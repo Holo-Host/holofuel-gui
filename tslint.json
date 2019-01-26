@@ -3,7 +3,8 @@
   "rules": {
   	"jsx-no-lambda": false,
     "jsx-no-multiline-js": false,
-    "semicolon": [true, "always", "ignore-interfaces"]
+    "semicolon": [true, "always", "ignore-interfaces"],
+    "indent": ["error", "tab"]
   },
   "linterOptions": {
     "exclude": [
