@@ -1,2 +1,32 @@
 # holofuel-gui
-Simple and intuitive interface allowing users to transact with Holo Fuel.
+**Status:** Pre-Alpha. Early development and testing.
+
+## Purpose:
+Simple and intuitive interface allowing users to transact with Holofuel.  This app pairs with the Holochain DNA, [holofuel](https://github.com/Holo-Host/holofuel), for data processing and management.
+
+## Preview:
+![holofuel-gui](#)
+
+## Design Decisions:
+* [HC-Admin UI ADR](https://hackmd.io/t7Y0H5eNQtycrsNyVRe3Ww?both)
+
+---
+## How to run?
+### Development:
+`npm install`
+`npm run dev`
+
+### Production:
+`npm install`
+`npm run build`
+`npm run start`
+
+## Built With
+* [React](https://reactjs.org/)
+* [Redux](https://redux.js.org/)
+* [Typescript](https://www.typescriptlang.org/)
+* [Webpack](https://webpack.js.org/)
+
+---
+## License
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
