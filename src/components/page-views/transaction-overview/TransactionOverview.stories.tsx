@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { MemoryRouter } from 'react-router-dom'
+import { MemoryRouter } from 'react-router-dom';
 import { storiesOf } from '@storybook/react';
 import * as constants from '../../../utils/seed-data/mock-data';
 // import { action } from '@storybook/addon-actions'
@@ -19,8 +19,8 @@ storiesOf('TransactionOverview', module)
       list_of_instance_info: constants.instanceListData,
       list_of_transactions: constants.processedData,
       get_info_instances: mockPromise,
-      list_transactions: mockPromise,
-    }
+      list_transactions: mockPromise
+    };
 
     return <MemoryRouter initialEntries={['/']}><TransactionOverview {...props} /></MemoryRouter>;
   });

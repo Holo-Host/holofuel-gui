@@ -29,7 +29,8 @@ import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware';
 // This is to retreive the DNA Instance Hash of the HC-Rust holofuel app
 //  for the remaining API calls using the Rust Conainter, RPC Websockets,
 //  and redux-hc-middleware..
-export const GetInfoInstancesAsyncAction = createHolochainAsyncAction<{}, Array<any>>('info', 'instances');.
+export const GetInfoInstancesAsyncAction = createHolochainAsyncAction<{}, Array<any>>('info', 'instances');
+
 export function get_info_instances () {
   return {
     type: 'GET_INFO_INSTANCES',
@@ -42,12 +43,13 @@ export function get_info_instances () {
 }
 
 // Call for LIST_OF_TRANSACTIONS ()
-export const TransactionListAsyncAction = createHolochainAsyncAction<{}, Array<any>>('i83uyi7u8kh076576t576278yi2u32hlu4y7', 'transactions', 'main', 'list_transactions');
+export const TransactionListAsyncAction = createHolochainAsyncAction<{}, Array<any>>('holofuel-instance', 'transactions', 'list_transactions');
+
 export function list_transactions () {
   console.log('>>LIST_TRANSACTIONS() invoked <<');
   return {
     type: 'LIST_OF_TRANSACTIONS',
-    payload: { since: '2019-01-23-05-21-55', until: '2019-01-23-05-22-03' },
+    payload: {},
     meta: {
       holochainAction: true,
       callString: TransactionListAsyncAction

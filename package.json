@@ -37,8 +37,8 @@
     "typescript": "^3.0.1"
   },
   "scripts": {
-    "start": "react-scripts-ts start",
-    "start-web": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.renderer.dev.babel.js",
+    "start": "PORT=9300 react-scripts-ts start",
+    "start-web": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.base.js",
     "build": "react-scripts-ts build && node copy-to-ui.js",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-prod": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
@@ -186,6 +186,7 @@
     "@types/react-dom": "^16.0.7",
     "@types/react-redux": "^6.0.6",
     "@types/react-router-dom": "^4.3.0",
+    "@types/redux-logger": "^3.0.6",
     "@types/redux-mock-store": "^1.0.0",
     "@types/storybook__addon-actions": "^3.4.1",
     "@types/storybook__addon-info": "^3.2.3",
@@ -231,6 +232,7 @@
     "react-scripts-ts": "^2.17.0",
     "redux-logger": "^3.0.6",
     "redux-mock-store": "^1.5.3",
+    "redux-thunk": "^2.3.0",
     "sinon": "^7.2.3",
     "storybook-addon-jsx": "^5.3.0",
     "storybook-addon-specifications": "^2.1.2",

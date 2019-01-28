@@ -1,17 +1,20 @@
 import * as React from 'react';
 import { Store } from 'redux';
 import { Provider } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import TransactionOverview from './components/page-views/transaction-overview/TransactionOverview';
+import { ConnectedRouter } from 'connected-react-router';
+import { Route, Switch } from 'react-router-dom';
+import TransactionOverviewContainer from './containers/TransactionOverviewContainer';
 
-import TestApp from './components/page-views/main-transactions-summary/TransactionsSummary';
+import TestApp from './containers/MainAppContainer';
 
-const Root = ({ store }: {store: Store}) => (
+const Root = ({ store, history }: { store: Store, history: any }) => (
   <Provider store={store}>
-    <Router>
-      <Route path='/' component={TransactionOverview} />
-      <Route path='/testapp' component={TestApp} />
-    </Router>
+    <ConnectedRouter history={history}>
+      <Switch>
+        <Route path='/testapp' component={TestApp} />
+        <Route path='/' component={TransactionOverviewContainer} />
+      </Switch>
+    </ConnectedRouter>
   </Provider>
 );
 

@@ -1,4 +1,4 @@
-import { JSONSchema6 } from 'json-schema'
+import { JSONSchema6 } from 'json-schema';
 
 /*----------  Created by the hApp  ----------*/
 

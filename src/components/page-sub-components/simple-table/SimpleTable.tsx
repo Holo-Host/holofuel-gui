@@ -3,7 +3,7 @@ import * as React from 'react';
 import '../../component-styles/scaffold-styles.css';
 
 export interface OwnProps {
-  // These are props the component creates and maintains within itself &&/ from its parent component
+  // These are props the component has received from its parent component
   // e.g. what you write in <ExampleComponent ...>
   data: any
 }
@@ -33,16 +33,20 @@ class SimpleTable extends React.Component<Props, State> {
   }
 
   componentWillMount () {
-    this.setState({ header: Object.getOwnPropertyNames(this.props.data[0]) });
+    this.setState({
+      header: Object.getOwnPropertyNames(this.props.data[0])
+    });
   }
 
   renderHeader (columns: any) {
     return(
       <thead>
         <tr>
-          {columns.map((column: any, index: number) => {
+          {columns.map((columnHeader: any, index: number) => {
             return(
-              <td key={index}>{column}</td>
+              <td key={index}>
+                {columnHeader}
+              </td>
             );
           })}
         </tr>
@@ -56,9 +60,11 @@ class SimpleTable extends React.Component<Props, State> {
         {rows.map((row: any, index: number) => {
           return(
             <tr key={index}>
-              {columns.map((column: any, innerIndex: number) => {
+              {columns.map((columnData: any, innerIndex: number) => {
                 return (
-                  <td key={innerIndex}>{row[column]}</td>
+                  <td key={innerIndex}>
+                    {row[columnData]}
+                  </td>
                 );
               })}
             </tr>

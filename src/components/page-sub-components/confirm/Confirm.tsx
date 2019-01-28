@@ -14,7 +14,8 @@ const Confirm = (props: any) => {
   if (mm < 10) mm = '0' + mm;
 
   today = mm + '/' + dd + '/' + yyyy;
-  return(
+
+  return (
 		<div className='confirm'>
 			<div className='notice success'>
 				<i className='fa fa-smile-o'/>
@@ -23,7 +24,7 @@ const Confirm = (props: any) => {
 			<h3>Summary</h3>
 			<Summary form={props.form}/>
       <div className='button-holder'>
-       <input type='button' className='button CTAButton' value='Do Another Transaction' onClick={() => props.setRoute('form')}/>
+       <input type='button' className='button CTAButton' value='Do Another Transaction' onClick={() => props.restartTransferForm('form')}/>
       </div>
 		</div>
   );

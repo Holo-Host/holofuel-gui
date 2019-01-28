@@ -16,29 +16,29 @@ export const TransactionOverviewTests = describe('', () => {
 
   const transactionOverviewComponent = () => {
     if (!mountedTransactionOverviewComponent) {
-      mountedTransactionOverviewComponent = mount(<MemoryRouter initialEntries={['/']}><TransactionOverview {...props}/></MemoryRouter>)
+      mountedTransactionOverviewComponent = mount(<MemoryRouter initialEntries={['/']}><TransactionOverview {...props}/></MemoryRouter>);
     }
-    return mountedTransactionOverviewComponent
+    return mountedTransactionOverviewComponent;
   };
 
   beforeEach(() => {
-    mountedTransactionOverviewComponent = undefined
+    mountedTransactionOverviewComponent = undefined;
   });
 
   // const mockFn = jest.fn();
   const mockPromise = jest.fn(() => Promise.reject('TransactionOverview test mockPromise'));
 
-    it('Clicking Visit Test App fires the link progression event', () => {
+  it('Clicking Visit Test App fires the link progression event', () => {
       props = {
         list_of_instance_info: constants.instanceListData,
         list_of_transactions: constants.processedData,
         get_info_instances: mockPromise,
         list_transactions: mockPromise
         // selectedTransaction: constants.processedData[0],
-      }
+      };
 
-      transactionOverviewComponent().find('Button').simulate('click')
-      expect(props.list_of_transactions).toBeCalled()
+      transactionOverviewComponent().find('Button').simulate('click');
+      expect(props.list_of_transactions).toBeCalled();
     });
 
     // it('Check getDerivedStateFromProps returns null when props are not updated by component', () => {
@@ -70,5 +70,5 @@ export const TransactionOverviewTests = describe('', () => {
     //   let newState = TransactionOverviewBase.getDerivedStateFromProps(props, prevState);
     //   expect(newState).toEqual(null);
     // })
-  };
+};
 )

@@ -1,28 +1,5 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700&subset=latin-ext');
 @import url('https://fonts.googleapis.com/css?family=Open+Sans:700');
-.geolocator {
-  padding-top: 60%;
-  width: 100%;
-  position: relative;
-}
-.geolocator-canvas {
-  top:10px;
-  display: block;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-}
-/*
-
-
-	Z-map:
-
-	wantToContainer		5
-	lblOpenMenu			10
-
-*/
-
-/* [START] Added by FGP on 10:07am Mar 3 2016 */
 
 body{
   overflow-x: hidden;
@@ -45,23 +22,14 @@ footer{
 }
 
 /*** Menu **/
-
 .menu{
 	position:relative;
 	background-color:#004B8C;
-
   width:100%;
-
-  /*
-	width:85%;
-	max-width:1024px;
-  */
-
 	display:inline-block;
   width: 200%;
   position: relative;
   left: -50%;
-
 }
 
 .menu:after{
@@ -71,7 +39,6 @@ footer{
 	width:3px;
 	background-color:#FFC107;
 	height:100%;
-
 	top:0;
 	right:3%;
 }
@@ -83,7 +50,6 @@ footer{
 	width:3px;
 	background-color:RED;
 	height:100%;
-
 	top:0;
 	right:2%;
 }
@@ -103,9 +69,9 @@ footer{
 }
 
 .menu li{
-	display:inline-block;
+	display:inline;
 	text-align:center;
-  width:150px;
+  width:100%;
 }
 
 .menu li:hover{
@@ -119,11 +85,9 @@ footer{
   cursor: pointer;
 	padding-top:2px;
 	padding-bottom:2px;
-
 	position:relative;
 	min-width:100px;
 	width:auto;
-
 	height:30px;
 	line-height:30px;
   cursor: pointer;
@@ -131,10 +95,10 @@ footer{
 }
 
 .menu a:hover{
-
+ /* TODO: Add hover styles..  */
 }
 
-#chkMenu{
+#select-menu{
 	display:none;
 }
 
@@ -191,32 +155,24 @@ footer{
 
 
 	.menu{
-
 		position:fixed;
 		top:0;
-
-
 		z-index:10;
-
-
 		width:50%;
 		min-width: 250px;
-
 		height:100%;
-
-
 		transition: left 500ms linear;
 		-webkit-transition: left 500ms linear;
     box-shadow: 2px 0 10px rgba(0,0,0,1);
 	}
 
-	#chkMenu + .menu{
+	#select-menu + .menu{
 		//display:none;
 
 		left:-90%;
 	}
 
-	#chkMenu:checked + .menu{
+	#select-menu:checked + .menu{
 		//display:block;
 		left:0;
 	}
@@ -241,10 +197,7 @@ footer{
   }
 }
 
-
-
-
-/* [END] Added by FGP on 10:08am Mar 3 2016*/
+/* /////////////////////////////////////////////////////////////////////////////////////// */
 
 *{
 	font-family: 'Lato', sans-serif;
@@ -253,7 +206,6 @@ footer{
 body, html{
 	padding:0;
 	margin:0;
-
 	background: #fbfbfb;
 	background: -moz-linear-gradient(top, #fbfbfb 0%, #ededed 46%, #ededed 100%);
 	background: -webkit-linear-gradient(top, #fbfbfb 0%, #ededed 46%, #ededed 100%);
@@ -721,22 +673,19 @@ dd, dt {
 		text-align:center;
 	}
 
-	#chkShowFooter{
+	#selectShowFooter{
 		position:fixed;
 		top:0;
 	}
 
-	#chkShowFooter + .flyPopup{
+	#selectShowFooter + .flyPopup{
 		display:none;
 	}
 
-	#chkShowFooter:checked + .flyPopup{
+	#selectShowFooter:checked + .flyPopup{
 		display:block;
 	}
 
-
-
-/* I want to... menu */
 
 .lblOpenMenu{
 	color:WHITE;
@@ -765,10 +714,7 @@ dd, dt {
 .wantToContainer li{
 	font-size:12px;
 	color:#0b6997;
-
-	/*background; url(https://statmcstg.usaa.com/mcontent/static_assets/Media/control_sprite.png) no-repeat -13000px -2px;*/
 	list-style: none;
-
 	padding: 0 0 10px 14px;
 }
 
@@ -781,7 +727,6 @@ dd, dt {
 	text-decoration:underline;
 }
 
-
 .wantToContainer h4{
 	font-weight:bold;
 	text-transform:uppercase;
@@ -790,8 +735,6 @@ dd, dt {
 	color: #666666;
 	font-size:11px;
 }
-
-
 
 
 /* UTILITIES */
@@ -807,6 +750,7 @@ dd, dt {
 .bigDisplay{
 	display:block;
 }
+
 .button {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -819,6 +763,7 @@ dd, dt {
   cursor: pointer;
   font-size: 16px;
 }
+
 .simpleButton{
   background: #B00D20;
 }
@@ -893,36 +838,34 @@ dd, dt {
 
 
 	/* Menu control for phone-size display */
-
-	#chkOpenMenu + label + aside{
+	#selectOpenMenu + label + aside{
 		overflow:hidden;
 		height:0;
 	}
 
-	#chkOpenMenu:checked + label + aside{
+	#selectOpenMenu:checked + label + aside{
 		height:140px;
 	}
 
-	#chkOpenMenu + label .openItem{
+	#selectOpenMenu + label .openItem{
 		display:block;
 	}
 
-	#chkOpenMenu:checked + label .openItem{
+	#selectOpenMenu:checked + label .openItem{
 		display:none;
 	}
 
 
-	#chkOpenMenu + label .closeItem{
+	#selectOpenMenu + label .closeItem{
 		display:none;
 		color:BLACK;
 	}
 
-	#chkOpenMenu:checked + label .closeItem{
+	#selectOpenMenu:checked + label .closeItem{
 		display:block;
 	}
 
 	/* small utilities */
-
 	.smallDisplay{
 		display:block;
 	}

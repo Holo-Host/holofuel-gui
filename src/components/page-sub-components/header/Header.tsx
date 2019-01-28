@@ -6,17 +6,17 @@ const Header = (props: any) => {
   return(
     <div>
       <div className='btnMenu' >
-        <label htmlFor='chkMenu'>
+        <label htmlFor='select-menu'>
           <i className='fa fa-bars'/>
         </label>
       </div>
-      <input type='checkbox' id='chkMenu' />
+      <input type='checkbox' id='select-menu' />
       <nav className='menu'>
-        <div className='title'>National Bank</div>
+        <div className='title'>Holofuel</div>
        <ul>
-          <li><label htmlFor='chkMenu' onClick={() => props.setRoute('profile')}>Transfer Activity</label></li>
-          <li><label htmlFor='chkMenu' onClick={() => props.setRoute('form')}>Transactions</label></li>
-          <li><label htmlFor='chkMenu' onClick={() => props.setRoute('contact')}>Contact</label></li>
+          <li><label htmlFor='select-menu' onClick={() => props.setRoute('transactionSummary')}>Transaction Summary</label></li>
+          <li><label htmlFor='select-menu' onClick={() => props.setRoute('form')}>Account Transfer</label></li>
+          <li><label htmlFor='select-menu' onClick={() => props.setRoute('contact')}>Contact</label></li>
         </ul>
       </nav>
     </div>

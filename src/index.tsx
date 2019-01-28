@@ -1,8 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import Root from './root';
-import CreateStore from './store';
+import { configureStore, history } from './store/configureStore';
+const store = configureStore();
 
-const store = CreateStore();
-
-ReactDOM.render(<Root store={store} />, document.querySelector('#root'));
+ReactDOM.render(<Root history={history} store={store} />, document.querySelector('#root'));

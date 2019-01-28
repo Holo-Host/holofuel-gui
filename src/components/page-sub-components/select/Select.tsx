@@ -3,7 +3,7 @@ import * as React from 'react';
 import '../../component-styles/scaffold-styles.css';
 
 export interface OwnProps {
-  // These are props the component creates and maintains within itself &&/ from its parent component
+  // These are props the component has received from its parent component
   // e.g. what you write in <ExampleComponent ...>
   css_class: any,
   title: string,
