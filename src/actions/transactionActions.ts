@@ -1,30 +1,22 @@
-
 import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware';
-// import { INITIAL_STATE } from '../reducers/reducer'
-// const info_instances = INITIAL_STATE.list_of_instance_info;
-
 // export const FETCH_STATE = 'FETCH_STATE';
-/////////////////////////////////////////////////////////////////////////////////////////
+// FILE CONSTANTS:
+const DNA_INSTANCE = 'holofuel_pagination.hcpkg instance';
+const TX_ZOME_NAME = 'transactions';
 
-                          /*  Available APIs  */
-// -----------------------------------------------------------------------------
-// [x]  info/instances()
-// [ ]  happ/zome/main/ list_transactions(since_date, until_date)
-// [ ]  happ/zome/main/ request_payment(spender_id, transaction_id)
-// [ ]  happ/zome/main/ list_pending()
+////////////////////////////////////////////////////////////////////////////
+                    /* Verfiy State - TESTING */
+////////////////////////////////////////////////////////////////////////////
+// // STATE CHECK
+// export function fetch_state () {
+//   return {
+//     type: FETCH_STATE
+//   };
+// }
 
-                          /*  Pending APIs  */
-// ----------------------------------------------------------------------------------
-// [ ]  happ/zome/main/ receive_payment({proposal_obj})
-// [ ]  happ/zome/main/ reject_payment({proposal_obj})
-// [ ]  happ/zome/main/ pay_request({request_obj})
-// [ ]  happ/zome/main/ decline_request({request_obj})
-
-/////////////////////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////
-    /* Reporting Container DNAs/DNA-instances */
-////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+        /* Confirm Holofuel Instance Discovery in Container */
+////////////////////////////////////////////////////////////////////////////
 // Call for GET_INFO_INSTANCES ()
 // This is to retreive the DNA Instance Hash of the HC-Rust holofuel app
 //  for the remaining API calls using the Rust Conainter, RPC Websockets,
@@ -42,24 +34,58 @@ export function get_info_instances () {
   };
 }
 
+////////////////////////////////////////////////////////
+            /* Reporting Transactions */
+////////////////////////////////////////////////////////
+// Call for GET_LEDGER_STATE ()
+export const LedgerStateAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'ledger_state');
+
 // Call for LIST_OF_TRANSACTIONS ()
-export const TransactionListAsyncAction = createHolochainAsyncAction<{}, Array<any>>('holofuel-instance', 'transactions', 'list_transactions');
-
-export function list_transactions () {
-  console.log('>>LIST_TRANSACTIONS() invoked <<');
-  return {
-    type: 'LIST_OF_TRANSACTIONS',
-    payload: {},
-    meta: {
-      holochainAction: true,
-      callString: TransactionListAsyncAction
-    }
-  };
-}
-
-// // STATE CHECK
-// export function fetch_state () {
+// Action API Body Call Reference: (Legacy Method Call)
+// export function list_transactions () {
+//   console.log('>>LIST_TRANSACTIONS() invoked <<');
 //   return {
-//     type: FETCH_STATE
+//     type: 'LIST_OF_TRANSACTIONS',
+//     payload: {},
+//     meta: {
+//       holochainAction: true,
+//       callString: 'holofuel_pagination.hcpkg instance', 'transactions', 'list_transactions'
+//     }
 //   };
 // }
+
+export const TransactionListAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_transactions');
+
+////////////////////////////////////////////////////////
+          /* Triggering Transaction Event */
+////////////////////////////////////////////////////////
+
+// Call for REQUEST_PAYMENT ()
+export const RequestPaymentAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'request');
+
+// Call for PROPOSE_PAYMENT ()
+export const ProposalAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'proposal');
+
+// Call for RECEIVE_PAYMENT ()
+export const ReceivePaymentAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'receive_payment');
+
+// Call for REJECT_PAYMENT ()
+export const RejectPaymentAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'reject_payment');
+
+// Call for PAY_REQUEST ()
+export const PayRequestAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'pay_request');
+
+// Call for DECLINE_REQUEST ()
+export const DeclineRequestAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'decline_request');
+
+// Call for LIST_REQUESTS ()
+export const ListRequestsAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_requests');
+
+// Call for LIST_PROPOSALS ()
+export const ListProposalsAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_proposals');
+
+// Call for GET_SINGLE_REQUEST ()
+export const GetRequestAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'get_request');
+
+// Call for GET_SINGLE_PROPOSAL ()
+export const GetProposalAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'get_proposal');

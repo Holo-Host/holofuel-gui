@@ -6,9 +6,9 @@ import Memo from '../../page-sub-components/memo/Memo';
 import Select from '../../page-sub-components/select/Select';
 // utils import :
 import { toAccounts, fromAccounts } from '../../../utils/seed-data/mock-data';
-import { getToday } from '../../../utils/table-refactors/table-helper-fns';
+import { getToday } from '../../../utils/seed-data/helper-fns';
 // custom stylesheet :
-import '../../component-styles/scaffold-styles.css';
+import '../../styles/page-sub-component-styles/scaffold-styles.css';
 
 
 export interface OwnProps {

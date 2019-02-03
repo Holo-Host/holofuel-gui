@@ -3,19 +3,25 @@ import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Route, Switch } from 'react-router-dom';
-import TransactionOverviewContainer from './containers/TransactionOverviewContainer';
+// import TransactionOverviewContainer from './containers/TransactionOverviewContainer';
+import HoloFuelAppContainer from './containers/HoloFuelAppContainer';
 
-import TestApp from './containers/MainAppContainer';
+import BankViewAppContainer from './containers/BankViewAppContainer';
 
 const Root = ({ store, history }: { store: Store, history: any }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
-        <Route path='/testapp' component={TestApp} />
-        <Route path='/' component={TransactionOverviewContainer} />
+        <Route path='/bankstyleapp' component={BankViewAppContainer} />
+        <Route path='/holofuelsummary' component={HoloFuelAppContainer} />
+        <Route path = '/holofuelrequest' component={HoloFuelAppContainer} />
+        <Route path = '/about' component={HoloFuelAppContainer} />
+        <Route path = '/holofueltransactiondetails' component={HoloFuelAppContainer} />
+        <Route path='/' component={HoloFuelAppContainer} />
       </Switch>
     </ConnectedRouter>
   </Provider>
 );
 
 export default Root;
+// <Route path='/' component={TransactionOverviewContainer} />

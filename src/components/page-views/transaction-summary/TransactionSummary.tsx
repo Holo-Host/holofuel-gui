@@ -3,7 +3,7 @@ import * as React from 'react';
 import SimpleTable from '../../page-sub-components/simple-table/SimpleTable';
 import { processedData, pendingData} from '../../../utils/seed-data/mock-data';
 // custom stylesheet
-import '../../component-styles/scaffold-styles.css';
+import '../../styles/page-sub-component-styles/scaffold-styles.css';
 
 
 // TODO: use the following when change to Class:

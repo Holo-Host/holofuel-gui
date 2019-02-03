@@ -1,6 +1,6 @@
 import * as React from 'react';
 // custom stylesheet :
-import '../../component-styles/scaffold-styles.css';
+import '../../styles/page-sub-component-styles/scaffold-styles.css';
 
 const Footer = (props: any) => {
   return (

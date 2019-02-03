@@ -1,6 +1,6 @@
 import * as React from 'react';
 // lcustom stylesheet :
-import '../../component-styles/scaffold-styles.css';
+import '../../styles/page-sub-component-styles/scaffold-styles.css';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
