@@ -1,6 +1,6 @@
 import * as React from 'react';
 // custom stylesheet :
-import '../../styles/page-sub-component-styles/scaffold-styles.css';
+import '../../styles/page-styles/scaffold-styles.css';
 
 const HiddenFields = (props: any) => {
   return (

@@ -2,8 +2,10 @@ import * as React from 'react';
 // local page-views imports :
 import HoloFuelSummaryPage from '../components/page-views/HoloFuelSummaryPage';
 // import HoloFuelTxSummary from '../components/page-views/HoloFuelTxSummary';
-import HoloFuelTranferFormPage from '../components/page-views/HoloFuelTransferFormPage';
-import AboutHolo from "../components/page-views/AboutHolo";
+import HoloFuelRequestPage from '../components/page-views/HoloFuelRequestPage';
+import HoloFuelProposalPage from '../components/page-views/HoloFuelProposalPage';
+import SettingsHolo from "../components/page-views/SettingsHolo";
+import AgentProfile from "../components/page-views/AgentProfile";
 import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTransactionDetailPage';
 // import Dashboard from '../components/page-sub-components/dashboard-header/Dashboard';
 import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
@@ -12,14 +14,14 @@ import AppNavBar from '../components/page-sub-components/app-nav-bar/AppNavBar';
 import SubNavBar from '../components/page-sub-components/app-nav-bar/SubNavBar';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 import styles from '../components/styles/page-styles/DefaultPageMuiStyles';
-import '../components/styles/page-sub-component-styles/scaffold-styles.css';
+import '../components/styles/page-styles/scaffold-styles.css';
 
 
 export interface OwnProps {
   // These are props the component has received from its parent component
   className: any,
+  staticContext: any,
   classes: any,
   history: any
 }
@@ -54,20 +56,33 @@ export type Props =  StateProps & DispatchProps & OwnProps;
 
 export interface State {
 // The components optional internal state
+  chooseTxBtnBarOpen: boolean,
+  transactionType: string,
 }
 
 class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
+    this.state = {
+      chooseTxBtnBarOpen: false,
+      transactionType: "",
+    }
   };
+
+
+  toggleTransferBtnBar = (txType: any) => {
+    this.setState({
+      chooseTxBtnBarOpen: !this.state.chooseTxBtnBarOpen,
+      transactionType: txType
+    })
+  }
 
   public render() {
     console.log('Props in HoloFuelAppContainer:', this.props);
     // const { classes } = this.props;
-    const { classes, ...newProps } = this.props;
+    const { classes, staticContext, ...newProps } = this.props; //TODO: Locate staticContext.. AND REMOVE from outer props
     const { location } = this.props.history;
     console.log(">>>> location: >>>", location);
-    const gutterBottom : boolean = true;
 
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>
@@ -76,37 +91,69 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
     return (
       <div>
-        <AppNavBar {...newProps}/>
-        <SubNavBar {...newProps}/>
+        <AppNavBar showTransferBar={this.toggleTransferBtnBar} {...newProps}/>
+        <SubNavBar showTransferBar={this.toggleTransferBtnBar} {...newProps}/>
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
-
-          <div className={classes.jumbotron}>
-            {/* <hr/> */}
-            <h3>Current Balance</h3>
-            <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
-              {this.props.ledger_state.balance} + 200 HF
-            </Typography>
-            <hr/>
-            <h3>Credit limit : 80 HF {this.props.ledger_state.credit} </h3>
-          </div>
-
           <div>
             {console.log("location.pathname",location.pathname)}
-          {location.pathname === "/" || location.pathname === "/holofuelsummary" ?
-          // default to HF Summary Page, if no path match
-          <HoloFuelSummaryPage className={classes.appTable} {...newProps} />
+            {location.pathname === "/" || location.pathname === "/holofuelsummary" ?
+            // default to HF Summary Page, if no path match
+            <HoloFuelSummaryPage
+              className={classes.appTable}
+              transferBtnBar={this.state.chooseTxBtnBarOpen}
+              txType={this.state.transactionType}
+              showTransferBar={this.toggleTransferBtnBar}
+              {...newProps}
+            />
           :
-          location.pathname === "/holofuelrequest" ?
+            location.pathname === "/holofuelrequest" ?
             // this should be the transaction creation form for HoloFuel
-            <HoloFuelTranferFormPage className={classes.appTable} {...newProps} />
+            <HoloFuelRequestPage
+              transferBtnBar={this.state.chooseTxBtnBarOpen}
+              showTransferBar={this.toggleTransferBtnBar}
+              txType={this.state.transactionType}
+              className={classes.appTable}
+              {...newProps}
+            />
+          :
+            location.pathname === "/holofuelproposal" ?
+            // this should be the HoloFuel Transaction Details Page
+            <HoloFuelProposalPage
+              transferBtnBar={this.state.chooseTxBtnBarOpen}
+              showTransferBar={this.toggleTransferBtnBar}
+              txType={this.state.transactionType}
+              className={classes.appTable} {...this.props}
+            />
           :
             location.pathname === "/holofueltransactiondetails" ?
-            // this should be the HoloFuel Transaction Details Page
-            <HoloFuelTransactionDetailPage className={classes.appTable} {...this.props} />
+              // this should be the HoloFuel Transaction Details Page
+              <HoloFuelTransactionDetailPage
+                transferBtnBar={this.state.chooseTxBtnBarOpen}
+                showTransferBar={this.toggleTransferBtnBar}
+                txType={this.state.transactionType}
+                className={classes.appTable}
+                {...this.props}
+              />
           :
-            // if matches none - route to the "about" page for HoloFuel &/ Holo
-            <AboutHolo className={classes.appTable} {...this.props} />
+            location.pathname === "/settings" ?
+            // this should lead to the "settings" page for HoloFuel &/ Holo
+            <SettingsHolo
+              transferBtnBar={this.state.chooseTxBtnBarOpen}
+              showTransferBar={this.toggleTransferBtnBar}
+              txType={this.state.transactionType}
+              className={classes.appTable}
+              {...this.props}
+            />
+          :
+            // if matches none - route to the Profile Page
+            <AgentProfile
+              transferBtnBar={this.state.chooseTxBtnBarOpen}
+              showTransferBar={this.toggleTransferBtnBar}
+              txType={this.state.transactionType}
+              className={classes.appTable}
+              {...this.props}
+            />
           }
           </div>
         </main>

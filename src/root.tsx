@@ -14,8 +14,10 @@ const Root = ({ store, history }: { store: Store, history: any }) => (
       <Switch>
         <Route path='/bankstyleapp' component={BankViewAppContainer} />
         <Route path='/holofuelsummary' component={HoloFuelAppContainer} />
+        <Route path = '/holofuelproposal' component={HoloFuelAppContainer} />
         <Route path = '/holofuelrequest' component={HoloFuelAppContainer} />
-        <Route path = '/about' component={HoloFuelAppContainer} />
+        <Route path = '/profile' component={HoloFuelAppContainer} />
+        <Route path = '/settings' component={HoloFuelAppContainer} />
         <Route path = '/holofueltransactiondetails' component={HoloFuelAppContainer} />
         <Route path='/' component={HoloFuelAppContainer} />
       </Switch>

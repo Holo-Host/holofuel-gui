@@ -11,8 +11,8 @@ import pending_transaction_table_columns, { processed_transaction_table_columns 
 // import { dataRefactor, refactorBaseDna, refactorInstanceData } from "../../../utils/data-refactor";
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // MUI Imports:
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
 
 export interface OwnProps {
   // These are props the component has received from its parent component

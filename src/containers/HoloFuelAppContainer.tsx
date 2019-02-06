@@ -22,6 +22,7 @@ import HoloFuelAppRouterContainer, { StateProps, DispatchProps } from './HoloFue
 export interface OwnProps {
   // These are props the component has received from its parent component
   // e.g. what you write in <ExampleComponent ...>
+  staticContext: any,
   className: any,
   classes: any,
   history: any

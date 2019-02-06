@@ -5,6 +5,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import { dependencies } from '../package.json';
+import 'react-dates/lib/css/_datepicker.css';
 
 export default {
   externals: [...Object.keys(dependencies || {})],

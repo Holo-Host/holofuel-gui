@@ -47,14 +47,14 @@ export type ListStateNames = {
 }
 
 export type RequestActionParam = {
-  to: Address,
+  from: Address,  // this was to >> shouldn't it be "from" ?!?!?!
   amount: string,
   notes?: string,
   deadline?: DateTimeString | string
 }
 
 export type ProposalActionParam = {
-  from: Address,
+  to: Address, // this was from >> shouldn't it be "to" ?!?!?!
   amount: string,
   notes?: string,
   deadline?: DateTimeString | string | undefined,

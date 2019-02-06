@@ -1,6 +1,6 @@
 import * as React from 'react';
 // lcustom stylesheet :
-import '../../styles/page-sub-component-styles/scaffold-styles.css';
+import '../../styles/page-styles/scaffold-styles.css';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
@@ -38,12 +38,12 @@ class Select extends React.Component<Props, State> {
 				<i className='fa fa-user fa-fw'/>
 				<select onChange={this.props.onChange} value={this.props.account}>
 					{this.props.serverResponse.map((option: any) => {
-  return (
+            return (
 							<option key={option.id} value={option.id}>
 								{option.name}
 							</option>
-  );
-})}
+              );
+            })}
 				</select>
 			</fieldset>
     );

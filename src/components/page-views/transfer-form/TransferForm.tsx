@@ -8,7 +8,7 @@ import Select from '../../page-sub-components/select/Select';
 import { toAccounts, fromAccounts } from '../../../utils/seed-data/mock-data';
 import { getToday } from '../../../utils/seed-data/helper-fns';
 // custom stylesheet :
-import '../../styles/page-sub-component-styles/scaffold-styles.css';
+import '../../styles/page-styles/scaffold-styles.css';
 
 
 export interface OwnProps {

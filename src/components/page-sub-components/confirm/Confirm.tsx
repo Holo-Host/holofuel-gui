@@ -2,7 +2,7 @@ import * as React from 'react';
 // local sub-component imports :
 import Summary from '../summary/Summary';
 // custom stylesheet :
-import '../../styles/page-sub-component-styles/scaffold-styles.css';
+import '../../styles/page-styles/scaffold-styles.css';
 
 const Confirm = (props: any) => {
   let today: any = new Date();

@@ -84,7 +84,7 @@ class TransactionOverview extends React.Component<Props, State> {
     // Invoke request_payment() (a ZOME Call) :
     // const currentDateTime: DateTimeString | undefined = get_current_datetime();
     const request_tx_obj : RequestActionParam = {
-      to: "Poison Ivy", // this will be the payment requestor's AGENT_ADDRESS
+      from: "Poison Ivy", // this will be the payment requestor's AGENT_ADDRESS
       amount:"0.0000000569066456676 HF",
       notes: "testing out the request_payment api call...",
       // deadline: currentDateTime
@@ -95,7 +95,7 @@ class TransactionOverview extends React.Component<Props, State> {
 
     // Invoke propose_payment() (a ZOME Call) :
     const propose_tx_obj: ProposalActionParam = {
-      from: "Poisin Ivy",// this will be the payment requestor's AGENT_ADDRESS
+      to: "Poisin Ivy",// this will be the payment requestor's AGENT_ADDRESS
       amount:"0.0000000569066456676 HF",
       notes: "testing out the propose_payment api call...",
       // deadline: currentDateTime // ,

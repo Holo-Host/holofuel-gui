@@ -11,18 +11,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // local imports
 import OutlinedButton from '../outlined-button/OutlinedButton';
-
-const styles = theme => ({
-  appBar: {
-    top: 'auto',
-    bottom: 0,
-    backgroundColor: '#0e3658'
-  },
-  toolbar: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  }
-});
+import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 function BottomMenuBar(props) {
   const { classes } = props;
@@ -30,10 +19,11 @@ function BottomMenuBar(props) {
     <React.Fragment>
       <CssBaseline />
       <AppBar position="fixed" className={classes.appBar}>
-        <Toolbar className={classes.toolbar}>
+        <Toolbar className={classes.toolbar} >
+          <div className={classes.closeBtn} onClick={() => props.showTransferBar("")}>X</div>
           <div className={classnames(classes.buttonMenu)}>
-            <OutlinedButton text="Send" color="primary" />
-            <OutlinedButton text="Receive" color="primary" />
+            <OutlinedButton text="Send" color="primary" link="/holofuelproposal" onClick={() => props.showTransferBar("proposal")}/>
+            <OutlinedButton text="Receive" color="primary" link="/holofuelrequest" onClick={() => props.showTransferBar("request")}/>
           </div>
         </Toolbar>
       </AppBar>
