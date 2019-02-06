@@ -11,9 +11,11 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 function OutlinedButton(props) {
   const { classes } = props;
   console.log("PROPS INSIDE OF OUTLINED BUTTON >> IS LINK displaying??", props);
-  
+
   return (
-      <Button variant="outlined" color={props.color} className={classnames(classes.button, classes.overlayTop)}>
+      <Button variant="outlined" color={props.color}
+      onClick={() => props.showTransferBar(props.fnName)}
+      className={classnames(classes.button, classes.overlayTop)}>
         {props.link ?
           <Link to={props.link} className={classes.link}>
             {props.text}

@@ -39,7 +39,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
   };
 
   componentDidMount () {
-    console.log("PROPS : ", this.props);
+    console.log("holofuel REQUEST PAGE PROPS : ", this.props);
     // set the this.state.agentHash value  !!!!
   }
 

@@ -71,6 +71,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
 
   toggleTransferBtnBar = (txType: any) => {
+    console.log("TRANSACTION TYPE arguments: ",txType)
     this.setState({
       chooseTxBtnBarOpen: !this.state.chooseTxBtnBarOpen,
       transactionType: txType
@@ -78,6 +79,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   }
 
   public render() {
+    console.log('State in HoloFuelAppContainer:', this.state);
     console.log('Props in HoloFuelAppContainer:', this.props);
     // const { classes } = this.props;
     const { classes, staticContext, ...newProps } = this.props; //TODO: Locate staticContext.. AND REMOVE from outer props

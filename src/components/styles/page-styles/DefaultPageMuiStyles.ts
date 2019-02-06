@@ -2,6 +2,11 @@
 import { StyleRulesCallback } from '@material-ui/core/';
 import { Theme } from '@material-ui/core/styles';
 
+// MUI Custom Colors:
+// import purple from '@material-ui/core/colors/purple';
+// import green from '@material-ui/core/colors/green';
+
+
 const styles: StyleRulesCallback  = (theme: Theme) => ({
     root: {
       display: 'flex',
@@ -19,7 +24,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       zIndex: 2
     },
     bottomAppBar: {
-      bottom: 0,
+      top: '90vh',
       backgroundColor: '#0e3658',
       zIndex: 2
     },
@@ -50,7 +55,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       color: '#0e094b', // 446164
       fontSize: 20,
       fontWeight: 300,
-      marginBottom: 3,
+      margin:0
     },
     h4: {
       color: '#d8dee3',
@@ -121,6 +126,8 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       fontSize: 18
     },
     jumbotron: {
+      width: '80%',
+      margin: '0 auto',
       display: 'block',
       boxSizing: 'border-box',
       padding: '1rem',
@@ -288,9 +295,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       width: 220,
       height: 220,
     },
-    createTxTextField: {
-      marginLeft: theme.spacing.unit,
-      marginRight: theme.spacing.unit,
+    formControl: {
+      width: '100%',
+      marginLeft: '2%',
+      marginRight: '2%',
     },
     cardBodyBackground: {
       position: "relative",
@@ -329,6 +337,38 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       backgroundColor: "#999999",
       padding: 15,
       marginTop: -20
+    },
+    requestwrapper:{
+      marginBottom: 100
+    },
+    customFormLabel: {
+      color:'#eee',
+      borderColor: '#e9ecef',
+      '&$customFormFocused': {
+        color:'#eee',
+      },
+    },
+    customFormFocused: {},
+    customFormUnderline: {
+      color: "#eee",
+      borderBottomColor:"#e9ecef",
+      '&:after': {
+        borderBottomColor: '#eee',
+      },
+    },
+    customFormInput: {
+      color: "#eee",
+      borderColor: "#e9ecef",
+      '&$customFormFocused': {
+        borderColor: '#eee',
+      },
+    },
+    customFormOutlinedInput: {
+      color: "#eee",
+      borderColor: "#e9ecef",
+      '&$customFormFocused' : { // To trigger application to multiple props: '&$cssFocused $notchedOutline'
+        borderColor: '#eee',
+      },
     },
 });
 

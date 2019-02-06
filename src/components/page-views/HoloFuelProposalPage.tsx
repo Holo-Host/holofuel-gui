@@ -48,6 +48,49 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
 
+     (
+    <div>
+      <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>
+        <div className={classes.flexItem}>
+          <h3 className={classes.h3}>Current Balance</h3>
+          <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
+            {this.props.ledger_state.balance} + 200 HF
+          </Typography>
+        </div>
+        <div className={classes.verticalLine}/>
+        <div className={classes.flexItem}>
+          <h3 className={classes.h3}>Credit limit</h3>
+          <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
+            {this.props.ledger_state.credit}  80 HF
+          </Typography>
+        </div>
+      </div>
+
+      <div>
+        <div className={classes.jumbotronImg}>
+          <h4 className={classes.h4}> Scan QR Code</h4>
+          <QrGenerator agentHash={this.state.agentHash}/>
+        </div>
+
+        <hr className={classes.horizontalLine}/>
+        {/* <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
+          Send Funds
+       </Typography> */}
+
+        <RequestProposalFormBtns {...newProps} txType={this.props.txType} />
+
+        { transferBtnBar ?
+          <Portal>
+            <Slide direction="down" in={transferBtnBar} mountOnEnter unmountOnExit>
+              <BottomMenuBar {...newProps} showTransferBar={this.props.showTransferBar} />
+            </Slide>
+          </Portal>
+        :
+          <div/>
+        }
+      </div>
+    </div>
+    );
     return (
     <div>
       <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>

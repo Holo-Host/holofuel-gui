@@ -15,6 +15,7 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 function BottomMenuBar(props) {
   const { classes } = props;
+  console.log("BottomMenuBar-> Props::",props);
   return (
     <React.Fragment>
       <CssBaseline />
@@ -22,8 +23,8 @@ function BottomMenuBar(props) {
         <Toolbar className={classes.toolbar} >
           <div className={classes.closeBtn} onClick={() => props.showTransferBar("")}>X</div>
           <div className={classnames(classes.buttonMenu)}>
-            <OutlinedButton text="Send" color="primary" link="/holofuelproposal" onClick={() => props.showTransferBar("proposal")}/>
-            <OutlinedButton text="Receive" color="primary" link="/holofuelrequest" onClick={() => props.showTransferBar("request")}/>
+            <OutlinedButton text="Send" color="primary" link="/holofuelproposal" showTransferBar={props.showTransferBar} fnName="proposal"/>
+            <OutlinedButton text="Receive" color="primary" link="/holofuelrequest" showTransferBar={props.showTransferBar} fnName="request"/>
           </div>
         </Toolbar>
       </AppBar>
