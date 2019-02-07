@@ -12,19 +12,21 @@ import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterCon
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
 import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
+import InformativeModal from '../page-sub-components/modal/InformativeModal';
 
 
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
-  showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
   txType: string,
+  showTransferBar: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
 // The components optional internal state
   agentHash: string,
+  message: string
 }
 
 const EXAMPLE_AGENT_HASH = '65ra8a76asfT0KAafFL5eASUasd9847aaR89F'
@@ -35,62 +37,40 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
 
     this.state = {
       agentHash: EXAMPLE_AGENT_HASH,
+      message: ""
     }
   };
 
   componentDidMount () {
-    console.log("PROPS : ", this.props);
+    console.log("ProposalPage PROPS upon componentDidMount : ", this.props);
     // set the this.state.agentHash value  !!!!
   }
 
+  sendProposal = async (txInfoObj: any) => {
+    console.log("txInfoObj for Proposal Call : ", txInfoObj);
+    // create propose const that amkes call and stores the result..
+    const proposalResult = await this.props.propose_payment({txInfoObj}); // send as JSON
+    this.sendConfirmationMessage(proposalResult);
+  }
+
+  sendConfirmationMessage = (proposalResult: any) => {
+    // expected output: 'resolved'
+    console.log('proposalResult >>> ', proposalResult);
+    this.setState({ message: proposalResult });
+  }
+
+  resetMessage = () => {
+    // resetting the message to blank after confirmed transaction result in modal...
+    console.log('resetting the message propety on the proposal page... >>> ');
+    this.setState({ message: "" });
+  }
+
   public render () {
-    console.log('Props in HoloFuelTransferFormPage:', this.props);
+    const { message } = this.state;
+    // console.log('Props in HoloFuelTransferFormPage:', this.props);
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
 
-     (
-    <div>
-      <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>
-        <div className={classes.flexItem}>
-          <h3 className={classes.h3}>Current Balance</h3>
-          <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
-            {this.props.ledger_state.balance} + 200 HF
-          </Typography>
-        </div>
-        <div className={classes.verticalLine}/>
-        <div className={classes.flexItem}>
-          <h3 className={classes.h3}>Credit limit</h3>
-          <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
-            {this.props.ledger_state.credit}  80 HF
-          </Typography>
-        </div>
-      </div>
-
-      <div>
-        <div className={classes.jumbotronImg}>
-          <h4 className={classes.h4}> Scan QR Code</h4>
-          <QrGenerator agentHash={this.state.agentHash}/>
-        </div>
-
-        <hr className={classes.horizontalLine}/>
-        {/* <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
-          Send Funds
-       </Typography> */}
-
-        <RequestProposalFormBtns {...newProps} txType={this.props.txType} />
-
-        { transferBtnBar ?
-          <Portal>
-            <Slide direction="down" in={transferBtnBar} mountOnEnter unmountOnExit>
-              <BottomMenuBar {...newProps} showTransferBar={this.props.showTransferBar} />
-            </Slide>
-          </Portal>
-        :
-          <div/>
-        }
-      </div>
-    </div>
-    );
     return (
     <div>
       <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>
@@ -120,14 +100,23 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
           Send Funds
        </Typography>
 
-        <RequestProposalFormBtns {...newProps} txType={this.props.txType} />
+        <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeTx={this.sendProposal} />
+        <hr className={classes.horizontalLine}/>
 
+      {/* Toggle Transaction Sending */}
         { transferBtnBar ?
           <Portal>
             <Slide direction="down" in={transferBtnBar} mountOnEnter unmountOnExit>
               <BottomMenuBar {...newProps} showTransferBar={this.props.showTransferBar} />
             </Slide>
           </Portal>
+        :
+          <div/>
+        }
+
+      {/* Toggle Confirmation Message */}
+        { message !== "" ?
+          <InformativeModal {...newProps} message={this.state.message} resetMessage={this.resetMessage}/>
         :
           <div/>
         }

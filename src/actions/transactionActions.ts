@@ -14,6 +14,19 @@ const TX_ZOME_NAME = 'transactions';
 //   };
 // }
 
+////////////////////////////////////////////////////////
+          /* Agent and Instance Discovery  */
+////////////////////////////////////////////////////////
+// Call for FETCH_AGENT_HASH ()
+// export const FetchtAgentHashAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'whoami_hash');
+
+// Call for FETCH_AGENT_STRING ()
+export const FetchAgentStringAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'whoami');
+
+// Call for GET_AGENT_LIST ()
+// This is to retreive the list of agent Hashes/IDs
+export const GetAgentListAsyncAction = createHolochainAsyncAction<{}, Array<any>>('admin', 'agent', 'list');
+
 ////////////////////////////////////////////////////////////////////////////
         /* Confirm Holofuel Instance Discovery in Container */
 ////////////////////////////////////////////////////////////////////////////
@@ -22,17 +35,16 @@ const TX_ZOME_NAME = 'transactions';
 //  for the remaining API calls using the Rust Conainter, RPC Websockets,
 //  and redux-hc-middleware..
 export const GetInfoInstancesAsyncAction = createHolochainAsyncAction<{}, Array<any>>('info', 'instances');
-
-export function get_info_instances () {
-  return {
-    type: 'GET_INFO_INSTANCES',
-    payload: [],
-    meta: {
-    	holochainAction: true,
-    	callString: 'info/instances'
-    }
-  };
-}
+// export function get_info_instances () {
+//   return {
+//     type: 'GET_INFO_INSTANCES',
+//     payload: [],
+//     meta: {
+//     	holochainAction: true,
+//     	callString: 'info/instances'
+//     }
+//   };
+// }
 
 ////////////////////////////////////////////////////////
             /* Reporting Transactions */

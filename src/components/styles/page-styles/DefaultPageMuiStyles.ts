@@ -348,7 +348,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
         color:'#eee',
       },
     },
-    customFormFocused: {},
+    customFormFocused: {
+      visiblility: "visable",
+      color:'#eee',
+    },
     customFormUnderline: {
       color: "#eee",
       borderBottomColor:"#e9ecef",
@@ -357,16 +360,20 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       },
     },
     customFormInput: {
+      visiblility:"hidden",
       color: "#eee",
       borderColor: "#e9ecef",
       '&$customFormFocused': {
+        visiblility: "visable",
         borderColor: '#eee',
       },
     },
     customFormOutlinedInput: {
+      visiblility:"hidden",
       color: "#eee",
       borderColor: "#e9ecef",
       '&$customFormFocused' : { // To trigger application to multiple props: '&$cssFocused $notchedOutline'
+        visiblility: "visable",
         borderColor: '#eee',
       },
     },

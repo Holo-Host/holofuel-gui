@@ -29,6 +29,9 @@ export interface StateProps {
   // Props that are set by mapStateToProps
   ledger_state: Ledger,
   list_of_instance_info: typeof instanceListData,
+  list_of_agents: Array<any>,
+  my_agent_string: string,
+  // my_agent_hash: string,
   list_of_transactions: typeof createMockApiData.list_of_request_transactions,
   list_of_requests: typeof createMockApiData.list_of_requests,
   list_of_proposals: typeof createMockApiData.list_of_proposals,
@@ -36,8 +39,12 @@ export interface StateProps {
   view_specific_proposal: typeof createMockApiData.get_proposal_kv_store[0]
 }
 export interface DispatchProps {
-    // Props that are set by mapDispatchToProps
+// Props that are set by mapDispatchToProps
+  // identifying calls :
     get_info_instances: () => void,
+    get_agent_list: () => void,
+    fetch_agent_string: () => void,
+  // holofuel specific calls :
     get_ledger_state: () => void,
     list_transactions: () => void,
     list_requests: () => void,
@@ -46,8 +53,10 @@ export interface DispatchProps {
     get_single_proposal: ({proposal_address}: any) => void,
     request_payment: ({request_tx_obj}: any) => void,
     propose_payment: ({propose_tx_obj}: any) => void,
-    receive_payment: ({payment_obj}: any) => void
+    receive_payment: ({payment_obj}: any) => void,
+
     // not yet avail:
+    // fetch_agent_hash: () => void,
     // pay_request: () => void,
     // decline_request: () => void,
     // reject_payment: () => void

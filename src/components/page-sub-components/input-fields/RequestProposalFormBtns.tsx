@@ -18,13 +18,17 @@ import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 
-type labelRef = HTMLElement | null | undefined;
+
+type StateKeyType = string | number | symbol | any;
+type LabelRef = HTMLElement | null | undefined;
+
 export interface OwnProps {
   // These are props the component has received from its parent component
   // e.g. what you write in <ExampleComponent ...>
   classes: any,
-  showTransferBar: (txType:any) => void,
   txType: string,
+  showTransferBar: (txType:any) => void,
+  invokeTx: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -35,6 +39,7 @@ export interface State {
   deadline: string,
   // requestIdReference: string
 }
+// type StateInput = Pick<State, StateKeyType>| null;
 
 class RequestProposalFormBtns extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -48,7 +53,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     };
   }
 
-  el: labelRef = null;
+  el: LabelRef = null;
   handleRef (el: any) { // tslint:disable-line
     this.el = ReactDOM.findDOMNode(el!) as HTMLLabelElement | null;
   }
@@ -57,28 +62,56 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     this.forceUpdate();
   }
 
-  handleChange = (name: string) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("selected name : ", name);
-    console.log("selected event : ", event);
+  handleChange = (name: StateKeyType) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    // console.log("selected event : ", event);
+    // console.log("selected name : ", name);
+  //TODO: Find a typed solution that allows the following isntead of switch case:
+  // The non-ts way:
     // this.setState({
     //   [name]: event.target.value,
     // });
+    switch (name) {
+      case 'recipient':
+        this.setState({
+          recipient: event.target.value,
+        });
+        break;
+
+      case 'amount':
+        this.setState({
+          amount: event.target.value,
+        });
+        break;
+
+      case 'notes':
+        this.setState({
+          notes: event.target.value,
+        });
+        break;
+
+      case 'deadline':
+        this.setState({
+          deadline: event.target.value,
+        });
+        break;
+
+      default:
+        return "";
+    }
   };
 
   handleMakePayment = () => {
     const { recipient, amount, deadline, notes } = this.state; // requestIdReference
-    const propose_tx_obj: ProposalActionParam = {
+    const tx_obj: ProposalActionParam = {
       to: recipient,// this will be the payment requestor's AGENT_ADDRESS
       amount,
       notes,
       deadline,
       // request?: requestIdReference
     }
-    console.log("calling : propose_payment >> ");
-    console.log("propose_tx_obj : ", propose_tx_obj);
-
-    // make propose_payment API call
-    // this.props.propose_payment({propose_tx_obj});
+    console.log("propose_tx_obj : ", tx_obj);
+    // Now send obj to parent component for API invocation :
+    this.props.invokeTx({tx_obj});
   };
 
   public render() {
@@ -146,20 +179,23 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
               <FormControl className={classes.formControl} variant="outlined" fullWidth={fullWidth}>
                 <InputLabel
                   htmlFor="deadline-input"
+                  classes={{
+                     root: classes.root,
+                     input: classes.customFormInput,
+                     focused: classes.customFormFocused,
+                   }}
                 >
-                  Deadline
+                  {/* Transaction Deadline */}
                 </InputLabel>
-                <OutlinedInput
+                <Input
                   id="deadline-input"
                   type="date"
                   value={this.state.deadline}
                   onChange={this.handleChange('deadline')}
-                  labelWidth={this.el ? this.el.offsetWidth : 0}
+                  aria-describedby="recipient-input-text"
                   classes={{
-                    root: classes.root,
-                    input: classes.customFormOutlinedInput,
-                    focused: classes.customFormFocused
-                 }}
+                    underline: classes.customFormUnderline
+                  }}
                 />
                 <FormHelperText id="deadline-input">Type in the transaction cut-off date</FormHelperText>
               </FormControl>
@@ -169,8 +205,13 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
               <FormControl className={classes.formControl} variant="outlined" fullWidth={fullWidth}>
                 <InputLabel
                   htmlFor="notes-input"
+                  classes={{
+                     root: classes.root,
+                     input: classes.customFormInput,
+                     focused: classes.customFormFocused,
+                   }}
                 >
-                  Notes
+                  Transaction Notes
                 </InputLabel>
                 <OutlinedInput
                   id="notes-input"
@@ -178,7 +219,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                   rows="4"
                   value={this.state.notes}
                   onChange={this.handleChange('notes')}
-                  labelWidth={this.el ? this.el.offsetWidth : 0}
+                  labelWidth={this.el ? this.el.offsetWidth : 3}
                   classes={{
                     root: classes.root,
                     input: classes.customFormOutlinedInput,
@@ -225,7 +266,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                 <OutlinedButton
                   text="Cancel"
                   color="primary"
-                  link="/holofuelsummary" 
+                  link="/holofuelsummary"
                   showTransferBar={this.props.showTransferBar}
                   fnName=""
                 />

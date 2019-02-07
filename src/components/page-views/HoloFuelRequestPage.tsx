@@ -17,9 +17,9 @@ import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
-  showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
   txType: string,
+  showTransferBar: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
@@ -43,8 +43,15 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
     // set the this.state.agentHash value  !!!!
   }
 
+  makeRequest = (txInfoObj: any) => {
+    console.log("txInfo for Proposal Call : ", txInfoObj);
+    // make make_payment API call
+    this.props.request_payment({txInfoObj});  // send as JSON
+  }
+
+
   public render () {
-    console.log('Props in HoloFuelRequestPage:', this.props);
+    console.log('HoloFuelRequestPage PROPS upon componentDidMount:', this.props);
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
 
@@ -77,7 +84,8 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
           Request Funds
        </Typography>
 
-        <RequestProposalFormBtns {...newProps} txType={this.props.txType} />
+        <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeTx={this.makeRequest} />
+        <hr className={classes.horizontalLine}/>
 
         { transferBtnBar ?
           <Portal>

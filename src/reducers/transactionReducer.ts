@@ -10,10 +10,17 @@ const DNA_INSTANCE = 'holofuel_pagination.hcpkg instance';
 const TX_ZOME_NAME = 'transactions';
 const TX_BATCH_VIEW_AMOUNT = 50;
 
+const CONTAINER_TESTER_AGENT_HASH = 'HoloTester2-----------------------------------------------------------------------AAAGy4WW9e';
 
 // readonly (- permissioned) keyword causes compiler to error if one attempts to mutate the state
 export type State = {
+// global identifiers :
   list_of_instance_info: Array<any>,
+  list_of_agents: Array<any>,
+  my_agent_string: string,
+  my_agent_hash: typeof CONTAINER_TESTER_AGENT_HASH,
+
+// holofuel specific states :
   ledger_state: Ledger,
   list_of_transactions: ListTransactionsResult,
   list_of_requests: Array<Address>,
@@ -27,6 +34,9 @@ export type OriginalState = State | undefined;
 
 export const INITIAL_STATE: State = {
   list_of_instance_info: [],
+  list_of_agents: [],
+  my_agent_string: '',
+  my_agent_hash: CONTAINER_TESTER_AGENT_HASH,
   ledger_state: {
     balance: null,
     credit: null,
@@ -110,15 +120,35 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
     // }
 
 ////////////////////////////////////////////////////////////////////////////
-          /* Confirm Holofuel Instance Discovery in Container */
+          /* Confirm GLobal App Constants from Container*/
 ////////////////////////////////////////////////////////////////////////////
   // GET_INFO_INSTANCE
+    // Confirm Holofuel Instance Discovery in Container
     case 'info/instances_SUCCESS': {
       console.log('GET_INFO_INSTANCES_SUCCESS payload', payload);
       // const list_of_installed_instances = JSON.parse(payload);
       // console.log("Parsed REDUCER VERSION OF >>>> info_instances <<<<<", list_of_installed_instances);
       return { ...state, list_of_instance_info : payload };
     }
+
+  // GET_INFO_INSTANCE
+    // Confirm Holofuel Instance Discovery in Container
+    case 'admin/agent/list_SUCCESS': {
+      console.log('GET_AGENT_LIST_SUCCESS payload', payload);;
+      return { ...state, list_of_agents : payload };
+    }
+
+    // FETCH_AGENT_STRING
+    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_SUCCESS`: {
+      console.log('FETCH_AGENT_STRING_SUCCESS payload', payload);
+      return { ...state, my_agent_hash : payload };
+    }
+
+  // FETCH_AGENT_HASH
+    // case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_hash_SUCCESS`: {
+    //   console.log('FETCH_AGENT_HASH_SUCCESS payload', payload);
+    //  return { ...state, my_agent_string : payload };
+    // }
 
 ////////////////////////////////////////////////////////
           /* Reporting Container Transactions */

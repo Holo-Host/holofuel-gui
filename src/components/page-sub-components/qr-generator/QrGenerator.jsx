@@ -16,7 +16,6 @@ class QrGenerator extends React.Component{
   };
 
   componentDidMount () {
-    console.log("PROPS : ", this.props);
     this.generateQR(this.props.agentHash);
   }
 
@@ -33,7 +32,7 @@ class QrGenerator extends React.Component{
   render () {
     const { qrPng } = this.state;
     const { classes } = this.props;
-    console.log('Props in QrGenerator:', this.props);
+    // console.log('Props in QrGenerator:', this.props);
 
     return (
       <div className={classes.QrCodeContainer}>

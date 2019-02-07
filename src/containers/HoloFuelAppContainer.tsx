@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 // actions, reducers, & utils imports :
 import {
 GetInfoInstancesAsyncAction,
+GetAgentListAsyncAction,
+FetchAgentStringAsyncAction,
+// FetchAgentHashAsyncAction,
 TransactionListAsyncAction,
 LedgerStateAsyncAction,
 ListRequestsAsyncAction,
@@ -44,7 +47,12 @@ class HoloFuelAppContainer extends React.Component<Props> {
 const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   // console.log("transactionReducer", transactionReducer);
   return {
+// global identifiers :
   list_of_instance_info: transactionReducer.list_of_instance_info,
+  list_of_agents: transactionReducer.list_of_agents,
+  my_agent_string: transactionReducer.my_agent_string,
+  // my_agent_hash: transactionReducer.my_agent_hash,
+// holofuel specific states :
   ledger_state: transactionReducer.ledger_state,
   list_of_transactions: transactionReducer.list_of_transactions,
   list_of_requests: transactionReducer.list_of_requests,
@@ -60,6 +68,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   // console.log("TransactionListAsyncAction", TransactionListAsyncAction);
   return {
       get_info_instances : () => {console.log("dispatching get_info_instances"); dispatch(GetInfoInstancesAsyncAction.create([]))},
+      get_agent_list : () => {console.log("dispatching get_agent_list"); dispatch(GetAgentListAsyncAction.create([]))},
+      fetch_agent_string: () => {console.log("dispatching fetch_agent_string"); dispatch(FetchAgentStringAsyncAction.create([]))},
+      // fetch_agent_hash: () => {console.log("dispatching fetch_agent_hash"); dispatch(FetchAgentHashAsyncAction.create([]))},
 
   // TRANSACTION STATES
       get_ledger_state : () => {console.log("dispatching get_ledger_state"); dispatch(LedgerStateAsyncAction.create({}))},

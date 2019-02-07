@@ -93,6 +93,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   public render() {
     const { classes } = this.props;
     const gutterBottom : boolean = true;
+    const filterable : boolean = true;
 
     if (!this.props.list_of_transactions || this.props.list_of_transactions.length === 0){
       return <div/>
@@ -128,10 +129,15 @@ class SummaryTransactionTables extends React.Component<Props, State> {
         </Typography>
         <div className={classnames(classes.tableContainer)}>
           <ReactTable
-            defaultPageSize={10}
             className={classnames("-striped", "-highlight", classes.table)}
             data={pending_table_data}
             columns={ pending_table_columns }
+            defaultPageSize={pending_table_data!.length}
+            showPagination={false}
+            filterable={filterable}
+            defaultFilterMethod={(filter, row) =>
+              String(row[filter.id]) === filter.value
+            }
           />
         </div>
 
@@ -151,3 +157,4 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(SummaryTransactionTables);
+            // {/* defaultPageSize={10} */}
