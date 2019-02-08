@@ -7,9 +7,9 @@ import DayPickerInput from 'react-day-picker/DayPickerInput';
 import 'react-day-picker/lib/style.css';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
-import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 import Typography from '@material-ui/core/Typography';
 // local imports
+import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 import DropDownInputFilter from '../input-fields/DropDownInputFilter';
 // import DialogFilterInput from '../input-fields/DialogFilterInput';
 // import { get_current_datetime } from '../../utils/global-helper-functions';
@@ -53,13 +53,20 @@ class DayTimePicker extends React.Component {
      const { classes } = this.props;
      const { startDate, endDate } = this.state;
      const modifiers = { start: startDate, end: endDate };
-
      const gutterBottom : boolean = true;
+
+     const txStatesdropDownHeader : string = "Transactions by Type";
+     const txStatesDropDownList : Array<any> = [
+       {name: 'all'},
+       {name: 'requests'},
+       {name: 'proposals'},
+       {name: 'rejected'}
+     ];
 
      return (
       <div className={classnames(classes.datetimeinputdiv,"InputFromTo")}>
         <div>
-          <DropDownInputFilter />
+          <DropDownInputFilter dropdownListData={txStatesDropDownList} dropDownHeader={txStatesdropDownHeader} />
         </div>
 
         <Typography className={classes.filterTextTitle} variant="subheading" gutterBottom={gutterBottom} component="h4" >
@@ -67,7 +74,7 @@ class DayTimePicker extends React.Component {
         </Typography>
         <DayPickerInput
          onDayChange={this.handleStartDateChange}
-         className={classes.dateInput}
+         className={classnames(classes.settingsInput, classes.dateInput)}
          value={startDate}
          placeholder="From"
          format="LL"
@@ -86,7 +93,7 @@ class DayTimePicker extends React.Component {
         <span className="InputFromTo-to">
          <DayPickerInput
            onDayChange={this.handleEndDateChange}
-           className={classes.dateInput}
+           className={classnames(classes.settingsInput, classes.dateInput)}
            ref={el => (this.endDate = el)}
            value={endDate}
            placeholder="Until"

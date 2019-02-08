@@ -14,29 +14,44 @@ export type Props = OwnProps & StateProps & DispatchProps;
 export interface State { /* The components optional internal state */ };
 
 class Jdenticon extends React.Component<Props, State> {
-  el: any = null
-
-  componentDidUpdate() {
+  private el = null
+  public componentDidUpdate() {
     (window as any).jdenticon.update(this.el)
   }
 
-  componentDidMount() {
+  public componentDidMount() {
     (window as any).jdenticon.update(this.el)
-  }
-
-  handleRef (el: any) { // tslint:disable-line
-    this.el = el
   }
 
   public render () {
-    const { hash } = this.props; // style ===> (..if wish to concat styles with parent styles)
+    const { hash } = this.props
     return <svg
-      { ...this.props }
-      style={{verticalAlign: 'middle', maxWidth:'100%'}} // style={...styles} style ===> (..if wish to concat styles with parent styles)
-      ref={(el) => this.handleRef(el)} // tslint:disable-line
+      {...this.props}
+      style={{ verticalAlign: 'middle' }}
+      ref={el => this.handleRef(el)}
+      width="105px"
+      height="105px"
       data-jdenticon-value={hash}
       />
+  }
+
+  private handleRef (el: any) {
+    this.el = el
   }
 }
 
 export default withStyles(styles)(Jdenticon);
+
+// When wish to merge style with parent inline style &/ have
+//   parent dynamically inform child of size, use sytle and size in props as shown below. :
+// public render () {
+//   const {hash, size, style} = this.props
+//   return <svg
+//     {...this.props}
+//     style={{verticalAlign: 'middle', ...style}}
+//     ref={el => this.handleRef(el)}
+//     width={size}
+//     height={size}
+//     data-jdenticon-value={hash}
+//     />
+// }

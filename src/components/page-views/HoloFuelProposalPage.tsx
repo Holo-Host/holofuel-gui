@@ -25,18 +25,14 @@ export interface OwnProps {
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
 // The components optional internal state
-  agentHash: string,
   message: string
 }
-
-const EXAMPLE_AGENT_HASH = '65ra8a76asfT0KAafFL5eASUasd9847aaR89F'
 
 class HoloFuelTransferFormPage extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
 
     this.state = {
-      agentHash: EXAMPLE_AGENT_HASH,
       message: ""
     }
   };
@@ -92,7 +88,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
       <div>
         <div className={classes.jumbotronImg}>
           <h4 className={classes.h4}> Scan QR Code</h4>
-          <QrGenerator agentHash={this.state.agentHash}/>
+          <QrGenerator agentHash={this.props.my_agent_hash}/>
         </div>
 
         <hr className={classes.horizontalLine}/>
@@ -101,7 +97,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
        </Typography>
 
         <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeTx={this.sendProposal} />
-        <hr className={classes.horizontalLine}/>
+        <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>
 
       {/* Toggle Transaction Sending */}
         { transferBtnBar ?

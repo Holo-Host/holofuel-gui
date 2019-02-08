@@ -3,7 +3,6 @@ import classnames from 'classnames';
 // import { QRCode, ErrorCorrectLevel, QRNumber, QRAlphaNum, QR8BitByte, QRKanji } from 'qrcode-generator-ts/js';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
-import styles from '../styles/page-styles/DefaultPageMuiStyles'
 import Portal from '@material-ui/core/Portal';
 import Slide from '@material-ui/core/Slide';
 import Typography from '@material-ui/core/Typography';
@@ -12,6 +11,7 @@ import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterCon
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
 import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
+import styles from '../styles/page-styles/DefaultPageMuiStyles'
 
 
 export interface OwnProps {
@@ -22,20 +22,11 @@ export interface OwnProps {
   showTransferBar: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
-export interface State {
-// The components optional internal state
-  agentHash: string,
-}
-
-const EXAMPLE_AGENT_HASH = '65ra8a76asfT0KAafFL5eASUasd9847aaR89F'
+export interface State {}
 
 class HoloFuelRequestPage extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
-
-    this.state = {
-      agentHash: EXAMPLE_AGENT_HASH,
-    }
   };
 
   componentDidMount () {
@@ -76,7 +67,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
       <div>
         <div className={classes.jumbotronImg}>
           <h4 className={classes.h4}> Scan QR Code</h4>
-          <QrGenerator agentHash={this.state.agentHash}/>
+          <QrGenerator agentHash={this.props.my_agent_hash}/>
         </div>
 
         <hr className={classes.horizontalLine}/>
@@ -85,7 +76,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
        </Typography>
 
         <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeTx={this.makeRequest} />
-        <hr className={classes.horizontalLine}/>
+        <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>
 
         { transferBtnBar ?
           <Portal>

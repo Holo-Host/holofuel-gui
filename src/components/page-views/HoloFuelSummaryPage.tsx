@@ -31,7 +31,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     super(props);
   };
 
-  componentDidMount () {
+  public componentDidMount () {
     console.log("PROPS : ", this.props);
   }
 
@@ -45,10 +45,10 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
           <div className={classes.jumbotron}>
             <h3 className={classes.h3}>Current Balance</h3>
             <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
-              {this.props.ledger_state.balance} + 200 HF
+              {this.props.ledger_state.balance ? `${this.props.ledger_state.balance} HF` : `Pending...`}
             </Typography>
             <hr style={{color:"#0e094b"}} />
-            <h3 className={classes.h3}>Credit limit : 80 HF {this.props.ledger_state.credit} </h3>
+            <h3 className={classes.h3}>Credit limit : {this.props.ledger_state.credit ? `${this.props.ledger_state.credit} HF`: `N/A`} </h3>
           </div>
 
           <div>

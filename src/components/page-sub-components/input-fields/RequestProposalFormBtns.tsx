@@ -16,8 +16,7 @@ import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouter
 import { ProposalActionParam } from '../../../utils/types'; //  RequestActionParam, Ledger, ListTransactionsResult , DateTimeString, Address
 import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
-
-
+// import Memo from '../memo/Memo';
 
 type StateKeyType = string | number | symbol | any;
 type LabelRef = HTMLElement | null | undefined;
@@ -122,7 +121,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     const { classes, txType } = this.props;
     return (
       <div>
-        <div className={classnames(classes.requestwrapper, classes.root)}>
+        <div className={classnames(classes.txWrapper, classes.root)}>
           <ul className={classes.flexContainer}>
             <li className={classes.flexItem}>
               <FormControl className={classes.formControl} fullWidth={fullWidth}>
@@ -200,7 +199,11 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                 <FormHelperText id="deadline-input">Type in the transaction cut-off date</FormHelperText>
               </FormControl>
             </li>
+           {/* </ul>
+         </div>
 
+          <div className={classnames(classes.txWrapper, classes.root)}>
+            <ul className={classes.flexContainer}> */}
             <li className={classes.flexItem}>
               <FormControl className={classes.formControl} variant="outlined" fullWidth={fullWidth}>
                 <InputLabel

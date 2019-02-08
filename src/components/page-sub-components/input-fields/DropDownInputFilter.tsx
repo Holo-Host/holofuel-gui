@@ -10,50 +10,44 @@ import TextField from '@material-ui/core/TextField';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
-// import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
+  dropDownHeader: string,
+  dropdownListData: Array<any>,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
 // The components optional internal state
-  txState: string
+  dataItem: string
 }
-
-const txStates = [
-  {name: 'all'},
-  {name: 'requests'},
-  {name: 'proposals'},
-  {name: 'rejected'}
-]
 
 class DropDownInputFilter extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
     this.state = {
-      txState: '',
+      dataItem: '',
     };
   };
 
   handleChange = (name: any) => (event: any) => {
     console.log("NAME IN DROPDOWN BTN: ", event.target.value);
-    let txState : string = event.target.value;
-    this.setState({ txState });
+    let dataItem : string = event.target.value;
+    this.setState({ dataItem });
     // this.setState({ [name]: Number(event.target.value) });
   };
 
   public render() {
     console.log("STATE IN DROPDOWN BTN: ", this.state);
-    const { classes } = this.props;
+    const { classes, dropdownListData, dropDownHeader } = this.props;
     const gutterBottom : boolean = true;
     const select : boolean = true;
 
     return (
       <FormControl variant="outlined" className={classes.filterFormControl}>
         <Typography className={classes.filterTextTitle} variant="subheading" gutterBottom={gutterBottom} component="h4" >
-          Filter Transactions by Type
+          Filter { dropDownHeader }
         </Typography>
         <TextField
           id="tx-state"
@@ -62,8 +56,8 @@ class DropDownInputFilter extends React.Component<Props, State> {
           className={classnames(classes.margin, classes.selectFitlerInput)}
           label="Transaction State"
           aria-label="tx-state"
-          value={this.state.txState}
-          onChange={this.handleChange("txState")}
+          value={this.state.dataItem}
+          onChange={this.handleChange("dataItem")}
           SelectProps={{
               MenuProps: {
                 className: classes.selectFitlerInput,
@@ -73,9 +67,9 @@ class DropDownInputFilter extends React.Component<Props, State> {
             variant="outlined"
             style={{color: ' #799ab6', borderColor:' #799ab6'}}
          >
-            {txStates.map(txType => (
-              <MenuItem key={txType.name + [txType]} value={txType.name}>
-                {txType.name}
+            {dropdownListData.map(dataItem => (
+              <MenuItem key={dataItem.name + [dataItem]} value={dataItem.name}>
+                {dataItem.name}
               </MenuItem>
             ))}
          </TextField>

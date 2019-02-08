@@ -24,7 +24,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       zIndex: 2
     },
     bottomAppBar: {
-      top: '90vh',
+      top: '84vh',
+      position: 'fixed',
+      bottom: 0,
       backgroundColor: '#0e3658',
       zIndex: 2
     },
@@ -55,6 +57,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       color: '#0e094b', // 446164
       fontSize: 20,
       fontWeight: 300,
+      marginBottom: 15,
       margin:0
     },
     h4: {
@@ -94,6 +97,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       color: '#d8dee3', // color : #d8dee3, // #909fb1 // rgba(0, 0, 0, 0.54)
       fontWeight: 400,
       fontSize: '2.125rem'
+    },
+    profileHeader:{
+      margin: 25
     },
     tableContainer: {
       display: 'block',
@@ -154,7 +160,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       }
     },
     reducedJumbotron: {
-      width: '80%',
+      width: '30%',
       height: 70,
       diplay: 'block',
       boxSizing: 'border-box',
@@ -195,6 +201,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       margin: theme.spacing.unit,
       display: "inline",
       width: 'calc(100vw / 2.85)',
+      padding: 10,
       background: '#0e3658', // #05939a, #d8dee3
       border: '1px solid #799ab6', // #446164, #0e094b, #d8dee3
       "&:hover": {
@@ -203,12 +210,16 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
         text: '#07808b'
       }
     },
-    // tableButtonBar : {
-    //   //
-    // },
-    // buttonMenu : {
-    //   //
-    // },
+     expansionPanelHeading: {
+       fontSize: theme.typography.pxToRem(15),
+       fontWeight: theme.typography.fontWeightRegular,
+     },
+     expantionPanelWrapper: {
+       width: '100%',
+     },
+    extraPaddingButton: {
+      padding: 36,
+    },
     overlay: {
       position: 'fixed',
       display: 'none',
@@ -338,8 +349,11 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       padding: 15,
       marginTop: -20
     },
-    requestwrapper:{
-      marginBottom: 100
+    txBottomLineSpace:{
+      marginBottom: 110,
+    },
+    txWrapper:{
+      marginBottom: 30,
     },
     customFormLabel: {
       color:'#eee',
@@ -360,7 +374,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       },
     },
     customFormInput: {
-      visiblility:"hidden",
+      // visiblility:"hidden",
       color: "#eee",
       borderColor: "#e9ecef",
       '&$customFormFocused': {
@@ -377,6 +391,56 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
         borderColor: '#eee',
       },
     },
-});
+    settingsInput: {
+       borderRadius: 4,
+       position: 'relative',
+       backgroundColor: theme.palette.common.white,
+       border: '1px solid #ced4da',
+       fontSize: 16,
+       width: 'auto',
+       padding: '10px 12px',
+       transition: theme.transitions.create(['border-color', 'box-shadow']),
+       // Use the system font instead of the default Roboto font.
+       fontFamily: [
+         '-apple-system',
+         'BlinkMacSystemFont',
+         '"Segoe UI"',
+         'Roboto',
+         '"Helvetica Neue"',
+         'Arial',
+         'sans-serif',
+         '"Apple Color Emoji"',
+         '"Segoe UI Emoji"',
+         '"Segoe UI Symbol"',
+       ].join(','),
+       '&:focus': {
+         borderRadius: 4,
+         borderColor: '#80bdff',
+         boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+       },
+     },
+     settingsFormLabel: {
+       fontSize: 18,
+     },
+     smallButton: {
+       fontSize: '0.8125rem',
+       lineHeight: '1.125rem',
+       minWidth: '3.75rem',
+       padding: '0.3125rem 0.875rem',
+       border: '1 solid ##003087',
+       boxShadow: '0 0 0 0.0625rem #003087 inset',
+       background: 'transparent',
+       color: '#003087'
+     },
+     muiSimpleTableRoot: {
+       width: '100%',
+       marginTop: theme.spacing.unit * 3,
+       overflowX: 'auto',
+     },
+     muiSimpleTable:{
+        minWidth: '80%', // WAS 700 px
+     },
+   }
+);
 
 export default styles;

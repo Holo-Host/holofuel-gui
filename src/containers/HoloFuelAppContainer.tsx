@@ -51,7 +51,9 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   list_of_instance_info: transactionReducer.list_of_instance_info,
   list_of_agents: transactionReducer.list_of_agents,
   my_agent_string: transactionReducer.my_agent_string,
-  // my_agent_hash: transactionReducer.my_agent_hash,
+  // currently this is just using a hard-coded value that relates to the container.
+  my_agent_hash: transactionReducer.my_agent_hash,
+
 // holofuel specific states :
   ledger_state: transactionReducer.ledger_state,
   list_of_transactions: transactionReducer.list_of_transactions,

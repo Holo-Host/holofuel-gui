@@ -9,6 +9,7 @@ import Slide from '@material-ui/core/Slide';
 // local imports :
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
+// import MuiSimpleTable from '../page-sub-components/bottom-menu-bar/MuiSimpleTable';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
@@ -50,8 +51,10 @@ class HoloFuelTransactionDetaiPage extends React.Component<Props, State> {
 
       <div>
         <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
-          Payment Details
+          Transaction Details
         </Typography>
+
+        {/* <MuiSimpleTable/> */}
 
         { transferBtnBar ?
           <Portal>

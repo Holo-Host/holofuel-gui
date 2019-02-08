@@ -8,7 +8,7 @@ import "react-table/react-table.css";
 // Local Imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
-// import { dataRefactor, refactorBaseDna, refactorInstanceData } from "../../../utils/data-refactor";
+import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // MUI Imports:
 import { withStyles } from '@material-ui/core/styles';
@@ -55,25 +55,25 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     }
   }
 
-  componentDidMount = () => {
-    this.beginAppMontoring();
-    // this.props.fetch_state();
-  }
-
-  beginAppMontoring = () => {
-      console.log("PROPS : ", this.props);
-      // 1) Invoke GET_INFO_INSTANCES()
-      this.props.get_info_instances();
-
-      // 2) Invoke list_transactions() (a ZOME Call) :
-      // this.props.list_pending();
-
-      // 3) Invoke list_transactions(spender, transaction) (a ZOME Call) :
-      // this.props.request_payment(spender, transaction);
-
-      // 4) Invoke list_transactions() (a ZOME Call) :
-      this.props.list_transactions();
-  }
+  // componentDidMount = () => {
+  //   this.beginAppMontoring();
+  //   // this.props.fetch_state();
+  // }
+  //
+  // beginAppMontoring = () => {
+  //     console.log("PROPS : ", this.props);
+  //     // 1) Invoke GET_INFO_INSTANCES()
+  //     this.props.get_info_instances();
+  //
+  //     // 2) Invoke list_transactions() (a ZOME Call) :
+  //     // this.props.list_pending();
+  //
+  //     // 3) Invoke list_transactions(spender, transaction) (a ZOME Call) :
+  //     // this.props.request_payment(spender, transaction);
+  //
+  //     // 4) Invoke list_transactions() (a ZOME Call) :
+  //     this.props.list_transactions();
+  // }
 
   displayData = () => {
     console.log("this.state inside displayData", this.state);
@@ -96,7 +96,9 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     const filterable : boolean = true;
 
     if (!this.props.list_of_transactions || this.props.list_of_transactions.length === 0){
-      return <div/>
+      return <div>
+        <ErrorMessage />
+      </div>
     }
 
     const pending_table_data = this.displayData();
@@ -107,6 +109,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     console.log("table_columns: ", pending_table_columns);
 
     return (
+
+  // TODO: Look into integratng the infnite scroll with ReactTable...
     //   <div style="height:700px;overflow:auto;" ref={(ref) => this.scrollParentRef = ref}>
     //     <div>
     //         <InfiniteScroll
@@ -122,7 +126,9 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     //     </div>
     // </div>
 
-      ////////////////////////////////
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        // FYI: If expantion panel doesn't work... then use the HOC dropdowna dn reference the Row value provdied byt the SubComponent Values.       //
+      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       <div>
         <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h4" >
           Pending Transactions

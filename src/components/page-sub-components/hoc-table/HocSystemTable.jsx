@@ -50,7 +50,8 @@ export const advancedExpandTableHOC = TableComponent =>
     constructor(props) {
       super(props);
       this.state = {
-        expanded: {}
+        expanded: {},
+        selected: {},
       };
       this.toggleRowSubComponent = this.toggleRowSubComponent.bind(this);
       this.showRowSubComponent = this.showRowSubComponent.bind(this);
@@ -167,6 +168,25 @@ export const advancedExpandTableHOC = TableComponent =>
       };
     }
 
+    getTrProps=(state, rowInfo) => {
+      if (rowInfo && rowInfo.row && rowInfo !== undefined) {
+        return {
+          onClick: (e) => {
+            this.setState({
+              selected: rowInfo.index
+            })
+          },
+          style: {
+            background: rowInfo.index === this.state.selected ? '#00afec' : '#eee',
+            color: rowInfo.index === this.state.selected ? '#eee' : 'black'
+          }
+        }
+      }
+      else {
+        return {}
+      }
+    }
+
     getWrappedInstance() {
       if (!this.wrappedInstance)
         console.warn("AdvancedExpandTable - No wrapped instance");
@@ -190,6 +210,7 @@ export const advancedExpandTableHOC = TableComponent =>
           columns={wrappedColumns}
           expanded={this.state.expanded}
           getTdProps={this.getTdProps}
+          getTrProps={this.getTrProps}
           SubComponent={WrappedSubComponent}
           TdComponent={AdvancedExpandTable.TdComponent}
         />

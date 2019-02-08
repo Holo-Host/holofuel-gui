@@ -35,7 +35,7 @@ export type OriginalState = State | undefined;
 export const INITIAL_STATE: State = {
   list_of_instance_info: [],
   list_of_agents: [],
-  my_agent_string: '',
+  my_agent_string: 'POISIN IVY',
   my_agent_hash: CONTAINER_TESTER_AGENT_HASH,
   ledger_state: {
     balance: null,

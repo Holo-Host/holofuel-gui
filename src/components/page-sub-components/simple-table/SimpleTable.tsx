@@ -1,22 +1,11 @@
 import * as React from 'react';
-// custom stylesheet :
-import '../../styles/page-styles/scaffold-styles.css';
+// local imports
+import '../../styles/page-styles/scaffold-styles.css'; // custom stylesheet :
+import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 
-export interface OwnProps {
-  // These are props the component has received from its parent component
-  // e.g. what you write in <ExampleComponent ...>
-  data: any
-}
-export interface StateProps {
-// Props that are set by mapStateToProps
-}
-export interface DispatchProps {
-// Props that are set by mapDispatchToProps
-}
-export type Props = OwnProps & StateProps;
-
+export interface OwnProps { data: any }
+export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
-// The components optional internal state
   header: Array<any>
 }
 
