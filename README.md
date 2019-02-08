@@ -11,7 +11,8 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 * [HC-Admin UI ADR](https://hackmd.io/t7Y0H5eNQtycrsNyVRe3Ww?both)
 
 ---
-## How to run?
+
+## How to run :
 ### Development:
 `npm install`
 `npm run dev`
