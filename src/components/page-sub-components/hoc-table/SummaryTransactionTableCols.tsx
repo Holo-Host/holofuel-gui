@@ -2,25 +2,20 @@
 import * as React from 'react';
 import * as matchSorter from 'match-sorter';
 import TransactionDetailsButton from "../transaction-details-button/TransactionDetailsButton";
-import ExpansionPanel from '../expansion-panel/ExpansionPanel';
 
 /* Transaction Table Headers */
 const pending_transaction_table_columns = (props: any, state: any) => {
   // console.log("Table Columns Props", props);
   // console.log("Table Columns State", state);
-
-  const { ...newProps } = props;
-
   const table_columns = [{
     Header: 'Origin Date',
     accessor: 'transaction_date',
       filterMethod: (filter:any, row:any) =>
         row[filter.id].startsWith(filter.value) &&
         row[filter.id].endsWith(filter.value),
-
       Cell: (row: any) => (
-        <div style={{ padding: '2px' }}>
-          <ExpansionPanel rowValue={row.value} {...newProps} />
+        <div style={{ padding: '5px' }}>
+        { row.value }
         </div>
       )
     }, {

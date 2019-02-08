@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
-import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
+import FABbutton from '../page-sub-components/input-fields/FABbutton';
 import InformativeModal from '../page-sub-components/modal/InformativeModal';
 
 
@@ -73,23 +73,20 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
         <div className={classes.flexItem}>
           <h3 className={classes.h3}>Current Balance</h3>
           <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
-            {this.props.ledger_state.balance} + 200 HF
+            {this.props.ledger_state.balance ? `${this.props.ledger_state.balance} HF` : `Pending...`}
           </Typography>
         </div>
         <div className={classes.verticalLine}/>
         <div className={classes.flexItem}>
           <h3 className={classes.h3}>Credit limit</h3>
           <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
-            {this.props.ledger_state.credit}  80 HF
+              {this.props.ledger_state.credit ? `${this.props.ledger_state.credit} HF`: `N/A`}
           </Typography>
         </div>
       </div>
 
       <div>
-        <div className={classes.jumbotronImg}>
-          <h4 className={classes.h4}> Scan QR Code</h4>
-          <QrGenerator agentHash={this.props.my_agent_hash}/>
-        </div>
+        <FABbutton agentHash={this.props.my_agent_hash} {...newProps}/>
 
         <hr className={classes.horizontalLine}/>
         <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >

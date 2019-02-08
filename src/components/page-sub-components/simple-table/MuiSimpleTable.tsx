@@ -23,6 +23,7 @@ function createData(originDate: string, completionDate: string, counterparty:any
 
 // const CURRENT_ROW_DATA => REPLACE with the avail ROW data/info from within the Row SubComponent;
 const currentRow = createData("origin_date", "completion_date", "counterparty", "adjustment", "notes");
+// const currentRow = createData(this.props.currentRowData);
 
 function SimpleTable(props: any) {
   const { classes } = props;

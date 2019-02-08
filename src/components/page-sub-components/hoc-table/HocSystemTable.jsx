@@ -4,7 +4,7 @@ import set from "lodash.set";
 import get from "lodash.get";
 
 /*
-  AvancedExpandTableHOC for ReactTable
+  This file is s the AvancedExpandTableHOC for ReactTable
 
   HOC which allows any Cell in the row to toggle the row's
   SubComponent. Also allows the SubComponent to toggle itself.
@@ -177,7 +177,7 @@ export const advancedExpandTableHOC = TableComponent =>
             })
           },
           style: {
-            background: rowInfo.index === this.state.selected ? '#00afec' : '#eee',
+            background: rowInfo.index === this.state.selected ? '#3a426d8a' : '#eee',
             color: rowInfo.index === this.state.selected ? '#eee' : 'black'
           }
         }

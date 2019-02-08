@@ -79,32 +79,31 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     }
   };
 
+  
+
   componentDidMount () {
     console.log("PROPS : ", this.props);
     // 1) Invoke GET_INFO_INSTANCES()
+    //  ==> test out container connection and
+    //       ensure holofuel is a running instance...
     this.props.get_info_instances();
 
-    // 2) Invoke list_transactions() (a ZOME Call) :
-    this.props.list_transactions();
+    // 2) Invoke fetch_agent_string() (a ZOME Call) :
+    //  ==> discover and/or verify Agent Hash and
+    //      Agent String Identities...
+    this.props.fetch_agent_string();
+    // this.props.fetch_agent_hash();
 
     // 3) Run through original test calls...
     this.makeTestCalls();
   }
 
   makeTestCalls() {
-    // Invoke GET_INFO_INSTANCES()
-    console.log("calling : get_info_instances >> inside handleClick... >> ");
-    this.props.get_info_instances();
-    // Invoke list_transactions() (a ZOME Call) :
-    console.log("calling : list_transactions >>  inside handleClick... >> ");
-    this.props.list_transactions();
+    // // Invoke GET_INFO_INSTANCES()
+    // console.log("calling : get_info_instances >> inside handleClick... >> ");
+    // this.props.get_info_instances();
 
-  ////////// NEW CALLS TX CALLS //////////////
-  // Agent ID String Call :
-  console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
-  this.props.get_ledger_state();
-
-  ////////// NEW CALLS TX CALLS //////////////
+    ////////// NEW CALLS TX CALLS //////////////
     // Invoke get_ledger_state() (a ZOME Call) :
     console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
     this.props.get_ledger_state();
@@ -129,6 +128,9 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     const proposal_address: any = createMockApiData.get_proposal_kv_store[0];
     this.props.get_single_proposal({proposal_address});
 
+///////////////////////////////////////////////////////////////////////////////////
+  //                   MAKE TRANSACTIONS...                                     //
+///////////////////////////////////////////////////////////////////////////////////
     // Invoke request_payment() (a ZOME Call) :
     // const currentDateTime: DateTimeString | undefined = get_current_datetime();
     const request_tx_obj : RequestActionParam = {
@@ -141,9 +143,16 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     console.log("calling : request_payment >> ", this.props.request_payment);
     this.props.request_payment({request_tx_obj});
 
+///////////////////////////////////////////////////////////////////////////////////
+//// CHECK FOR Request Transaction Returned...
+    // Invoke list_transactions() (a ZOME Call) :
+    console.log("calling : list_transactions >>  inside handleClick... >> ");
+    this.props.list_transactions();
+///////////////////////////////////////////////////////////////////////////////////
+
     // Invoke propose_payment() (a ZOME Call) :
     const propose_tx_obj: ProposalActionParam = {
-      to: "Poisin Ivy",// this will be the payment requestor's AGENT_ADDRESS
+      to: "Poison Ivy",// this will be the payment requestor's AGENT_ADDRESS
       amount:"0.0000000569066456676 HF",
       notes: "testing out the propose_payment api call...",
       // deadline: currentDateTime // ,
@@ -173,6 +182,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     console.log("calling : receive_payment >> ", this.props.receive_payment);
     this.props.receive_payment({payment_obj});
   }
+
+
 
   toggleTransferBtnBar = (txType: any) => {
     console.log("TRANSACTION TYPE arguments: ",txType)

@@ -3,11 +3,12 @@ import * as React from 'react';
 import classnames from 'classnames';
 // ReactTable Imports
 import ReactTable from "react-table";
-// import { advancedExpandTableHOC } from "./HocSystemTable";
+import { advancedExpandTableHOC } from "./HocSystemTable";
 import "react-table/react-table.css";
 // Local Imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
+import SimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // MUI Imports:
@@ -15,28 +16,33 @@ import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 export interface OwnProps {
-  // These are props the component has received from its parent component
-  // e.g. what you write in <ExampleComponent ...>
   classes: any,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
 export interface State {
-  data: {} | null,
+  // txEndDate: string,
+  // txStartDate: string,
+  // txViewType: string,
   row: String,
   filter: any,
+  data: {} | null,
   prevProps: any
 }
 
-// const AdvancedExpandReactTable = advancedExpandTableHOC(ReactTable);
+// For the REACT TABLE Exapandable Version: Advanced HOC
+const AdvancedExpandReactTable = advancedExpandTableHOC(ReactTable);
 
 class SummaryTransactionTables extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      data: {},
+      // txEndDate: "",
+      // txStartDate: "",
+      // txViewType: "",
       row: "",
       filter: null,
+      data: {},
       prevProps: {},
     };
   }
@@ -91,7 +97,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
 
   public render() {
-    const { classes } = this.props;
+    const { classes, ...newProps } = this.props;
     const gutterBottom : boolean = true;
     const filterable : boolean = true;
 
@@ -134,32 +140,65 @@ class SummaryTransactionTables extends React.Component<Props, State> {
           Pending Transactions
         </Typography>
         <div className={classnames(classes.tableContainer)}>
-          <ReactTable
+          <AdvancedExpandReactTable
             className={classnames("-striped", "-highlight", classes.table)}
-            data={pending_table_data}
-            columns={ pending_table_columns }
-            defaultPageSize={pending_table_data!.length}
             showPagination={false}
+            defaultPageSize={pending_table_data!.length}
             filterable={filterable}
-            defaultFilterMethod={(filter, row) =>
+            defaultFilterMethod={(filter:any, row:any) =>
               String(row[filter.id]) === filter.value
             }
-          />
-        </div>
+            data={pending_table_data}
+            columns={ pending_table_columns }
+            SubComponent={(row:any) => {
+              console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
+              {/* const addInstance = (custom_agent_id, custom_instance_id, interfaceforInstance) => {
+                console.log("<><><><><> customAgentId <><><<><>", custom_agent_id);
+                console.log("<><><><><> customInstanceId <><><<><>", custom_instance_id);
+                console.log("<><><><><> interfaceforInstance <><><<><>", interfaceforInstance);
 
-        <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
-          Processed Transactions
-        </Typography>
-        <div className={classnames(classes.tableContainer)}>
-          <ReactTable
-            defaultPageSize={10}
-            className={classnames("-striped", "-highlight", classes.table)}
-            data={processed_table_data}
-            columns={ processed_table_columns }
+                const { dna_id } = row.original;
+                const agent_id = custom_agent_id ? custom_agent_id : this.props.containerApiCalls.agent_list[0].id; // HC AGENT ID
+                const instance_id = custom_instance_id ?  custom_instance_id : (dna_id + agent_id);
+                const interface_id = interfaceforInstance;
+
+                this.props.add_agent_dna_instance({id, dna_id, agent_id}).then(res => {
+                  this.props.add_instance_to_interface({instance_id, interface_id});
+                })
+              } */}
+
+              return (
+                <div style={{ paddingTop: "2px", marginBottom:"8px" }}>
+                  <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h4" >
+                    Transaction Details
+                  </Typography>
+
+                  <div className={classes.flexContainer}>
+                    <SimpleTable classNames={classes.flexItem} {...newProps} />
+                  </div>
+
+                </div>
+              );
+            }}
           />
+
+          <br/>
+          <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
+            Processed Transactions
+          </Typography>
+          <div className={classnames(classes.tableContainer)}>
+            <AdvancedExpandReactTable
+              defaultPageSize={10}
+              className={classnames("-striped", "-highlight", classes.table)}
+              data={processed_table_data}
+              columns={ processed_table_columns }
+            />
+          </div>
+
         </div>
       </div>
-  )}
+    );
+  }
 }
 
 export default withStyles(styles)(SummaryTransactionTables);

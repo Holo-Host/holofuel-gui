@@ -57,8 +57,11 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       color: '#0e094b', // 446164
       fontSize: 20,
       fontWeight: 300,
-      marginBottom: 15,
+      marginBottom: 5,
       margin:0
+    },
+    h3ExtraBottomMargin: {
+      marginBottom: 15,
     },
     h4: {
       color: '#d8dee3',
@@ -92,7 +95,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       fontSize: 65
     },
     tableHeader: {
-      marginTop: 55,
+      marginTop: 30,
       textAlign: "center",
       color: '#d8dee3', // color : #d8dee3, // #909fb1 // rgba(0, 0, 0, 0.54)
       fontWeight: 400,
@@ -137,7 +140,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       display: 'block',
       boxSizing: 'border-box',
       padding: '1rem',
-      marginBottom: '2rem',
+      marginBottom: '3rem',
       backgroundColor: '#e9ecef',
       opacity: .9,
       border: '.3rem',
@@ -160,7 +163,8 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       }
     },
     reducedJumbotron: {
-      width: '30%',
+      minwidth: '30%',
+      maxWidth: '60%',
       height: 70,
       diplay: 'block',
       boxSizing: 'border-box',
@@ -193,7 +197,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       // height: 200,\
     },
     flexItem: {
-      padding: 10,
+      padding: 5,
       textAlign: 'center',
       // border: '3px solid rgba(0,0,0,.2)',
     },
@@ -268,6 +272,8 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     },
     filterTextTitle : {
       color: '#e9ecef',
+      marginTop: '11px',
+      marginBottom: '34px',
     },
     dialogContainer: {
       display: 'flex',
@@ -284,8 +290,14 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       // color: '#799ab6',
     },
     datetimeinputdiv : {
+      margin: '0 auto',
       marginTop: 15,
-      padding: 20,
+      padding: 15,
+      paddingBottom: 45,
+      border: '1px solid #e9ecef', //799ab6
+      borderRadius: 46,
+      maxWidth: '50%',
+      minWidth: '40%',
       // display: 'inline-flex',
     },
     dateInput: {
@@ -431,6 +443,20 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
        boxShadow: '0 0 0 0.0625rem #003087 inset',
        background: 'transparent',
        color: '#003087'
+     },
+     fab: {
+       margin: theme.spacing.unit,
+     },
+     extendedIcon: {
+       marginRight: theme.spacing.unit,
+     },
+     outlineBtn: {
+       padding: theme.spacing.unit,
+       margin: `${theme.spacing.unit}px 0`,
+       marginTop: 25,
+       background:'#2e4f6a', // alternative-color : #0e3658
+       border: '1px solid #e9ecef',
+       color: '#e9ecef'
      },
      muiSimpleTableRoot: {
        width: '100%',
