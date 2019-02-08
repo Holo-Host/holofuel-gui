@@ -21,9 +21,12 @@ export interface OwnProps {
 export type Props = OwnProps & StateProps & DispatchProps;
 
 export interface State {
-  data: {} | null,
+  // txEndDate: string,
+  // txStartDate: string,
+  // txViewType: string,
   row: String,
   filter: any,
+  data: {} | null,
   prevProps: any
 }
 
@@ -34,9 +37,12 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      data: {},
+      // txEndDate: "",
+      // txStartDate: "",
+      // txViewType: "",
       row: "",
       filter: null,
+      data: {},
       prevProps: {},
     };
   }
@@ -145,11 +151,12 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             data={pending_table_data}
             columns={ pending_table_columns }
             SubComponent={(row:any) => {
-              console.log("row out: ", row);
+              console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
               {/* const addInstance = (custom_agent_id, custom_instance_id, interfaceforInstance) => {
                 console.log("<><><><><> customAgentId <><><<><>", custom_agent_id);
                 console.log("<><><><><> customInstanceId <><><<><>", custom_instance_id);
                 console.log("<><><><><> interfaceforInstance <><><<><>", interfaceforInstance);
+
                 const { dna_id } = row.original;
                 const agent_id = custom_agent_id ? custom_agent_id : this.props.containerApiCalls.agent_list[0].id; // HC AGENT ID
                 const instance_id = custom_instance_id ?  custom_instance_id : (dna_id + agent_id);

@@ -125,7 +125,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
   // GET_INFO_INSTANCE
     // Confirm Holofuel Instance Discovery in Container
     case 'info/instances_SUCCESS': {
-      console.log('GET_INFO_INSTANCES_SUCCESS payload', payload);
+      // console.log('GET_INFO_INSTANCES_SUCCESS payload', payload);
       // const list_of_installed_instances = JSON.parse(payload);
       // console.log("Parsed REDUCER VERSION OF >>>> info_instances <<<<<", list_of_installed_instances);
       return { ...state, list_of_instance_info : payload };
@@ -134,7 +134,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
   // GET_INFO_INSTANCE
     // Confirm Holofuel Instance Discovery in Container
     case 'admin/agent/list_SUCCESS': {
-      console.log('GET_AGENT_LIST_SUCCESS payload', payload);;
+      // console.log('GET_AGENT_LIST_SUCCESS payload', payload);;
       return { ...state, list_of_agents : payload };
     }
 
@@ -156,39 +156,39 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 // View ledger snapshot / transaction history //
   // Call for GET_LEDGER_STATE ()
     case `${DNA_INSTANCE}/${TX_ZOME_NAME}/ledger_state_SUCCESS`: {
-      console.log('GET_LEDGER_STATE payload', payload);
+      // console.log('GET_LEDGER_STATE payload', payload);
       return { ...state, ledger_state : payload };
     }
 
     // LIST_OF_TRANSACTIONS
     case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_transactions_SUCCESS`: {
-      console.log('LIST_OF_TRANSACTIONS_SUCCESS state', payload);
+      // console.log('LIST_OF_TRANSACTIONS_SUCCESS state', payload);
       return { ...state, list_of_transactions : payload };
     }
 
 // View List of Transaction by Type (Request/Proposal) //
    // LIST_REQUESTS ()
    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_requests_SUCCESS`: {
-     console.log('LIST_REQUESTS_SUCCESS state', payload);
+     // console.log('LIST_REQUESTS_SUCCESS state', payload);
      return { ...state, list_of_requests : payload };
    }
 
    // LIST_PROPOSALS ()
    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_proposals_SUCCESS`: {
-     console.log('LIST_PROPOSALS_SUCCESS state', payload);
+     // console.log('LIST_PROPOSALS_SUCCESS state', payload);
      return { ...state, list_of_proposals : payload };
    }
 
 // View Specific Transaction
   // GET_SINGLE_REQUEST ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/get_request_SUCCESS`: {
-    console.log('GET_SINGLE_REQUEST_SUCCESS state', payload);
+    // console.log('GET_SINGLE_REQUEST_SUCCESS state', payload);
     return { ...state, view_specific_request : payload };
   }
 
   // GET_SINGLE_PROPOSAL ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/get_proposal_SUCCESS`: {
-    console.log('GET_SINGLE_PROPOSAL_SUCCESS state', payload);
+    // console.log('GET_SINGLE_PROPOSAL_SUCCESS state', payload);
     return { ...state, view_specific_proposal : payload };
   }
 
@@ -198,13 +198,13 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
   // Call for REQUEST_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/request_SUCCESS`: {
-      console.log('REQUEST_PAYMENT (REQEUST) payload', payload);
+      // console.log('REQUEST_PAYMENT (REQEUST) payload', payload);
       return { ...state };
     }
 
   // Call for PROPOSE_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/proposal_SUCCESS`: {
-      console.log('PROPOSE_PAYMENT (PROPOSAL) payload', payload);
+      // console.log('PROPOSE_PAYMENT (PROPOSAL) payload', payload);
       return { ...state };
     }
 
@@ -216,19 +216,19 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
   // Call for REJECT_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/reject_payment_SUCCESS`: {
-      console.log('REJECT_PAYMENT (REQEUST) payload', payload);
+      // console.log('REJECT_PAYMENT (REQEUST) payload', payload);
       return { ...state };
     }
 
   // Call for PAY_REQUEST ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/pay_request_SUCCESS`: {
-      console.log('PAY_REQUEST payload', payload);
+      // console.log('PAY_REQUEST payload', payload);
       return { ...state };
     }
 
   // Call for DECLINE_REQUEST ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/decline_request_SUCCESS`: {
-      console.log('DECLINE_REQUEST payload', payload);
+      // console.log('DECLINE_REQUEST payload', payload);
       return { ...state };
     }
 
