@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway:300,400,700&subset=latin-ext');
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:700');
+
+@keyframes holo-motion {
+  0%   { background-position: 0% 95%; }
+  50%  { background-position: 35% 19%; }
+  100% { background-position: 0% 95%; }
+}
+
+* {
+	font-family: 'Raleway', sans-serif;
+}
+
+body {
+  overflow-y: scroll;
+}
+
+body, html{
+	padding:0;
+	margin:0;
+	background: #4b6a7d; /* // 0e3658 */
+	/* background: -moz-linear-gradient(top, #fbfbfb 0%, #ededed 46%, #ededed 100%); */
+	/* background: -webkit-linear-gradient(top, #fbfbfb 0%, #ededed 46%, #ededed 100%); */
+	/* background: linear-gradient(to bottom, #fbfbfb 0%, #ededed 46%, #ededed 100%); */
+	text-align:center;
+}
+
+
+/*******************************************************
+              React-Table Custom styles
+*******************************************************/
+
+.MuiListItem-root-111 {
+  display: 'inline';
+  box-sizing: border-box;
+  margin: 0 auto;
+}
+
+.ReactTable .rt-table {
+  overflow: hidden;
+}
+
+
+/* The below is : to select/highlight an entire row on hover  */
+/* .ReactTable.-highlight .rt-tbody .rt-tr:not(.-padRow):hover {
+  background: rgba(0, 0, 0, 0.05)
+} */
+
+.ReactTable.-striped .rt-tr.-even {
+  background-color: #c3cdd6; /* #9eb2c3, #5c7388 */
+}
+
+.ReactTable.-striped .rt-tr.-odd {
+  background-color: #63779082; /* #9eb2c3, #5c7388 */
+}
+
+.ReactTable .rt-tr {
+  border: 1px solid #d8dee3;
+  border-radius: 4px;
+  margin: 3px;
+}
+
+.ReactTable .-pagination .-pageInfo {
+  margin: 5px -7px;
+}
+
+.ReactTable .-pagination .-btn {
+  color: #d8dee3;
+  display: inline;
+  width:86%;
+}
+
+.ReactTable .-pagination input,
+.ReactTable .-pagination select {
+  color: #4b6a7d;
+  background-color: #b9c3cb;
+  border: 2px solid #d8dee3;
+  border-radius: 4px;
+}
+
+/*******************************************************
+              Calendar Custom styles
+*******************************************************/
+.InputFromTo .DayPicker-Day--selected:not(.DayPicker-Day--start):not(.DayPicker-Day--end):not(.DayPicker-Day--outside) {
+  background-color: #f0f8ff !important;
+  color: #4a90e2;
+}
+.InputFromTo .DayPicker-Day {
+  border-radius: 0 !important;
+}
+.InputFromTo .DayPicker-Day--start {
+  border-top-left-radius: 50% !important;
+  border-bottom-left-radius: 50% !important;
+}
+.InputFromTo .DayPicker-Day--end {
+  border-top-right-radius: 50% !important;
+  border-bottom-right-radius: 50% !important;
+}
+.InputFromTo .DayPickerInput-Overlay {
+  width: 550px;
+}
+.InputFromTo-to .DayPickerInput-Overlay {
+  margin-left: -198px;
+}
