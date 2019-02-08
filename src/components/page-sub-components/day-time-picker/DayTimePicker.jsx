@@ -65,51 +65,52 @@ class DayTimePicker extends React.Component {
 
      return (
       <div className={classnames(classes.datetimeinputdiv,"InputFromTo")}>
-        <div>
+        <div className={classnames(classes.flexContainer, classes.flexItem)}>
           <DropDownInputFilter dropdownListData={txStatesDropDownList} dropDownHeader={txStatesdropDownHeader} />
+          <div className={classes.flexItem}>
+            <Typography className={classes.filterTextTitle} variant="subheading" gutterBottom={gutterBottom} component="h4" >
+              Filter Transactions by Day
+            </Typography>
+            <DayPickerInput
+             onDayChange={this.handleStartDateChange}
+             className={classnames(classes.settingsInput, classes.dateInput)}
+             value={startDate}
+             placeholder="From"
+             format="LL"
+             formatDate={formatDate}
+             parseDate={parseDate}
+             dayPickerProps={{
+               selectedDays: [startDate, { startDate, endDate }],
+               disabledDays: { after: endDate },
+               toMonth: endDate,
+               modifiers,
+               numberOfMonths: 2,
+               onDayClick: () => this.endDate.getInput().focus(),
+             }}
+            />
+            {' '}  {' '}
+            <span className="InputFromTo-to">
+             <DayPickerInput
+               onDayChange={this.handleEndDateChange}
+               className={classnames(classes.settingsInput, classes.dateInput)}
+               ref={el => (this.endDate = el)}
+               value={endDate}
+               placeholder="Until"
+               format="LL"
+               formatDate={formatDate}
+               parseDate={parseDate}
+               dayPickerProps={{
+                 selectedDays: [startDate, { startDate, endDate }],
+                 disabledDays: { before: startDate },
+                 modifiers,
+                 month: startDate,
+                 fromMonth: startDate,
+                 numberOfMonths: 2,
+               }}
+              />
+            </span>
+          </div>
         </div>
-
-        <Typography className={classes.filterTextTitle} variant="subheading" gutterBottom={gutterBottom} component="h4" >
-          Filter Transactions by Day
-        </Typography>
-        <DayPickerInput
-         onDayChange={this.handleStartDateChange}
-         className={classnames(classes.settingsInput, classes.dateInput)}
-         value={startDate}
-         placeholder="From"
-         format="LL"
-         formatDate={formatDate}
-         parseDate={parseDate}
-         dayPickerProps={{
-           selectedDays: [startDate, { startDate, endDate }],
-           disabledDays: { after: endDate },
-           toMonth: endDate,
-           modifiers,
-           numberOfMonths: 2,
-           onDayClick: () => this.endDate.getInput().focus(),
-         }}
-        />
-        {' '}  {' '}
-        <span className="InputFromTo-to">
-         <DayPickerInput
-           onDayChange={this.handleEndDateChange}
-           className={classnames(classes.settingsInput, classes.dateInput)}
-           ref={el => (this.endDate = el)}
-           value={endDate}
-           placeholder="Until"
-           format="LL"
-           formatDate={formatDate}
-           parseDate={parseDate}
-           dayPickerProps={{
-             selectedDays: [startDate, { startDate, endDate }],
-             disabledDays: { before: startDate },
-             modifiers,
-             month: startDate,
-             fromMonth: startDate,
-             numberOfMonths: 2,
-           }}
-          />
-        </span>
       </div>
     );
   }

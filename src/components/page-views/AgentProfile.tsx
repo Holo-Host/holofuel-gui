@@ -75,7 +75,7 @@ class AgentProfile extends React.Component<Props, State> {
         HoloFuel Profile
       </Typography>
 
-      <div className={classnames(classes.flexContainer, classes.profileHeader)}>
+      <div className={classnames(classes.flexContainer, classes.reducedJumbotron, classes.profileHeader)}>
         <div className={classes.flexItem}>
           <Avatar className={classnames(classes.headerAvatar, classes.profile)}>
             <Jdenticon hash={ this.state.agentData!.agentHash } {...newProps} />
