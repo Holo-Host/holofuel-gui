@@ -7,7 +7,8 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.6.3",
     "@holochain/hc-redux-middleware": "^1.0.9",
-    "@material-ui/core": "^3.2.0",
+    "@holochain/hc-web-client": "^0.0.1",
+    "@material-ui/core": "3.8.2",
     "@material-ui/icons": "^3.0.2",
     "@types/luxon": "^1.10.2",
     "axios": "^0.18.0",
@@ -28,11 +29,10 @@
     "react-hot-loader": "^4.6.3",
     "react-infinite-scroller": "^1.2.4",
     "react-markdown": "^3.3.0",
-    "react-redux": "^5.0.7",
+    "react-redux": "^6.0.0",
     "react-responsive": "^5.0.0",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
-    "react-scripts-ts": "2.17.0",
     "react-table": "^6.8.6",
     "redux": "latest",
     "redux-axios-middleware": "^4.0.0",
@@ -40,8 +40,7 @@
     "source-map-support": "^0.5.10",
     "typeface-raleway": "0.0.54",
     "typeface-roboto": "0.0.54",
-    "typesafe-actions": "^2.0.4",
-    "typescript": "^3.0.1"
+    "typesafe-actions": "^2.0.4"
   },
   "scripts": {
     "start": "PORT=9300 react-scripts-ts start",

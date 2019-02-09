@@ -6,7 +6,7 @@ import createMockApiData from '../utils/seed-data/mock-api-data';
 export type Action = ActionType<typeof actions>;
 
 // FILE CONSTANTS:
-const DNA_INSTANCE = 'holofuel_pagination.hcpkg instance';
+const DNA_INSTANCE = 'holofuelv4.hcpkg instance';
 const TX_ZOME_NAME = 'transactions';
 const TX_BATCH_VIEW_AMOUNT = 50;
 
