@@ -11,19 +11,22 @@ import pending_transaction_table_columns, { processed_transaction_table_columns 
 import SimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
+import createMockApiData from '../../../utils/seed-data/mock-api-data';
 // MUI Imports:
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
 
 export interface OwnProps {
   classes: any,
+  txBatchType: any,
+  txBatchDuration: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
 export interface State {
-  // txEndDate: string,
-  // txStartDate: string,
-  // txViewType: string,
+  txEndDate: string,
+  txStartDate: string,
+  txBatchType: string,
   row: String,
   filter: any,
   data: {} | null,
@@ -37,9 +40,9 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      // txEndDate: "",
-      // txStartDate: "",
-      // txViewType: "",
+      txEndDate: "",
+      txStartDate: "",
+      txBatchType: "",
       row: "",
       filter: null,
       data: {},
@@ -48,12 +51,12 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
-    const { list_of_transactions, list_of_instance_info } = props;
+    const { list_of_transactions, list_of_instance_info, list_of_proposals, list_of_requests } = props;
     if (!list_of_transactions) {
       return null;
     }
     else {
-      const transactionData = { list_of_transactions, list_of_instance_info };
+      const transactionData = { list_of_transactions, list_of_instance_info, list_of_proposals, list_of_requests };
       const prevProps = state.prevProps || {};
       const data = prevProps.value !== transactionData ? transactionData : state.data
       console.log("data", data);
@@ -61,25 +64,9 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     }
   }
 
-  // componentDidMount = () => {
-  //   this.beginAppMontoring();
-  //   // this.props.fetch_state();
-  // }
-  //
-  // beginAppMontoring = () => {
-  //     console.log("PROPS : ", this.props);
-  //     // 1) Invoke GET_INFO_INSTANCES()
-  //     this.props.get_info_instances();
-  //
-  //     // 2) Invoke list_transactions() (a ZOME Call) :
-  //     // this.props.list_pending();
-  //
-  //     // 3) Invoke list_transactions(spender, transaction) (a ZOME Call) :
-  //     // this.props.request_payment(spender, transaction);
-  //
-  //     // 4) Invoke list_transactions() (a ZOME Call) :
-  //     this.props.list_transactions();
-  // }
+  componentDidMount = () => {
+    console.log("state within SummaryTransactionTables upon mount >> verify whether the list_of_transactions, list_of_requests, and list_of_proposals are present... ", this.state);
+  }
 
   displayData = () => {
     console.log("this.state inside displayData", this.state);
@@ -88,7 +75,15 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       // const { list_of_transactions, list_of_instance_info } = this.props;
 
       // const table_pending_table_info =  refactorInstanceData(list_of_transactions);
-      const table_pending_table_info = [{}];
+      // const table_pending_table_info = [{}];
+
+      //NB: MOCK DATA USE
+      const { list_of_request_transactions, list_of_requests, list_of_proposals } = createMockApiData;
+
+      const list_of_all_tx_commits_hashes = list_of_requests.concat(list_of_proposals);
+      console.log("list_of_all_tx_commits_hashes", list_of_all_tx_commits_hashes);
+
+      const table_pending_table_info = list_of_request_transactions;
 
       // console.log("DATA GOING TO INSTANCE MAIN TABLE >>>> !! table_pending_table_info !! <<<<<<<< : ", table_pending_table_info);
       return table_pending_table_info;
@@ -132,11 +127,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     //     </div>
     // </div>
 
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-        // FYI: If expantion panel doesn't work... then use the HOC dropdowna dn reference the Row value provdied byt the SubComponent Values.       //
-      /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       <div>
-        <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h4" >
+        <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
           Pending Transactions
         </Typography>
         <div className={classnames(classes.tableContainer)}>
@@ -152,7 +144,14 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             columns={ pending_table_columns }
             SubComponent={(row:any) => {
               console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
-              {/* const addInstance = (custom_agent_id, custom_instance_id, interfaceforInstance) => {
+              // refactor rows to include the tx deadline, tx notes, + tx commit_hash, and timestamp of last action commit (to record completion...).
+              {/* const currentRowData = {
+                row.deadline, row.notes
+              }; */}
+              const currentRowData = ["due_date", "tx_notes"];
+
+
+              {/* const seeDetails = (tx_type, transfer, interfaceforInstance) => {
                 console.log("<><><><><> customAgentId <><><<><>", custom_agent_id);
                 console.log("<><><><><> customInstanceId <><><<><>", custom_instance_id);
                 console.log("<><><><><> interfaceforInstance <><><<><>", interfaceforInstance);
@@ -168,33 +167,48 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               } */}
 
               return (
-                <div style={{ paddingTop: "2px", marginBottom:"8px" }}>
-                  <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h4" >
+                <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
+                  <Typography className={classes.subtableHeader} variant="caption" gutterBottom={gutterBottom} component="h4" >
                     Transaction Details
                   </Typography>
 
-                  <div className={classes.flexContainer}>
-                    <SimpleTable classNames={classes.flexItem} {...newProps} />
+                  <div className={classnames(classes.flexContainer)}>
+                    <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
                   </div>
-
                 </div>
               );
             }}
           />
+        </div>
 
-          <br/>
-          <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
-            Processed Transactions
-          </Typography>
-          <div className={classnames(classes.tableContainer)}>
-            <AdvancedExpandReactTable
-              defaultPageSize={10}
-              className={classnames("-striped", "-highlight", classes.table)}
-              data={processed_table_data}
-              columns={ processed_table_columns }
-            />
-          </div>
+        <br/>
+        <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
+          Processed Transactions
+        </Typography>
+        <div className={classnames(classes.tableContainer)}>
+          <AdvancedExpandReactTable
+            className={classnames("-striped", "-highlight", classes.table)}
+            data={processed_table_data}
+            columns={ processed_table_columns }
+            showPagination={false}
+            defaultPageSize={processed_table_data!.length}
+            SubComponent={(row:any) => {
+              console.log("<><><><><> Processed TX SubComponent ROW out : >> <><><><><> ", row);
+              const currentRowData = ["completion_date", "tx_notes"];
 
+              return (
+                <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
+                  <Typography className={classes.subtableHeader} variant="display1" gutterBottom={gutterBottom} component="h4" >
+                    Transaction Details
+                  </Typography>
+
+                  <div className={classes.flexContainer}>
+                    <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+                  </div>
+                </div>
+              );
+            }}
+          />
         </div>
       </div>
     );
@@ -202,4 +216,3 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(SummaryTransactionTables);
-            // {/* defaultPageSize={10} */}

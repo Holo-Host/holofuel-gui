@@ -6,7 +6,7 @@ import createMockApiData from '../utils/seed-data/mock-api-data';
 export type Action = ActionType<typeof actions>;
 
 // FILE CONSTANTS:
-const DNA_INSTANCE = 'holofuel_pagination.hcpkg instance';
+const DNA_INSTANCE = 'holofuelv4.hcpkg instance';
 const TX_ZOME_NAME = 'transactions';
 const TX_BATCH_VIEW_AMOUNT = 50;
 
@@ -131,7 +131,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state, list_of_instance_info : payload };
     }
 
-  // GET_INFO_INSTANCE
+  // GET_AGENT_LIST
     // Confirm Holofuel Instance Discovery in Container
     case 'admin/agent/list_SUCCESS': {
       // console.log('GET_AGENT_LIST_SUCCESS payload', payload);;

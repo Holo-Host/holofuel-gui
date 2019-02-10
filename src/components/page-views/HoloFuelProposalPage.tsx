@@ -46,13 +46,14 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
     console.log("txInfoObj for Proposal Call : ", txInfoObj);
     // create propose const that amkes call and stores the result..
     const proposalResult = await this.props.propose_payment({txInfoObj}); // send as JSON
-    this.sendConfirmationMessage(proposalResult);
+    this.sendConfirmationMessage(proposalResult, txInfoObj);
   }
 
-  sendConfirmationMessage = (proposalResult: any) => {
+  sendConfirmationMessage = (proposalResult: any, txInfoObj: any) => {
     // expected output: 'resolved'
-    console.log('proposalResult >>> ', proposalResult);
-    this.setState({ message: proposalResult });
+    console.log('The attempt to send money (the proposal) resolved to be : >>> ', proposalResult);
+    this.setState({ message: `You just made the following transaction: ${txInfoObj}.`});
+    console.log("MESSAGE : Inside the proposal page >> : ", this.state.message);
   }
 
   resetMessage = () => {

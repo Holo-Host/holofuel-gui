@@ -3,6 +3,13 @@ import * as React from 'react';
 import * as matchSorter from 'match-sorter';
 import TransactionDetailsButton from "../transaction-details-button/TransactionDetailsButton";
 
+
+// TODO: Implement the filtering method below :
+// filterMethod: (filter, rows) =>
+//   matchSorter(rows, filter.value, { keys: ["type"] }),
+// filterAll: true,
+
+
 /* Transaction Table Headers */
 const pending_transaction_table_columns = (props: any, state: any) => {
   // console.log("Table Columns Props", props);

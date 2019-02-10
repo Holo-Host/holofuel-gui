@@ -60,6 +60,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       marginBottom: 5,
       margin:0
     },
+    h3extraTopMargin: {
+      marginTop: 25,
+    },
     h3ExtraBottomMargin: {
       marginBottom: 15,
     },
@@ -85,6 +88,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       textAlign: "center",
       color: '#00838d',
       fontWeight: 300,
+      marginTop: -8,
       fontSize: 28
     },
     mainHeader: {
@@ -95,11 +99,14 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       fontSize: 65
     },
     tableHeader: {
-      marginTop: 30,
+      marginTop: 15,
       textAlign: "center",
       color: '#d8dee3', // color : #d8dee3, // #909fb1 // rgba(0, 0, 0, 0.54)
       fontWeight: 400,
-      fontSize: '2.125rem'
+      fontSize: '2.125rem',
+    },
+    leadingTitle: {
+      marginTop: 50,
     },
     profileHeader:{
       margin: 25
@@ -133,6 +140,19 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       color: '#d8dee3',
       fontWeight: 'bolder',
       fontSize: 18
+    },
+    subtable: {
+      border: '1px solid #eee',
+      borderRadius: 4,
+      background: '#13426a',
+      color: '#d8dee3', // table-row input color:#c3cdd6
+    },
+    subtableHeader : {
+      fontSize: '1.3rem',
+      marginTop: 5,
+      textAlign: "center",
+      color: '#789bb4',
+      fontWeight: 300,
     },
     jumbotron: {
       width: '80%',
@@ -188,6 +208,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     },
     flexContainer : {
       padding: 0,
+      paddingTop: 5,
       margin: '0 auto',
       listStyle: 'none',
       display: 'flex',
@@ -271,9 +292,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       color: ' #799ab6',
     },
     filterTextTitle : {
-      color: '#e9ecef',
+      color: '#0e3658',
       marginTop: '11px',
-      marginBottom: '34px',
+      marginBottom: '3px',
     },
     dialogContainer: {
       display: 'flex',
@@ -294,7 +315,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       marginTop: 15,
       padding: 15,
       paddingBottom: 45,
-      border: '1px solid #e9ecef', //799ab6
+      border: '1px solid #0e3658', //#e9ecef, #799ab6
       borderRadius: 46,
       maxWidth: '50%',
       minWidth: '40%',
@@ -413,18 +434,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
        padding: '10px 12px',
        transition: theme.transitions.create(['border-color', 'box-shadow']),
        // Use the system font instead of the default Roboto font.
-       fontFamily: [
-         '-apple-system',
-         'BlinkMacSystemFont',
-         '"Segoe UI"',
-         'Roboto',
-         '"Helvetica Neue"',
-         'Arial',
-         'sans-serif',
-         '"Apple Color Emoji"',
-         '"Segoe UI Emoji"',
-         '"Segoe UI Symbol"',
-       ].join(','),
+       fontFamily: 'Raleway',
        '&:focus': {
          borderRadius: 4,
          borderColor: '#80bdff',
@@ -462,10 +472,20 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
        width: '100%',
        marginTop: theme.spacing.unit * 3,
        overflowX: 'auto',
+       color: '#d8dee3',
+       background: '#13426a'
      },
      muiSimpleTable:{
-        minWidth: '80%', // WAS 700 px
+       margin: '0 auto',
+       justifyContent: 'center',
+       minWidth: '80%', // WAS 700 px
+       color: '#d8dee3',
      },
+     tableCell: {
+       color: '#789bb4',
+       fontSize: '.9rem',
+       padding: 0
+     }
    }
 );
 

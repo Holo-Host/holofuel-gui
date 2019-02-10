@@ -8,6 +8,7 @@ import 'react-day-picker/lib/style.css';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
 // local imports
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 import DropDownInputFilter from '../input-fields/DropDownInputFilter';
@@ -19,12 +20,26 @@ import DropDownInputFilter from '../input-fields/DropDownInputFilter';
 // const yesterday = today.getDate() - 1;
 // const lastRecord= new Date(today.getFullYear() - 7, today.getMonth(), today.getDate());
 
+export interface OwnProps {
+  // These are props the component has received from its parent component
+  classes: any,
+  setDateFilter: (startDate: string, endDate:string) => void,
+  setTxTypeFilter: (txBatchType: string) => void,
+}
+export type Props = OwnProps & StateProps & DispatchProps;
+export interface State {
+  startDate: string | undefined,
+  endDate: string | undefined,
+  txState: string | undefined,
+}
+
 class DayTimePicker extends React.Component {
   constructor(props:Props){
     super(props);
     this.state = {
       startDate: undefined,
-      endDate: undefined
+      endDate: undefined,
+      txState: undefined
     }
     this.handleStartDateChange = this.handleStartDateChange.bind(this);
     this.handleEndDateChange = this.handleEndDateChange.bind(this);
@@ -39,15 +54,23 @@ class DayTimePicker extends React.Component {
       this.endDate.getDayPicker().showMonth(startDate);
     }
    }
-
    handleStartDateChange(startDate) {
       // Change the startDate date and focus the "endDate" input field
       this.setState({ startDate });
    }
-
    handleEndDateChange(endDate) {
       this.setState({ endDate }, this.showStartingMonth);
     }
+
+    handleNewType = () => {
+      console.log("Day Time Picker STATE: ", this.state);
+      this.props.setTxTypeFilter(this.state.txState);
+    };
+
+    handleNewDuration = () => {
+      console.log("Day Time Picker STATE: ", this.state);
+      this.props.setDateFilter(this.state.endDate, this.state.startDate);
+    };
 
     render () {
      const { classes } = this.props;
@@ -67,6 +90,12 @@ class DayTimePicker extends React.Component {
       <div className={classnames(classes.datetimeinputdiv,"InputFromTo")}>
         <div className={classnames(classes.flexContainer, classes.flexItem)}>
           <DropDownInputFilter dropdownListData={txStatesDropDownList} dropDownHeader={txStatesdropDownHeader} />
+          <Button variant="outlined" color="primary"
+          className={classnames(classes.button, classes.overlayTop, classes.smallButton)}
+          onClick={this.handleNewType}>
+            Apply Type
+          </Button>
+
           <div className={classes.flexItem}>
             <Typography className={classes.filterTextTitle} variant="subheading" gutterBottom={gutterBottom} component="h4" >
               Filter Transactions by Day
@@ -109,6 +138,12 @@ class DayTimePicker extends React.Component {
                }}
               />
             </span>
+            <Button variant="outlined" color="primary"
+            className={classnames(classes.button, classes.overlayTop, classes.smallButton)}
+            onClick={this.handleNewDuration}>
+              Apply Dates
+            </Button>
+
           </div>
         </div>
       </div>

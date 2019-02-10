@@ -1,7 +1,7 @@
 import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware';
 // export const FETCH_STATE = 'FETCH_STATE';
 // FILE CONSTANTS:
-const DNA_INSTANCE = 'holofuel_pagination.hcpkg instance';
+const DNA_INSTANCE = 'holofuelv4.hcpkg instance';
 const TX_ZOME_NAME = 'transactions';
 
 ////////////////////////////////////////////////////////////////////////////

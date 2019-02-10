@@ -25,6 +25,14 @@ body, html{
 	text-align:center;
 }
 
+input {
+  background: #4c6880;
+  border: 1px solid #152838;
+  border-radius: 4px;
+  color: #152838;
+  margin: 2px;
+}
+
 
 /*******************************************************
               React-Table Custom styles

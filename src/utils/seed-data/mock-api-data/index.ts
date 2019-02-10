@@ -24,9 +24,9 @@ export const instanceListData = [
 const createMockApiData = {
   MOCK_AGENT_ADDRESS,
   list_of_requests,
+  list_of_proposals,
   get_request_kv_store,
   get_proposal_kv_store,
-  list_of_proposals,
   list_of_proposal_transactions,
   list_of_request_transactions
 };

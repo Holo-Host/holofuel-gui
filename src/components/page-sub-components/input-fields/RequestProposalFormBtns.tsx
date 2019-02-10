@@ -18,6 +18,17 @@ import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // import Memo from '../memo/Memo';
 
+//TODO : Apply logic to buttons >>
+
+
+// Recipient (known by their role in proposal >> only true they DID NOT initate the proposal (ie. there is no request value in propsoal struct)):
+//1.) Determine whether Local Agent is Recipient of current TX (ie. ...)
+//2.) Discern TX Event type
+//3.) Run conditional: If the event === "receive_payment or reject_payment"  && the  { 
+  //    then the button action text should to "OK" or "Reject"
+  //  }
+
+
 type StateKeyType = string | number | symbol | any;
 type LabelRef = HTMLElement | null | undefined;
 
