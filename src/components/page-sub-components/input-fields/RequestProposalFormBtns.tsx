@@ -10,7 +10,12 @@ import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
+import PersonPin from '@material-ui/icons/PersonPin';
+// import AccountCircle from '@material-ui/icons/AccountCircle';
+import Message from '@material-ui/icons/Message';
+import Timer from '@material-ui/icons/Timer';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import { ProposalActionParam } from '../../../utils/types'; //  RequestActionParam, Ledger, ListTransactionsResult , DateTimeString, Address
@@ -24,7 +29,7 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // Recipient (known by their role in proposal >> only true they DID NOT initate the proposal (ie. there is no request value in propsoal struct)):
 //1.) Determine whether Local Agent is Recipient of current TX (ie. ...)
 //2.) Discern TX Event type
-//3.) Run conditional: If the event === "receive_payment or reject_payment"  && the  { 
+//3.) Run conditional: If the event === "receive_payment or reject_payment"  && the  {
   //    then the button action text should to "OK" or "Reject"
   //  }
 
@@ -125,7 +130,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   };
 
   public render() {
-    const fullWidth:boolean = true;
     const multiline:boolean = true;
     console.log("Inside the RequestProposalFormBtns...", this.props);
 
@@ -134,8 +138,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>
           <ul className={classes.flexContainer}>
-            <li className={classes.flexItem}>
-              <FormControl className={classes.formControl} fullWidth={fullWidth}>
+            <li className={classnames(classes.formList, classes.flexItem)}>
+              <FormControl className={classnames(classes.formInputContainer, classes.formControl)}>
                  <InputLabel
                    htmlFor="recipient-input"
                    classes={{
@@ -143,14 +147,13 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                      input: classes.customFormInput,
                      focused: classes.customFormFocused,
                     }}
-                  >
-                    Transaction Recipient
-                  </InputLabel>
+                  />
                  <Input
                    id="recipient-input"
                    value={this.state.recipient}
                    onChange={this.handleChange('recipient')}
                    aria-describedby="recipient-input-text"
+                   startAdornment={<InputAdornment position="start"><PersonPin/></InputAdornment>}
                    classes={{
                      underline: classes.customFormUnderline
                   }}
@@ -159,8 +162,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                </FormControl>
             </li>
 
-            <li className={classes.flexItem}>
-              <FormControl className={classes.formControl} fullWidth={fullWidth}>
+            <li className={classnames(classes.formList, classes.flexItem)}>
+              <FormControl className={classnames(classes.formInputContainer, classes.formControl)}>
                  <InputLabel
                    htmlFor="amount-input"
                    classes={{
@@ -168,15 +171,14 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                       input: classes.customFormInput,
                       focused: classes.customFormFocused,
                     }}
-                  >
-                    Transaction Amount
-                 </InputLabel>
+                  />
                  <Input
                    id="amount-input"
                    type="number"
                    value={this.state.amount}
                    onChange={this.handleChange('amount')}
                    aria-describedby="amount-input-number"
+                   startAdornment={<InputAdornment position="start"><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/></InputAdornment>}
                    classes={{
                      underline: classes.customFormUnderline
                    }}
@@ -185,8 +187,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                </FormControl>
             </li>
 
-            <li className={classes.flexItem}>
-              <FormControl className={classes.formControl} variant="outlined" fullWidth={fullWidth}>
+            <li className={classnames(classes.formList, classes.flexItem, classes, classes.areaTextBox)}>
+              <FormControl className={classnames(classes.formInputContainer, classes.formControl)} variant="outlined">
                 <InputLabel
                   htmlFor="deadline-input"
                   classes={{
@@ -194,17 +196,19 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                      input: classes.customFormInput,
                      focused: classes.customFormFocused,
                    }}
-                >
-                  {/* Transaction Deadline */}
-                </InputLabel>
+                />
                 <Input
                   id="deadline-input"
                   type="date"
                   value={this.state.deadline}
                   onChange={this.handleChange('deadline')}
                   aria-describedby="recipient-input-text"
+                  startAdornment={<InputAdornment position="start"><Timer/></InputAdornment>}
                   classes={{
-                    underline: classes.customFormUnderline
+                    root: classes.root,
+                    input: classes.customFormInput,
+                    underline: classes.customFormUnderline,
+                    focused: classes.customFormFocused,
                   }}
                 />
                 <FormHelperText id="deadline-input">Type in the transaction cut-off date</FormHelperText>
@@ -215,8 +219,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
 
           <div className={classnames(classes.txWrapper, classes.root)}>
             <ul className={classes.flexContainer}> */}
-            <li className={classes.flexItem}>
-              <FormControl className={classes.formControl} variant="outlined" fullWidth={fullWidth}>
+            <li className={classnames(classes.formList, classes.flexItem)}>
+              <FormControl className={classnames(classes.formInputContainer, classes.formControl)} variant="outlined">
                 <InputLabel
                   htmlFor="notes-input"
                   classes={{
@@ -225,7 +229,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                      focused: classes.customFormFocused,
                    }}
                 >
-                  Transaction Notes
+                  <Message/>
                 </InputLabel>
                 <OutlinedInput
                   id="notes-input"

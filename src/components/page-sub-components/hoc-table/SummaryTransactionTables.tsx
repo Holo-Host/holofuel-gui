@@ -138,8 +138,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             defaultPageSize={pending_table_data!.length}
             filterable={filterable}
             defaultFilterMethod={(filter:any, row:any) =>
-              String(row[filter.id]) === filter.value
-            }
+               String(row[filter.id]) === filter.value
+             }
             data={pending_table_data}
             columns={ pending_table_columns }
             SubComponent={(row:any) => {
@@ -192,6 +192,10 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             columns={ processed_table_columns }
             showPagination={false}
             defaultPageSize={processed_table_data!.length}
+            filterable={filterable}
+            defaultFilterMethod={(filter:any, row:any) =>
+               String(row[filter.id]) === filter.value
+             }
             SubComponent={(row:any) => {
               console.log("<><><><><> Processed TX SubComponent ROW out : >> <><><><><> ", row);
               const currentRowData = ["completion_date", "tx_notes"];

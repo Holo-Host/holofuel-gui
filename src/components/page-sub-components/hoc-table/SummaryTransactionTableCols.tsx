@@ -4,12 +4,6 @@ import * as matchSorter from 'match-sorter';
 import TransactionDetailsButton from "../transaction-details-button/TransactionDetailsButton";
 
 
-// TODO: Implement the filtering method below :
-// filterMethod: (filter, rows) =>
-//   matchSorter(rows, filter.value, { keys: ["type"] }),
-// filterAll: true,
-
-
 /* Transaction Table Headers */
 const pending_transaction_table_columns = (props: any, state: any) => {
   // console.log("Table Columns Props", props);
@@ -17,9 +11,9 @@ const pending_transaction_table_columns = (props: any, state: any) => {
   const table_columns = [{
     Header: 'Origin Date',
     accessor: 'transaction_date',
-      filterMethod: (filter:any, row:any) =>
-        row[filter.id].startsWith(filter.value) &&
-        row[filter.id].endsWith(filter.value),
+      filterMethod: (filter:any, rows:any) =>
+        matchSorter(rows, filter.value, { keys: ["transaction_date"] }),
+      filterAll: true,
       Cell: (row: any) => (
         <div style={{ padding: '5px' }}>
         { row.value }
@@ -27,9 +21,8 @@ const pending_transaction_table_columns = (props: any, state: any) => {
       )
     }, {
     Header: 'Amount',
-    // {/* accessor: 'amount', */}
     id: "amount",
-     accessor: (d:any) => d.amount,
+    accessor: (d:any) => d.amount,
      filterMethod: (filter:any, rows:any) =>
         matchSorter(rows, filter.value, { keys: ["amount"] }),
      filterAll: true,
@@ -42,6 +35,9 @@ const pending_transaction_table_columns = (props: any, state: any) => {
     }, {
     Header: 'Action',
     accessor: 'action',
+    filterMethod: (filter:any, rows:any) =>
+      matchSorter(rows, filter.value, { keys: ["action"] }),
+    filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
       { row.value }
@@ -50,9 +46,9 @@ const pending_transaction_table_columns = (props: any, state: any) => {
     }, {
     Header: 'Counterparty',
     accessor: 'counterparty',
-    filterMethod: (filter:any, row:any) =>
-      row[filter.id].startsWith(filter.value) &&
-      row[filter.id].endsWith(filter.value),
+    filterMethod: (filter:any, rows:any) =>
+      matchSorter(rows, filter.value, { keys: ["counterparty"] }),
+    filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
       { row.value }
@@ -61,9 +57,9 @@ const pending_transaction_table_columns = (props: any, state: any) => {
     }, {
     Header: 'Status',
     accessor: 'status',
-    filterMethod: (filter:any, row:any) =>
-      row[filter.id].startsWith(filter.value) &&
-      row[filter.id].endsWith(filter.value),
+    filterMethod: (filter:any, rows:any) =>
+      matchSorter(rows, filter.value, { keys: ["status"] }),
+    filterAll: true,
     Cell: (row: any) => (
       <div>
         <TransactionDetailsButton
@@ -83,6 +79,9 @@ export const processed_transaction_table_columns = (props: any, state: any) => {
   const table_columns = [{
     Header: 'Origin Date',
     accessor: 'transaction_date',
+    filterMethod: (filter:any, rows:any) =>
+      matchSorter(rows, filter.value, { keys: ["transaction_date"] }),
+    filterAll: true,
       Cell: (row: any) => (
         <div style={{ padding: '5px' }}>
         { row.value }
@@ -91,6 +90,9 @@ export const processed_transaction_table_columns = (props: any, state: any) => {
     }, {
     Header: 'Amount',
     accessor: 'amount',
+    filterMethod: (filter:any, rows:any) =>
+      matchSorter(rows, filter.value, { keys: ["amount"] }),
+    filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
       { row.value }
@@ -99,6 +101,9 @@ export const processed_transaction_table_columns = (props: any, state: any) => {
     }, {
     Header: 'Action',
     accessor: 'action',
+    filterMethod: (filter:any, rows:any) =>
+      matchSorter(rows, filter.value, { keys: ["action"] }),
+    filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
       { row.value }
@@ -107,6 +112,9 @@ export const processed_transaction_table_columns = (props: any, state: any) => {
     }, {
     Header: 'Counterparty',
     accessor: 'counterparty',
+    filterMethod: (filter:any, rows:any) =>
+      matchSorter(rows, filter.value, { keys: ["counterparty"] }),
+    filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
       { row.value }

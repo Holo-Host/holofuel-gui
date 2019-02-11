@@ -12,7 +12,7 @@ export interface OwnProps { classes: any, agentHash: string }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State { show: boolean }
 
-class FABbutton extends React.Component<Props, State> {
+class QRbutton extends React.Component<Props, State> {
   state = {
     show: false,
   };
@@ -50,4 +50,4 @@ class FABbutton extends React.Component<Props, State> {
 }
 
 
-export default withStyles(styles)(FABbutton);
+export default withStyles(styles)(QRbutton);

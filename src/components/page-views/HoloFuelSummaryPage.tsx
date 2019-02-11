@@ -10,7 +10,7 @@ import Slide from '@material-ui/core/Slide';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import TransactionTables from '../page-sub-components/hoc-table/SummaryTransactionTables';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-import DayTimePicker from '../page-sub-components/day-time-picker/DayTimePicker';
+import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
 import Button from '@material-ui/core/Button';
@@ -117,8 +117,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
               </Button>
             </div>
 
-            <DayTimePicker setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
-
+            <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
             <TransactionTables txBatchType={this.state.txBatchType} txBatchDuration={{endDate:this.state.txEndDate, startDate:this.state.txStartDate}} {...newProps} />
 
             { transferBtnBar ?
