@@ -1,4 +1,4 @@
-export type ReactInputParam = React.ChangeEvent<HTMLInputElement>
+export type ReactInputParam = React.ChangeEvent<HTMLInputElement> | string | undefined | null;
 
 // HOLOCHAIN TYPING definitions :
 export type HashString = string;

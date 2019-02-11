@@ -8,37 +8,81 @@ import Slide from '@material-ui/core/Slide';
 // local imports
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import TransactionTables from '../page-sub-components/hoc-table/SummaryTransactionTables';
-import OutlinedButton from '../page-sub-components/outlined-button/OutlinedButton';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-import DayTimePicker from '../page-sub-components/day-time-picker/DayTimePicker';
+import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import '../styles/page-styles/scaffold-styles.css';
+import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
+  txType: any,
   showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
-  txType: string,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
-// The components optional internal state
-  selectedDate: string | number | undefined,
+  txEndDate: string,
+  txStartDate: string,
+  txBatchType: string,
 }
 
 class HoloFuelSummaryPage extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
+    this.state = {
+      txEndDate: "",
+      txStartDate: "",
+      txBatchType: ""
+    };
   };
 
   public componentDidMount () {
-    console.log("PROPS : ", this.props);
+    // Invoke list_transactions() (a ZOME Call) :
+    console.log("calling : list_transactions >>  inside HoloFuelSummaryPage... >> ");
+    this.props.list_transactions();
+
+    // Invoke list_requests() (a ZOME Call) :
+    console.log("calling : list_requests >> ", this.props.list_requests);
+    this.props.list_requests();
+
+    // Invoke list_proposals() (a ZOME Call) :
+    console.log("calling : list_proposals >> ", this.props.list_proposals);
+    this.props.list_proposals();
+  }
+
+  handleTxBatchType = (txState: string) => {
+    console.log("TXTYPE for Batch -- inside of HoloFuelSummaryPage", txState);
+    this.setState({
+      txBatchType: txState
+    });
+    // reset table data with custom date filters :
+    this.handleTableRefresh();
+  }
+
+  handleTxBatchDuration = (txEndDate: any, txStartDate: any) => {
+    console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txEndDate);
+    console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txStartDate);
+    this.setState({
+      txEndDate,
+      txStartDate
+    });
+    // reset table data with custom date filters :
+    this.handleTableRefresh();
+  }
+
+  handleTableRefresh = () => {
+    const { txBatchType, txStartDate, txEndDate } = this.state;
+    // Invoke list_transactions() WITH PARAMS :
+    console.log("calling : list_transactions WITH PARAMS >> !! >> ");
+    this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
   }
 
    public render () {
       const { classes, transferBtnBar, ...newProps } = this.props;
-      console.log('Props in HoloFuelSummaryPage:', this.props);
       const gutterBottom : boolean = true;
+
+      console.log('Props in HoloFuelSummaryPage:', this.props);
 
       return (
         <div>
@@ -56,14 +100,8 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
               Transaction History
             </Typography>
 
-            <div className={classes.tableButtonBar}>
-              <OutlinedButton text="refresh" color="primary" />
-              <OutlinedButton text="view more" color="primary"/>
-            </div>
-
-            <DayTimePicker />
-
-            <TransactionTables {...newProps} />
+            <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
+            <TransactionTables txBatchType={this.state.txBatchType} txBatchDuration={{endDate:this.state.txEndDate, startDate:this.state.txStartDate}} handleTableRefresh={this.handleTableRefresh} {...newProps} />
 
             { transferBtnBar ?
               <Portal>
@@ -82,8 +120,17 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
 
 export default withStyles(styles)(HoloFuelSummaryPage);
 
-{/* < div
-  className={classes.alert}
-  ref={ref => {
-    this.container = ref;
-}} */}
+
+// {/* <div className={classes.tableButtonBar}>
+//   <Button variant="outlined" color="primary"
+//   className={classnames(classes.buttonSumTable, classes.overlayTop)}
+//   onClick={this.handleTableRefresh}>
+//     <ExpandMore/>
+//   </Button>
+// </div> */}
+
+// {/* < div
+//   className={classes.alert}
+//   ref={ref => {
+//     this.container = ref;
+// }} */}

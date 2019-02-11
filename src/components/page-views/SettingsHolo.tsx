@@ -3,14 +3,12 @@ import classnames from 'classnames';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
-import Avatar from '@material-ui/core/Avatar';
 import Typography from '@material-ui/core/Typography';
 import Portal from '@material-ui/core/Portal';
 import Slide from '@material-ui/core/Slide';
 // local imports :
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-import Jdenticon from '../page-sub-components/avatar-generator/Jdenticon';
 import SettingFormParameters from '../page-sub-components/input-fields/SettingFormParameters';
 
 export interface OwnProps {
@@ -72,20 +70,6 @@ class HoloSettings extends React.Component<Props, State> {
       <Typography className={classnames(classes.tableHeader, classes.profileHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
         HoloFuel Settings
       </Typography>
-
-      <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>
-        <div className={classes.flexItem}>
-          <Avatar className={classnames(classes.headerAvatar, classes.profile)}>
-            <Jdenticon hash={ this.state.agentData!.agentHash }  {...newProps} />
-          </Avatar>
-        </div>
-        <div className={classes.verticalLine}/>
-        <div className={classes.flexItem}>
-          <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
-            { this.state.agentData!.agentString }
-          </Typography>
-        </div>
-      </div>
 
         <SettingFormParameters {...newProps}/>
 

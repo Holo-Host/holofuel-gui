@@ -48,7 +48,7 @@ export interface DispatchProps {
     fetch_agent_string: () => void,
   // holofuel specific calls :
     get_ledger_state: () => void,
-    list_transactions: () => void,
+    list_transactions: (payload? : any) => void,
     list_requests: () => void,
     list_proposals: () => void,
     get_single_request: ({request_address}: any) => void,
@@ -79,53 +79,53 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     }
   };
 
-  
+
 
   componentDidMount () {
     console.log("PROPS : ", this.props);
-    // 1) Invoke GET_INFO_INSTANCES()
+    // 1.) Invoke GET_INFO_INSTANCES()
     //  ==> test out container connection and
     //       ensure holofuel is a running instance...
     this.props.get_info_instances();
 
-    // 2) Invoke fetch_agent_string() (a ZOME Call) :
+    // 2.) Invoke fetch_agent_string() (a ZOME Call) :
     //  ==> discover and/or verify Agent Hash and
     //      Agent String Identities...
     this.props.fetch_agent_string();
     // this.props.fetch_agent_hash();
 
-    // 3) Run through original test calls...
+    // 3.) Invoke get_ledger_state() (a ZOME Call) :
+    console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
+    this.props.get_ledger_state();
+
+    // 4) Run through original test calls...
     this.makeTestCalls();
   }
 
   makeTestCalls() {
-    // // Invoke GET_INFO_INSTANCES()
-    // console.log("calling : get_info_instances >> inside handleClick... >> ");
-    // this.props.get_info_instances();
-
     ////////// NEW CALLS TX CALLS //////////////
-    // Invoke get_ledger_state() (a ZOME Call) :
-    console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
-    this.props.get_ledger_state();
+    // // Invoke get_ledger_state() (a ZOME Call) :
+    // console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
+    // this.props.get_ledger_state();
+  //
+  //   // Invoke list_requests() (a ZOME Call) :
+  //   console.log("calling : list_requests >> ", this.props.list_requests);
+  //   this.props.list_requests();
+  //
+  //   // Invoke list_proposals() (a ZOME Call) :
+  //   console.log("calling : list_proposals >> ", this.props.list_proposals);
+  //   this.props.list_proposals();
 
-    // Invoke list_requests() (a ZOME Call) :
-    console.log("calling : list_requests >> ", this.props.list_requests);
-    this.props.list_requests();
-
-    // Invoke list_proposals() (a ZOME Call) :
-    console.log("calling : list_proposals >> ", this.props.list_proposals);
-    this.props.list_proposals();
-  ////
     // Invoke get_single_request() (a ZOME Call) :
     console.log("calling : get_single_request >> ", this.props.get_single_request);
     // const request_address = this.props.list_of_requests[0];
-    const request_address: any = createMockApiData.get_request_kv_store[0];
+    const request_address: any = createMockApiData.list_of_requests[0];
     this.props.get_single_request({request_address});
   ////
     // Invoke get_single_proposal() (a ZOME Call) :
     console.log("calling : get_single_proposal >> ", this.props.get_single_proposal);
     // const proposal_address = this.props.list_of_proposals[0];
-    const proposal_address: any = createMockApiData.get_proposal_kv_store[0];
+    const proposal_address: any = createMockApiData.list_of_proposals[0];
     this.props.get_single_proposal({proposal_address});
 
 ///////////////////////////////////////////////////////////////////////////////////
@@ -216,10 +216,10 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
             {location.pathname === "/" || location.pathname === "/holofuelsummary" ?
             // default to HF Summary Page, if no path match
             <HoloFuelSummaryPage
-              className={classes.appTable}
               transferBtnBar={this.state.chooseTxBtnBarOpen}
-              txType={this.state.transactionType}
               showTransferBar={this.toggleTransferBtnBar}
+              txType={this.state.transactionType}
+              className={classes.appTable}
               {...newProps}
             />
           :

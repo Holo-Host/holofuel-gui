@@ -168,6 +168,8 @@ export const advancedExpandTableHOC = TableComponent =>
       };
     }
 
+
+// TODO: CORRECT THE BOOLEAN ... never unselects ROW...
     getTrProps=(state, rowInfo) => {
       if (rowInfo && rowInfo.row && rowInfo !== undefined) {
         return {
@@ -177,8 +179,8 @@ export const advancedExpandTableHOC = TableComponent =>
             })
           },
           style: {
-            background: rowInfo.index === this.state.selected ? '#3a426d8a' : '#eee',
-            color: rowInfo.index === this.state.selected ? '#eee' : 'black'
+            background: rowInfo.index === this.state.selected ? '#13426a' : 'default',
+            color: rowInfo.index === this.state.selected ? '#d8dee3' : '#0e094b'
           }
         }
       }

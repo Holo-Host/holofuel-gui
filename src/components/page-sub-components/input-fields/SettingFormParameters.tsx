@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Redirect } from 'react-router-dom';
+import classnames from 'classnames';
 // mui custom styling imports :
 import { withStyles } from '@material-ui/core/styles';
 import FormControl from '@material-ui/core/FormControl';
@@ -128,18 +129,21 @@ class CreateNewSettings extends React.Component<Props, State>  {
         <div className="CreateNewSettings">
           <div className="form" onSubmit={this.handleSubmit}>
 
-            <br/>
-            <hr style={{width:"30%"}}/>
-            <h2 className="title">{this.state.errorMessage}</h2>
-            <h2 className="title">{this.state.promptMessage}</h2>
-            <hr style={{width:"30%"}}/>
-            <br/>
+          {this.state.errorMessage !== "" && this.state.promptMessage !== "" ?
+            <div>
+              <hr style={{width:"30%"}}/>
+              <h2 className="title">{this.state.errorMessage}</h2>
+              <h2 className="title">{this.state.promptMessage}</h2>
+              <hr style={{width:"30%"}}/>
+            </div>
+          :
+            <div/>
+          }
 
-            <Typography className={classes.h3} variant="caption" gutterBottom={gutterBottom} component="h4" >
+
+            <Typography className={classnames(classes.h3extraTopMargin, classes.h3)} variant="caption" gutterBottom={gutterBottom} component="h4" >
               Personal Info
             </Typography>
-
-            {/* <h4 className={classes.h3}>Personal Info</h4> */}
 
             <FormControl className={classes.margin}>
               <TextField

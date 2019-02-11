@@ -25,7 +25,8 @@ const dataRefactor = (transaction_details: any) => {
         amount:  transaction.dna_instance,
         action: transaction.type,
         counterparty: transaction.hash,
-        status: transaction.status
+        status: transaction.status,
+        
       };
       console.log("newTxObj", newTxObj);
       return newTxObj;

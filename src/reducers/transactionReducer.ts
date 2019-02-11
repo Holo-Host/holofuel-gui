@@ -131,7 +131,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state, list_of_instance_info : payload };
     }
 
-  // GET_INFO_INSTANCE
+  // GET_AGENT_LIST
     // Confirm Holofuel Instance Discovery in Container
     case 'admin/agent/list_SUCCESS': {
       // console.log('GET_AGENT_LIST_SUCCESS payload', payload);;

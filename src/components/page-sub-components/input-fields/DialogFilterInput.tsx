@@ -69,11 +69,11 @@ class DialogFilterInput extends React.Component<Props, State> {
                   <MenuItem value="">
                     <em>None</em>
                   </MenuItem>
-                  <MenuItem value={10}>All</MenuItem>
-                  <MenuItem value={10}>Requests</MenuItem>
-                  <MenuItem value={20}>Proposals</MenuItem>
-                  <MenuItem value={30}>Rejected</MenuItem>
-                  <MenuItem value={30}>Declined</MenuItem>
+                  <MenuItem value="all">All</MenuItem>
+                  <MenuItem value="requests">Requests</MenuItem>
+                  <MenuItem value="proposals">Proposals</MenuItem>
+                  <MenuItem value="rejected">Rejected</MenuItem>
+                  <MenuItem value="declined">Declined</MenuItem>
                 </Select>
               </FormControl>
             </form>

@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
-import FABbutton from '../page-sub-components/input-fields/FABbutton';
+import QRbutton from '../page-sub-components/input-fields/QRbutton';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
 // import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
 
@@ -66,7 +66,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
       </div>
 
       <div>
-        <FABbutton agentHash={this.props.my_agent_hash} {...newProps}/>
+        <QRbutton agentHash={this.props.my_agent_hash} {...newProps}/>
 
         <hr className={classes.horizontalLine}/>
         <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >

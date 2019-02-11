@@ -11,7 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
-import FABbutton from '../page-sub-components/input-fields/FABbutton';
+import QRbutton from '../page-sub-components/input-fields/QRbutton';
 import InformativeModal from '../page-sub-components/modal/InformativeModal';
 
 
@@ -46,13 +46,14 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
     console.log("txInfoObj for Proposal Call : ", txInfoObj);
     // create propose const that amkes call and stores the result..
     const proposalResult = await this.props.propose_payment({txInfoObj}); // send as JSON
-    this.sendConfirmationMessage(proposalResult);
+    this.sendConfirmationMessage(proposalResult, txInfoObj);
   }
 
-  sendConfirmationMessage = (proposalResult: any) => {
+  sendConfirmationMessage = (proposalResult: any, txInfoObj: any) => {
     // expected output: 'resolved'
-    console.log('proposalResult >>> ', proposalResult);
-    this.setState({ message: proposalResult });
+    console.log('The attempt to send money (the proposal) resolved to be : >>> ', proposalResult);
+    this.setState({ message: `You just made the following transaction: ${txInfoObj}.`});
+    console.log("MESSAGE : Inside the proposal page >> : ", this.state.message);
   }
 
   resetMessage = () => {
@@ -86,7 +87,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
       </div>
 
       <div>
-        <FABbutton agentHash={this.props.my_agent_hash} {...newProps}/>
+        <QRbutton agentHash={this.props.my_agent_hash} {...newProps}/>
 
         <hr className={classes.horizontalLine}/>
         <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
