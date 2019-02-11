@@ -5,6 +5,12 @@ import classnames from 'classnames';
 import ReactTable from "react-table";
 import { advancedExpandTableHOC } from "./HocSystemTable";
 import "react-table/react-table.css";
+// MUI Imports:
+import { withStyles } from '@material-ui/core/styles';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import Refresh from '@material-ui/icons/Refresh';
 // Local Imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
@@ -12,14 +18,12 @@ import SimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 import createMockApiData from '../../../utils/seed-data/mock-api-data';
-// MUI Imports:
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
 
 export interface OwnProps {
   classes: any,
   txBatchType: any,
-  txBatchDuration: any
+  txBatchDuration: any,
+  handleTableRefresh: () => void
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -127,10 +131,18 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     //     </div>
     // </div>
 
-      <div>
+      <div className={classes.transactionTablesContainer}>
         <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
           Pending Transactions
         </Typography>
+        <span className={classes.tableButtonBar}>
+          <Button variant="outlined" color="primary"
+            className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
+            onClick={() => this.props.handleTableRefresh()}>
+            <Refresh className={classes.svg}/>
+          </Button>
+        </span>
+  {/* ///// Pending-TX Table :  ///// */}
         <div className={classnames(classes.tableContainer)}>
           <AdvancedExpandReactTable
             className={classnames("-striped", "-highlight", classes.table)}
@@ -181,10 +193,26 @@ class SummaryTransactionTables extends React.Component<Props, State> {
           />
         </div>
 
+        <div className={classes.tableButtonBar}>
+          <Button variant="outlined" color="primary"
+          className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
+          onClick={() => this.props.handleTableRefresh()}>
+            <ExpandMore/>
+          </Button>
+        </div>
+
+{/* ///// Proccessed-TX Table :  ///// */}
         <br/>
         <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
           Processed Transactions
         </Typography>
+        <span className={classes.tableButtonBar}>
+          <Button variant="outlined" color="primary"
+            className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
+            onClick={() => this.props.handleTableRefresh()}>
+            <Refresh className={classes.svg}/>
+          </Button>
+        </span>
         <div className={classnames(classes.tableContainer)}>
           <AdvancedExpandReactTable
             className={classnames("-striped", "-highlight", classes.table)}
@@ -214,9 +242,21 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             }}
           />
         </div>
+
+        <div className={classes.tableButtonBar}>
+          <Button variant="outlined" color="primary"
+          className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
+          onClick={() => this.props.handleTableRefresh()}>
+            <ExpandMore className={classes.svg}/>
+          </Button>
+        </div>
+
       </div>
     );
   }
 }
 
 export default withStyles(styles)(SummaryTransactionTables);
+
+// for the Refresh Buttons (adjacent to each table header)... do the following:
+// {/* UPDATE THIS BUTTON onClick functon to TRIGGER the handleTxBatchDuration() with params of SINCE and UNTIL (where since === the most recent currently tx date shown and until is date.now) */}

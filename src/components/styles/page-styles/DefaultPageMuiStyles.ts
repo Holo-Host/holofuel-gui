@@ -96,8 +96,11 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       fontWeight: 600,
       fontSize: 65
     },
+    transactionTablesContainer: {
+      marginTop: 75,
+    },
     tableHeader: {
-      marginTop: 15,
+      display: 'inline',
       textAlign: "center",
       color: '#d8dee3', // color : #d8dee3, // #909fb1 // rgba(0, 0, 0, 0.54)
       fontWeight: 400,
@@ -114,7 +117,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       boxSizing: 'border-box',
       margin: 20,
       marginTop: 20,
-      marginBottom: 50,
+      marginBottom: 5,
       backgroundColor: 'transparent', // #c3cdd6
       border: 3,
       borderRadius: 4,
@@ -148,6 +151,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     subtableHeader : {
       fontSize: '1.3rem',
       marginTop: 5,
+      display: 'inline',
       textAlign: "center",
       color: '#789bb4',
       fontWeight: 300,
@@ -234,6 +238,36 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
         background:'#13426a',
         text: '#07808b'
       }
+    },
+    buttonSumTable: {
+      color: '#eee',
+      margin: theme.spacing.unit,
+      display: 'inline',
+      width: 40,
+      padding: 5,
+      paddingTop: 11,
+      background: '#0e3658', // #05939a, #d8dee3
+      border: '1px solid #799ab6', // #446164, #0e094b, #d8dee3
+      "&:hover": {
+        border: '2px solid #799ab6', // #0e094b
+        background:'#13426a',
+        text: '#07808b'
+      }
+    },
+    refreshBtn : {
+      marginBottom: 5,
+      width: 5,
+      borderRadius: 45,
+      padding: 14,
+    },
+    moreBtn: {
+      marginBottom: 50,
+      width: 5,
+      borderRadius: 45,
+      padding: 14,
+    },
+    svg : {
+      paddingTop: 3,
     },
      expansionPanelHeading: {
        fontSize: theme.typography.pxToRem(15),

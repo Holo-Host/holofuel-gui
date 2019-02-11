@@ -1,5 +1,4 @@
 import * as React from 'react';
-import classnames from 'classnames';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
@@ -13,7 +12,6 @@ import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar'
 import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
-import Button from '@material-ui/core/Button';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
@@ -102,23 +100,8 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
               Transaction History
             </Typography>
 
-            <div className={classes.tableButtonBar}>
-              <Button variant="outlined" color="primary"
-              className={classnames(classes.button, classes.overlayTop)}
-              onClick={this.handleTableRefresh}>
-              {/* UPDATE THIS BUTTON onClick functon to TRIGGER the handleTxBatchDuration() with params of SINCE and UNTIL (where since === the most recent currently tx date shown and until is date.now) */}
-                Refresh
-              </Button>
-
-              <Button variant="outlined" color="primary"
-              className={classnames(classes.button, classes.overlayTop)}
-              onClick={this.handleTableRefresh}>
-                View More
-              </Button>
-            </div>
-
             <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
-            <TransactionTables txBatchType={this.state.txBatchType} txBatchDuration={{endDate:this.state.txEndDate, startDate:this.state.txStartDate}} {...newProps} />
+            <TransactionTables txBatchType={this.state.txBatchType} txBatchDuration={{endDate:this.state.txEndDate, startDate:this.state.txStartDate}} handleTableRefresh={this.handleTableRefresh} {...newProps} />
 
             { transferBtnBar ?
               <Portal>
@@ -137,8 +120,17 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
 
 export default withStyles(styles)(HoloFuelSummaryPage);
 
-{/* < div
-  className={classes.alert}
-  ref={ref => {
-    this.container = ref;
-}} */}
+
+// {/* <div className={classes.tableButtonBar}>
+//   <Button variant="outlined" color="primary"
+//   className={classnames(classes.buttonSumTable, classes.overlayTop)}
+//   onClick={this.handleTableRefresh}>
+//     <ExpandMore/>
+//   </Button>
+// </div> */}
+
+// {/* < div
+//   className={classes.alert}
+//   ref={ref => {
+//     this.container = ref;
+// }} */}

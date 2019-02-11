@@ -119,13 +119,13 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     // Invoke get_single_request() (a ZOME Call) :
     console.log("calling : get_single_request >> ", this.props.get_single_request);
     // const request_address = this.props.list_of_requests[0];
-    const request_address: any = createMockApiData.get_request_kv_store[0];
+    const request_address: any = createMockApiData.list_of_requests[0];
     this.props.get_single_request({request_address});
   ////
     // Invoke get_single_proposal() (a ZOME Call) :
     console.log("calling : get_single_proposal >> ", this.props.get_single_proposal);
     // const proposal_address = this.props.list_of_proposals[0];
-    const proposal_address: any = createMockApiData.get_proposal_kv_store[0];
+    const proposal_address: any = createMockApiData.list_of_proposals[0];
     this.props.get_single_proposal({proposal_address});
 
 ///////////////////////////////////////////////////////////////////////////////////

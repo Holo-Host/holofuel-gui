@@ -168,6 +168,8 @@ export const advancedExpandTableHOC = TableComponent =>
       };
     }
 
+
+// TODO: CORRECT THE BOOLEAN ... never unselects ROW...
     getTrProps=(state, rowInfo) => {
       if (rowInfo && rowInfo.row && rowInfo !== undefined) {
         return {
