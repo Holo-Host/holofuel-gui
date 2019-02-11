@@ -82,9 +82,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
       //fetch_agent_hash: () => {console.log("dispatching fetch_agent_hash"); dispatch(FetchAgentHashAsyncAction.create([]))},
 
   // TRANSACTION STATES
-      get_ledger_state : () => {
-      // console.log("dispatching get_ledger_state");
-       dispatch(LedgerStateAsyncAction.create({}))},
+      get_ledger_state : () => {console.log("dispatching get_ledger_state");dispatch(LedgerStateAsyncAction.create({}))},
       list_transactions : (payload?) => {
         // console.log("dispatching list_transactions");
        dispatch(TransactionListAsyncAction.create(payload))},

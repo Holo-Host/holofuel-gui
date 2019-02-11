@@ -10,7 +10,7 @@ const pending_transaction_table_columns = (props: any, state: any) => {
   // console.log("Table Columns State", state);
   const table_columns = [{
     Header: 'Origin Date',
-    accessor: 'transaction_date',
+    accessor: 'originTimeStamp',
       filterMethod: (filter:any, rows:any) =>
         matchSorter(rows, filter.value, { keys: ["transaction_date"] }),
       filterAll: true,

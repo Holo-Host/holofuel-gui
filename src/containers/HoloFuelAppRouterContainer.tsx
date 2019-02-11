@@ -104,10 +104,10 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
   makeTestCalls() {
     ////////// NEW CALLS TX CALLS //////////////
-    // // Invoke get_ledger_state() (a ZOME Call) :
-    // console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
-    // this.props.get_ledger_state();
-  //
+    // Invoke get_ledger_state() (a ZOME Call) :
+    console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
+    this.props.get_ledger_state();
+
   //   // Invoke list_requests() (a ZOME Call) :
   //   console.log("calling : list_requests >> ", this.props.list_requests);
   //   this.props.list_requests();
@@ -147,7 +147,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 //// CHECK FOR Request Transaction Returned...
     // Invoke list_transactions() (a ZOME Call) :
     console.log("calling : list_transactions >>  inside handleClick... >> ");
-    this.props.list_transactions();
+    this.props.list_transactions({});
 ///////////////////////////////////////////////////////////////////////////////////
 
     // Invoke propose_payment() (a ZOME Call) :

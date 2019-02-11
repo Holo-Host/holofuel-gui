@@ -25,6 +25,7 @@ export interface State {
   txEndDate: string,
   txStartDate: string,
   txBatchType: string,
+  currentTxBatchInfo: {next:{}, over:{}} | null,
 }
 
 class HoloFuelSummaryPage extends React.Component<Props, State> {
@@ -33,7 +34,8 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     this.state = {
       txEndDate: "",
       txStartDate: "",
-      txBatchType: ""
+      txBatchType: "",
+      currentTxBatchInfo: null
     };
   };
 
@@ -49,6 +51,24 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     // Invoke list_proposals() (a ZOME Call) :
     console.log("calling : list_proposals >> ", this.props.list_proposals);
     this.props.list_proposals();
+  }
+
+  componentDidUpdate () {
+    { next, over } = this.props.list_of_instance_info;
+    currentTxBatchInfo = Object.assign({next, over}, {});
+
+    txEndDate = [next].until;
+    txStartDate = [next].since;
+
+    console.log(" <><><><><>< TXENDDATE UPON componentDidUpdate <><><><><", txEndDate);
+    console.log(" <><><><><>< TXSTARTDATE UPON componentDidUpdate <><><><><", txStartDate);
+
+    this.setState({
+      currentTxBatchInfo,
+      txStartDate,
+      txEndDate,
+      txBatchType: 'All Transactions',
+    })
   }
 
   handleTxBatchType = (txState: string) => {
@@ -72,10 +92,13 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   }
 
   handleTableRefresh = () => {
-    const { txBatchType, txStartDate, txEndDate } = this.state;
+    // const { txBatchType, txStartDate, txEndDate } = this.state;
+    console.log("calling : TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
     // Invoke list_transactions() WITH PARAMS :
+
     console.log("calling : list_transactions WITH PARAMS >> !! >> ");
-    this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
+
+    // this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
   }
 
    public render () {

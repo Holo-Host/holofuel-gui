@@ -21,12 +21,17 @@ const dataRefactor = (transaction_details: any) => {
     // console.log("transaction", transaction);
     if (transaction !== parseInt(transaction, 10)) {
       const newTxObj = {
-        transaction_date: transaction.dna_id,
-        amount:  transaction.dna_instance,
+        originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
+        amount:  transaction.amount,
         action: transaction.type,
         counterparty: transaction.hash,
         status: transaction.status,
-
+        transaction_timestamp: transaction.transaction_date, //timestamp of the current Transaction
+        eventCommitHash:transaction.eventCommitHash,
+        dueDate: transaction.dueDate,
+        notes: transaction.notes,
+        // originCommitHash: transaction.originCommitHash,
+        // inResponseToTX?: tranaction.inResponseToTX
       };
       console.log("newTxObj", newTxObj);
       return newTxObj;
@@ -67,32 +72,92 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     console.log("originTxList", originTxList);
     console.log("listOfTxByCurrentState", listOfTxByCurrentState);
 
-    const list_of_current_transactions = listOfTxByCurrentState.map((tx: any) => {
-      const txDate = DateTime.fromISO(tx.transactions.date);
-      console.log(txDate);
-      console.log("transaction.transactions.event", tx.transactions.event);
-      return {
-        transaction_date: txDate,
-        amount:  "amount",
-        action: tx.transactions.event,
-        counterparty: "counterparty",
-        status: tx.state
-      };
+  //   const list_of_current_transactions = listOfTxByCurrentState.map((tx: any) => {
+  //     const txDate = DateTime.fromISO(tx.transactions.timestamp);
+  //     console.log(txDate);
+  //     console.log("transaction.transactions.event", tx.transactions.event);
+  //     return {
+  //       originTimeStamp: txDate,
+  //       amount:  "amount",
+  //       action: tx.transactions.event,
+  //       counterparty: "counterparty",
+  //       status: tx.state
+  //     };
+  //
+  //     //// TODO: replace currently returned/exposed obj with one below once event is filtered & parsed...
+  //     // return {
+  //     //   transaction_date: txDate,
+  //     //   amount:  transaction.transactions.event.Request.amount, // TODO: filter by Event... ie: Proposal/Request...
+  //     //   action: transaction.transactions.event, // to locate the key of the event object (PS. in Rust this Event Object is typed as an Enum)
+  //     //   counterparty: transaction.transactions.event.Request.to, // TODO: filter by Event... ie: Proposal/Request...
+  //     //   status: transaction.state
+  //     // };
+  // });
 
-      //// TODO: replace currently returned/exposed obj with one below once event is filtered & parsed...
-      // return {
-      //   transaction_date: txDate,
-      //   amount:  transaction.transactions.event.Request.amount, // TODO: filter by Event... ie: Proposal/Request...
-      //   action: transaction.transactions.event, // to locate the key of the event object (PS. in Rust this Event Object is typed as an Enum)
-      //   counterparty: transaction.transactions.event.Request.to, // TODO: filter by Event... ie: Proposal/Request...
-      //   status: transaction.state
-      // };
-  })
-  console.log("list of current TRANSACTIONS", list_of_current_transactions);
-  return dataRefactor(list_of_current_transactions);
+      const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
+        const originTxDate = DateTime.fromISO(tx.timestamp);
+        const txEvent = tx.event;
+        console.log("transaction.transactions.timestamp >> ORIGIN TIMESTAMP <<", txDate)
+        console.log("transaction.transactions.event", txEvent);
+
+        let amount: number;
+        let counterparty: string;
+        let dueDate: string;
+        let txTimestamp: string;
+        let notes: string;
+        let eventCommitHash : string;
+        let inResponseToTX: string;
+
+        switch (txEvent) {
+          case 'request' :
+            amount =  txEvent.amount;
+            counterparty = txEvent.to;
+            dueDate = txEvent.deadline;
+            notes = txEvent.notes;
+            eventCommitHash =  tx.origin;
+            inResponseToTX = null;
+            // txTimestamp = ;
+          break;
+
+          case 'proposal' :
+            amount =  txEvent.tx.amount;
+            counterparty = txEvent.tx.to;
+            dueDate = txEvent.tx.deadline;
+            notes = txEvent.tx.notes;
+            inResponseToTX: tx.request;
+            // txTimestamp = ;
+            // eventCommitHash = ;
+            break;
+
+            case 'decline' :
+              break;
+
+            case 'reject' :
+              break;
+
+            case 'refund' :
+              break;
+          }
+
+          return {
+            originTimeStamp: originTxDate,
+            amount,
+            action: txEvent,
+            counterparty,
+            status: tx.state,
+            originCommitHash: tx.origin,
+            dueDate: dueDate,
+            notes: notes,
+            inResponseToTX,
+            // eventCommitHash:, // commit hash for the currently displayed Transaction
+            // transaction_timestamp:, // timestamp of the currently displayed Transaction
+          };
+        };
+      });
+
+  console.log("list of current TRANSACTIONS", list_of_refactored_transactions);
+  return dataRefactor(list_of_refactored_transactions);
 }
-
-[]
 
 // Locate Most Recent State for each Transaction : Helper Function
 const listTxByOriginAddress = (tx_list: any) => {
