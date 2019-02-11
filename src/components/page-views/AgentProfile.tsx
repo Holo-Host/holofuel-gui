@@ -80,24 +80,11 @@ class AgentProfile extends React.Component<Props, State> {
       <Typography className={classnames(classes.tableHeader, classes.profileHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
         HoloFuel Profile
       </Typography>
+      <br/>
+      <br/>
+      <br/>
 
-      {/* <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>
-        <div className={classes.flexItem}>
-          <h3 className={classes.h3}>Hash ID</h3>
-          <Avatar className={classnames(classes.headerAvatar, classes.profile)}>
-            <Jdenticon hash={ this.state.agentData!.agentHash } {...newProps} />
-          </Avatar>
-        </div>
-        <div className={classes.verticalLine}/>
-        <div className={classes.flexItem}>
-          <h3 className={classes.h3}>Name</h3>
-          <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
-            { this.state.agentData!.agentString }
-          </Typography>
-        </div>
-      </div> */}
-
-    <ProfileInfoCard {...newProps} agentHash={this.state.agentData!.agentHash} name={this.state.agentData!.agentString}email={MOCK_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}/>
+      <ProfileInfoCard {...newProps} agentHash={this.state.agentData!.agentHash} name={this.state.agentData!.agentString}email={MOCK_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}/>
 
       <div className={classes.jumbotronImg}>
         <h4 className={classes.h4}> Your HoloFuel ID</h4>
