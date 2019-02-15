@@ -25,7 +25,7 @@ export interface State {
   txEndDate: string | undefined,
   txStartDate: string | undefined,
   txBatchType: string | undefined,
-  currentTxBatchInfo: {next:{}, over:{}} | null,
+  currentTxBatchInfo: {newer:{}, over:{}} | null,
   data: {} | null,
   prevProps: any
 }
@@ -46,15 +46,15 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   public componentDidMount () {
     // Invoke list_transactions() (a ZOME Call) :
     console.log("calling : list_transactions >>  inside HoloFuelSummaryPage... >> ");
-    this.props.list_transactions();
+    this.props.list_transactions({});
 
     // Invoke list_requests() (a ZOME Call) :
-    console.log("calling : list_requests >> ", this.props.list_requests);
-    this.props.list_requests();
+    // console.log("calling : list_requests >> ", this.props.list_requests);
+    // this.props.list_requests();
 
     // Invoke list_proposals() (a ZOME Call) :
-    console.log("calling : list_proposals >> ", this.props.list_proposals);
-    this.props.list_proposals();
+    // console.log("calling : list_proposals >> ", this.props.list_proposals);
+    // this.props.list_proposals();
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -68,10 +68,11 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       const data = prevProps.value !== transactionData ? transactionData : state.data
       console.log("data", data);
 
-      const { next, over } = list_of_transactions;
-      const currentTxBatchInfo = Object.assign({next, over}, {});
-      const txEndDate = next.until;
-      const txStartDate = next.since;
+      const { newer } = list_of_transactions;
+      const currentTxBatchInfo = Object.assign({newer}, {});
+      console.log("------------------------>",list_of_transactions)
+      const txEndDate = newer!.until;
+      const txStartDate = newer!.since;
       console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
       console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
 

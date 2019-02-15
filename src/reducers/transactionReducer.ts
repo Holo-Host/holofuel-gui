@@ -50,16 +50,17 @@ export const INITIAL_STATE: State = {
       payable: null,
       receivable: null
     },
-    next: {
+    newer: {
       since: "",
       until: "",
       limit: TX_BATCH_VIEW_AMOUNT,
       state: ""
     },
-    over: {
-      first: 0,
-      count: 0,
-      total: 0
+    older: {
+      since: "",
+      until: "",
+      limit: TX_BATCH_VIEW_AMOUNT,
+      state: ""
     },
     transactions: [{
         timestamp: "",
