@@ -23,10 +23,10 @@ const dataRefactor = (transaction_details: any) => {
       const newTxObj = {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
         amount:  transaction.amount,
-        action: transaction.type,
-        counterparty: transaction.hash,
+        action: transaction.action,
+        counterparty: transaction.originCommitHash,
         status: transaction.status,
-        transaction_timestamp: transaction.transaction_date, //timestamp of the current Transaction
+        transaction_timestamp: transaction.transaction_timestamp, //timestamp of the current Transaction
         eventCommitHash:transaction.eventCommitHash,
         dueDate: transaction.dueDate,
         notes: transaction.notes,
@@ -66,12 +66,11 @@ const dataRefactor = (transaction_details: any) => {
 export const refactorListOfTransactions = (list_of_transactions: any) => {
   console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
 
-  const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
-    // const originTxDate = DateTime.fromISO(tx.timestamp);
-    console.log("transaction.transactions.timestamp >> ORIGIN TIMESTAMP <<", tx.timestamp)
-    const txEvent = tx.event;
-    console.log("transaction.transactions.event", txEvent);
+  const list_of_refactored_transactions = MOCK_list_of_transactions_requests_only.transactions.map((tx: any) => {
+    const event = tx.event;
+    console.log("transaction.transactions.event", event);
 
+    let txEvent:string | undefined = undefined;
     let amount: number | null = null;
     let counterparty: string | undefined = undefined;
     let dueDate: string | undefined = undefined;
@@ -80,36 +79,36 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     // let eventCommitHash : string; // FIND way to get acess to this for all tx types...
     let inResponseToTX: string | undefined = undefined;
 
-    switch (txEvent) {
-      case 'request' :
-        amount =  txEvent.amount;
-        counterparty = txEvent.to;
-        dueDate = txEvent.deadline;
-        notes = txEvent.notes;
-        // eventCommitHash =  tx.origin; // FIND way to get acess to this for all tx types...
-        inResponseToTX = undefined;
-        // txTimestamp = ;
-      break;
+    if (event.Request){
+      txEvent = "Request"
+      amount =  event.Request.amount;
+      counterparty = event.Request.to;
+      dueDate = event.Request.deadline;
+      notes = event.Request.notes;
+      // eventCommitHash =  tx.origin; // FIND way to get acess to this for all tx types...
+      inResponseToTX = undefined;
+      // txTimestamp = ;
 
-      case 'proposal' :
-        amount =  txEvent.tx.amount;
-        counterparty = txEvent.tx.to;
-        dueDate = txEvent.tx.deadline;
-        notes = txEvent.tx.notes;
-        inResponseToTX: tx.request;
-        // txTimestamp = ;
-        // eventCommitHash = ;
-        break;
+    }
+    else if (event.Proposal){
+      txEvent="Proposal"
+      amount =  event.tx.amount;
+      counterparty = event.tx.to;
+      dueDate = event.tx.deadline;
+      notes = event.tx.notes;
+      inResponseToTX: tx.request;
+      // txTimestamp = ;
+      // eventCommitHash = ;
+    }
+        // case 'decline' :
+        //   break;
+        //
+        // case 'reject' :
+        //   break;
+        //
+        // case 'refund' :
+        //   break;
 
-        case 'decline' :
-          break;
-
-        case 'reject' :
-          break;
-
-        case 'refund' :
-          break;
-      }
 
       return {
         originTimeStamp: tx.timestamp,
@@ -122,7 +121,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
         notes: notes,
         inResponseToTX,
         // eventCommitHash:, // commit hash for the currently displayed Transaction
-        // transaction_timestamp:, // timestamp of the currently displayed Transaction
+        transaction_timestamp:"TBD", // timestamp of the currently displayed Transaction
       };
     });
 
@@ -130,6 +129,93 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
   return dataRefactor(list_of_refactored_transactions);
 };
 
+// MOCK Data
+export const MOCK_list_of_transactions_requests_only = {
+  ledger: {
+      balance: 20,
+      credit: 41,
+      payable: 24,
+      receivable: 15
+  },
+  newer: {
+      state: null,
+      since: "2018-04-12",
+      until: "2018-07-01",
+      limit: 50
+  },
+  older: {
+      state: null,
+      since: "2018-04-12",
+      until: "2018-07-01",
+      limit: 50
+  },
+  transactions: [
+    {
+      timestamp: "2018-07-19",
+      state: "outgoing/completed",
+      origin: "1GxHKZ8HCxKUBN7tQHTu75FN82g4sx2zP6",
+      event: {Request:{
+        amount: 40,
+        to: "Liza",
+        deadline: "Friday",
+        notes: "Today is Friday"
+      }},
+      adjustment: {
+          balance: 13,
+          payable: 80,
+          receivable: 93
+        }
+    },
+    {
+      timestamp: "2019-05-09",
+      state: "incoming/completed",
+      origin: "asdfas8HCijlkmxKUBN7tQHTu75FNp439joi",
+      event: {Request:{
+        amount: 40,
+        to: "Liza",
+        deadline: "Friday",
+        notes: "Today is Friday"
+      }},
+      adjustment: {
+          balance: 59,
+          payable: 68,
+          receivable: 4.1
+        }
+    },
+    {
+      timestamp: "2018-12-11",
+      state: "outgoing/approved",
+      origin: "1DEiFZ1kThW4AVtDmL1w2oDyEKYKcqBcRB",
+      event: {Request:{
+        amount: 40,
+        to: "Liza",
+        deadline: "Friday",
+        notes: "Today is Friday"
+      }},
+      adjustment: {
+          balance: 84,
+          payable: 8,
+          receivable: 12
+        }
+    },
+    {
+      timestamp: "2018-04-27",
+      state: "incoming/approved",
+      origin: "1MNMQcEsd3BkQpaFUyZrViQ26axooErWtc",
+      event: {Request:{
+        amount: 40,
+        to: "Liza",
+        deadline: "Friday",
+        notes: "Today is Friday"
+      }},
+      adjustment: {
+          balance: 47,
+          payable: 79,
+          receivable: 61
+      }
+    }
+  ]
+}
 
 // Locate Most Recent State for each Transaction : Helper Function
 // const listTxByOriginAddress = (tx_list: any) => {

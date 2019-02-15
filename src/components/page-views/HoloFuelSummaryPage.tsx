@@ -12,7 +12,10 @@ import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar'
 import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
+import {RequestActionParam} from '../../utils/types';
+import * as moment from 'moment';
 
+// type Moment = moment.Moment;
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
@@ -55,6 +58,20 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     // Invoke list_proposals() (a ZOME Call) :
     // console.log("calling : list_proposals >> ", this.props.list_proposals);
     // this.props.list_proposals();
+      // this.initializing();
+  }
+
+  initializing (){
+    const request_tx_obj : RequestActionParam = {
+      from: "HoloTester2-----------------------------------------------------------------------AAACZp4xHB", // this will be the payment requestor's AGENT_ADDRESS
+      amount:"0.0000000569066456676 HF",
+      notes: "testing out the request_payment api call...",
+      deadline: moment().format()
+    }
+    console.log("request_tx_obj", request_tx_obj);
+    console.log("calling : request_payment >> ", this.props.request_payment);
+    this.props.request_payment(request_tx_obj);
+
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {

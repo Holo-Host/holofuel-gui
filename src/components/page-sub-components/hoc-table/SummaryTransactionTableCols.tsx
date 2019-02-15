@@ -62,6 +62,9 @@ const pending_transaction_table_columns = (props: any, state: any) => {
     filterAll: true,
     Cell: (row: any) => (
       <div>
+        <div style={{ padding: '5px' }}>
+        { row.value }
+        </div>
         <TransactionDetailsButton
           transactionState={row.value}
         />
@@ -77,10 +80,10 @@ export const processed_transaction_table_columns = (props: any, state: any) => {
   // console.log("Table Columns Props", props);
   // console.log("Table Columns State", state);
   const table_columns = [{
-    Header: 'Origin Date',
-    accessor: 'transaction_date',
+    Header: 'Transaction Date',
+    accessor: 'transaction_timestamp',
     filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["transaction_date"] }),
+      matchSorter(rows, filter.value, { keys: ["transaction_timestamp"] }),
     filterAll: true,
       Cell: (row: any) => (
         <div style={{ padding: '5px' }}>
