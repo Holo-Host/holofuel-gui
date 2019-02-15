@@ -139,6 +139,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
             </Typography>
 
             <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
+            
             <TransactionTables txBatchType={this.state.txBatchType} txBatchDuration={{endDate:this.state.txEndDate, startDate:this.state.txStartDate}} handleTableRefresh={this.handleTableRefresh} {...newProps} />
 
             { transferBtnBar ?

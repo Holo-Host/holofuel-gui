@@ -119,16 +119,18 @@ export type ListTransactionOptions = {
   limit?: number,
 }
 
-export type ListTransactionsCoverage = {
-  first: number, //   index of 1st transaction
-  count: number, //   and how many transaction returned
-  total: number
-}
+// export type ListTransactionsCoverage = {
+//   first: number, //   index of 1st transaction
+//   count: number, //   and how many transaction returned
+//   total: number
+// }
 
 export type ListTransactionsResult = {
   ledger: Ledger,
-  next: ListTransactionOptions,
-  over: ListTransactionsCoverage,
+  newer: ListTransactionOptions, // newer
+  older: ListTransactionOptions, // newer
+  // next: ListTransactionOptions,
+  // over: ListTransactionsCoverage,
   transactions: [
     {
       timestamp: DateTimeString | string,

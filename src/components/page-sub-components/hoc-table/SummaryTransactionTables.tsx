@@ -14,10 +14,10 @@ import Refresh from '@material-ui/icons/Refresh';
 // Local Imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
+import { refactorListOfTransactions } from '../../../utils/table-helper-functions/transaction-data-refactor';
 import SimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
-import createMockApiData from '../../../utils/seed-data/mock-api-data';
 
 export interface OwnProps {
   classes: any,
@@ -74,22 +74,13 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
   displayData = () => {
     console.log("this.state inside displayData", this.state);
-    console.log("this.;props inside displayData", this.props);
+    console.log("this.props inside displayData", this.props);
     if (this.props.list_of_transactions) {
-      // const { list_of_transactions, list_of_instance_info } = this.props;
+      const table_pending_table_info =  refactorListOfTransactions(this.props.list_of_transactions);
 
-      // const table_pending_table_info =  refactorInstanceData(list_of_transactions);
+      console.log("DATA GOING TO INSTANCE MAIN TABLE >>>> !! table_pending_table_info !! <<<<<<<< : ", table_pending_table_info);
+      
       // const table_pending_table_info = [{}];
-
-      //NB: MOCK DATA USE
-      const { list_of_request_transactions, list_of_requests, list_of_proposals } = createMockApiData;
-
-      const list_of_all_tx_commits_hashes = list_of_requests.concat(list_of_proposals);
-      console.log("list_of_all_tx_commits_hashes", list_of_all_tx_commits_hashes);
-
-      const table_pending_table_info = list_of_request_transactions;
-
-      // console.log("DATA GOING TO INSTANCE MAIN TABLE >>>> !! table_pending_table_info !! <<<<<<<< : ", table_pending_table_info);
       return table_pending_table_info;
     }
   }
@@ -155,6 +146,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             data={pending_table_data}
             columns={ pending_table_columns }
             SubComponent={(row:any) => {
+              // SubComponent LOGIC >> to display the tx details...
               console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
               // refactor rows to include the tx deadline, tx notes, + tx commit_hash, and timestamp of last action commit (to record completion...).
               {/* const currentRowData = {

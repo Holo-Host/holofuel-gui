@@ -1,4 +1,4 @@
-import { DateTime } from 'luxon';
+// import { DateTime } from 'luxon';
 // To Parse from IS0-8601 (date as supplied by Rust Code) through use of Luxon :
 //   > DateTime.fromISO("2017-05-15")  //=> May 15, 2017 at midnight
 //   > DateTime.fromISO("2017-05-15T08:30:00")  //=> May 15, 2017 at 8:30
@@ -67,10 +67,10 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
   console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
 
     // find,isolate, and return most recent event for each tx :
-    const originTxList = listTxByOriginAddress(list_of_transactions)
-    const listOfTxByCurrentState = isoloateTxMostRecentState(originTxList);
-    console.log("originTxList", originTxList);
-    console.log("listOfTxByCurrentState", listOfTxByCurrentState);
+    // const originTxList = listTxByOriginAddress(list_of_transactions)
+    // console.log("originTxList", originTxList);
+    // const listOfTxByCurrentState = isoloateTxMostRecentState(originTxList);
+    // console.log("listOfTxByCurrentState", listOfTxByCurrentState);
 
   //   const list_of_current_transactions = listOfTxByCurrentState.map((tx: any) => {
   //     const txDate = DateTime.fromISO(tx.transactions.timestamp);
@@ -95,9 +95,9 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
   // });
 
   const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
-    const originTxDate = DateTime.fromISO(tx.timestamp);
+    // const originTxDate = DateTime.fromISO(tx.timestamp);
+    console.log("transaction.transactions.timestamp >> ORIGIN TIMESTAMP <<", tx.timestamp)
     const txEvent = tx.event;
-    console.log("transaction.transactions.timestamp >> ORIGIN TIMESTAMP <<", originTxDate)
     console.log("transaction.transactions.event", txEvent);
 
     let amount: number | null = null;
@@ -140,7 +140,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       }
 
       return {
-        originTimeStamp: originTxDate,
+        originTimeStamp: tx.timestamp,
         amount,
         action: txEvent,
         counterparty,
@@ -152,66 +152,59 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
         // eventCommitHash:, // commit hash for the currently displayed Transaction
         // transaction_timestamp:, // timestamp of the currently displayed Transaction
       };
-    };
+    });
 
   console.log("list of current TRANSACTIONS", list_of_refactored_transactions);
   return dataRefactor(list_of_refactored_transactions);
-});
+};
+
 
 // Locate Most Recent State for each Transaction : Helper Function
-const listTxByOriginAddress = (tx_list: any) => {
-  // iterate over tx_list, checking the Origin Commit Hash
-  let arrayOfTxChains: Array<any> = [];
+// const listTxByOriginAddress = (tx_list: any) => {
+//   // iterate over tx_list, checking the Origin Commit Hash
+//   let arrayOfTxChains: Array<any> = [];
+//
+//   for (let tx of tx_list) {
+//     let transaction_obj = tx!.transactions;
+//     let tx_origin_address = tx!.transactions.origin;
+//     if (tx_origin_address !== [arrayOfTxChains]) {
+//       arrayOfTxChains.push({tx_origin_address:[transaction_obj]});
+//     }
+//     else if (tx_origin_address === [arrayOfTxChains]) {
+//         tx_origin_address.push({transaction_obj});
+//     }
+//   }
+//   console.log(">>>>>>>>> arrayOfTxChains <<<<<<<<< : ", arrayOfTxChains);
+// }
 
-  for (let tx of tx_list) {
-    let transaction_obj = tx.transactions;
-    let tx_origin_address = tx.transactions.origin;
-    if (tx_origin_address !== [arrayOfTxChains]) {
-      arrayOfTxChains.push({tx_origin_address:[transaction_obj]});
-    }
-    else if (tx_origin_address === [arrayOfTxChains]) {
-        tx_origin_address.push({transaction_obj});
 
-      // arrayOfTxChains.find(origin_key => {
-      //   let origin_object = origin_key === tx_origin_address;
-      //   origin_object.push(transaction_obj);
-      // })
-      // origin_object.push(transaction_obj);
+// const isoloateTxMostRecentState = (txListByOriginAddress: any) => {
+//   let filtered_tx_list = [];
+//   filtered_tx_list = txListByOriginAddress.filter((tx: any) => {
+//       // currently sorting by date to locate the most recent event/state for each tx:
+//       // Luxon: d1 < d2 // is d1 before d2?
+//       // (Luxon Ref: https://moment.github.io/luxon/docs/manual/math.html#comparing-datetimes)
+//       let most_recent_event : any;
+//       let most_recent_event_date: any;
+//       for(let tx_event of tx ) {
+//         // let current_event_date = tx_event.timestamp.fromISO();
+//         if(!most_recent_event_date){
+//           most_recent_event_date = tx_event.timestamp;
+//           most_recent_event = tx_event;
+//         }
+//         else if (tx_event.timestamp > most_recent_event_date){
+//           most_recent_event_date = tx_event.timestamp;
+//           most_recent_event = tx_event;
+//         }
+//       }
+//       console.log("===>>>> most_recent_event_date", most_recent_event_date)
+//       return most_recent_event;
+//   });
+//
+//   console.log(" ====>>>> filtered_tx_list <<<===== ", filtered_tx_list);
+//   return filtered_tx_list;
+// }
 
-      // let origin_object = arrayOfTxChains.filter(origin_key => {
-      //   return origin_key === tx_origin_address;
-      // })
-    }
-  }
-  console.log(">>>>>>>>> arrayOfTxChains <<<<<<<<< : ", arrayOfTxChains);
-}
-
-const isoloateTxMostRecentState = (txListByOriginAddress: any) => {
-  let filtered_tx_list = [];
-  filtered_tx_list = txListByOriginAddress.filter((tx: any) => {
-      // currently sorting by date to locate the most recent event/state for each tx:
-      // Luxon: d1 < d2 // is d1 before d2?
-      // (Luxon Ref: https://moment.github.io/luxon/docs/manual/math.html#comparing-datetimes)
-      let most_recent_event : any;
-      let most_recent_event_date: any;
-      for(let tx_event of tx ) => {
-        // let current_event_date = tx_event.timestamp.fromISO();
-        if(!most_recent_event_date){
-          most_recent_event_date = tx_event.timestamp;
-          most_recent_event = tx_event;
-        }
-        else if (tx_event.timestamp > most_recent_event_date){
-          most_recent_event_date = tx_event.timestamp;
-          most_recent_event = tx_event;
-        }
-      }
-      console.log("===>>>> most_recent_event_date", most_recent_event_date)
-      return most_recent_event;
-  });
-
-  console.log(" ====>>>> filtered_tx_list <<<===== ", filtered_tx_list);
-  return filtered_tx_list;
-}
 
 // mostRecentEvent = tx.filter(tx_event => {
 //   let current_event_date = tx_event.timestamp;
