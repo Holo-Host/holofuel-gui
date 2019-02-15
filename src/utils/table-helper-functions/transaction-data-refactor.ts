@@ -94,70 +94,69 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
   //     // };
   // });
 
-      const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
-        const originTxDate = DateTime.fromISO(tx.timestamp);
-        const txEvent = tx.event;
-        console.log("transaction.transactions.timestamp >> ORIGIN TIMESTAMP <<", txDate)
-        console.log("transaction.transactions.event", txEvent);
+  const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
+    const originTxDate = DateTime.fromISO(tx.timestamp);
+    const txEvent = tx.event;
+    console.log("transaction.transactions.timestamp >> ORIGIN TIMESTAMP <<", originTxDate)
+    console.log("transaction.transactions.event", txEvent);
 
-        let amount: number;
-        let counterparty: string;
-        let dueDate: string;
-        let txTimestamp: string;
-        let notes: string;
-        let eventCommitHash : string;
-        let inResponseToTX: string;
+    let amount: number | null = null;
+    let counterparty: string | undefined = undefined;
+    let dueDate: string | undefined = undefined;
+    // let txTimestamp: string; // FIND way to get acess to this for all tx types...
+    let notes: string | undefined = undefined;
+    // let eventCommitHash : string; // FIND way to get acess to this for all tx types...
+    let inResponseToTX: string | undefined = undefined;
 
-        switch (txEvent) {
-          case 'request' :
-            amount =  txEvent.amount;
-            counterparty = txEvent.to;
-            dueDate = txEvent.deadline;
-            notes = txEvent.notes;
-            eventCommitHash =  tx.origin;
-            inResponseToTX = null;
-            // txTimestamp = ;
+    switch (txEvent) {
+      case 'request' :
+        amount =  txEvent.amount;
+        counterparty = txEvent.to;
+        dueDate = txEvent.deadline;
+        notes = txEvent.notes;
+        // eventCommitHash =  tx.origin; // FIND way to get acess to this for all tx types...
+        inResponseToTX = undefined;
+        // txTimestamp = ;
+      break;
+
+      case 'proposal' :
+        amount =  txEvent.tx.amount;
+        counterparty = txEvent.tx.to;
+        dueDate = txEvent.tx.deadline;
+        notes = txEvent.tx.notes;
+        inResponseToTX: tx.request;
+        // txTimestamp = ;
+        // eventCommitHash = ;
+        break;
+
+        case 'decline' :
           break;
 
-          case 'proposal' :
-            amount =  txEvent.tx.amount;
-            counterparty = txEvent.tx.to;
-            dueDate = txEvent.tx.deadline;
-            notes = txEvent.tx.notes;
-            inResponseToTX: tx.request;
-            // txTimestamp = ;
-            // eventCommitHash = ;
-            break;
+        case 'reject' :
+          break;
 
-            case 'decline' :
-              break;
+        case 'refund' :
+          break;
+      }
 
-            case 'reject' :
-              break;
-
-            case 'refund' :
-              break;
-          }
-
-          return {
-            originTimeStamp: originTxDate,
-            amount,
-            action: txEvent,
-            counterparty,
-            status: tx.state,
-            originCommitHash: tx.origin,
-            dueDate: dueDate,
-            notes: notes,
-            inResponseToTX,
-            // eventCommitHash:, // commit hash for the currently displayed Transaction
-            // transaction_timestamp:, // timestamp of the currently displayed Transaction
-          };
-        };
-      });
+      return {
+        originTimeStamp: originTxDate,
+        amount,
+        action: txEvent,
+        counterparty,
+        status: tx.state,
+        originCommitHash: tx.origin,
+        dueDate: dueDate,
+        notes: notes,
+        inResponseToTX,
+        // eventCommitHash:, // commit hash for the currently displayed Transaction
+        // transaction_timestamp:, // timestamp of the currently displayed Transaction
+      };
+    };
 
   console.log("list of current TRANSACTIONS", list_of_refactored_transactions);
   return dataRefactor(list_of_refactored_transactions);
-}
+});
 
 // Locate Most Recent State for each Transaction : Helper Function
 const listTxByOriginAddress = (tx_list: any) => {

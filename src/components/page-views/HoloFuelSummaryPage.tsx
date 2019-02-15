@@ -22,9 +22,9 @@ export interface OwnProps {
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
-  txEndDate: string,
-  txStartDate: string,
-  txBatchType: string,
+  txEndDate: string | undefined,
+  txStartDate: string | undefined,
+  txBatchType: string | undefined,
   currentTxBatchInfo: {next:{}, over:{}} | null,
 }
 
@@ -54,11 +54,11 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   }
 
   componentDidUpdate () {
-    const { next, over } = this.props.list_of_instance_info;
-    currentTxBatchInfo = Object.assign({next, over}, {});
+    const { next, over } = this.props.list_of_transactions;
+    const currentTxBatchInfo = Object.assign({next, over}, {});
 
-    txEndDate = [next].until;
-    txStartDate = [next].since;
+    const txEndDate = next.until;
+    const txStartDate = next.since;
 
     console.log(" <><><><><>< TXENDDATE UPON componentDidUpdate <><><><><", txEndDate);
     console.log(" <><><><><>< TXSTARTDATE UPON componentDidUpdate <><><><><", txStartDate);
