@@ -93,11 +93,11 @@ class DateTimePicker extends React.Component<Props, State> {
     const txStatesdropDownHeader : string = "Transactions by Type";
     const txStatesDropDownList : Array<any> = [
       {name: 'All Transactions'},
-      {name: 'Requests'},
-      {name: 'Proposals'},
-      {name: 'Rejected'},
-      {name: 'Declined'},
-      {name: 'Refunded'},
+      {name: 'Incoming'},
+      {name: 'Outgoing'},
+      {name: 'Pending'},
+      {name: 'Approved'},
+      {name: 'Completed'},
     ];
 
     return (

@@ -6,7 +6,8 @@ export const list_of_request_transactions = [{
       "receivable": 15
   },
   "next": {
-      "state": "2018-04-12",
+      "state": "request",
+      "since": "2018-04-12",
       "until": "2018-07-01",
       "limit": 1
   },
@@ -17,7 +18,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-07-19",
-    "state": "Comedy|Crime",
+    "since": "request",
     "origin": "1GxHKZ8HCxKUBN7tQHTu75FN82g4sx2zP6",
     "event": {
       "Request": {
@@ -27,7 +28,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-04-10"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 84,
         "payable": 58,
@@ -43,7 +44,8 @@ export const list_of_request_transactions = [{
       "receivable": 38
   },
   "next": {
-      "state": "2018-04-15",
+      "state":"request",
+      "since": "2018-04-15",
       "until": "2018-02-27",
       "limit": 2
   },
@@ -54,7 +56,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-03-08",
-    "state": "Action",
+    "state": "proposal",
     "origin": "1DEiFZ1kThW4AVtDmL1w2oDyEKYKcqBcRB",
     "event": {
       "Request": {
@@ -64,7 +66,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-06-29"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 68,
         "payable": 80,
@@ -80,7 +82,8 @@ export const list_of_request_transactions = [{
       "receivable": 3
   },
   "next": {
-      "state": "2018-04-20",
+      "state": "request",
+      "since": "2018-04-20",
       "until": "2018-08-17",
       "limit": 3
   },
@@ -91,7 +94,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-12-11",
-    "state": "Comedy|Drama|Romance",
+    "state": "request",
     "origin": "1BpfQN4LwvzB4A5v3km1dBujfawZo3AYmz",
     "event": {
       "Request": {
@@ -101,7 +104,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-12-13"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 13,
         "payable": 80,
@@ -117,7 +120,8 @@ export const list_of_request_transactions = [{
       "receivable": 18
   },
   "next": {
-      "state": "2018-09-30",
+      "state": "request",
+      "since": "2018-09-30",
       "until": "2018-07-26",
       "limit": 4
   },
@@ -128,7 +132,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-11-02",
-    "state": "Drama",
+    "state": "request",
     "origin": "1KSfULedsWUGKnjm36ZdWRtVhd2WtN7nGn",
     "event": {
       "Request": {
@@ -138,7 +142,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-12-21"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 97,
         "payable": 58,
@@ -154,7 +158,8 @@ export const list_of_request_transactions = [{
       "receivable": 77
   },
   "next": {
-      "state": "2018-06-28",
+      "state": "request",
+      "since": "2018-06-28",
       "until": "2018-04-27",
       "limit": 5
   },
@@ -165,7 +170,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-03-22",
-    "state": "Comedy|Romance",
+    "state": "request",
     "origin": "17xab2pD9jBYhBMSmqK6qJ4JBZuf1rxPQD",
     "event": {
       "Request": {
@@ -175,7 +180,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-11-03"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 5,
         "payable": 99,
@@ -191,7 +196,8 @@ export const list_of_request_transactions = [{
       "receivable": 30
   },
   "next": {
-      "state": "2018-05-17",
+      "state": "request",
+      "since": "2018-05-17",
       "until": "2018-09-26",
       "limit": 6
   },
@@ -202,7 +208,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-02-23",
-    "state": "Action|Animation|Children|Comedy",
+    "state": "request",
     "origin": "1LbWZ9hiQtJiyTzsQ7HWVJbFoE1JXzr5d5",
     "event": {
       "Request": {
@@ -212,7 +218,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-06-03"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 46,
         "payable": 83,
@@ -228,7 +234,8 @@ export const list_of_request_transactions = [{
       "receivable": 36
   },
   "next": {
-      "state": "2018-01-30",
+      "state": "request",
+      "since": "2018-01-30",
       "until": "2018-06-23",
       "limit": 7
   },
@@ -239,7 +246,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-09-12",
-    "state": "Drama",
+    "state": "request",
     "origin": "1JJT64jeouzio55gjR8TFp3h2TyKLTJjB",
     "event": {
       "Request": {
@@ -249,7 +256,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-09-15"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 30,
         "payable": 23,
@@ -265,7 +272,8 @@ export const list_of_request_transactions = [{
       "receivable": 34
   },
   "next": {
-      "state": "2018-02-24",
+      "state": "request",
+      "since": "2018-02-24",
       "until": "2018-07-28",
       "limit": 8
   },
@@ -276,7 +284,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-04-09",
-    "state": "Crime|Mystery|Sci-Fi|Thriller",
+    "state": "request",
     "origin": "1JENsQ3ZwDF5wHGRjtd8onzbxHSThP4z1F",
     "event": {
       "Request": {
@@ -286,7 +294,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-03-13"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 52,
         "payable": 5,
@@ -302,7 +310,8 @@ export const list_of_request_transactions = [{
       "receivable": 73
   },
   "next": {
-      "state": "2018-11-24",
+      "state": "request",
+      "since": "2018-11-24",
       "until": "2018-05-25",
       "limit": 9
   },
@@ -313,7 +322,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-06-26",
-    "state": "Drama|Romance",
+    "state": "request",
     "origin": "13prb7yyVNjRrAqT81VwUP8qVzryRiZjyX",
     "event": {
       "Request": {
@@ -323,7 +332,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-10-18"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 77,
         "payable": 55,
@@ -339,7 +348,8 @@ export const list_of_request_transactions = [{
       "receivable": 89
   },
   "next": {
-      "state": "2018-01-30",
+      "state": "request",
+      "since": "2018-01-30",
       "until": "2018-11-04",
       "limit": 10
   },
@@ -350,7 +360,7 @@ export const list_of_request_transactions = [{
   },
   "transactions": {
     "timestamp": "2018-12-30",
-    "state": "Comedy|Drama",
+    "state": "request",
     "origin": "1GhWYA7QcAf1Ds74B3A2RrT1RzjGs7sKPx",
     "event": {
       "Request": {
@@ -360,7 +370,7 @@ export const list_of_request_transactions = [{
         "deadline": "2018-10-26"
       }
     },
-    "adjust": {
+    "adjustment": {
       "Adjustment": {
         "balance": 15,
         "payable": 91,

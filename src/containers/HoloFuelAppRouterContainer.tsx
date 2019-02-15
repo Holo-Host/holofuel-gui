@@ -9,7 +9,7 @@ import AgentProfile from "../components/page-views/AgentProfile";
 import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTransactionDetailPage';
 // import Dashboard from '../components/page-sub-components/dashboard-header/Dashboard';
 import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
-import { Ledger, RequestActionParam, ProposalActionParam } from '../utils/types'; // ListTransactionsResult , , , Address, DateTimeString
+import { Ledger, RequestActionParam, ProposalActionParam, ListTransactionsResult } from '../utils/types'; // ListTransactionsResult , , , Address, DateTimeString
 import AppNavBar from '../components/page-sub-components/app-nav-bar/AppNavBar';
 import SubNavBar from '../components/page-sub-components/app-nav-bar/SubNavBar';
 // custom styles :
@@ -33,8 +33,8 @@ export interface StateProps {
   my_agent_string: string,
 // currently this is just using a hard-coded value that relates to the container.
   my_agent_hash: string,
-
-  list_of_transactions: typeof createMockApiData.list_of_request_transactions,
+  list_of_transactions : ListTransactionsResult,
+  // list_of_transactions: typeof createMockApiData.list_of_request_transactions,
   list_of_requests: typeof createMockApiData.list_of_requests,
   list_of_proposals: typeof createMockApiData.list_of_proposals,
   view_specific_request: typeof createMockApiData.get_request_kv_store[0],

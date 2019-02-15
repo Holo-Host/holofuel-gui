@@ -113,10 +113,10 @@ export type AddressArray = Array<Address>; // an array of the commit hashes/ dht
 
 
 export type ListTransactionOptions = {
-  since: DateTimeString | string,
-  until: DateTimeString | string,
-  limit: number,
   state?: ListStateNames | string
+  since?: DateTimeString | string,
+  until?: DateTimeString | string,
+  limit?: number,
 }
 
 export type ListTransactionsCoverage = {

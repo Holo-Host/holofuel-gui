@@ -54,7 +54,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   }
 
   componentDidUpdate () {
-    { next, over } = this.props.list_of_instance_info;
+    const { next, over } = this.props.list_of_instance_info;
     currentTxBatchInfo = Object.assign({next, over}, {});
 
     txEndDate = [next].until;

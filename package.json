@@ -35,13 +35,15 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "react-table": "^6.8.6",
+    "recompose": "^0.30.0",
     "redux": "latest",
     "redux-axios-middleware": "^4.0.0",
     "redux-logger": "^3.0.6",
     "source-map-support": "^0.5.10",
     "typeface-raleway": "0.0.54",
     "typeface-roboto": "0.0.54",
-    "typesafe-actions": "^2.0.4"
+    "typesafe-actions": "^2.0.4",
+    "utility-types": "^3.4.1"
   },
   "scripts": {
     "start": "PORT=9300 react-scripts-ts start",
@@ -200,6 +202,7 @@
     "@types/react-redux": "^6.0.6",
     "@types/react-router-dom": "^4.3.0",
     "@types/react-table": "^6.7.21",
+    "@types/recompose": "^0.30.3",
     "@types/redux-logger": "^3.0.6",
     "@types/redux-mock-store": "^1.0.0",
     "@types/storybook__addon-actions": "^3.4.1",

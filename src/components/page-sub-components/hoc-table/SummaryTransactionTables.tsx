@@ -100,7 +100,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     const gutterBottom : boolean = true;
     const filterable : boolean = true;
 
-    if (!this.props.list_of_transactions || this.props.list_of_transactions.length === 0){
+    if (!this.props.list_of_transactions){
       return <div>
         <ErrorMessage />
       </div>
