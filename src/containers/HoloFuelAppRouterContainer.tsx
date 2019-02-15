@@ -82,24 +82,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
 
   componentDidMount () {
-    console.log("PROPS : ", this.props);
-    // 1.) Invoke GET_INFO_INSTANCES()
-    //  ==> test out container connection and
-    //       ensure holofuel is a running instance...
-    this.props.get_info_instances();
-
-    // 2.) Invoke fetch_agent_string() (a ZOME Call) :
-    //  ==> discover and/or verify Agent Hash and
-    //      Agent String Identities...
-    this.props.fetch_agent_string();
-    // this.props.fetch_agent_hash();
-
-    // 3.) Invoke get_ledger_state() (a ZOME Call) :
-    console.log("calling : get_ledger_state >> ", this.props.get_ledger_state);
-    this.props.get_ledger_state();
-
-    // 4) Run through original test calls...
-    this.makeTestCalls();
+    // this.props.fetch_agent_string();
+    // this.props.get_ledger_state();
   }
 
   makeTestCalls() {

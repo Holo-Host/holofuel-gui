@@ -12,7 +12,10 @@ import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar'
 import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
+import {RequestActionParam} from '../../utils/types';
+import * as moment from 'moment';
 
+// type Moment = moment.Moment;
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
@@ -25,7 +28,7 @@ export interface State {
   txEndDate: string | undefined,
   txStartDate: string | undefined,
   txBatchType: string | undefined,
-  currentTxBatchInfo: {next:{}, over:{}} | null,
+  currentTxBatchInfo: {newer:{}, over:{}} | null,
   data: {} | null,
   prevProps: any
 }
@@ -46,15 +49,29 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   public componentDidMount () {
     // Invoke list_transactions() (a ZOME Call) :
     console.log("calling : list_transactions >>  inside HoloFuelSummaryPage... >> ");
-    this.props.list_transactions();
+    this.props.list_transactions({});
 
     // Invoke list_requests() (a ZOME Call) :
-    console.log("calling : list_requests >> ", this.props.list_requests);
-    this.props.list_requests();
+    // console.log("calling : list_requests >> ", this.props.list_requests);
+    // this.props.list_requests();
 
     // Invoke list_proposals() (a ZOME Call) :
-    console.log("calling : list_proposals >> ", this.props.list_proposals);
-    this.props.list_proposals();
+    // console.log("calling : list_proposals >> ", this.props.list_proposals);
+    // this.props.list_proposals();
+      // this.initializing();
+  }
+
+  initializing (){
+    const request_tx_obj : RequestActionParam = {
+      from: "HoloTester2-----------------------------------------------------------------------AAACZp4xHB", // this will be the payment requestor's AGENT_ADDRESS
+      amount:"0.0000000569066456676 HF",
+      notes: "testing out the request_payment api call...",
+      deadline: moment().format()
+    }
+    console.log("request_tx_obj", request_tx_obj);
+    console.log("calling : request_payment >> ", this.props.request_payment);
+    this.props.request_payment(request_tx_obj);
+
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -68,10 +85,11 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       const data = prevProps.value !== transactionData ? transactionData : state.data
       console.log("data", data);
 
-      const { next, over } = list_of_transactions;
-      const currentTxBatchInfo = Object.assign({next, over}, {});
-      const txEndDate = next.until;
-      const txStartDate = next.since;
+      const { newer } = list_of_transactions;
+      const currentTxBatchInfo = Object.assign({newer}, {});
+      console.log("------------------------>",list_of_transactions)
+      const txEndDate = newer!.until;
+      const txStartDate = newer!.since;
       console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
       console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
 

@@ -43,9 +43,9 @@ class TransactionOverview extends React.Component<Props, State> {
   componentDidMount () {
     console.log("PROPS : ", this.props);
     // Invoke GET_INFO_INSTANCES()
-    this.props.get_info_instances();
-    // Invoke list_transactions() (a ZOME Call) :
-    this.props.list_transactions();
+    // this.props.get_info_instances();
+    // // Invoke list_transactions() (a ZOME Call) :
+    // this.props.list_transactions();
   }
 
   handleClick = () => {

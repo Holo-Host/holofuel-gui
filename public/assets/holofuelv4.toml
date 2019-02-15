@@ -1,36 +1,34 @@
 bridges = []
-
 [[agents]]
 id = "test agent 1"
 key_file = "holo_tester.key"
 name = "Holo Tester 1"
 public_address = "HoloTester1-----------------------------------------------------------------------AAACZp4xHB"
 
-[[agents]]
-id = "test agent 2"
-key_file = "holo_tester.key"
-name = "Holo Tester 2"
-public_address = "HoloTester2-----------------------------------------------------------------------AAAGy4WW9e"
-
 [[ui_bundles]]
 id = "bundle1"
-root_dir = "./example-config/example-static-site"
+root_dir = "/home/lisa/Documents/gitrepos/holochain/holo/HoloFuel/holoFuelUI/holofuel-gui/ui"
 hash = "Qm000"
 
 [[ui_interfaces]]
 id = "ui-interface-1"
 bundle = "bundle1"
-port = 9800
-dna_interface = "websocket interface 2"
+port = 8800
+dna_interface = "websocket interface"
 
 
 [[dnas]]
-file = "/home/lisa/Desktop/holofuelv5.hcpkg"
+file = "example-config/app_spec.hcpkg"
+hash = "Qm328wyq38924y"
+id = "app spec rust"
+
+[[dnas]]
+file = "/home/lisa/Desktop/holofuelv4.hcpkg"
 hash = "QmSFFbDHUmhSWP8pA3Z63pN4hqqgg91c3At9E4hucfVmSn"
 id = "holofuelv4.hcpkg"
 
 [[instances]]
-agent = "test agent 2"
+agent = "test agent 1"
 dna = "holofuelv4.hcpkg"
 id = "holofuelv4.hcpkg instance"
 
@@ -38,36 +36,29 @@ id = "holofuelv4.hcpkg instance"
 path = "example-config/tmp-storage"
 type = "file"
 
-
 [[interfaces]]
 admin = true
 id = "websocket interface"
+
+[[interfaces.instances]]
+id = "holofuelv4.hcpkg instance"
 
 [interfaces.driver]
 port = 3000
 type = "websocket"
 
 [[interfaces]]
-admin = false
+admin = true
 id = "http interface"
 
 [[interfaces.instances]]
 id = "holofuelv4.hcpkg instance"
 
+
 [interfaces.driver]
 port = 4000
 type = "http"
 
-[[interfaces]]
-admin = false
-id = "websocket interface 2"
-
-[[interfaces.instances]]
-id = "holofuelv4.hcpkg instance"
-
-[interfaces.driver]
-port = 3000
-type = "websocket"
 [logger]
 type = "debug"
 [[logger.rules.rules]]

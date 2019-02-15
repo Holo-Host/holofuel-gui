@@ -48,7 +48,7 @@
   "scripts": {
     "start": "PORT=9300 react-scripts-ts start",
     "start-web": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.base.js",
-    "build": "react-scripts-ts build && node copy-to-ui.js",
+    "build": "react-scripts-ts build ",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-prod": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "test": "react-scripts-ts test --env=jsdom",

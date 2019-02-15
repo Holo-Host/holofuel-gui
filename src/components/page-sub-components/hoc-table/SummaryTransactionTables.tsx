@@ -79,7 +79,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       const table_pending_table_info =  refactorListOfTransactions(this.props.list_of_transactions);
 
       console.log("DATA GOING TO INSTANCE MAIN TABLE >>>> !! table_pending_table_info !! <<<<<<<< : ", table_pending_table_info);
-      
+
       // const table_pending_table_info = [{}];
       return table_pending_table_info;
     }
