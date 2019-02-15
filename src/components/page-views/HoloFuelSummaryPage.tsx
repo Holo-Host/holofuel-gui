@@ -26,6 +26,8 @@ export interface State {
   txStartDate: string | undefined,
   txBatchType: string | undefined,
   currentTxBatchInfo: {next:{}, over:{}} | null,
+  data: {} | null,
+  prevProps: any
 }
 
 class HoloFuelSummaryPage extends React.Component<Props, State> {
@@ -35,7 +37,9 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       txEndDate: "",
       txStartDate: "",
       txBatchType: "",
-      currentTxBatchInfo: null
+      currentTxBatchInfo: null,
+      data: {},
+      prevProps: {}
     };
   };
 
@@ -53,22 +57,33 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     this.props.list_proposals();
   }
 
-  componentDidUpdate () {
-    const { next, over } = this.props.list_of_transactions;
-    const currentTxBatchInfo = Object.assign({next, over}, {});
+  static getDerivedStateFromProps(props: Props, state: State) {
+    const { list_of_transactions } = props;
+    if (!list_of_transactions) {
+      return null;
+    }
+    else {
+      const transactionData = { list_of_transactions };
+      const prevProps = state.prevProps || {};
+      const data = prevProps.value !== transactionData ? transactionData : state.data
+      console.log("data", data);
 
-    const txEndDate = next.until;
-    const txStartDate = next.since;
+      const { next, over } = list_of_transactions;
+      const currentTxBatchInfo = Object.assign({next, over}, {});
+      const txEndDate = next.until;
+      const txStartDate = next.since;
+      console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
+      console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
 
-    console.log(" <><><><><>< TXENDDATE UPON componentDidUpdate <><><><><", txEndDate);
-    console.log(" <><><><><>< TXSTARTDATE UPON componentDidUpdate <><><><><", txStartDate);
-
-    this.setState({
-      currentTxBatchInfo,
-      txStartDate,
-      txEndDate,
-      txBatchType: 'All Transactions',
-    })
+      return ({
+        data,
+        prevProps: data,
+        currentTxBatchInfo,
+        txStartDate,
+        txEndDate,
+        txBatchType: 'All Transactions',
+      });
+    }
   }
 
   handleTxBatchType = (txState: string) => {
