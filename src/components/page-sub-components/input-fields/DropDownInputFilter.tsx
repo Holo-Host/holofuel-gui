@@ -74,7 +74,7 @@ class DropDownInputFilter extends React.Component<Props, State> {
             style={{ borderColor:' #799ab6', color:'#799ab6', width:'248px', height:'40px',marginBottom:'14px', background:'#c3cdd6', border:'1px solid #799ab6', borderRadius:'4px' }}
          >
             {dropdownListData.map(dataItem => (
-              <MenuItem style={{color: '#e9ecef', background: '#799ab6' }} key={dataItem.name + [dataItem]} value={dataItem.name}>
+              <MenuItem className={classes.dropdownMenuItem} key={dataItem.name + [dataItem]} value={dataItem.name}>
                 {dataItem.name}
               </MenuItem>
             ))}

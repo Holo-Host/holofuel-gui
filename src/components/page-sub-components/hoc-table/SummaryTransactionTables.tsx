@@ -14,6 +14,7 @@ import Refresh from '@material-ui/icons/Refresh';
 // Local Imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
+import mobile_pending_transaction_table_columns, { mobile_processed_transaction_table_columns } from './SummaryTransactionTableColsMobile';
 import { refactorListOfTransactions } from '../../../utils/table-helper-functions/transaction-data-refactor';
 import SimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
@@ -34,7 +35,8 @@ export interface State {
   row: String,
   filter: any,
   data: {} | null,
-  prevProps: any
+  prevProps: any,
+  isMobile: boolean
 }
 
 // For the REACT TABLE Exapandable Version: Advanced HOC
@@ -51,7 +53,9 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       filter: null,
       data: {},
       prevProps: {},
+      isMobile: false
     };
+    this.updateViewPortSize = this.updateViewPortSize.bind(this);
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
@@ -70,6 +74,17 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
   componentDidMount = () => {
     console.log("state within SummaryTransactionTables upon mount >> verify whether the list_of_transactions, list_of_requests, and list_of_proposals are present... ", this.state);
+
+    this.updateViewPortSize();
+    window.addEventListener("resize", this.updateViewPortSize);
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("resize", this.updateViewPortSize);
+  }
+
+  updateViewPortSize() {
+    this.setState({ isMobile: window.innerWidth < 768})
   }
 
   displayData = () => {
@@ -88,6 +103,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
   public render() {
     const { classes, ...newProps } = this.props;
+    const { isMobile } = this.state;
     const gutterBottom : boolean = true;
     const filterable : boolean = true;
 
@@ -97,6 +113,11 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       </div>
     }
 
+  // Sm (mobile) Viewport
+    const mobile_pending_table_columns = mobile_pending_transaction_table_columns(this.props, this.state);
+    const mobile_processed_table_columns = mobile_processed_transaction_table_columns(this.props, this.state);
+
+// Md/Lg Viewport
     const pending_table_data = this.displayData();
     const processed_table_data = this.displayData();
     const pending_table_columns = pending_transaction_table_columns(this.props, this.state);
@@ -106,94 +127,108 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
     return (
 
-  // TODO: Look into integratng the infnite scroll with ReactTable...
-    //   <div style="height:700px;overflow:auto;" ref={(ref) => this.scrollParentRef = ref}>
-    //     <div>
-    //         <InfiniteScroll
-    //             pageStart={0}
-    //             loadMore={loadFunc}
-    //             hasMore={true || false}
-    //             loader={<div className="loader" key={0}>Loading ...</div>}
-    //             useWindow={false}
-    //             getScrollParent={() => this.scrollParentRef}
-    //         >
-    //             {items}
-    //         </InfiniteScroll>
-    //     </div>
-    // </div>
+    // TODO: Look into integratng the infnite scroll with ReactTable...
+      //   <div style="height:700px;overflow:auto;" ref={(ref) => this.scrollParentRef = ref}>
+      //     <div>
+      //         <InfiniteScroll
+      //             pageStart={0}
+      //             loadMore={loadFunc}
+      //             hasMore={true || false}
+      //             loader={<div className="loader" key={0}>Loading ...</div>}
+      //             useWindow={false}
+      //             getScrollParent={() => this.scrollParentRef}
+      //         >
+      //             {items}
+      //         </InfiniteScroll>
+      //     </div>
+      // </div>
 
-      <div className={classes.transactionTablesContainer}>
-        <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
-          Pending Transactions
-        </Typography>
-        <span className={classes.tableButtonBar}>
-          <Button variant="outlined" color="primary"
-            className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-            onClick={() => this.props.handleTableRefresh()}>
-            <Refresh className={classes.svg}/>
-          </Button>
-        </span>
-  {/* ///// Pending-TX Table :  ///// */}
-        <div className={classnames(classes.tableContainer)}>
-          <AdvancedExpandReactTable
-            className={classnames("-striped", "-highlight", classes.table)}
-            showPagination={false}
-            defaultPageSize={pending_table_data!.length}
-            filterable={filterable}
-            defaultFilterMethod={(filter:any, row:any) =>
-               String(row[filter.id]) === filter.value
-             }
-            data={pending_table_data}
-            columns={ pending_table_columns }
-            SubComponent={(row:any) => {
-              // SubComponent LOGIC >> to display the tx details...
-              console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
-              // refactor rows to include the tx deadline, tx notes, + tx commit_hash, and timestamp of last action commit (to record completion...).
-              {/* const currentRowData = {
-                row.deadline, row.notes
-              }; */}
-              const currentRowData = ["due_date", "tx_notes"];
+        <div className={classes.transactionTablesContainer}>
+          <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
+            Pending Transactions
+          </Typography>
+          <span className={classes.tableButtonBar}>
+            <Button variant="outlined" color="primary"
+              className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
+              onClick={() => this.props.handleTableRefresh()}>
+              <Refresh className={classes.svgView}/>
+            </Button>
+          </span>
+
+    {/* ///// Pending-TX Table :  ///// */}
+    {/* // viewports === Mobile Size (widths <=767) */}
+      { isMobile ?
+          <div className={classnames(classes.tableContainer)}>
+            <ReactTable
+              className={classnames("-striped", "-highlight", classes.table)}
+              showPagination={false}
+              defaultPageSize={pending_table_data!.length}
+              data={ pending_table_data }
+              columns={ mobile_pending_table_columns }
+            />
+          </div>
+
+      :
+
+      /* // viewports >= Tablet Size (widths >=768) */
+          <div className={classnames(classes.tableContainer)}>
+            <AdvancedExpandReactTable
+              className={classnames("-striped", "-highlight", classes.table)}
+              showPagination={false}
+              defaultPageSize={pending_table_data!.length}
+              filterable={filterable}
+              defaultFilterMethod={(filter:any, row:any) =>
+                 String(row[filter.id]) === filter.value
+               }
+              data={pending_table_data}
+              columns={ pending_table_columns }
+              SubComponent={(row:any) => {
+                // SubComponent LOGIC >> to display the tx details...
+                console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
+                // refactor rows to include the tx deadline, tx notes, + tx commit_hash, and timestamp of last action commit (to record completion...).
+
+                /* const currentRowData = {
+                  row.deadline, row.notes
+                }; */
+                const currentRowData = ["due_date", "tx_notes"];
 
 
-              {/* const seeDetails = (tx_type, transfer, interfaceforInstance) => {
-                console.log("<><><><><> customAgentId <><><<><>", custom_agent_id);
-                console.log("<><><><><> customInstanceId <><><<><>", custom_instance_id);
-                console.log("<><><><><> interfaceforInstance <><><<><>", interfaceforInstance);
+                /* const seeDetails = (tx_type, transfer, interfaceforInstance) => {
+                  console.log("<><><><><> customAgentId <><><<><>", custom_agent_id);
+                  console.log("<><><><><> customInstanceId <><><<><>", custom_instance_id);
+                  console.log("<><><><><> interfaceforInstance <><><<><>", interfaceforInstance);
 
-                const { dna_id } = row.original;
-                const agent_id = custom_agent_id ? custom_agent_id : this.props.containerApiCalls.agent_list[0].id; // HC AGENT ID
-                const instance_id = custom_instance_id ?  custom_instance_id : (dna_id + agent_id);
-                const interface_id = interfaceforInstance;
+                  const { dna_id } = row.original;
+                  const agent_id = custom_agent_id ? custom_agent_id : this.props.containerApiCalls.agent_list[0].id; // HC AGENT ID
+                  const instance_id = custom_instance_id ?  custom_instance_id : (dna_id + agent_id);
+                  const interface_id = interfaceforInstance;
 
-                this.props.add_agent_dna_instance({id, dna_id, agent_id}).then(res => {
-                  this.props.add_instance_to_interface({instance_id, interface_id});
-                })
-              } */}
+                  this.props.add_agent_dna_instance({id, dna_id, agent_id}).then(res => {
+                    this.props.add_instance_to_interface({instance_id, interface_id});
+                  })
+                } */
 
-              return (
-                <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
-                  <Typography className={classes.subtableHeader} variant="caption" gutterBottom={gutterBottom} component="h4" >
-                    Transaction Details
-                  </Typography>
-
-                  <div className={classnames(classes.flexContainer)}>
-                    <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+                return (
+                  <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
+                    <div className={classnames(classes.flexContainer)}>
+                      <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+                    </div>
                   </div>
-                </div>
-              );
-            }}
-          />
-        </div>
-
+                );
+              }}
+            />
+          </div>
+        }
         <div className={classes.tableButtonBar}>
           <Button variant="outlined" color="primary"
           className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
           onClick={() => this.props.handleTableRefresh()}>
-            <ExpandMore/>
+            <ExpandMore className={classes.svgMore}/>
           </Button>
         </div>
 
-{/* ///// Proccessed-TX Table :  ///// */}
+
+  {/* ///// Proccessed-TX Table :  ///// */}
         <br/>
         <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
           Processed Transactions
@@ -202,44 +237,60 @@ class SummaryTransactionTables extends React.Component<Props, State> {
           <Button variant="outlined" color="primary"
             className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
             onClick={() => this.props.handleTableRefresh()}>
-            <Refresh className={classes.svg}/>
+            <Refresh className={classes.svgView}/>
           </Button>
         </span>
-        <div className={classnames(classes.tableContainer)}>
-          <AdvancedExpandReactTable
-            className={classnames("-striped", "-highlight", classes.table)}
-            data={processed_table_data}
-            columns={ processed_table_columns }
-            showPagination={false}
-            defaultPageSize={processed_table_data!.length}
-            filterable={filterable}
-            defaultFilterMethod={(filter:any, row:any) =>
-               String(row[filter.id]) === filter.value
-             }
-            SubComponent={(row:any) => {
-              console.log("<><><><><> Processed TX SubComponent ROW out : >> <><><><><> ", row);
-              const currentRowData = ["completion_date", "tx_notes"];
 
-              return (
-                <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
-                  <Typography className={classes.subtableHeader} variant="display1" gutterBottom={gutterBottom} component="h4" >
-                    Transaction Details
-                  </Typography>
+        { isMobile ?
+          /* // viewports === Mobile Size (widths <=767) */
+          <div className={classnames(classes.tableContainer)}>
+            <ReactTable
+              className={classnames("-striped", "-highlight", classes.table)}
+              showPagination={false}
+              defaultPageSize={pending_table_data!.length}
+              filterable={filterable}
+              defaultFilterMethod={(filter:any, row:any) =>
+                 String(row[filter.id]) === filter.value
+               }
+              data={ processed_table_data }
+              columns={ mobile_processed_table_columns }
+            />
+          </div>
 
-                  <div className={classes.flexContainer}>
-                    <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+        :
+
+          /* // viewports >= Tablet Size (width of ~768) */
+          <div className={classnames(classes.tableContainer)}>
+            <AdvancedExpandReactTable
+              className={classnames("-striped", "-highlight", classes.table)}
+              data={ processed_table_data }
+              columns={ processed_table_columns }
+              showPagination={false}
+              defaultPageSize={processed_table_data!.length}
+              filterable={filterable}
+              defaultFilterMethod={(filter:any, row:any) =>
+                 String(row[filter.id]) === filter.value
+               }
+              SubComponent={(row:any) => {
+                console.log("<><><><><> Processed TX SubComponent ROW out : >> <><><><><> ", row);
+                const currentRowData = ["completion_date", "tx_notes"];
+
+                return (
+                  <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
+                    <div className={classes.flexContainer}>
+                      <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+                    </div>
                   </div>
-                </div>
-              );
-            }}
-          />
-        </div>
-
+                );
+              }}
+            />
+          </div>
+        }
         <div className={classes.tableButtonBar}>
           <Button variant="outlined" color="primary"
           className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
           onClick={() => this.props.handleTableRefresh()}>
-            <ExpandMore className={classes.svg}/>
+            <ExpandMore className={classes.svgMore}/>
           </Button>
         </div>
 

@@ -145,15 +145,19 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     subtable: {
       border: '1px solid #eee',
       borderRadius: 4,
-      background: '#13426a',
-      color: '#d8dee3', // table-row input color:#c3cdd6
+      background: '#c3cdd6',
+      color: '#13426a',
+      "&:hover": {
+        color: '#c3cdd6',
+        background: '#13426a'
+      }
     },
     subtableHeader : {
       fontSize: '1.3rem',
       marginTop: 5,
       display: 'inline',
       textAlign: "center",
-      color: '#789bb4',
+      color: '#13426a',
       fontWeight: 300,
     },
     jumbotron: {
@@ -240,34 +244,52 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       }
     },
     buttonSumTable: {
-      color: '#eee',
-      margin: theme.spacing.unit,
+      color: '#799ab6',
+      margin: '0 auto',
+      marginLeft:theme.spacing.unit,
       display: 'inline',
-      width: 40,
-      padding: 5,
-      paddingTop: 11,
+      minWidth: '30px !important',
+      width: '40px !important',
+      height: 40,
+      padding: 0,
       background: '#0e3658', // #05939a, #d8dee3
       border: '1px solid #799ab6', // #446164, #0e094b, #d8dee3
+      boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)',
       "&:hover": {
         border: '2px solid #799ab6', // #0e094b
         background:'#13426a',
-        text: '#07808b'
       }
     },
     refreshBtn : {
+      marginTop: 3,
       marginBottom: 5,
       width: 5,
       borderRadius: 45,
-      padding: 14,
+      "&:hover": {
+        border: '2px solid #799ab6', // #0e094b
+        background:'#13426a',
+      }
     },
     moreBtn: {
+      marginTop: 2,
       marginBottom: 50,
       width: 5,
       borderRadius: 45,
-      padding: 14,
+      "&:hover": {
+        marginTop:3,
+      }
     },
-    svg : {
-      paddingTop: 3,
+    svgView : {
+      paddingTop: 4,
+      "&:hover": {
+        transform: 'rotate(30deg)',
+      }
+    },
+    svgMore : {
+      paddingTop: 4,
+      "&:hover": {
+        marginTop: 2,
+      }
     },
      expansionPanelHeading: {
        fontSize: theme.typography.pxToRem(15),
@@ -343,6 +365,19 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       padding: 4,
       // border: '1px solid #799ab6',
       // color: '#799ab6',
+    },
+    dropdownMenuItem : {
+      color: '#bec4dd',
+      background: '#0e094b',
+      zIndex: 99,
+      "&:hover": {
+        color: '#0e094b',
+        background: '#bec4dd'
+      },
+      "&:selected": {
+        color: '#0e094b',
+        background: '#bec4dd'
+      }
     },
     datetimeinputdiv : {
       margin: '0 auto',
@@ -518,21 +553,24 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
      },
      muiSimpleTableRoot: {
        width: '100%',
-       marginTop: theme.spacing.unit * 3,
        overflowX: 'auto',
-       color: '#d8dee3',
-       background: '#13426a'
+       background: 'transparent',
+       color: '#13426a',
+       "&:hover": {
+         color: '#c3cdd6',
+       }
      },
      muiSimpleTable:{
        margin: '0 auto',
        justifyContent: 'center',
-       minWidth: '80%', // WAS 700 px
-       color: '#d8dee3',
+       minWidth: '80%',
      },
      tableCell: {
-       color: '#789bb4',
-       fontSize: '.9rem',
-       padding: 0
+       fontSize: '.7rem',
+       padding: 0,
+       "&:hover": {
+         color: '#c3cdd6'
+       }
      }
    }
 );

@@ -57,7 +57,7 @@ class MainListItems extends React.Component<Props, State> {
             </Typography>
           </Link>
         </ListItem>
-        <ListItem style={{paddingTop: "45px"}} button={button}>
+        <ListItem button={button}>
           <Link to='/holofuelrequest'>
             <ListItemIcon style={{color:"#0e88efde"}}>
               <LayersIcon />
@@ -67,7 +67,7 @@ class MainListItems extends React.Component<Props, State> {
             </Typography>
           </Link>
         </ListItem>
-        <ListItem style={{paddingTop: "45px"}} button={button}>
+        <ListItem button={button}>
           <Link to='/about'>
           <ListItemIcon style={{color:"#0e88efde"}}>
             <PeopleIcon />

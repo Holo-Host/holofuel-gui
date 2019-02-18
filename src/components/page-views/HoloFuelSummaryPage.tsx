@@ -13,7 +13,7 @@ import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicke
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
 import {RequestActionParam} from '../../utils/types';
-import * as moment from 'moment';
+// import * as moment from 'moment';
 
 // type Moment = moment.Moment;
 export interface OwnProps {
@@ -58,15 +58,17 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     // Invoke list_proposals() (a ZOME Call) :
     // console.log("calling : list_proposals >> ", this.props.list_proposals);
     // this.props.list_proposals();
-      // this.initializing();
+      this.initializing();
   }
 
   initializing (){
+    // let time = moment().format().toString();
+    // let time1= "Some("+time+")";
     const request_tx_obj : RequestActionParam = {
       from: "HoloTester2-----------------------------------------------------------------------AAACZp4xHB", // this will be the payment requestor's AGENT_ADDRESS
       amount:"0.0000000569066456676 HF",
-      notes: "testing out the request_payment api call...",
-      deadline: moment().format()
+      notes: "Some(testing out the request_payment api call...)",
+      deadline: "Some()"
     }
     console.log("request_tx_obj", request_tx_obj);
     console.log("calling : request_payment >> ", this.props.request_payment);
@@ -157,7 +159,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
             </Typography>
 
             <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
-            
+
             <TransactionTables txBatchType={this.state.txBatchType} txBatchDuration={{endDate:this.state.txEndDate, startDate:this.state.txStartDate}} handleTableRefresh={this.handleTableRefresh} {...newProps} />
 
             { transferBtnBar ?

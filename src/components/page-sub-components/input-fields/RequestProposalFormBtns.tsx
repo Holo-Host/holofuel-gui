@@ -18,7 +18,7 @@ import Message from '@material-ui/icons/Message';
 import Timer from '@material-ui/icons/Timer';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
-import { ProposalActionParam } from '../../../utils/types'; //  RequestActionParam, Ledger, ListTransactionsResult , DateTimeString, Address
+import { ProposalActionParam, RequestActionParam } from '../../../utils/types'; //  RequestActionParam, Ledger, ListTransactionsResult , DateTimeString, Address
 import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // import Memo from '../memo/Memo';
@@ -43,7 +43,8 @@ export interface OwnProps {
   classes: any,
   txType: string,
   showTransferBar: (txType:any) => void,
-  invokeTx: (txType:any) => void,
+  invokeProposal: (txType:any) => void,
+  invokeRequest: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -118,7 +119,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   handleMakePayment = () => {
     const { recipient, amount, deadline, notes } = this.state; // requestIdReference
     const tx_obj: ProposalActionParam = {
-      to: recipient,// this will be the payment requestor's AGENT_ADDRESS
+      to: recipient,// this will be the payment requestor's/payment recipeient's AGENT_ADDRESS
       amount,
       notes,
       deadline,
@@ -126,7 +127,21 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     }
     console.log("propose_tx_obj : ", tx_obj);
     // Now send obj to parent component for API invocation :
-    this.props.invokeTx({tx_obj});
+    this.props.invokeProposal({tx_obj});
+  };
+
+  handleRequestPayment = () => {
+    const { recipient, amount, deadline, notes } = this.state; // requestIdReference
+    const tx_obj: RequestActionParam = {
+      from: recipient,// this will be the payment requestor's/payment recipeient's AGENT_ADDRESS
+      amount,
+      notes,
+      deadline,
+      // request?: requestIdReference
+    }
+    console.log("propose_tx_obj : ", tx_obj);
+    // Now send obj to parent component for API invocation :
+    this.props.invokeRequest({tx_obj});
   };
 
   public render() {
@@ -275,7 +290,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
               <span>
                 <Button variant="outlined"
                   color="primary"
-                  onClick={this.handleMakePayment}
+                  onClick={this.handleRequestPayment}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
                   <span className={classes.innerBtnText}>Request</span>

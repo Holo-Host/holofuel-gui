@@ -168,19 +168,29 @@ export const advancedExpandTableHOC = TableComponent =>
       };
     }
 
+// handle toggle detail modal
+    handleClick = (rowInfo) => {
+      // pass the info needed for the detial modal here.. and triger the TX Detail Modal
+    }
 
-// TODO: CORRECT THE BOOLEAN ... never unselects ROW...
+// TODO: Correct the color toggle... doesn't reset to odd color....
     getTrProps=(state, rowInfo) => {
       if (rowInfo && rowInfo.row && rowInfo !== undefined) {
+        console.log("THIS IS YOUR ROW INFO ... inside the the HocSystemTable addon...", rowInfo);
         return {
           onClick: (e) => {
+            this.handleClick(rowInfo.index);
+          },
+          onMouseOver: (e) => {
             this.setState({
               selected: rowInfo.index
             })
           },
           style: {
-            background: rowInfo.index === this.state.selected ? '#13426a' : 'default',
-            color: rowInfo.index === this.state.selected ? '#d8dee3' : '#0e094b'
+            overflowX: scroll,
+            fontSize: '.7525rem',
+            background: rowInfo.index === this.state.selected ? '#13426a' : rowInfo.row.rowNumberType === 'odd' ? '#63779082' : '#e9ecef',
+            color: rowInfo.index === this.state.selected ? '#d8dee3' : '#0e3658'
           }
         }
       }

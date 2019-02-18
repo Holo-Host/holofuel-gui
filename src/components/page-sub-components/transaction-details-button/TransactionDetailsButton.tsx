@@ -1,6 +1,5 @@
 // Main Imports
 import * as React from 'react';
-import { Link } from 'react-router-dom';
 // MUI Imports
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,16 +10,20 @@ import styles from '../../styles/page-sub-component-styles/TransactionDetailsBut
 export interface OwnProps {
   // These are props the component has received from its parent component
   // e.g. what you write in <ExampleComponent ...>
-  transactionState: any,
   classes: any
+  transactionState: any,
+  column: string,
+  rowInfo: any
 };
 export type Props = OwnProps;
 
 export interface State {
 // The components optional internal state
-  transactionState: "",
-  buttonText: "",
-  route: ""
+  transactionState: string,
+  txStateDirection:string,
+  txStateStage: string,
+  todoText: string | undefined,
+  nextApiCall: string
 };
 
 class TransactionDetailsButton extends React.Component<Props, State> {
@@ -28,84 +31,147 @@ class TransactionDetailsButton extends React.Component<Props, State> {
     super(props);
     this.state = {
       transactionState: "",
-      buttonText: "",
-      route: ""
+      txStateDirection:"",
+      txStateStage: "",
+      todoText: undefined,
+      nextApiCall: "/"
     }
     this.configureTransactionState();
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
     if (props.transactionState !== state.transactionState) {
+      const txStateDirection = props.transactionState.split("/")[0];
+      const txStateStage =props.transactionState.split("/")[1];
       return {
         transactionState: props.transactionState,
+        txStateDirection,
+        txStateStage
       };
     }
-    const { transactionState } = state;
-    console.log("transactionState >>>> ", transactionState);
-    return ({ transactionState });
+    console.log("transactionState >>>> ", state.transactionState);
+    return ({ transactionState: state.transactionState });
   }
 
-  componentDidUpdate = () => {
+  componentDidMount = () => {
+    console.log("!>!>!>!>!>>!INSIDE COMPONENT DID MOUNT !!>!>!>!>!");
     this.configureTransactionState();
     // this.props.fetch_state();
   }
 
   configureTransactionState = () => {
-    const txState: any = this.state.transactionState;
-    let route;
-    let buttonText;
-    // go to the transaction detail page >> sorted by NAME of transaction state...
-    switch (txState) {
-      case 'requested': {
-        route = 'requestsent';
-        buttonText = 'Sent'; // (INITIATOR'S VIEW): request to send money or to recieve money
+    let nextApiCall = "/";
+    let todoText = "";
+    console.log("!>!>!>!>!>>!INSIDE configureTransactionState!!>!>!>!>!");
+
+    if(this.state.txStateDirection === "incoming"){
+      switch (this.state.txStateStage) {
+        case 'requested': {
+          nextApiCall = 'propose_payment';
+          todoText = 'Send Funds'; // (INITIATOR'S VIEW): request to send money or to recieve money
+        }
+        case 'rejected': {
+           // no api call ... only need to review details
+          nextApiCall = '';
+          todoText = 'Review Decline';
+        }
+        case 'accepted': {
+          nextApiCall = 'receive_payment';
+          todoText = 'Accept Final Payment';
+        }
+        case 'refunded': {
+           // no api call ... only need to review details
+          nextApiCall = '';
+          todoText = 'Review Refund';
+        }
+        default:
+          return null;
       }
-      case 'proposed': {
-        route = '';
-        buttonText = '';  // (RECIPIENT'S VIEW): proposal to receive money or to send money
+    }
+    if(this.state.txStateDirection === "outgoing"){
+      switch (this.state.txStateStage) {
+        case 'approved': {
+           // no api call ... only need to review details
+          nextApiCall = '';
+          todoText = 'Review Proposal';
+        }
+        case 'declined': {
+             // no api call ... only need to review details
+          nextApiCall = '';
+          todoText = 'Review Decline';
+        }
+        case 'completed': {
+          nextApiCall = '';
+          todoText = 'Review Final Payment';
+        }
+        case 'recovered': {
+  // TODO: determine if there is an API for this:
+          nextApiCall = '???';
+          todoText = 'Review Refund';
+        }
+        default:
+          return null;
       }
-      case 'accepted': {
-        route = 'pendingfinalapproval';
-        buttonText = 'Approval Pending'; // (INITIATOR'S & RECIPIENT'S VIEW): : accepted request to receive or to send money
-      }
-      case 'rejected': {
-        route = 'rejectedrequest';
-        buttonText = 'Review'; // (INITIATOR'S & RECIPIENT'S VIEW): : accepted request to receive or to send money
-      }
-      case 'refunded': {
-        route = 'refundedrequest';
-        buttonText = 'Review'; // (INITIATOR'S & RECIPIENT'S VIEW): : accepted request to receive or to send money
-      }
-      default:
-        return null;
     }
 
-    this.setState({ route, buttonText });
+    this.setState({ nextApiCall, todoText });
   };
 
   handlePendingTransaction = (name: any) => (event: any) => {
-     // name (should) === 'buttonText'
+     // name (should) === 'nextApiCall'
     // this.setState({ [name]: event.target.value });
-    console.log("you should be re-routing to the detials page...");
+
+    // if nextApiCall === "" (an empty sting), make btn access tx details page
+    console.log("you should be re-routing to the details page...");
   };
 
   public render() {
-    const { classes } = this.props;
-    // console.log("TransactionDetailsButton props", this.props);
-    // console.log("TransactionDetailsButton state", this.state);
+    const { classes, column } = this.props;
+    console.log("TransactionDetailsButton props", this.props);
+    console.log("TransactionDetailsButton state", this.state);
+
     return (
       <div>
-       <Link to={this.state.route}>
-          <Button
-            variant="outlined"
-            color="primary"
-            className={ classes.button }
-            onClick={ this.handlePendingTransaction('buttonText') }
-            value={ this.state.transactionState }
-          >
-            { this.state.buttonText }
-          </Button>
-        </Link>
+        { column === "status" ?
+          <div style={{textTransform:"uppercase"}}>
+            { this.state.txStateStage }
+          </div>
+
+        : column === "todo" ?
+          <div>
+            <Button
+              variant="outlined"
+              color="primary"
+              className={ classes.smallButton }
+              onClick={ this.handlePendingTransaction(this.state.nextApiCall) }
+              value={ this.state.nextApiCall }
+            >
+              todo text
+              {this.state.todoText}
+            </Button>
+          </div>
+
+        : column === "both" ?
+          <div className={classes.flexContainer}>
+            <div style={{textTransform:"uppercase", marginTop:'5px', marginBottom:'10px'}}>
+              { this.state.txStateStage }
+            </div>
+
+            <Button
+              variant="outlined"
+              color="primary"
+              className={ classes.mobileButton }
+              onClick={ this.handlePendingTransaction(this.state.nextApiCall) }
+              value={ this.state.nextApiCall }
+              style={{margin:"5px"}}
+            >
+              todo text
+              {this.state.todoText}
+            </Button>
+          </div>
+        :
+          <div/>
+        }
       </div>
     )
   }

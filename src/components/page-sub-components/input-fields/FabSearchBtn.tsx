@@ -13,10 +13,10 @@ const styles : StyleRulesCallback  = (theme: Theme) => ({
     margin: theme.spacing.unit,
     color: "#799ab6",
     background: "#0e3658",
-  },
-  extendedIcon: {
-    marginRight: theme.spacing.unit,
-  },
+    "&:hover": {
+      color: '#0e094b',
+    }
+  }
 });
 
 function FabSearchBtn(props: any) {

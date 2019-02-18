@@ -65,7 +65,7 @@ function ProfileAccountOptsCard(props: Props) {
         <CardHeader
           avatar={
              <Avatar className={classnames(classes.headerAvatar, classes.profile)}>
-               <Jdenticon hash={ agentHash } {...newProps} />
+               <Jdenticon hash={ agentHash } size="105px" {...newProps} />
              </Avatar>
            }
            title="Profile"

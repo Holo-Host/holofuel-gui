@@ -38,7 +38,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
   makeRequest = (txInfoObj: any) => {
     console.log("txInfo for Proposal Call : ", txInfoObj);
     // make make_payment API call
-    this.props.request_payment({txInfoObj});  // send as JSON
+    this.props.request_payment(txInfoObj);  // send as JSON
   }
 
 
@@ -73,7 +73,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
           Request Funds
        </Typography>
 
-        <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeTx={this.makeRequest} />
+        <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeRequest={this.makeRequest} invokeProposal={this.makeRequest}/>
         <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>
 
         { transferBtnBar ?

@@ -6,6 +6,8 @@ import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
+import HourGlassIcon from '@material-ui/icons/HourglassEmpty';
+import MessageIcon from '@material-ui/icons/Message';
 // local imports
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
@@ -29,11 +31,18 @@ function SimpleTable(props: any) {
   const { classes } = props;
   return (
     <Paper className={classes.muiSimpleTableRoot}>
+      {/* <Typography className={classes.subtableHeader} variant="display1" component="h4" >
+        Transaction Details
+      </Typography> */}
       <Table className={classes.muiSimpleTable}>
         <TableBody>
           <TableRow key={currentRow.id}>
-            <TableCell align="center" scope="currentRow" className={classes.tableCell}> Due By: {currentRow.dueDate}</TableCell>
-            <TableCell align="center" className={classes.tableCell}>Notes: {currentRow.notes}</TableCell>
+            <TableCell align="center" scope="currentRow">
+            <HourGlassIcon/> {currentRow.dueDate}
+            </TableCell>
+            <TableCell align="center">
+              <MessageIcon/> {currentRow.notes}
+            </TableCell>
           </TableRow>
         </TableBody>
       </Table>

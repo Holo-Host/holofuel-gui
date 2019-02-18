@@ -9,6 +9,7 @@ export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
   hash: string,
+  size: string
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State { /* The components optional internal state */ };
@@ -24,13 +25,13 @@ class Jdenticon extends React.Component<Props, State> {
   }
 
   public render () {
-    const { hash } = this.props
+    const { hash, size } = this.props
     return <svg
       {...this.props}
       style={{ verticalAlign: 'middle' }}
       ref={el => this.handleRef(el)}
-      width="105px"
-      height="105px"
+      width={size}
+      height={size}
       data-jdenticon-value={hash}
       />
   }

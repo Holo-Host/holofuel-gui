@@ -75,7 +75,7 @@ function ProfileInfoCard(props: Props) {
             Main Identity
           </Typography> */}
            <Avatar className={classnames(classes.headerAvatar, classes.profile)}>
-             <Jdenticon hash={ agentHash } {...newProps} />
+             <Jdenticon hash={ agentHash } size="105px" {...newProps} />
            </Avatar>
         </CardContent>
       </div>

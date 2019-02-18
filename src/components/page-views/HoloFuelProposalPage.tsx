@@ -45,7 +45,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
   sendProposal = async (txInfoObj: any) => {
     console.log("txInfoObj for Proposal Call : ", txInfoObj);
     // create propose const that amkes call and stores the result..
-    const proposalResult = await this.props.propose_payment({txInfoObj}); // send as JSON
+    const proposalResult = await this.props.propose_payment(txInfoObj); // send as JSON
     this.sendConfirmationMessage(proposalResult, txInfoObj);
   }
 
@@ -94,7 +94,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
           Send Funds
        </Typography>
 
-        <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeTx={this.sendProposal} />
+        <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeProposal={this.sendProposal} invokeRequest={this.sendProposal}  />
         <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>
 
       {/* Toggle Transaction Sending */}

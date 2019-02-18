@@ -22,16 +22,18 @@ const dataRefactor = (transaction_details: any) => {
     if (transaction !== parseInt(transaction, 10)) {
       const newTxObj = {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
-        amount:  transaction.amount,
-        action: transaction.action,
+        originEvent: transaction.originEvent,
         counterparty: transaction.originCommitHash,
+        amount:  transaction.amount,
+        event: transaction.event,
         status: transaction.status,
         transaction_timestamp: transaction.transaction_timestamp, //timestamp of the current Transaction
         eventCommitHash:transaction.eventCommitHash,
         dueDate: transaction.dueDate,
         notes: transaction.notes,
         // originCommitHash: transaction.originCommitHash,
-        // inResponseToTX?: tranaction.inResponseToTX
+        // inResponseToTX?: transaction.inResponseToTX
+        rowNumberType: transaction.rowNumberType
       };
       console.log("newTxObj", newTxObj);
       return newTxObj;
@@ -63,6 +65,16 @@ const dataRefactor = (transaction_details: any) => {
 //////////////////////////////////////////////////////////////////////////////////
           /* Data for Pending Transactions Table Overview */
 //////////////////////////////////////////////////////////////////////////////////
+const alternateEven = () => {
+  let rowNumberType: string = 'odd';
+  if (rowNumberType === "odd") {
+    return rowNumberType ="even"
+  }
+  else {
+    return rowNumberType ="odd"
+  }
+}
+
 export const refactorListOfTransactions = (list_of_transactions: any) => {
   console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
 
@@ -71,6 +83,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     console.log("transaction.transactions.event", event);
 
     let txEvent:string | undefined = undefined;
+    let originEvent:string | undefined = undefined;
     let amount: number | null = null;
     let counterparty: string | undefined = undefined;
     let dueDate: string | undefined = undefined;
@@ -78,9 +91,12 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     let notes: string | undefined = undefined;
     // let eventCommitHash : string; // FIND way to get acess to this for all tx types...
     let inResponseToTX: string | undefined = undefined;
+    let rowNumberType: string | undefined = alternateEven();
+    console.log("rowNumberType >> should oscilate between odd and even << :", rowNumberType);
 
     if (event.Request){
-      txEvent = "Request"
+      txEvent = "Request";
+      originEvent = "Request";
       amount =  event.Request.amount;
       counterparty = event.Request.to;
       dueDate = event.Request.deadline;
@@ -92,6 +108,8 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     }
     else if (event.Proposal){
       txEvent="Proposal"
+      // if a request commit hash exists, then the request was the original transaction in tx-chain.
+      originEvent = event.request ? "Request" : "Proposal";
       amount =  event.tx.amount;
       counterparty = event.tx.to;
       dueDate = event.tx.deadline;
@@ -113,7 +131,8 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       return {
         originTimeStamp: tx.timestamp,
         amount,
-        action: txEvent,
+        originEvent,
+        event: txEvent,
         counterparty,
         status: tx.state,
         originCommitHash: tx.origin,
@@ -122,6 +141,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
         inResponseToTX,
         // eventCommitHash:, // commit hash for the currently displayed Transaction
         transaction_timestamp:"TBD", // timestamp of the currently displayed Transaction
+        rowNumberType,
       };
     });
 
