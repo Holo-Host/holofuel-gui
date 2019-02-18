@@ -5,11 +5,18 @@
   "proxy": "http://localhost:4141",
   "description": "Simple and intuitive interface allowing users to transact with Holo Fuel.",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build && mv ./build ../ui",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject",
-    "lint": "standard"
+    "start": "PORT=9388 react-scripts-ts start",
+    "start-web": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.base.js",
+    "build": "react-scripts-ts build && node copy-to-ui.js",
+    "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
+    "build-prod": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
+    "test": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "coverage": "react-scripts-ts test --env=jsdom --coverage --collectCoverageFrom=!src/**/*.d.ts --collectCoverageFrom=!src/**/*.stories.tsx --collectCoverageFrom=!src/**/data/*.ts --collectCoverageFrom=src/**/*.ts --collectCoverageFrom=src/**/*.tsx",
+    "release:files": "node copy-release.js",
+    "storybook": "start-storybook -p 6006 -c .storybook",
+    "tslint": "tslint --project ./tsconfig.json",
+    "tslint:fix": "tslint --project ./tsconfig.json --fix"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.6.3",
@@ -51,99 +58,6 @@
     "typeface-roboto": "0.0.54",
     "typesafe-actions": "^2.0.4",
     "utility-types": "^3.4.1"
-  },
-  "lint-staged": {
-    "src/**/*.{js,jsx,json,css}": [
-      "prettier --single-quote --write",
-      "git add"
-    ]
-  },
-  "build": {
-    "productName": "Holo.Host:holofuel-gui",
-    "appId": "holo-host.holofuel-gui",
-    "files": [
-      "app/dist/",
-      "app/app.html",
-      "app/main.prod.js",
-      "app/main.prod.js.map",
-      "package.json"
-    ],
-    "dmg": {
-      "contents": [
-        {
-          "x": 130,
-          "y": 220
-        },
-        {
-          "x": 410,
-          "y": 220,
-          "type": "link",
-          "path": "/Applications"
-        }
-      ]
-    },
-    "win": {
-      "target": [
-        "nsis",
-        "msi"
-      ]
-    },
-    "linux": {
-      "target": [
-        "deb",
-        "rpm",
-        "snap",
-        "AppImage"
-      ],
-      "category": "Development"
-    },
-    "directories": {
-      "buildResources": "resources",
-      "output": "release"
-    },
-    "publish": {
-      "provider": "github",
-      "owner": "Holo-Host",
-      "repo": "holofuel-gui",
-      "private": false
-    }
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Holo-Host/holofuel-gui.git"
-  },
-  "author": {
-    "name": "Lisa Jetton"
-  },
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/holo-host/holofuel-gui/issues"
-  },
-  "keywords": [
-    "Holochain",
-    "Holo",
-    "Holofuel"
-  ],
-  "homepage": "https://github.com//Holo-Host/holofuel-gui#readme",
-  "jest": {
-    "testURL": "http://localhost/",
-    "moduleNameMapper": {
-      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/internals/mocks/fileMock.js",
-      "\\.(css|less|sass|scss)$": "identity-obj-proxy"
-    },
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json"
-    ],
-    "transform": {
-      "^.+\\.jsx?$": "babel-jest"
-    },
-    "setupFiles": [
-      "./internals/scripts/CheckBuiltsExist.js"
-    ]
   },
   "devDependencies": {
     "@babel/core": "^7.2.2",
@@ -192,7 +106,7 @@
     "@types/react-dates": "^17.1.5",
     "@types/react-day-picker": "^5.3.0",
     "@types/react-dom": "^16.0.7",
-    "@types/react-redux": "^6.0.6",
+    "@types/react-redux": "^7.0.1",
     "@types/react-router-dom": "^4.3.0",
     "@types/react-table": "^6.7.21",
     "@types/recompose": "^0.30.3",
