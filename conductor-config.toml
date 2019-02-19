@@ -1,7 +1,5 @@
 
 # -----------  Agents  -----------
-
-
 [[agents]]
 id = "test_agent1"
 name = "HoloTester1"
@@ -21,8 +19,6 @@ key_file = "holo_tester.key"
 # key_file = "holo_tester.key"
 
 # -----------  DNA  -----------
-
-
 [[dnas]]
 id = "fuel-dna"
 file = "dna/holofuelv6.hcpkg"
@@ -49,7 +45,6 @@ port = 3000
 id = "holofuel instance"
 
 # -----------  UI  -----------
-
 [[ui_bundles]]
 id = "main"
 root_dir = "./ui"
@@ -62,14 +57,12 @@ port = 9300
 dna_interface = "websocket_interface"
 
 # -----------  Networking  -----------
-
 # [network]
 # n3h_path = "/path/to/n3h"
 # n3h_persistence_path = "/tmp"
 # bootstrap_nodes = []
 
 # -----------  Networking instructions  -----------
-
 # To get networking running requires the following steps:
 
 # - Clone the repo for the holochain networking library n3h (https://github.com/holochain/n3h)

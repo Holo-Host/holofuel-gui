@@ -31,8 +31,8 @@ export interface StateProps {
   list_of_instance_info: typeof instanceListData,
   list_of_agents: Array<any>,
   my_agent_string: string,
-// currently this is just using a hard-coded value that relates to the container.
   my_agent_hash: string,
+  hf_base_dna_hash: string,
   list_of_transactions : ListTransactionsResult,
   // list_of_transactions: typeof createMockApiData.list_of_request_transactions,
   list_of_requests: typeof createMockApiData.list_of_requests,
@@ -80,7 +80,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   };
 
   componentDidMount () {
-    // this.props.fetch_agent_string();
+    this.props.fetch_agent_string();
     this.props.get_ledger_state();
   }
 
@@ -93,12 +93,12 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   }
 
   public render() {
-    console.log('State in HoloFuelAppContainer:', this.state);
-    console.log('Props in HoloFuelAppContainer:', this.props);
+    // console.log('State in HoloFuelAppContainer:', this.state);
+    // console.log('Props in HoloFuelAppContainer:', this.props);
     // const { classes } = this.props;
     const { classes, staticContext, ...newProps } = this.props; //TODO: Locate staticContext.. AND REMOVE from outer props
     const { location } = this.props.history;
-    console.log(">>>> location: >>>", location);
+    // console.log(">>>> location: >>>", location);
 
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>

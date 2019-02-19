@@ -10,15 +10,14 @@ const DNA_INSTANCE = 'holofuel instance';
 const TX_ZOME_NAME = 'transactions';
 const TX_BATCH_VIEW_AMOUNT = 50;
 
-const CONTAINER_TESTER_AGENT_HASH = 'HoloTester2-----------------------------------------------------------------------AAAGy4WW9e';
-
 // readonly (- permissioned) keyword causes compiler to error if one attempts to mutate the state
 export type State = {
 // global identifiers :
   list_of_instance_info: Array<any>,
   list_of_agents: Array<any>,
   my_agent_string: string,
-  my_agent_hash: typeof CONTAINER_TESTER_AGENT_HASH,
+  my_agent_hash: string,
+  hf_base_dna_hash: string,
 
 // holofuel specific states :
   ledger_state: Ledger,
@@ -35,8 +34,9 @@ export type OriginalState = State | undefined;
 export const INITIAL_STATE: State = {
   list_of_instance_info: [],
   list_of_agents: [],
-  my_agent_string: 'Poison Ivy',
-  my_agent_hash: CONTAINER_TESTER_AGENT_HASH,
+  my_agent_string: 'Test Agent',
+  my_agent_hash: 'HoloTester2-----------------------------------------------------------------------AAAGy4WW9e',
+  hf_base_dna_hash: "QmcYtest",
   ledger_state: {
     balance: null,
     credit: null,
@@ -139,17 +139,24 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state, list_of_agents : payload };
     }
 
-    // FETCH_AGENT_STRING
+    // FETCH_AGENT_STRING  >> Success message & Result
     case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_SUCCESS`: {
       console.log('FETCH_AGENT_STRING_SUCCESS payload', payload);
-      return { ...state, my_agent_hash : payload };
+      const my_agent_string = payload.agent_id.nick;
+      const my_agent_hash = payload.agent_address;
+      const hf_base_dna_hash = payload.dna_address;
+      return {
+        ...state,
+        my_agent_string,
+        my_agent_hash,
+        hf_base_dna_hash
+      };
     }
 
-  // FETCH_AGENT_HASH
-    // case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_hash_SUCCESS`: {
-    //   console.log('FETCH_AGENT_HASH_SUCCESS payload', payload);
-    //  return { ...state, my_agent_string : payload };
-    // }
+    // FETCH_AGENT_STRING >> Failure message
+    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_FAILURE`: {
+      console.log('FETCH_AGENT_STRING_SUCCESS payload', payload);
+    }
 
 ////////////////////////////////////////////////////////
           /* Reporting Container Transactions */
@@ -199,31 +206,37 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
   // Call for REQUEST_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/request_SUCCESS`: {
-      // console.log('REQUEST_PAYMENT (REQEUST) payload', payload);
+      console.log('REQUEST_PAYMENT_SUCCESS payload', payload);
+      return { ...state };
+    }
+
+  // Call for REQUEST_PAYMENT ()
+  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/request_FAILURE`: {
+      console.log('REQUEST_PAYMENT_FAILURE payload', payload);
       return { ...state };
     }
 
   // Call for PROPOSE_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/proposal_SUCCESS`: {
-      // console.log('PROPOSE_PAYMENT (PROPOSAL) payload', payload);
+      console.log('PROPOSE_PAYMENT_SUCCESS (PROPOSAL_SUCCESS) payload', payload);
       return { ...state };
     }
 
   // Call for RECEIVE_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/receive_payment_SUCCESS`: {
-      console.log('RECEIVE_PAYMENT payload', payload);
+      console.log('RECEIVE_PAYMENT_SUCCESS payload', payload);
       return { ...state };
     }
 
   // Call for REJECT_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/reject_payment_SUCCESS`: {
-      // console.log('REJECT_PAYMENT (REQEUST) payload', payload);
+      // console.log('REJECT_PAYMENT_SUCCESS (REQEUST) payload', payload);
       return { ...state };
     }
 
   // Call for PAY_REQUEST ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/pay_request_SUCCESS`: {
-      // console.log('PAY_REQUEST payload', payload);
+      // console.log('PAY_REQUEST_SUCCESS payload', payload);
       return { ...state };
     }
 

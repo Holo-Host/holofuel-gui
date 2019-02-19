@@ -51,9 +51,9 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   list_of_instance_info: transactionReducer.list_of_instance_info,
   list_of_agents: transactionReducer.list_of_agents,
   my_agent_string: transactionReducer.my_agent_string,
-  // currently this is just using a hard-coded value that relates to the container.
   my_agent_hash: transactionReducer.my_agent_hash,
-
+  hf_base_dna_hash:  transactionReducer.hf_base_dna_hash,
+  
 // holofuel specific states :
   ledger_state: transactionReducer.ledger_state,
   list_of_transactions: transactionReducer.list_of_transactions,
@@ -76,7 +76,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
         // console.log("dispatching get_agent_list");
        dispatch(GetAgentListAsyncAction.create([]))},
       fetch_agent_string: () => {
-        // console.log("dispatching fetch_agent_string");
+        console.log("dispatching fetch_agent_string");
        dispatch(FetchAgentStringAsyncAction.create([]))},
 //NB: This API is not yet avail:
       //fetch_agent_hash: () => {console.log("dispatching fetch_agent_hash"); dispatch(FetchAgentHashAsyncAction.create([]))},
@@ -88,10 +88,10 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
        dispatch(TransactionListAsyncAction.create(payload))},
 
       list_requests : () => {
-        // console.log("dispatching list_transactions");
+        console.log("dispatching list_transactions");
        dispatch(ListRequestsAsyncAction.create({}))},
       list_proposals : () => {
-        // console.log("dispatching list_transactions");
+        console.log("dispatching list_transactions");
        dispatch(ListProposalsAsyncAction.create({}))},
 
   //// View Specific Transaction

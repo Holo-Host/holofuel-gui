@@ -23,9 +23,6 @@ import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // import Memo from '../memo/Memo';
 
-//TODO : Apply logic to buttons >>
-
-
 // Recipient (known by their role in proposal >> only true they DID NOT initate the proposal (ie. there is no request value in propsoal struct)):
 //1.) Determine whether Local Agent is Recipient of current TX (ie. ...)
 //2.) Discern TX Event type
@@ -119,7 +116,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   handleMakePayment = () => {
     const { recipient, amount, deadline, notes } = this.state; // requestIdReference
     const tx_obj: ProposalActionParam = {
-      to: recipient,// this will be the payment requestor's/payment recipeient's AGENT_ADDRESS
+      to: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
       amount,
       notes,
       deadline,
@@ -136,8 +133,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       from: recipient,// this will be the payment requestor's/payment recipeient's AGENT_ADDRESS
       amount,
       notes,
-      deadline,
-      // request?: requestIdReference
+      deadline:`Some(${deadline})`
     }
     console.log("propose_tx_obj : ", tx_obj);
     // Now send obj to parent component for API invocation :

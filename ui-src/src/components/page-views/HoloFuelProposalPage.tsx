@@ -31,7 +31,6 @@ export interface State {
 class HoloFuelTransferFormPage extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
-
     this.state = {
       message: ""
     }

@@ -33,8 +33,8 @@ class MobileMesssageColumn extends React.Component<Props, State> {
 
   public render() {
     const currentRowInfo = this.props.rowInfo.original;
-    console.log("MobileMesssageColumn props", this.props);
-    console.log("MobileMesssageColumn state", this.state);
+    // console.log("MobileMesssageColumn props", this.props);
+    // console.log("MobileMesssageColumn state", this.state);
 
     return (
       <div>

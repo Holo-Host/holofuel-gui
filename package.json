@@ -1,13 +1,16 @@
 {
-  "name": "holofuel",
+  "name": "HoloFuel",
   "version": "1.0.0",
-  "description": "Simple and intuitive interface allowing users to transact with Holo Fuel.",
+  "description": "Simple and intuitive interface allowing users to transact with HoloFuel.",
   "main": "index.js",
   "scripts": {
     "hc:build": "mkdir -p dna && cd dna-src && hc package --strip-meta -o ../dna/holofuel.hcpkg",
     "ui:build":"cd ui-src && npm run build && cd ..",
-    "hc:start": "npm run ui:build && holochain -c ./conductor-config.toml"
+    "hc:start": "npm run ui:build &&  holochain -c ./conductor-config.toml"
   },
-  "author": "",
-  "license": "GPL-3"
+  "author": [
+    "Lisa Jetton",
+    "Zo-el"
+  ],
+  "license": "MIT"
 }

@@ -14,7 +14,7 @@
    Table Data Generation Refactor Helper Function - Final Obj
  //////////////////////////////////////////////////////////////////*/
 const dataRefactor = (transaction_details: any) => {
-  console.log("APPDETAILS:-------------->",transaction_details);
+  // console.log("APPDETAILS:-------------->",transaction_details);
   const APP_LIST_LENGTH = transaction_details.length;
 
   const insertAppDetails = (transaction: any) => {
@@ -35,7 +35,7 @@ const dataRefactor = (transaction_details: any) => {
         // inResponseToTX?: transaction.inResponseToTX
         rowNumberType: transaction.rowNumberType
       };
-      console.log("newTxObj", newTxObj);
+      // console.log("newTxObj", newTxObj);
       return newTxObj;
     }
     else {
@@ -76,11 +76,11 @@ const alternateEven = () => {
 }
 
 export const refactorListOfTransactions = (list_of_transactions: any) => {
-  console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
+  // console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
 
   const list_of_refactored_transactions = MOCK_list_of_transactions_requests_only.transactions.map((tx: any) => {
     const event = tx.event;
-    console.log("transaction.transactions.event", event);
+    // console.log("transaction.transactions.event", event);
 
     let txEvent:string | undefined = undefined;
     let originEvent:string | undefined = undefined;
@@ -92,7 +92,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     // let eventCommitHash : string; // FIND way to get acess to this for all tx types...
     let inResponseToTX: string | undefined = undefined;
     let rowNumberType: string | undefined = alternateEven();
-    console.log("rowNumberType >> should oscilate between odd and even << :", rowNumberType);
+    // console.log("rowNumberType >> should oscilate between odd and even << :", rowNumberType);
 
     if (event.Request){
       txEvent = "Request";
@@ -145,7 +145,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       };
     });
 
-  console.log("list of current TRANSACTIONS", list_of_refactored_transactions);
+  // console.log("list of current TRANSACTIONS", list_of_refactored_transactions);
   return dataRefactor(list_of_refactored_transactions);
 };
 

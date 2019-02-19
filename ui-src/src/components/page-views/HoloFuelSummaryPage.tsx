@@ -13,7 +13,7 @@ import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicke
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
 import {RequestActionParam} from '../../utils/types';
-// import * as moment from 'moment';
+import * as moment from 'moment';
 
 // type Moment = moment.Moment;
 export interface OwnProps {
@@ -48,7 +48,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
 
   public componentDidMount () {
     // Invoke list_transactions() (a ZOME Call) :
-    console.log("calling : list_transactions >>  inside HoloFuelSummaryPage... >> ");
+    // console.log("calling : list_transactions >>  inside HoloFuelSummaryPage... >> ");
     this.props.list_transactions({});
 
     // Invoke list_requests() (a ZOME Call) :
@@ -62,13 +62,14 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   }
 
   initializing (){
-    // let time = moment().format().toString();
+    let time = moment().format().toString();
     // let time1= "Some("+time+")";
+    // let time2 = `Some({Iso8601:${time}});
     const request_tx_obj : RequestActionParam = {
       from: "HoloTester2-----------------------------------------------------------------------AAACZp4xHB", // this will be the payment requestor's AGENT_ADDRESS
       amount:"0.0000000569066456676 HF",
       notes: "Some(testing out the request_payment api call...)",
-      deadline: "Some()"
+      deadline: `Some(${time})`
     }
     console.log("request_tx_obj", request_tx_obj);
     console.log("calling : request_payment >> ", this.props.request_payment);
@@ -85,15 +86,15 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       const transactionData = { list_of_transactions };
       const prevProps = state.prevProps || {};
       const data = prevProps.value !== transactionData ? transactionData : state.data
-      console.log("data", data);
+      // console.log("data", data);
 
       const { newer } = list_of_transactions;
       const currentTxBatchInfo = Object.assign({newer}, {});
-      console.log("------------------------>",list_of_transactions)
+      // console.log("------------------------>",list_of_transactions)
       const txEndDate = newer!.until;
       const txStartDate = newer!.since;
-      console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
-      console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
+      // console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
+      // console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
 
       return ({
         data,
@@ -107,7 +108,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   }
 
   handleTxBatchType = (txState: string) => {
-    console.log("TXTYPE for Batch -- inside of HoloFuelSummaryPage", txState);
+    // console.log("TXTYPE for Batch -- inside of HoloFuelSummaryPage", txState);
     this.setState({
       txBatchType: txState
     });
@@ -116,8 +117,8 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   }
 
   handleTxBatchDuration = (txEndDate: any, txStartDate: any) => {
-    console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txEndDate);
-    console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txStartDate);
+    // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txEndDate);
+    // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txStartDate);
     this.setState({
       txEndDate,
       txStartDate
@@ -128,11 +129,13 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
 
   handleTableRefresh = () => {
     // const { txBatchType, txStartDate, txEndDate } = this.state;
-    console.log("calling : TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
+    console.log("this is your TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
+    // console.log("this is your Transaction Batch StartDate >> !! >> ", txStartDate);
+    // console.log("this is your Transaction Batch EndDate >> !! >> ", txEndDate);
+    // console.log("this is your Transaction Batch Type >> !! >> ", txBatchType);
+
     // Invoke list_transactions() WITH PARAMS :
-
-    console.log("calling : list_transactions WITH PARAMS >> !! >> ");
-
+    // console.log("calling : list_transactions WITH PARAMS >> !! >> ");
     // this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
   }
 
@@ -140,7 +143,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       const { classes, transferBtnBar, ...newProps } = this.props;
       const gutterBottom : boolean = true;
 
-      console.log('Props in HoloFuelSummaryPage:', this.props);
+      // console.log('Props in HoloFuelSummaryPage:', this.props);
 
       return (
         <div>

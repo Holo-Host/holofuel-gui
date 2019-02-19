@@ -84,7 +84,12 @@ class AgentProfile extends React.Component<Props, State> {
       <br/>
       <br/>
 
-      <ProfileInfoCard {...newProps} agentHash={this.state.agentData!.agentHash} name={this.state.agentData!.agentString}email={MOCK_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}/>
+      <ProfileInfoCard
+        {...newProps}
+        agentHash={this.state.agentData!.agentHash}
+        name={this.state.agentData!.agentString}
+        email={MOCK_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}
+      />
 
       <div className={classes.jumbotronImg}>
         <h4 className={classes.h4}> Your HoloFuel ID</h4>
