@@ -78,7 +78,7 @@ const alternateEven = () => {
 export const refactorListOfTransactions = (list_of_transactions: any) => {
   // console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
 
-  const list_of_refactored_transactions = MOCK_list_of_transactions_requests_only.transactions.map((tx: any) => {
+  const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
     const event = tx.event;
     // console.log("transaction.transactions.event", event);
 
@@ -103,19 +103,17 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       notes = event.Request.notes;
       // eventCommitHash =  tx.origin; // FIND way to get acess to this for all tx types...
       inResponseToTX = undefined;
-      // txTimestamp = ;
 
     }
     else if (event.Proposal){
-      txEvent="Proposal"
       // if a request commit hash exists, then the request was the original transaction in tx-chain.
+      txEvent="Proposal"
       originEvent = event.request ? "Request" : "Proposal";
       amount =  event.tx.amount;
       counterparty = event.tx.to;
       dueDate = event.tx.deadline;
       notes = event.tx.notes;
       inResponseToTX: tx.request;
-      // txTimestamp = ;
       // eventCommitHash = ;
     }
         // case 'decline' :
@@ -129,7 +127,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
 
 
       return {
-        originTimeStamp: tx.timestamp,
+        originTimeStamp: tx.timestamp.origin,
         amount,
         originEvent,
         event: txEvent,
@@ -140,7 +138,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
         notes: notes,
         inResponseToTX,
         // eventCommitHash:, // commit hash for the currently displayed Transaction
-        transaction_timestamp:"TBD", // timestamp of the currently displayed Transaction
+        transaction_timestamp: tx.timestamp.event,
         rowNumberType,
       };
     });

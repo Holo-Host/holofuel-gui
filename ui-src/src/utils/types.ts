@@ -1,3 +1,6 @@
+import * as moment from 'moment';
+type Moment = moment.Moment;
+
 export type ReactInputParam = React.ChangeEvent<HTMLInputElement> | string | undefined | null;
 
 // HOLOCHAIN TYPING definitions :
@@ -52,21 +55,21 @@ export type RequestActionParam = {
   from: Address,  // this was to >> shouldn't it be "from" ?!?!?!
   amount: string,
   notes?: string,
-  deadline?: DateTimeString | string
+  deadline?: DateTimeString | Moment | string
 }
 
 export type ProposalActionParam = {
   to: Address, // this was from >> shouldn't it be "to" ?!?!?!
   amount: string,
   notes?: string,
-  deadline?: DateTimeString | string | undefined,
+  deadline?: DateTimeString | Moment | string | undefined,
 }
 
 export type Transaction = {
     to: Address,
     amount: string,
     notes?: string,
-    deadline?: DateTimeString | string | undefined,
+    deadline?: DateTimeString | Moment | string | undefined,
     request?: Address
 }
 
@@ -106,7 +109,8 @@ export type Ledger = {
 export type Adjustment = {
   balance: number,
   payable: number,
-  receivable: number
+  receivable: number,
+  credit?: number
 }
 
 export type AddressArray = Array<Address>; // an array of the commit hashes/ dht addresses
@@ -127,13 +131,14 @@ export type ListTransactionOptions = {
 
 export type ListTransactionsResult = {
   ledger: Ledger,
-  newer: ListTransactionOptions, // newer
-  older: ListTransactionOptions, // newer
-  // next: ListTransactionOptions,
-  // over: ListTransactionsCoverage,
+  newer: ListTransactionOptions,
+  older: ListTransactionOptions,
   transactions: [
     {
-      timestamp: DateTimeString | string,
+      timestamp: {
+        event: DateTimeString | string,
+        origin: DateTimeString | string
+      }
       state: string,
       origin: Address,
       event: Event,

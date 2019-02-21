@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import classnames from 'classnames';
+import * as moment from 'moment';
 // mui custom style imports
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -30,9 +31,9 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
   //    then the button action text should to "OK" or "Reject"
   //  }
 
-
 type StateKeyType = string | number | symbol | any;
 type LabelRef = HTMLElement | null | undefined;
+type Moment = moment.Moment;
 
 export interface OwnProps {
   // These are props the component has received from its parent component
@@ -49,7 +50,7 @@ export interface State {
   recipient: string,
   amount: string,
   notes: string,
-  deadline: string,
+  deadline: string | Moment,
   // requestIdReference: string
 }
 // type StateInput = Pick<State, StateKeyType>| null;
@@ -78,7 +79,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   handleChange = (name: StateKeyType) => (event: React.ChangeEvent<HTMLInputElement>) => {
     // console.log("selected event : ", event);
     // console.log("selected name : ", name);
-  //TODO: Find a typed solution that allows the following isntead of switch case:
+  //TODO: Find a typed solution that allows the following instead of switch case:
   // The non-ts way:
     // this.setState({
     //   [name]: event.target.value,
@@ -115,29 +116,48 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
 
   handleMakePayment = () => {
     const { recipient, amount, deadline, notes } = this.state; // requestIdReference
+    const isoDeadline: Moment = moment(deadline, moment.ISO_8601);
     const tx_obj: ProposalActionParam = {
       to: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
       amount,
       notes,
-      deadline,
+      deadline: isoDeadline //,
       // request?: requestIdReference
     }
-    console.log("propose_tx_obj : ", tx_obj);
+
+    this.setState({
+      recipient: "",
+      amount: "",
+      notes: "",
+      deadline: ""
+    })
+
     // Now send obj to parent component for API invocation :
-    this.props.invokeProposal({tx_obj});
+    console.log("propose_tx_obj : ", tx_obj);
+    this.props.invokeProposal(tx_obj);
   };
 
   handleRequestPayment = () => {
     const { recipient, amount, deadline, notes } = this.state; // requestIdReference
+    const isoDeadline = moment(deadline, moment.ISO_8601);
+    // const isoDeadline = moment(deadline, 'YYYY-MM-DD HH:mm Z');
     const tx_obj: RequestActionParam = {
-      from: recipient,// this will be the payment requestor's/payment recipeient's AGENT_ADDRESS
+      from: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
       amount,
       notes,
-      deadline:`Some(${deadline})`
+      deadline: isoDeadline
     }
-    console.log("propose_tx_obj : ", tx_obj);
+
+    this.setState({
+      recipient: "",
+      amount: "",
+      notes: "",
+      deadline: ""
+    })
+
     // Now send obj to parent component for API invocation :
-    this.props.invokeRequest({tx_obj});
+    console.log("request_tx_obj : ", tx_obj);
+    this.props.invokeRequest(tx_obj);
   };
 
   public render() {

@@ -2,13 +2,12 @@ import { ActionType } from 'typesafe-actions';
 import * as actions from '../actions/transactionActions';
 import { Ledger, ListTransactionsResult, Address } from '../utils/types';
 import createMockApiData from '../utils/seed-data/mock-api-data';
-
+import { setInstance, TABLE_DATA_BATCH_LIMIT } from '../utils/constants'
 export type Action = ActionType<typeof actions>;
 
 // FILE CONSTANTS:
-const DNA_INSTANCE = 'holofuel instance';
+const DNA_INSTANCE = setInstance();
 const TX_ZOME_NAME = 'transactions';
-const TX_BATCH_VIEW_AMOUNT = 50;
 
 // readonly (- permissioned) keyword causes compiler to error if one attempts to mutate the state
 export type State = {
@@ -53,17 +52,20 @@ export const INITIAL_STATE: State = {
     newer: {
       since: "",
       until: "",
-      limit: TX_BATCH_VIEW_AMOUNT,
+      limit: TABLE_DATA_BATCH_LIMIT,
       state: ""
     },
     older: {
       since: "",
       until: "",
-      limit: TX_BATCH_VIEW_AMOUNT,
+      limit: TABLE_DATA_BATCH_LIMIT,
       state: ""
     },
     transactions: [{
-        timestamp: "",
+        timestamp: {
+          event:"", // ** added **
+          origin: "" // ** added **
+        },
         state: "",
         origin: "",
         event: {
@@ -78,7 +80,8 @@ export const INITIAL_STATE: State = {
         adjustment: {
           balance: 0,
           payable: 0,
-          receivable: 0
+          receivable: 0,
+          credit: 0 // ** added **
         }
     }]
   },
@@ -212,7 +215,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
   // Call for REQUEST_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/request_FAILURE`: {
-      console.log('REQUEST_PAYMENT_FAILURE payload', payload);
+      console.log('REQUEST_PAYMENT_FAILURE payload', JSON.stringify(payload));
       return { ...state };
     }
 

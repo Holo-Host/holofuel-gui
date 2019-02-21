@@ -12,8 +12,8 @@ import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar'
 import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
-import {RequestActionParam} from '../../utils/types';
-import * as moment from 'moment';
+// import { RequestActionParam } from '../../utils/types';
+// import * as moment from 'moment';
 
 // type Moment = moment.Moment;
 export interface OwnProps {
@@ -58,24 +58,25 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     // Invoke list_proposals() (a ZOME Call) :
     // console.log("calling : list_proposals >> ", this.props.list_proposals);
     // this.props.list_proposals();
-      this.initializing();
+      // this.initializing();
   }
 
-  initializing (){
-    let time = moment().format().toString();
-    // let time1= "Some("+time+")";
-    // let time2 = `Some({Iso8601:${time}});
-    const request_tx_obj : RequestActionParam = {
-      from: "HoloTester2-----------------------------------------------------------------------AAACZp4xHB", // this will be the payment requestor's AGENT_ADDRESS
-      amount:"0.0000000569066456676 HF",
-      notes: "Some(testing out the request_payment api call...)",
-      deadline: `Some(${time})`
-    }
-    console.log("request_tx_obj", request_tx_obj);
-    console.log("calling : request_payment >> ", this.props.request_payment);
-    this.props.request_payment(request_tx_obj);
-
-  }
+  // initializing (){
+  //   let time = moment().format().toString();
+  //   console.log('time', time);
+  //   // let time1= "Some("+time+")";
+  //   // let time2 = `Some({Iso8601:${time}});
+  //   // let time3 = `Some(${time})`;
+  //   const request_tx_obj : RequestActionParam = {
+  //     from: "HoloTester2-----------------------------------------------------------------------AAACZp4xHB", // this will be the payment requestor's AGENT_ADDRESS
+  //     amount:"0.0000000569066456676 HF",
+  //     notes: "testing out the request_payment api call..."
+  //   }
+  //   console.log("request_tx_obj", request_tx_obj);
+  //   console.log("calling : request_payment >> ", this.props.request_payment);
+  //   this.props.request_payment(request_tx_obj);
+  //
+  // }
 
   static getDerivedStateFromProps(props: Props, state: State) {
     const { list_of_transactions } = props;

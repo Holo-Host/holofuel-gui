@@ -1,9 +1,10 @@
 import { createHolochainAsyncAction } from '@holochain/hc-redux-middleware';
 // export const FETCH_STATE = 'FETCH_STATE';
 // FILE CONSTANTS:
-const DNA_INSTANCE = 'holofuel instance';
+import { setInstance } from '../utils/constants'
+// const DNA_INSTANCE = 'holofuel instance';
 const TX_ZOME_NAME = 'transactions';
-
+const DNA_INSTANCE = setInstance();
 ////////////////////////////////////////////////////////////////////////////
                     /* Verfiy State - TESTING */
 ////////////////////////////////////////////////////////////////////////////

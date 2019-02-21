@@ -34,7 +34,6 @@ export interface StateProps {
   my_agent_hash: string,
   hf_base_dna_hash: string,
   list_of_transactions : ListTransactionsResult,
-  // list_of_transactions: typeof createMockApiData.list_of_request_transactions,
   list_of_requests: typeof createMockApiData.list_of_requests,
   list_of_proposals: typeof createMockApiData.list_of_proposals,
   view_specific_request: typeof createMockApiData.get_request_kv_store[0],
@@ -91,6 +90,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
       transactionType: txType
     });
   }
+
+// Find a dynamic way to connect the ui to the dna >> play with info_instances && agent_string >> access prior to running?!?!
 
   public render() {
     // console.log('State in HoloFuelAppContainer:', this.state);

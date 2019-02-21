@@ -36,9 +36,9 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
   }
 
   makeRequest = (txInfoObj: any) => {
-    console.log("txInfo for Proposal Call : ", txInfoObj);
+    console.log("txInfo for Request Call : ", txInfoObj);
     // make make_payment API call
-    this.props.request_payment(txInfoObj);  // send as JSON
+    this.props.request_payment(txInfoObj);  // sending as JSON
   }
 
 
