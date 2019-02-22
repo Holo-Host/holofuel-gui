@@ -65,14 +65,56 @@ const dataRefactor = (transaction_details: any) => {
 //////////////////////////////////////////////////////////////////////////////////
           /* Data for Pending Transactions Table Overview */
 //////////////////////////////////////////////////////////////////////////////////
+let rowNumberType: string = 'odd';
 const alternateEven = () => {
-  let rowNumberType: string = 'odd';
   if (rowNumberType === "odd") {
     return rowNumberType ="even"
   }
   else {
     return rowNumberType ="odd"
   }
+}
+
+export const refactorListOfPending = (list_of_pending:any)=>{
+  const  list_of_proposals =  list_of_pending.proposals.map((p:any) => {
+    return {
+      originTimeStamp: p[1],
+      amount:p[2].Proposal.tx.amount,
+      originEvent:p[2].Proposal.request ? "Request" : "Proposal",
+      event: "Proposal",
+      counterparty:p[2].Proposal.tx.to,
+      status: "State",
+      originCommitHash: p[0],
+      dueDate: p[2].Proposal.tx.deadline,
+      notes:  p[2].Proposal.tx.notes,
+      inResponseToTX:p[2].Proposal.request,
+      // eventCommitHash:, // commit hash for the currently displayed Transaction
+      transactionTimestamp: p[1],
+      rowNumberType,
+      pendingCase:"recepient"
+    };
+  });
+
+  const  list_of_requests =  list_of_pending.requests.map((r:any) => {
+      return {
+      originTimeStamp: r[1],
+      amount:r[2].Request.amount,
+      originEvent:"Request",
+      event: "Request",
+      counterparty:r[2].Request.to,
+      status: "State",
+      originCommitHash: r[0],
+      dueDate: r[2].Request.deadline,
+      notes:  r[2].Request.notes,
+      inResponseToTX:undefined,
+      // eventCommitHash:, // commit hash for the currently displayed Transaction
+      transactionTimestamp: r[1],
+      rowNumberType,
+      pendingCase:"spender"
+    };
+  });
+
+  return dataRefactor(list_of_proposals.concat(list_of_requests));
 }
 
 export const refactorListOfTransactions = (list_of_transactions: any) => {

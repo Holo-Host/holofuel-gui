@@ -15,7 +15,7 @@ import Refresh from '@material-ui/icons/Refresh';
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
 import mobile_pending_transaction_table_columns, { mobile_processed_transaction_table_columns } from './SummaryTransactionTableColsMobile';
-import { refactorListOfTransactions } from '../../../utils/table-helper-functions/transaction-data-refactor';
+import { refactorListOfTransactions,refactorListOfPending } from '../../../utils/table-helper-functions/transaction-data-refactor';
 import SimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
@@ -100,6 +100,16 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     }
   }
 
+  getListOfPendingData=()=>{
+    console.log("#######################")
+    console.log("Getting pending data",this.props)
+    console.log("#######################")
+    if(!this.props.list_of_pending.proposals && !this.props.list_of_pending.requests)
+    return []
+    else
+    return refactorListOfPending(this.props.list_of_pending)
+  }
+
 
   public render() {
     const { classes, ...newProps } = this.props;
@@ -113,6 +123,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       </div>
     }
 
+    const list_of_pending_data_refactored = this.getListOfPendingData();
   // Sm (mobile) Viewport
     const mobile_pending_table_columns = mobile_pending_transaction_table_columns(this.props, this.state);
     const mobile_processed_table_columns = mobile_processed_transaction_table_columns(this.props, this.state);
@@ -124,7 +135,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     const processed_table_columns = processed_transaction_table_columns(this.props, this.state);
     console.log("table_data: ", pending_table_data);
     console.log("table_columns: ", pending_table_columns);
-
+    console.log("FIRST LOG:list_of_pending_data_refactored ",list_of_pending_data_refactored)
+    
     return (
 
     // TODO: Look into integratng the infnite scroll with ReactTable...
@@ -142,8 +154,69 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       //         </InfiniteScroll>
       //     </div>
       // </div>
+/////////////////PENDING TRANSACTIONS//////////////////
+<div className={classes.transactionTablesContainer}>
 
-        <div className={classes.transactionTablesContainer}>
+  <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
+    List Of Pending Transactions
+  </Typography>
+  <div className={classes.tableButtonBar}>
+    <Button variant="outlined" color="primary"
+      className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
+      onClick={() => this.props.handleTableRefresh()}>
+      <Refresh className={classes.svgView}/>
+    </Button>
+  </div>
+
+{ isMobile ?
+  <div className={classnames(classes.tableContainer)}>
+    <ReactTable
+      className={classnames("-striped", "-highlight", classes.table)}
+      showPagination={false}
+      defaultPageSize={list_of_pending_data_refactored!.length}
+      data={ list_of_pending_data_refactored }
+      columns={ mobile_pending_table_columns }
+    />
+  </div>
+
+:
+
+/* // viewports >= Tablet Size (widths >=768) */
+  <div className={classnames(classes.tableContainer)}>
+    <AdvancedExpandReactTable
+      className={classnames("-striped", "-highlight", classes.table)}
+      showPagination={false}
+      defaultPageSize={list_of_pending_data_refactored!.length}
+      data={list_of_pending_data_refactored}
+      columns={ pending_table_columns }
+      filterable={filterable}
+      defaultFilterMethod={(filter:any, row:any) =>
+         String(row[filter.id]) === filter.value
+       }
+      SubComponent={(row:any) => {
+        // SubComponent LOGIC >> to display the tx details...
+        console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
+          const currentRowData = ["due_date", "tx_notes"];
+        return (
+          <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
+            <div className={classnames(classes.flexContainer)}>
+              <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+            </div>
+          </div>
+        );
+      }}
+    />
+  </div>
+}
+<div className={classes.tableButtonBar}>
+  <Button variant="outlined" color="primary"
+  className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
+  onClick={() => this.props.handleTableRefresh()}>
+    <ExpandMore className={classes.svgMore}/>
+  </Button>
+</div>
+
+/////////////////asd///////////////////////
           <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
             Pending Transactions
           </Typography>
