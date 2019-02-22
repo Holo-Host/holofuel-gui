@@ -19,7 +19,8 @@ import Message from '@material-ui/icons/Message';
 import Timer from '@material-ui/icons/Timer';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
-import { ProposalActionParam, RequestActionParam } from '../../../utils/types'; //  RequestActionParam, Ledger, ListTransactionsResult , DateTimeString, Address
+// import { ProposalActionParam, RequestActionParam } from '../../../utils/types'; //  RequestActionParam, Ledger, ListTransactionsResult , DateTimeString, Address
+import VerificationMessage from '../modal/VerificationMessage';
 import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // import Memo from '../memo/Memo';
@@ -51,6 +52,8 @@ export interface State {
   amount: string,
   notes: string,
   deadline: string | Moment,
+  message: any,
+  transactionType: string // ,
   // requestIdReference: string
 }
 // type StateInput = Pick<State, StateKeyType>| null;
@@ -63,6 +66,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       amount: "",
       notes: "",
       deadline: "",
+      message: "",
+      transactionType: ""
       // requestIdReference: ""
     };
   }
@@ -114,16 +119,15 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     }
   };
 
-  handleMakePayment = () => {
-    const { recipient, amount, deadline, notes } = this.state; // requestIdReference
-    const isoDeadline: Moment = moment(deadline, moment.ISO_8601);
-    const tx_obj: ProposalActionParam = {
-      to: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
-      amount,
-      notes,
-      deadline: isoDeadline //,
-      // request?: requestIdReference
-    }
+  handleMakePayment = (tx_obj: object) => {
+    // const { recipient, amount, deadline, notes } = this.state; // requestIdReference
+    // const isoDeadline: Moment = moment(deadline, moment.ISO_8601);
+    // const tx_obj: ProposalActionParam = {
+    //   to: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
+    //   amount,
+    //   notes,
+    //   deadline: isoDeadline
+    // }
 
     this.setState({
       recipient: "",
@@ -137,16 +141,16 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     this.props.invokeProposal(tx_obj);
   };
 
-  handleRequestPayment = () => {
-    const { recipient, amount, deadline, notes } = this.state; // requestIdReference
-    const isoDeadline = moment(deadline, moment.ISO_8601);
-    // const isoDeadline = moment(deadline, 'YYYY-MM-DD HH:mm Z');
-    const tx_obj: RequestActionParam = {
-      from: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
-      amount,
-      notes,
-      deadline: isoDeadline
-    }
+  handleRequestPayment = (tx_obj: object) => {
+    // const { recipient, amount, deadline, notes } = this.state; // requestIdReference
+    // const isoDeadline = moment(deadline, moment.ISO_8601);
+    // // const isoDeadline = moment(deadline, 'YYYY-MM-DD HH:mm Z');
+    // const tx_obj: RequestActionParam = {
+    //   from: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
+    //   amount,
+    //   notes,
+    //   deadline: isoDeadline
+    // }
 
     this.setState({
       recipient: "",
@@ -159,6 +163,27 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     console.log("request_tx_obj : ", tx_obj);
     this.props.invokeRequest(tx_obj);
   };
+
+  verifyTx(transactionType: any) {
+    return ((e: any) => {
+      e.preventDefault();
+      const { recipient, amount, deadline, notes } = this.state;
+      const isoDeadline: Moment = moment(deadline, moment.ISO_8601);
+      const transactionObj = {
+        counterparty: recipient,
+        amount,
+        notes,
+        deadline: isoDeadline
+      };
+      this.setState({ message: transactionObj });
+    });
+  }
+
+  resetMessage = () => {
+    // resetting the message to blank after confirmed transaction result in modal...
+    console.log('resetting the message property in the RequestProposalFormBtns component... >>> ');
+    this.setState({ message: "" });
+  }
 
   public render() {
     const multiline:boolean = true;
@@ -281,6 +306,19 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
           </ul>
         </div>
 
+        {/* Toggle Verification_Message Modal */}
+          { this.state.message ?
+            <VerificationMessage
+              resetMessage={this.resetMessage}
+              tx={this.state.transactionType}
+              handleRequestPayment={this.handleRequestPayment}
+              handleMakePayment={this.handleMakePayment}
+              message={JSON.stringify(this.state.message)}
+            />
+          :
+            <div/>
+          }
+
         <AppBar position="fixed" className={classes.bottomAppBar}>
           <Toolbar className={classes.toolbar}>
             <div className={classnames(classes.buttonMenu)}>
@@ -288,7 +326,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
               <span>
                 <Button variant="outlined"
                   color="primary"
-                  onClick={this.handleMakePayment}
+                  onClick={this.verifyTx("proposal")}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
                   <span className={classes.innerBtnText}>Send</span>
@@ -306,7 +344,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
               <span>
                 <Button variant="outlined"
                   color="primary"
-                  onClick={this.handleRequestPayment}
+                  onClick={this.verifyTx("request")}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
                   <span className={classes.innerBtnText}>Request</span>

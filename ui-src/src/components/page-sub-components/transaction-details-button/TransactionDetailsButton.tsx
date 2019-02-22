@@ -126,7 +126,11 @@ class TransactionDetailsButton extends React.Component<Props, State> {
           return null;
       }
     }
-    // still need to add this functionality >> DURING DATA-REFACTOR any list_of_pending transactions that === incoming requests should create a prop that sets pendingCase==="spender", as the current user will be the spender when responding to a request to pay.
+    // >> DURING DATA-REFACTOR any list_of_pending transactions that === incoming requests should create a prop that sets pendingCase==="spender", as the current user will be the spender when responding to a request to pay.
+    else if(this.props.rowInfo.pendingCase === "recipient"){
+      nextApiCall = 'receive_payment';
+      todoText = 'Accept Final Payment';
+    }
     else if(this.props.rowInfo.pendingCase === "spender"){
       nextApiCall = 'propose_payment';
       todoText = 'Send Funds';

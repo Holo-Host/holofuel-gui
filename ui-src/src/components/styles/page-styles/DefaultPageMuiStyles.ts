@@ -11,6 +11,30 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       display: 'flex',
       flexWrap: 'wrap', // comment out ?
     },
+    modalRoot: {
+      width: '100%',
+      display: 'flex',
+      flexWrap: 'wrap',
+      minWidth: 300,
+      fontWeight: 'bolder'
+    },
+    nextBtn: {
+      position:'relative',
+      left:'51.25%',
+      bottom:0,
+      width: 350,
+      color: '#eee',
+      fontSize: 20,
+      display:'flex',
+      background: '#6600ff',
+      justifyContent: 'center',
+      alignItems: 'center',
+      '&:hover, &$focusVisible': {
+        fontSize: 18,
+        border: '2px solid #10d6a9',
+        background: 'rgba(0, 1, 127, 0.7)'
+      }
+    },
     extraTopSpace: {
       marginTop: 16,
     },
@@ -572,7 +596,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
        "&:hover": {
          color: '#c3cdd6'
        }
-     }
+     },
+     modal: {
+      marginTop: 33,
+    },
    }
 );
 

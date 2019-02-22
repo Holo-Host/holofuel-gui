@@ -66,7 +66,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       const transactionData = { list_of_transactions, list_of_proposals };
       const prevProps = state.prevProps || {};
       const data = prevProps.value !== transactionData ? transactionData : state.data
-      // console.log("data", data);
+      // console.log("data", data); 
 
       const { newer } = list_of_transactions;
       const currentTxBatchInfo = Object.assign({newer}, {});

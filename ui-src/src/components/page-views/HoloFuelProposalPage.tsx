@@ -112,7 +112,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
 
       {/* Toggle Confirmation Message */}
         { message ?
-          <InformativeModal {...newProps} message={this.state.message} resetMessage={this.resetMessage}/>
+          <InformativeModal {...newProps} message={ message } resetMessage={this.resetMessage}/>
         :
           <div/>
         }

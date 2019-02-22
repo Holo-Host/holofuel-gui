@@ -71,6 +71,7 @@ export interface State {
 // The components optional internal state
   chooseTxBtnBarOpen: boolean,
   transactionType: string,
+  prevProps: any,
 }
 
 class HoloFuelAppRouterContainer extends React.Component<Props, State> {
@@ -79,24 +80,13 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     this.state = {
       chooseTxBtnBarOpen: false,
       transactionType: "",
+      prevProps: {}
     }
   };
 
   componentDidMount () {
     this.props.fetch_agent_string();
     this.props.get_ledger_state();
-
-    if(this.props.mostRecentProposalCommit) {
-      console.log("INSIDE HoloFuelAppRouterContainer >> mostRecentProposalCommit:", this.props.mostRecentProposalCommit);
-      this.props.get_single_proposal({proposal: this.props.mostRecentProposalCommit });
-    }
-
-    if(this.props.mostRecentRequestCommit) {
-      console.log("INSIDE HoloFuelAppRouterContainer >> mostRecentRequestCommit:", this.props.mostRecentRequestCommit);
-      this.props.get_single_request({request: this.props.mostRecentRequestCommit });
-    }
-
-    console.log("!!!!!!!!!!!!!!!INSIDE HoloFuelAppRouterContainer >> mostRecentProposalCommit nor mostRecentRequestCommit not found...!!!!!!!!!!!!!!!!!!!!!");
   }
 
   toggleTransferBtnBar = (txType: any) => {
@@ -107,11 +97,12 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     });
   }
 
+
 // Find a dynamic way to connect the ui to the dna >> play with info_instances && agent_string >> access prior to running?!?!
 
   public render() {
     // console.log('State in HoloFuelAppContainer:', this.state);
-    console.log('Props in HoloFuelAppContainer:', this.props);
+    console.log('Props in HoloFuelAppRouterContainer:', this.props);
     // const { classes } = this.props;
     const { classes, staticContext, ...newProps } = this.props; //TODO: Locate staticContext.. AND REMOVE from outer props
     const { location } = this.props.history;

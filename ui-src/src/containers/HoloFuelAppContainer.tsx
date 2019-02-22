@@ -31,8 +31,8 @@ export interface OwnProps {
   classes: any,
   history: any
 }
-
 export type Props = OwnProps & StateProps & DispatchProps;
+
 class HoloFuelAppContainer extends React.Component<Props> {
   constructor(props:Props){
     super(props);
