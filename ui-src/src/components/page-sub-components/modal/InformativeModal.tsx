@@ -42,13 +42,13 @@ class informativeModal extends React.Component<Props, State>  {
 
   componentDidMount() {
     if(this.props.message){
-      this.handleClickOpen();
+      // this.handleClickOpen();
     }
   }
 
   componentDidUpdate(prevProps:any, prevState:any) {
     if (prevProps.message !== this.props.message) {
-      this.handleClickOpen();
+      // this.handleClickOpen();
     }
   }
 
