@@ -120,15 +120,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   };
 
   handleMakePayment = (tx_obj: object) => {
-    // const { recipient, amount, deadline, notes } = this.state; // requestIdReference
-    // const isoDeadline: Moment = moment(deadline, moment.ISO_8601);
-    // const tx_obj: ProposalActionParam = {
-    //   to: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
-    //   amount,
-    //   notes,
-    //   deadline: isoDeadline
-    // }
-
     this.setState({
       recipient: "",
       amount: "",
@@ -142,16 +133,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   };
 
   handleRequestPayment = (tx_obj: object) => {
-    // const { recipient, amount, deadline, notes } = this.state; // requestIdReference
-    // const isoDeadline = moment(deadline, moment.ISO_8601);
-    // // const isoDeadline = moment(deadline, 'YYYY-MM-DD HH:mm Z');
-    // const tx_obj: RequestActionParam = {
-    //   from: recipient,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
-    //   amount,
-    //   notes,
-    //   deadline: isoDeadline
-    // }
-
     this.setState({
       recipient: "",
       amount: "",
@@ -175,7 +156,10 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
         notes,
         deadline: isoDeadline
       };
-      this.setState({ message: transactionObj });
+      this.setState({
+        message: transactionObj,
+        transactionType
+      });
     });
   }
 
@@ -188,8 +172,9 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   public render() {
     const multiline:boolean = true;
     console.log("Inside the RequestProposalFormBtns...", this.props);
-
     const { classes, txType } = this.props;
+
+    console.log("this.state >> check for >> this.state.tx<< ", this.state);
     return (
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>

@@ -24,14 +24,14 @@ export interface OwnProps {
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
 // The components optional internal state
-  message: string
+  confirmation: string
 }
 
 class HoloFuelTransferFormPage extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
     this.state = {
-      message: ""
+      confirmation: ""
     }
   };
 
@@ -50,19 +50,19 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
   sendConfirmationMessage = (proposalResult: any, txInfoObj: any) => {
     console.log('The attempt to send money (the proposal) resolved to be : >>> ', proposalResult);
 
-    this.setState({ message: `You just made the following transaction: ${JSON.stringify(txInfoObj)}.`});
+    this.setState({ confirmation: `You just made the following transaction: ${JSON.stringify(txInfoObj)}.`});
 
-    console.log("MESSAGE : Inside the proposal page >> : ", this.state.message);
+    console.log("MESSAGE : Inside the proposal page >> : ", this.state.confirmation);
   }
 
   resetMessage = () => {
     // resetting the message to blank after confirmed transaction result in modal...
-    console.log('resetting the message propety on the proposal page... >>> ');
-    this.setState({ message: "" });
+    console.log('resetting the confirmation propety on the proposal page... >>> ');
+    this.setState({ confirmation: "" });
   }
 
   public render () {
-    const { message } = this.state;
+    const { confirmation } = this.state;
     // console.log('Props in HoloFuelTransferFormPage:', this.props);
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
@@ -111,8 +111,8 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
         }
 
       {/* Toggle Confirmation Message */}
-        { message ?
-          <InformativeModal {...newProps} message={ message } resetMessage={this.resetMessage}/>
+        { confirmation ?
+          <InformativeModal {...newProps} confirmMessage={ confirmation } resetMessage={this.resetMessage}/>
         :
           <div/>
         }

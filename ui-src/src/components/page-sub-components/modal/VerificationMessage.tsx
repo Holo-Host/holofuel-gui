@@ -19,7 +19,7 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 export interface OwnProps {
   message: any,
   resetMessage: () => void,
-  tx: any,
+  tx: string,
   classes: any,
   handleMakePayment: (tx_obj:any) => void,
   handleRequestPayment: (tx_obj:any) => void
@@ -67,7 +67,9 @@ class VerficationModal extends React.Component<Props, State>  {
     };
 
     handleMakeTransaction = () => {
+      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> YOU CLICKED HANDLEMAKETRANSACTION <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< !!!! ", this.state.messageAsObj);
       const { counterparty, amount, deadline, notes } = this.state.messageAsObj;
+
       if(this.props.tx === "proposal"){
         const tx_obj: ProposalActionParam = {
           to: counterparty,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
@@ -86,6 +88,7 @@ class VerficationModal extends React.Component<Props, State>  {
         }
         this.props.handleRequestPayment(tx_obj);
       }
+
       this.setState({ open: false });
     };
 

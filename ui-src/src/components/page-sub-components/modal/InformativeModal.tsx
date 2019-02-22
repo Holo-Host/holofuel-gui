@@ -1,5 +1,6 @@
 import * as React from 'react';
 import classnames from 'classnames';
+import * as moment from 'moment';
 // MUI Imports:
 import { withStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -14,12 +15,13 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // local imports :
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
-import {  get_current_datetime  } from '../../../utils/global-helper-functions';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
+
+// type Moment = moment.Moment;
 
 export interface OwnProps {
   // These are props the component has received from its parent component
-  message: any,
+  confirmMessage: any,
   resetMessage: () => void,
   classes: any,
 }
@@ -41,14 +43,14 @@ class informativeModal extends React.Component<Props, State>  {
   };
 
   componentDidMount() {
-    if(this.props.message){
-      // this.handleClickOpen();
+    if(this.props.confirmMessage){
+      this.handleClickOpen();
     }
   }
 
   componentDidUpdate(prevProps:any, prevState:any) {
-    if (prevProps.message !== this.props.message) {
-      // this.handleClickOpen();
+    if (prevProps.confirmMessage !== this.props.confirmMessage) {
+      this.handleClickOpen();
     }
   }
 
@@ -65,6 +67,9 @@ class informativeModal extends React.Component<Props, State>  {
     console.log("PROPS inside the informative-dialog-modal", this.props);
     const { classes } = this.props;
     const fullScreen: boolean = false;
+
+    // const today: Moment = moment.format();
+
     return (
         <Grid xs={12} >
           <div className={classnames(classes.modal, classes.modalRoot)}>
@@ -81,7 +86,7 @@ class informativeModal extends React.Component<Props, State>  {
             <DialogTitle id="responsive-dialog-title" style={{color:'#072dc3'}}>{"Transaction Sent"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Your transfer has been successfully completed on { get_current_datetime }.
+                    Your transfer has been successfully completed on { moment().format('LLLL') }.
                   </DialogContentText>
 
                   <br/>
@@ -91,7 +96,7 @@ class informativeModal extends React.Component<Props, State>  {
                      Transaction Message:
                   </DialogContentText>
                   <DialogContentText id="alert-dialog-description">
-                    {this.props.message}
+                    {this.props.confirmMessage}
                   </DialogContentText>
 
                   <DialogContentText id="alert-dialog-slide-description">
