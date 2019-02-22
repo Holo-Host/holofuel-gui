@@ -14,7 +14,6 @@ import RequestProposalFormBtns from '../page-sub-components/input-fields/Request
 import QRbutton from '../page-sub-components/input-fields/QRbutton';
 import InformativeModal from '../page-sub-components/modal/InformativeModal';
 
-
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
@@ -49,9 +48,10 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
   }
 
   sendConfirmationMessage = (proposalResult: any, txInfoObj: any) => {
-    // expected output: 'resolved'
     console.log('The attempt to send money (the proposal) resolved to be : >>> ', proposalResult);
-    this.setState({ message: `You just made the following transaction: ${txInfoObj}.`});
+
+    this.setState({ message: `You just made the following transaction: ${JSON.stringify(txInfoObj)}.`});
+
     console.log("MESSAGE : Inside the proposal page >> : ", this.state.message);
   }
 
@@ -66,6 +66,9 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
     // console.log('Props in HoloFuelTransferFormPage:', this.props);
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
+
+    console.log(" <><><>< Single Proposal Data ,><><><>", this.props.view_specific_proposal);
+    console.log("************this.state inside HoloFuelProposalPage**********************", this.state)
 
     return (
     <div>
@@ -108,7 +111,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
         }
 
       {/* Toggle Confirmation Message */}
-        { message !== "" ?
+        { message ?
           <InformativeModal {...newProps} message={this.state.message} resetMessage={this.resetMessage}/>
         :
           <div/>

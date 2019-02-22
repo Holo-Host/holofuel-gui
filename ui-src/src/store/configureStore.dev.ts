@@ -8,7 +8,10 @@ import * as transactionActions from '../actions/transactionActions';
 // ** Middleware for HC Rust Container Communication ** >> Reference Holochain-UI //
 import { holochainMiddleware } from '@holochain/hc-redux-middleware';
 import { connect } from '@holochain/hc-web-client';  // '@holochain/hc-web-client'
-const url = 'ws:localhost:3000';
+// import { setPort } from '../../utils/constants'
+
+const url = 'ws:localhost:4000';
+// const url = `ws:localhost:${setPort()}`
 const hcWc = connect(url);
 
 const history = createHashHistory();

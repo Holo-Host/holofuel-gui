@@ -176,7 +176,7 @@ export const advancedExpandTableHOC = TableComponent =>
 // TODO: Correct the color toggle... doesn't reset to odd color....
     getTrProps=(state, rowInfo) => {
       if (rowInfo && rowInfo.row && rowInfo !== undefined) {
-        console.log("THIS IS YOUR ROW INFO ... inside the the HocSystemTable addon...", rowInfo);
+        // console.log("THIS IS YOUR ROW INFO ... inside the the HocSystemTable addon...", rowInfo);
         return {
           onClick: (e) => {
             this.handleClick(rowInfo.index);
@@ -201,7 +201,7 @@ export const advancedExpandTableHOC = TableComponent =>
 
     getWrappedInstance() {
       if (!this.wrappedInstance)
-        console.warn("AdvancedExpandTable - No wrapped instance");
+        // console.warn("AdvancedExpandTable - No wrapped instance");
       if (this.wrappedInstance.getWrappedInstance)
         return this.wrappedInstance.getWrappedInstance();
       else return this.wrappedInstance;

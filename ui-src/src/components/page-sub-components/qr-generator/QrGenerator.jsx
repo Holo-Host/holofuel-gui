@@ -35,8 +35,11 @@ class QrGenerator extends React.Component{
     // console.log('Props in QrGenerator:', this.props);
 
     return (
-      <div className={classes.QrCodeContainer}>
-        <img src={qrPng} alt="Your QR Code" className={classes.QrCodeImg}/>
+      <div>
+        <div className={classes.QrCodeContainer}>
+          <img src={qrPng} alt="Your QR Code" className={classes.QrCodeImg}/>
+        </div>
+        <h6 style={{color:'#eee', fontFamily:'Raleway', maxWidth:'20%', margin:'0 auto', marginTop:'5px'}}>{this.props.agentHash}</h6>
       </div>
     );
   }

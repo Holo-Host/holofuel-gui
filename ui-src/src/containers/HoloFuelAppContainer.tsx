@@ -8,6 +8,7 @@ GetAgentListAsyncAction,
 FetchAgentStringAsyncAction,
 // FetchAgentHashAsyncAction,
 TransactionListAsyncAction,
+PendingListAsyncAction,
 LedgerStateAsyncAction,
 ListRequestsAsyncAction,
 ListProposalsAsyncAction,
@@ -53,10 +54,13 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   my_agent_string: transactionReducer.my_agent_string,
   my_agent_hash: transactionReducer.my_agent_hash,
   hf_base_dna_hash:  transactionReducer.hf_base_dna_hash,
-  
+
 // holofuel specific states :
   ledger_state: transactionReducer.ledger_state,
   list_of_transactions: transactionReducer.list_of_transactions,
+  list_of_pending:transactionReducer.list_of_pending,
+  mostRecentProposalCommit:transactionReducer.mostRecentProposalCommit,
+  mostRecentRequestCommit:transactionReducer.mostRecentRequestCommit,
   list_of_requests: transactionReducer.list_of_requests,
   list_of_proposals: transactionReducer.list_of_proposals,
   view_specific_request: transactionReducer.view_specific_request,
@@ -72,34 +76,41 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
       get_info_instances : () => {
         // console.log("dispatching get_info_instances");
        dispatch(GetInfoInstancesAsyncAction.create([]))},
+
       get_agent_list : () => {
         // console.log("dispatching get_agent_list");
        dispatch(GetAgentListAsyncAction.create([]))},
+
       fetch_agent_string: () => {
         console.log("dispatching fetch_agent_string");
        dispatch(FetchAgentStringAsyncAction.create([]))},
-//NB: This API is not yet avail:
-      //fetch_agent_hash: () => {console.log("dispatching fetch_agent_hash"); dispatch(FetchAgentHashAsyncAction.create([]))},
 
   // TRANSACTION STATES
       get_ledger_state : () => {console.log("dispatching get_ledger_state");dispatch(LedgerStateAsyncAction.create({}))},
+
       list_transactions : (payload?) => {
         // console.log("dispatching list_transactions");
        dispatch(TransactionListAsyncAction.create(payload))},
 
+      list_pending : () => {
+        console.log("dispatching list_pending");
+       dispatch(PendingListAsyncAction.create({}))},
+
       list_requests : () => {
         console.log("dispatching list_transactions");
        dispatch(ListRequestsAsyncAction.create({}))},
+
       list_proposals : () => {
-        console.log("dispatching list_transactions");
+        console.log("dispatching list_proposals");
        dispatch(ListProposalsAsyncAction.create({}))},
 
   //// View Specific Transaction
       get_single_request : (request_payload) => {
-      // console.log("dispatching list_transactions");
+      console.log("dispatching get_single_request");
        dispatch(GetRequestAsyncAction.create(request_payload))},
+
       get_single_proposal : (proposal_payload) => {
-        // console.log("dispatching list_transactions");
+        // console.log("dispatching get_single_proposal");
        dispatch(GetProposalAsyncAction.create(proposal_payload))},
 
   // TRANSACTION EVENTS (ACTIONS):
@@ -119,7 +130,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
       receive_payment : (payload) => {console.log("dispatching receive_payment"); dispatch(ReceivePaymentAsyncAction.create(payload))},
 
   // NB: API not yet available...
-      // reject_payment : () => {console.log("dispatching receive_payment"); dispatch(RejectPaymentAsyncAction.create({}))}
+      // reject_payment : () => {console.log("dispatching reject_payment"); dispatch(RejectPaymentAsyncAction.create({}))}
   };
 }
 

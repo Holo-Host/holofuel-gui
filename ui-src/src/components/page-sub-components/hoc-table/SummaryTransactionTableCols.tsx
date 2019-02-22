@@ -1,8 +1,11 @@
 // Main Imports
 import * as React from 'react';
 import * as matchSorter from 'match-sorter';
-import Jdenticon from "../avatar-generator/Jdenticon";
+// local imports :
+import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import TransactionDetailsButton from "../transaction-details-button/TransactionDetailsButton";
+import Jdenticon from "../avatar-generator/Jdenticon";
+// MUI Custom Style Imports :
 import SearchIcon from '@material-ui/icons/Search';
 import Today from '@material-ui/icons/Today';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -12,8 +15,10 @@ import Info from '@material-ui/icons/Info';
 import List from '@material-ui/icons/List';
 // import Receipt from '@material-ui/icons/Receipt';
 
+export type Props = DispatchProps & StateProps;
+
 /* Transaction Table Headers */
-const pending_transaction_table_columns = (props: any, state: any) => {
+const pending_transaction_table_columns = (props: Props, state: any) => {
   // console.log("Table Columns Props", props);
   // console.log("Table Columns State", state);
   const table_columns = [{
@@ -71,7 +76,7 @@ const pending_transaction_table_columns = (props: any, state: any) => {
           {row.value ?
             <span>
               <Jdenticon hash={row.value} size="35px" {...props}/>
-              <p style={{fontSize:'.5rem', margin:'0 auto', marginTop:'2px'}}>Name GOES HERE</p>
+              <p style={{fontSize:'.5rem', margin:'0 auto', marginTop:'2px'}}>{row.value}</p>
             </span>
           :
             <span/>
@@ -130,13 +135,13 @@ const pending_transaction_table_columns = (props: any, state: any) => {
     FilterAll: true,
     Cell: (row: any) => (
       <div style={{ padding:'5px', fontSize:"1rem"}}>
-        {row.original.event === "Request" ?
-            <span className="decreasedBalance" style={{color:"#b85eb3"}}>
-              - { row.value } HF
+        {row.original.status.split("/")[0] === "incoming" ?
+            <span className="decreasedBalance" style={{color:"#00828d"}}>
+              + { row.value } HF
             </span>
           :
-            <span className="increasedBalance" style={{color:"#00828d"}}>
-              + { row.value } HF
+            <span className="increasedBalance" style={{color:"#b85eb3"}}>
+              - { row.value } HF
             </span>
         }
       </div>
@@ -166,6 +171,7 @@ const pending_transaction_table_columns = (props: any, state: any) => {
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
         <TransactionDetailsButton
+          {...props}
           column="status"
           transactionState={row.value}
           rowInfo={row}
@@ -197,6 +203,7 @@ const pending_transaction_table_columns = (props: any, state: any) => {
     Cell: (row: any) => (
       <div>
         <TransactionDetailsButton
+          {...props}
           column="todo"
           transactionState={row.value}
           rowInfo={row}
@@ -209,7 +216,7 @@ const pending_transaction_table_columns = (props: any, state: any) => {
 export default pending_transaction_table_columns;
 
 
-export const processed_transaction_table_columns = (props: any, state: any) => {
+export const processed_transaction_table_columns = (props: Props, state: any) => {
   // console.log("Table Columns Props", props);
   // console.log("Table Columns State", state);
   const table_columns = [{

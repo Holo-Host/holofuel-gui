@@ -38,16 +38,18 @@ class MobileMesssageColumn extends React.Component<Props, State> {
 
     return (
       <div>
-        <h5 style={{marginBottom:'10px'}}>{`${currentRowInfo.counterparty} ${currentRowInfo.originEvent}ed`}</h5>
+        <h5 style={{marginBottom:'10px'}}>
+          {`${currentRowInfo.counterparty} ${currentRowInfo.originEvent}ed`}
+        </h5>
 
-        { currentRowInfo.originEvent === "Request" ?
-            <h3 className="decreasedBalance" style={{color:"#af67ad", margin:'2px'}}>
-              - { currentRowInfo.amount } HF
-            </h3>
-         :
-            <h3 className="increasedBalance" style={{color:"#00828d", margin:'2px'}}>
-              + { currentRowInfo.amount } HF
-            </h3>
+        { currentRowInfo.status.split("/")[0] === "incoming" ?
+             <span className="decreasedBalance" style={{color:"#00828d", margin: "2px"}}>
+               + { currentRowInfo.amount } HF
+             </span>
+           :
+             <span className="increasedBalance" style={{color:"#b85eb3", margin: "2px"}}>
+               - { currentRowInfo.amount } HF
+             </span>
          }
 
         <hr/>

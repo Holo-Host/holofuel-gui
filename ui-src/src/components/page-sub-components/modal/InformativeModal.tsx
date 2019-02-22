@@ -19,6 +19,7 @@ export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
 // The components optional internal state
   open: boolean,
+  prevProps: any
 }
 
 function Transition(props:any) {
@@ -28,7 +29,20 @@ function Transition(props:any) {
 class informativeModal extends React.Component<Props, State>  {
   state = {
     open: false,
+    prevProps: {}
   };
+
+  componentDidMount() {
+    if(this.props.message){
+      this.handleClickOpen();
+    }
+  }
+
+  componentDidUpdate(prevProps:any, prevState:any) {
+    if (prevProps.message !== this.props.message) {
+      this.handleClickOpen();
+    }
+  }
 
   handleClickOpen = () => {
     this.setState({ open: true });
@@ -60,7 +74,10 @@ class informativeModal extends React.Component<Props, State>  {
           </DialogTitle>
           <DialogContent>
             <DialogContentText id="alert-dialog-slide-description">
-              Transaction Message: {this.props.message}
+              Transaction Message:
+            </DialogContentText>
+            <DialogContentText id="alert-dialog-slide-description">
+              {this.props.message}
             </DialogContentText>
 
             <DialogContentText id="alert-dialog-slide-description">

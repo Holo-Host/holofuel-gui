@@ -63,6 +63,7 @@ export type ProposalActionParam = {
   amount: string,
   notes?: string,
   deadline?: DateTimeString | Moment | string | undefined,
+  request?: string
 }
 
 export type Transaction = {
@@ -70,6 +71,7 @@ export type Transaction = {
     amount: string,
     notes?: string,
     deadline?: DateTimeString | Moment | string | undefined,
+    // transaction should not have request.. track what requires this and refactor/rework...
     request?: Address
 }
 
@@ -116,10 +118,16 @@ export type Adjustment = {
 export type AddressArray = Array<Address>; // an array of the commit hashes/ dht addresses
 
 
+// The details of each pending request/proposal includes its TxOrigin Address, the ChainHeader timestamp of the Event commit, and the Event details. 
+export type PendingResult = {
+  requests?: [ Address, DateTimeString | Moment | string, Event ],
+  proposals?: [ Address, DateTimeString | Moment | string, Event ]
+}
+
 export type ListTransactionOptions = {
-  state?: ListStateNames | string
-  since?: DateTimeString | string,
-  until?: DateTimeString | string,
+  state?: ListStateNames | Moment | string
+  since?: DateTimeString | Moment | string,
+  until?: DateTimeString | Moment | string,
   limit?: number,
 }
 

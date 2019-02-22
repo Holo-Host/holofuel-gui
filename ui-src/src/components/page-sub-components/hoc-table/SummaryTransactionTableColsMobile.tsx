@@ -44,6 +44,7 @@ const mobile_pending_transaction_table_columns = (props: any, state: any) => {
     Cell: (row: any) => (
       <div style={{ padding: '5px', marginTop:'10px' }}>
         <TransactionDetailsButton
+          {...props}
           column="both"
           transactionState={row.value}
           rowInfo={row}

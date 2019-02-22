@@ -53,7 +53,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       filter: null,
       data: {},
       prevProps: {},
-      isMobile: false
+      isMobile: window.innerWidth < 768
     };
     this.updateViewPortSize = this.updateViewPortSize.bind(this);
   }
@@ -147,13 +147,13 @@ class SummaryTransactionTables extends React.Component<Props, State> {
           <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
             Pending Transactions
           </Typography>
-          <span className={classes.tableButtonBar}>
+          <div className={classes.tableButtonBar}>
             <Button variant="outlined" color="primary"
               className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
               onClick={() => this.props.handleTableRefresh()}>
               <Refresh className={classes.svgView}/>
             </Button>
-          </span>
+          </div>
 
     {/* ///// Pending-TX Table :  ///// */}
     {/* // viewports === Mobile Size (widths <=767) */}
@@ -176,12 +176,12 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               className={classnames("-striped", "-highlight", classes.table)}
               showPagination={false}
               defaultPageSize={pending_table_data!.length}
+              data={pending_table_data}
+              columns={ pending_table_columns }
               filterable={filterable}
               defaultFilterMethod={(filter:any, row:any) =>
                  String(row[filter.id]) === filter.value
                }
-              data={pending_table_data}
-              columns={ pending_table_columns }
               SubComponent={(row:any) => {
                 // SubComponent LOGIC >> to display the tx details...
                 console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
@@ -233,13 +233,13 @@ class SummaryTransactionTables extends React.Component<Props, State> {
         <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
           Processed Transactions
         </Typography>
-        <span className={classes.tableButtonBar}>
+        <div className={classes.tableButtonBar}>
           <Button variant="outlined" color="primary"
             className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
             onClick={() => this.props.handleTableRefresh()}>
             <Refresh className={classes.svgView}/>
           </Button>
-        </span>
+        </div>
 
         { isMobile ?
           /* // viewports === Mobile Size (widths <=767) */
@@ -247,7 +247,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             <ReactTable
               className={classnames("-striped", "-highlight", classes.table)}
               showPagination={false}
-              defaultPageSize={pending_table_data!.length}
+              defaultPageSize={processed_table_data!.length}
               filterable={filterable}
               defaultFilterMethod={(filter:any, row:any) =>
                  String(row[filter.id]) === filter.value

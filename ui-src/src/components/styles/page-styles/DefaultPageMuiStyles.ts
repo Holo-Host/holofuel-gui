@@ -105,6 +105,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       color: '#d8dee3', // color : #d8dee3, // #909fb1 // rgba(0, 0, 0, 0.54)
       fontWeight: 400,
       fontSize: '2.125rem',
+      textShadow: '0px 1px 8px #09144b'
     },
     leadingTitle: {
       marginTop: 50,

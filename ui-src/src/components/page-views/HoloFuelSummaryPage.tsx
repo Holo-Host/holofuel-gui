@@ -1,7 +1,6 @@
 import * as React from 'react';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
-import styles from '../styles/page-styles/DefaultPageMuiStyles';
 import Typography from '@material-ui/core/Typography';
 import Portal from '@material-ui/core/Portal';
 import Slide from '@material-ui/core/Slide';
@@ -10,14 +9,13 @@ import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterCon
 import TransactionTables from '../page-sub-components/hoc-table/SummaryTransactionTables';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
+import styles from '../styles/page-styles/DefaultPageMuiStyles';
 import '../styles/page-styles/scaffold-styles.css';
 import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
-// import { RequestActionParam } from '../../utils/types';
 // import * as moment from 'moment';
-
 // type Moment = moment.Moment;
+
 export interface OwnProps {
-  // These are props the component has received from its parent component
   classes: any,
   txType: any,
   showTransferBar: (txType:any) => void,
@@ -30,7 +28,7 @@ export interface State {
   txBatchType: string | undefined,
   currentTxBatchInfo: {newer:{}, over:{}} | null,
   data: {} | null,
-  prevProps: any
+  prevProps: any,
 }
 
 class HoloFuelSummaryPage extends React.Component<Props, State> {
@@ -47,44 +45,25 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   };
 
   public componentDidMount () {
-    // Invoke list_transactions() (a ZOME Call) :
-    // console.log("calling : list_transactions >>  inside HoloFuelSummaryPage... >> ");
     this.props.list_transactions({});
-
-    // Invoke list_requests() (a ZOME Call) :
-    // console.log("calling : list_requests >> ", this.props.list_requests);
-    // this.props.list_requests();
-
-    // Invoke list_proposals() (a ZOME Call) :
-    // console.log("calling : list_proposals >> ", this.props.list_proposals);
-    // this.props.list_proposals();
-      // this.initializing();
+    this.props.list_proposals();
+    this.props.list_requests();
+    this.props.list_pending();
   }
 
-  // initializing (){
-  //   let time = moment().format().toString();
-  //   console.log('time', time);
-  //   // let time1= "Some("+time+")";
-  //   // let time2 = `Some({Iso8601:${time}});
-  //   // let time3 = `Some(${time})`;
-  //   const request_tx_obj : RequestActionParam = {
-  //     from: "HoloTester2-----------------------------------------------------------------------AAACZp4xHB", // this will be the payment requestor's AGENT_ADDRESS
-  //     amount:"0.0000000569066456676 HF",
-  //     notes: "testing out the request_payment api call..."
-  //   }
-  //   console.log("request_tx_obj", request_tx_obj);
-  //   console.log("calling : request_payment >> ", this.props.request_payment);
-  //   this.props.request_payment(request_tx_obj);
-  //
-  // }
+  componentDidUpdate(prevProps:any, prevState:any ) {
+    if (prevProps.list_transactions !== this.props.list_transactions || prevProps.list_pending !== this.props.list_pending ) {
+      this.render();
+    }
+  }
 
   static getDerivedStateFromProps(props: Props, state: State) {
-    const { list_of_transactions } = props;
-    if (!list_of_transactions) {
+    const { list_of_transactions, list_of_proposals } = props;
+    if (!list_of_transactions || !list_of_proposals) {
       return null;
     }
     else {
-      const transactionData = { list_of_transactions };
+      const transactionData = { list_of_transactions, list_of_proposals };
       const prevProps = state.prevProps || {};
       const data = prevProps.value !== transactionData ? transactionData : state.data
       // console.log("data", data);
@@ -144,7 +123,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       const { classes, transferBtnBar, ...newProps } = this.props;
       const gutterBottom : boolean = true;
 
-      // console.log('Props in HoloFuelSummaryPage:', this.props);
+      console.log('Props in HoloFuelSummaryPage:', this.props);
 
       return (
         <div>

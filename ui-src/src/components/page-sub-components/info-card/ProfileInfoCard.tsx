@@ -16,7 +16,9 @@ import Jdenticon from '../avatar-generator/Jdenticon';
 const styles: StyleRulesCallback  = (theme: Theme) => ({
   card: {
     display: 'flex',
-    minWidth: 275,
+    minWidth: 375,
+    maxWidth: 575,
+    margin: '0 auto'
   },
   bullet: {
     display: 'inline-block',

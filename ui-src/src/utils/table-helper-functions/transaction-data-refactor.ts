@@ -23,11 +23,11 @@ const dataRefactor = (transaction_details: any) => {
       const newTxObj = {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
         originEvent: transaction.originEvent,
-        counterparty: transaction.originCommitHash,
+        counterparty: transaction.counterparty,
         amount:  transaction.amount,
         event: transaction.event,
         status: transaction.status,
-        transaction_timestamp: transaction.transaction_timestamp, //timestamp of the current Transaction
+        transaction_timestamp: transaction.transactionTimestamp, //timestamp of the current Transaction
         eventCommitHash:transaction.eventCommitHash,
         dueDate: transaction.dueDate,
         notes: transaction.notes,
@@ -108,12 +108,12 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     else if (event.Proposal){
       // if a request commit hash exists, then the request was the original transaction in tx-chain.
       txEvent="Proposal"
-      originEvent = event.request ? "Request" : "Proposal";
-      amount =  event.tx.amount;
-      counterparty = event.tx.to;
-      dueDate = event.tx.deadline;
-      notes = event.tx.notes;
-      inResponseToTX: tx.request;
+      originEvent = event.Proposal.request ? "Request" : "Proposal";
+      amount =  event.Proposal.tx.amount;
+      counterparty = event.Proposal.tx.to;
+      dueDate = event.Proposal.tx.deadline;
+      notes = event.Proposal.tx.notes;
+      inResponseToTX = event.Proposal.request;
       // eventCommitHash = ;
     }
         // case 'decline' :
@@ -138,7 +138,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
         notes: notes,
         inResponseToTX,
         // eventCommitHash:, // commit hash for the currently displayed Transaction
-        transaction_timestamp: tx.timestamp.event,
+        transactionTimestamp: tx.timestamp.event,
         rowNumberType,
       };
     });

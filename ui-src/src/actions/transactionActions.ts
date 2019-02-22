@@ -67,7 +67,12 @@ export const LedgerStateAsyncAction = createHolochainAsyncAction<{}, Array<any>>
 //   };
 // }
 
+
+// This will return a client's self-initiated transactions ONLY
 export const TransactionListAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_transactions');
+
+// This will return ONLY those transactions (requests/proposals/refunds) that are not yet converted to transactions, ie. only the initating party has made a transaction and has mentioned the current user as the counterparty, yet the current user still has yet to engage in the transaction...
+export const PendingListAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_pending');
 
 ////////////////////////////////////////////////////////
           /* Triggering Transaction Event */

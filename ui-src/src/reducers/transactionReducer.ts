@@ -1,7 +1,7 @@
 import { ActionType } from 'typesafe-actions';
 import * as actions from '../actions/transactionActions';
-import { Ledger, ListTransactionsResult, Address } from '../utils/types';
-import createMockApiData from '../utils/seed-data/mock-api-data';
+import { Ledger, ListTransactionsResult, Address, Proposal, Transaction, PendingResult } from '../utils/types';
+// import createMockApiData from '../utils/seed-data/mock-api-data';
 import { setInstance, TABLE_DATA_BATCH_LIMIT } from '../utils/constants'
 export type Action = ActionType<typeof actions>;
 
@@ -21,10 +21,13 @@ export type State = {
 // holofuel specific states :
   ledger_state: Ledger,
   list_of_transactions: ListTransactionsResult,
+  list_of_pending:PendingResult,
   list_of_requests: Array<Address>,
   list_of_proposals: Array<Address>,
-  view_specific_request: typeof createMockApiData.get_request_kv_store[0], // this include metadata from propsal commit hash (ie ZomeApiResult<AppEntryValue>)
-  view_specific_proposal: typeof createMockApiData.get_proposal_kv_store[0], // this include metadata from propsal commit hash
+  mostRecentProposalCommit:Address,
+  mostRecentRequestCommit:Address,
+  view_specific_request: Transaction, // this include metadata from propsal commit hash (ie ZomeApiResult<AppEntryValue>)
+  view_specific_proposal: Proposal, // this include metadata from propsal commit hash
   readonly status: string
 };
 
@@ -34,6 +37,8 @@ export const INITIAL_STATE: State = {
   list_of_instance_info: [],
   list_of_agents: [],
   my_agent_string: 'Test Agent',
+  mostRecentProposalCommit:'',
+  mostRecentRequestCommit:'',
   my_agent_hash: 'HoloTester2-----------------------------------------------------------------------AAAGy4WW9e',
   hf_base_dna_hash: "QmcYtest",
   ledger_state: {
@@ -42,6 +47,7 @@ export const INITIAL_STATE: State = {
     payable: null,
     receivable: null
   },
+  list_of_pending  : {},
   list_of_transactions: {
     ledger: {
       balance: null,
@@ -88,25 +94,20 @@ export const INITIAL_STATE: State = {
   list_of_requests: [],
   list_of_proposals: [],
   view_specific_request:{
-    "134dFh8vfhhVGjsS8QoarGjfaJa5XPQDpY" : {
       to: "",
       amount: "",
       notes: "",
       deadline: ""
-    }
   },
   view_specific_proposal: {
-    "1BFe7xaqCh2gHf94AC5xmH6ooShbRy4vC" : {
       from: "",
-      proposal_sig: "",
+      request: "",
       tx: {
         to: "",
         amount: "",
         notes: "",
         deadline: ""
-      },
-      request: ""
-    }
+      }
   },
   status: 'default'
 };
@@ -177,6 +178,12 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state, list_of_transactions : payload };
     }
 
+    // LIST_OF_PENDING_TRANSACTIONS
+    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_pending_SUCCESS`: {
+      console.log('LIST_OF_PENDING_TRANSACTIONS_SUCCESS state', payload);
+      return { ...state, list_of_pending : payload };
+    }
+
 // View List of Transaction by Type (Request/Proposal) //
    // LIST_REQUESTS ()
    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_requests_SUCCESS`: {
@@ -191,10 +198,16 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
    }
 
 // View Specific Transaction
-  // GET_SINGLE_REQUEST ()
+  // GET_SINGLE_REQUEST_SUCCESS ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/get_request_SUCCESS`: {
-    // console.log('GET_SINGLE_REQUEST_SUCCESS state', payload);
+    console.log('GET_SINGLE_REQUEST_SUCCESS state', payload);
     return { ...state, view_specific_request : payload };
+  }
+
+  // GET_SINGLE_REQUEST.._FAILURE ()
+  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/get_request_FAILURE`: {
+    console.log('GET_SINGLE_REQUEST_FAILURE state', payload);
+    return { ...state };
   }
 
   // GET_SINGLE_PROPOSAL ()
@@ -210,7 +223,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
   // Call for REQUEST_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/request_SUCCESS`: {
       console.log('REQUEST_PAYMENT_SUCCESS payload', payload);
-      return { ...state };
+      return { ...state, mostRecentRequestCommit: payload };
     }
 
   // Call for REQUEST_PAYMENT ()
@@ -228,7 +241,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
   // Call for RECEIVE_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/receive_payment_SUCCESS`: {
       console.log('RECEIVE_PAYMENT_SUCCESS payload', payload);
-      return { ...state };
+      return { ...state, mostRecentProposalCommit: payload };
     }
 
   // Call for REJECT_PAYMENT ()
