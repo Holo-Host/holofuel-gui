@@ -42,14 +42,29 @@ class MobileMesssageColumn extends React.Component<Props, State> {
           {`${currentRowInfo.counterparty} ${currentRowInfo.originEvent}ed`}
         </h5>
 
-        { currentRowInfo.status.split("/")[0] === "incoming" ?
-             <span className="decreasedBalance" style={{color:"#00828d", margin: "2px"}}>
+         {currentRowInfo.status.split("/")[0] === "incoming" ?
+             <span className="increasedBalance" style={{color:"#00828d", margin: "2px"}}>
                + { currentRowInfo.amount } HF
              </span>
-           :
-             <span className="increasedBalance" style={{color:"#b85eb3", margin: "2px"}}>
+
+         : currentRowInfo.status.split("/")[0] === "outgoing" ?
+             <span className="decreasedBalance" style={{color:"#b85eb3", margin: "2px"}}>
                - { currentRowInfo.amount } HF
              </span>
+
+         : currentRowInfo.status.split("/")[0] === "pending" &&
+           currentRowInfo.status.split("/")[1] === "spender" ?
+             <span className="decreasedBalance" style={{color:"#b85eb3", margin: "2px"}}>
+             - { currentRowInfo.amount } HF
+             </span>
+
+         :  currentRowInfo.status.split("/")[0] === "pending" &&
+            currentRowInfo.status.split("/")[1] === "recipient" ?
+             <span className="increasedBalance" style={{color:"#00828d", margin: "2px"}}>
+             + { currentRowInfo.amount } HF
+             </span>
+         :
+             <div/>
          }
 
         <hr/>

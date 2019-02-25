@@ -31,7 +31,7 @@ const dataRefactor = (transaction_details: any) => {
         eventCommitHash:transaction.eventCommitHash,
         dueDate: transaction.dueDate,
         notes: transaction.notes,
-        // originCommitHash: transaction.originCommitHash,
+        originCommitHash: transaction.originCommitHash,
         // inResponseToTX?: transaction.inResponseToTX
         rowNumberType: transaction.rowNumberType
       };
@@ -82,16 +82,15 @@ export const refactorListOfPending = (list_of_pending:any)=>{
       amount:p[2].Proposal.tx.amount,
       originEvent:p[2].Proposal.request ? "Request" : "Proposal",
       event: "Proposal",
-      counterparty:p[2].Proposal.tx.to,
-      status: "State",
+      counterparty:p[2].Proposal.tx.from,
+      status: "pending/recipient",
       originCommitHash: p[0],
       dueDate: p[2].Proposal.tx.deadline,
       notes:  p[2].Proposal.tx.notes,
       inResponseToTX:p[2].Proposal.request,
-      // eventCommitHash:, // commit hash for the currently displayed Transaction
+      eventCommitHash: undefined,
       transactionTimestamp: p[1],
-      rowNumberType,
-      pendingCase:"recepient"
+      rowNumberType
     };
   });
 
@@ -102,15 +101,14 @@ export const refactorListOfPending = (list_of_pending:any)=>{
       originEvent:"Request",
       event: "Request",
       counterparty:r[2].Request.to,
-      status: "State",
+      status: "pending/spender",
       originCommitHash: r[0],
       dueDate: r[2].Request.deadline,
       notes:  r[2].Request.notes,
       inResponseToTX:undefined,
-      // eventCommitHash:, // commit hash for the currently displayed Transaction
+      eventCommitHash: undefined, // commit hash for the currently displayed Transaction
       transactionTimestamp: r[1],
-      rowNumberType,
-      pendingCase:"spender"
+      rowNumberType
     };
   });
 
@@ -131,7 +129,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     let dueDate: string | undefined = undefined;
     // let txTimestamp: string; // FIND way to get acess to this for all tx types...
     let notes: string | undefined = undefined;
-    // let eventCommitHash : string; // FIND way to get acess to this for all tx types...
+    let eventCommitHash : string | undefined = undefined; // FIND way to get acess to this for all tx types...
     let inResponseToTX: string | undefined = undefined;
     let rowNumberType: string | undefined = alternateEven();
     // console.log("rowNumberType >> should oscilate between odd and even << :", rowNumberType);
@@ -140,10 +138,10 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       txEvent = "Request";
       originEvent = "Request";
       amount =  event.Request.amount;
-      counterparty = event.Request.to;
+      counterparty = event.Request.from;
       dueDate = event.Request.deadline;
       notes = event.Request.notes;
-      // eventCommitHash =  tx.origin; // FIND way to get acess to this for all tx types...
+      eventCommitHash =  tx.origin; // commit hash for the currently displayed Transaction
       inResponseToTX = undefined;
 
     }
@@ -179,7 +177,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
         dueDate: dueDate,
         notes: notes,
         inResponseToTX,
-        // eventCommitHash:, // commit hash for the currently displayed Transaction
+        eventCommitHash, // commit hash for the currently displayed Transaction
         transactionTimestamp: tx.timestamp.event,
         rowNumberType,
       };
@@ -190,92 +188,95 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
 };
 
 // MOCK Data
-export const MOCK_list_of_transactions_requests_only = {
-  ledger: {
-      balance: 20,
-      credit: 41,
-      payable: 24,
-      receivable: 15
-  },
-  newer: {
-      state: null,
-      since: "2018-04-12",
-      until: "2018-07-01",
-      limit: 50
-  },
-  older: {
-      state: null,
-      since: "2018-04-12",
-      until: "2018-07-01",
-      limit: 50
-  },
-  transactions: [
-    {
-      timestamp: "2018-07-19",
-      state: "outgoing/completed",
-      origin: "1GxHKZ8HCxKUBN7tQHTu75FN82g4sx2zP6",
-      event: {Request:{
-        amount: 40,
-        to: "Alice",
-        deadline: "Friday",
-        notes: "Today is Friday"
-      }},
-      adjustment: {
-          balance: 13,
-          payable: 80,
-          receivable: 93
-        }
-    },
-    {
-      timestamp: "2019-05-09",
-      state: "incoming/completed",
-      origin: "asdfas8HCijlkmxKUBN7tQHTu75FNp439joi",
-      event: {Request:{
-        amount: 40,
-        to: "Bob",
-        deadline: "Friday",
-        notes: "Today is Friday"
-      }},
-      adjustment: {
-          balance: 59,
-          payable: 68,
-          receivable: 4.1
-        }
-    },
-    {
-      timestamp: "2018-12-11",
-      state: "outgoing/approved",
-      origin: "1DEiFZ1kThW4AVtDmL1w2oDyEKYKcqBcRB",
-      event: {Request:{
-        amount: 40,
-        to: "Alice",
-        deadline: "Friday",
-        notes: "Today is Friday"
-      }},
-      adjustment: {
-          balance: 84,
-          payable: 8,
-          receivable: 12
-        }
-    },
-    {
-      timestamp: "2018-04-27",
-      state: "incoming/approved",
-      origin: "1MNMQcEsd3BkQpaFUyZrViQ26axooErWtc",
-      event: {Request:{
-        amount: 40,
-        to: "Bob",
-        deadline: "Friday",
-        notes: "Today is Friday"
-      }},
-      adjustment: {
-          balance: 47,
-          payable: 79,
-          receivable: 61
-      }
-    }
-  ]
-}
+// export const MOCK_list_of_transactions_requests_only = {
+//   ledger: {
+//       balance: 20,
+//       credit: 41,
+//       payable: 24,
+//       receivable: 15
+//   },
+//   newer: {
+//       state: null,
+//       since: "2018-04-12",
+//       until: "2018-07-01",
+//       limit: 50
+//   },
+//   older: {
+//       state: null,
+//       since: "2018-04-12",
+//       until: "2018-07-01",
+//       limit: 50
+//   },
+//   transactions: [
+//     {
+//       timestamp: "2018-07-19",
+//       state: "outgoing/completed",
+//       origin: "1GxHKZ8HCxKUBN7tQHTu75FN82g4sx2zP6",
+//       event: {Request:{
+//         amount: 40,
+//         to: "Alice",
+//         deadline: "Friday",
+//         notes: "Today is Friday"
+//       }},
+//       adjustment: {
+//           balance: 13,
+//           payable: 80,
+//           receivable: 93
+//         }
+//     },
+//     {
+//       timestamp: "2019-05-09",
+//       state: "incoming/completed",
+//       origin: "asdfas8HCijlkmxKUBN7tQHTu75FNp439joi",
+//       event: {Request:{
+//         amount: 40,
+//         to: "Bob",
+//         deadline: "Friday",
+//         notes: "Today is Friday"
+//       }},
+//       adjustment: {
+//           balance: 59,
+//           payable: 68,
+//           receivable: 4.1
+//         }
+//     },
+//     {
+//       timestamp: "2018-12-11",
+//       state: "outgoing/approved",
+//       origin: "1DEiFZ1kThW4AVtDmL1w2oDyEKYKcqBcRB",
+//       event: {Request:{
+//         amount: 40,
+//         to: "Alice",
+//         deadline: "Friday",
+//         notes: "Today is Friday"
+//       }},
+//       adjustment: {
+//           balance: 84,
+//           payable: 8,
+//           receivable: 12
+//         }
+//     },
+//     {
+//       timestamp: "2018-04-27",
+//       state: "incoming/approved",
+//       origin: "1MNMQcEsd3BkQpaFUyZrViQ26axooErWtc",
+//       event: {Request:{
+//         amount: 40,
+//         to: "Bob",
+//         deadline: "Friday",
+//         notes: "Today is Friday"
+//       }},
+//       adjustment: {
+//           balance: 47,
+//           payable: 79,
+//           receivable: 61
+//       }
+//     }
+//   ]
+// }
+
+
+
 
 // Locate Most Recent State for each Transaction : Helper Function
 // const listTxByOriginAddress = (tx_list: any) => {
@@ -294,6 +295,8 @@ export const MOCK_list_of_transactions_requests_only = {
 //   }
 //   console.log(">>>>>>>>> arrayOfTxChains <<<<<<<<< : ", arrayOfTxChains);
 // }
+
+
 
 
 // const isoloateTxMostRecentState = (txListByOriginAddress: any) => {

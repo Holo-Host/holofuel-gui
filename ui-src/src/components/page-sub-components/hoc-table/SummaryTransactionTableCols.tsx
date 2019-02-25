@@ -18,9 +18,12 @@ import List from '@material-ui/icons/List';
 export type Props = DispatchProps & StateProps;
 
 /* Transaction Table Headers */
-const pending_transaction_table_columns = (props: Props, state: any) => {
+const pending_transaction_table_columns = (props: Props, state: any, cb:() => void) => {
   // console.log("Table Columns Props", props);
   // console.log("Table Columns State", state);
+
+  // const resetCB = cb("reset");
+
   const table_columns = [{
     Header: (row: any) => (<Today/>),
     id: 'originTimeStamp',
@@ -136,13 +139,28 @@ const pending_transaction_table_columns = (props: Props, state: any) => {
     Cell: (row: any) => (
       <div style={{ padding:'5px', fontSize:"1rem"}}>
         {row.original.status.split("/")[0] === "incoming" ?
-            <span className="decreasedBalance" style={{color:"#00828d"}}>
-              + { row.value } HF
+            <span className="increasedBalance" style={{color:"#00828d"}}>
+              +{ row.value } HF
             </span>
-          :
-            <span className="increasedBalance" style={{color:"#b85eb3"}}>
-              - { row.value } HF
+
+        : row.original.status.split("/")[0] === "outgoing" ?
+            <span className="decreasedBalance" style={{color:"#b85eb3"}}>
+              -{ row.value } HF
             </span>
+
+        : row.original.status.split("/")[0] === "pending" &&
+          row.original.status.split("/")[1] === "spender" ?
+            <span className="decreasedBalance" style={{color:"#b85eb3"}}>
+            -{ row.value } HF
+            </span>
+
+        :  row.original.status.split("/")[0] === "pending" &&
+           row.original.status.split("/")[1] === "recipient" ?
+            <span className="increasedBalance" style={{color:"#00828d"}}>
+            +{ row.value } HF
+            </span>
+        :
+            <div/>
         }
       </div>
       )
@@ -175,6 +193,7 @@ const pending_transaction_table_columns = (props: Props, state: any) => {
           column="status"
           transactionState={row.value}
           rowInfo={row}
+          resetPage={() => cb()}
         />
       </div>
       )
@@ -207,6 +226,7 @@ const pending_transaction_table_columns = (props: Props, state: any) => {
           column="todo"
           transactionState={row.value}
           rowInfo={row}
+          resetPage={() => cb()}
         />
       </div>
       )

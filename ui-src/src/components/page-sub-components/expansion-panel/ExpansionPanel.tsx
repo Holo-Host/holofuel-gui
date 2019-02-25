@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
-import SimpleTable from '../simple-table/MuiSimpleTable';
+// import SimpleTable from '../simple-table/SimpleTable';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
@@ -24,7 +24,7 @@ export interface State {
 }
 
 function SimpleExpansionPanel(props: Props) {
-  const { classes, rowValue, ...newProps } = props;
+  const { classes, rowValue } = props; // { ...newProps }
   const gutterBottom : boolean = true;
 
   return (
@@ -42,7 +42,8 @@ function SimpleExpansionPanel(props: Props) {
               Transaction Details
            </Typography>
 
-           <SimpleTable {...newProps} />
+           {/* Was prev MuiSimpleTable */}
+           {/* <SimpleTable {...newProps} /> */}
 
        </ExpansionPanelDetails>
      </ExpansionPanel>

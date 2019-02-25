@@ -1,75 +1,161 @@
 import * as React from 'react';
-// import { Link } from 'react-router-dom';
+import classnames from 'classnames';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
-import styles from '../styles/page-styles/DefaultPageMuiStyles'
+import Dialog from '@material-ui/core/Dialog';
+import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem';
+import List from '@material-ui/core/List';
+import Divider from '@material-ui/core/Divider';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import Portal from '@material-ui/core/Portal';
+import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-// local imports :
-import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
-import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-// import MuiSimpleTable from '../page-sub-components/bottom-menu-bar/MuiSimpleTable';
+// local imports
+import styles from '../styles/page-styles/DefaultPageMuiStyles'
+import { Ledger } from '../../utils/types';
+// import SimpleTable from '../page-sub-components/bottom-menu-bar/SimpleTable';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
+  ledger_state: Ledger,
   classes: any,
-  showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
   txType: string,
+  showTransferBar: (txType:any) => void,
+  toggleTxDetailModal: () => void,
+  currentRowDataDetailed: Array<any>
 }
-export type Props = OwnProps & StateProps & DispatchProps;
 
 export interface State {
-// The components optional internal state
+  open: boolean
 }
 
-class HoloFuelTransactionDetaiPage extends React.Component<Props, State> {
-  constructor(props:Props){
+
+function Transition(props:any) {
+  return <Slide direction="up" {...props} />;
+}
+
+class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
+  constructor(props:any){
     super(props);
+    this.state = {
+      open: false,
+    };
   };
+
 
   componentDidMount () {
     console.log("PROPS : ", this.props);
+    this.handleClickOpen();
   }
 
-  public render () {
-    console.log('Props in HoloFuelTransferFormPage:', this.props);
-    const { classes, transferBtnBar, ...newProps } = this.props;
-    const gutterBottom : boolean = true;
+  handleClickOpen = () => {
+    this.setState({ open: true });
+  };
+
+  handleClose = () => {
+    this.setState({ open: false });
+    this.props.toggleTxDetailModal();
+  };
+
+// due_date: string, tx_initiation_date: string, origin_time_stamp: string, amount: any, notes: string, counterparty:string, status: string
+
+  render() {
+    const { classes, currentRowDataDetailed } = this.props;
+    const rowData = currentRowDataDetailed.forEach(txDetail => {return txDetail});
+    console.log("ROW DATA >> are there 7 separate strings ??", rowData );
+
+    const gutterBottom: boolean = true;
 
     return (
-    <div>
-      <div className={classes.reducedJumbotron}>
-        <h3 className={classes.h3}>Current Balance</h3>
-        <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
-          {this.props.ledger_state.balance} + 200 HF
-        </Typography>
-        <hr style={{color:"#0e094b"}} />
-        <h3 className={classes.h3}>Credit limit : 80 HF {this.props.ledger_state.credit} </h3>
-      </div>
-
       <div>
-        <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
-          Transaction Details
-        </Typography>
+        <Dialog
+          fullScreen
+          open={this.state.open}
+          onClose={this.handleClose}
+          TransitionComponent={Transition}
+        >
+          <AppBar className={classes.appBarFullPageModal}>
+            <Toolbar>
+              <Typography variant="h6" color="inherit" className={classes.flex}>
+                Transaction Details
+              </Typography>
+              {/* <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
+                Transaction Details
+              </Typography> */}
+              <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
+                <CloseIcon />
+              </IconButton>
+            </Toolbar>
+          </AppBar>
 
-        {/* <MuiSimpleTable/> */}
+          <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>
+            <div className={classes.flexItem}>
+              <h3 className={classes.h3}>Current Balance</h3>
+              <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
+                {this.props.ledger_state.balance ? `${this.props.ledger_state.balance} HF` : `Pending...`}
+              </Typography>
+            </div>
+            <div className={classes.verticalLine}/>
+            <div className={classes.flexItem}>
+              <h3 className={classes.h3}>Credit limit</h3>
+              <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
+                  {this.props.ledger_state.credit ? `${this.props.ledger_state.credit} HF`: `N/A`}
+              </Typography>
+            </div>
+          </div>
 
-        { transferBtnBar ?
-          <Portal>
-            <Slide direction="down" in={transferBtnBar} mountOnEnter unmountOnExit>
-              <BottomMenuBar {...newProps} showTransferBar={this.props.showTransferBar} />
-            </Slide>
-          </Portal>
-        :
-          <div/>
-        }
+          <div className={classnames(classes.flexContainer)}>
+            {/* <SimpleTable classNames={classes.flexItem} {...newProps} currentTxData={this.state.currentTxData} /> */}
+
+            <List>
+              <ListItem button>
+                <ListItemText primary="Due Date :" secondary="dueDate" />
+              </ListItem>
+              <Divider />
+
+              {/* <ListItem button>
+                <ListItemText primary="Due Date :" secondary={currentRowDataDetailed.dueDate} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Current Transaction Date" secondary={currentRowDataDetailed.transaction_timestamp} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Date Transaction Initiated:" secondary={currentRowDataDetailed.originTimeStamp} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed.amount} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed.coumterparty} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Notes" secondary={currentRowDataDetailed.notes} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Status:" secondary={currentRowDataDetailed.status.split("/")[1]} />
+              </ListItem> */}
+
+              {/* <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Intiator:" secondary={} />
+              </ListItem> */}
+            </List>
+          </div>
+
+        </Dialog>
       </div>
-    </div>
     );
   }
 }
 
-
-export default withStyles(styles)(HoloFuelTransactionDetaiPage);
+export default withStyles(styles)(HoloFuelTransactionDetailPage);

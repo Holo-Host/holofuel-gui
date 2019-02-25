@@ -19,7 +19,6 @@ import Message from '@material-ui/icons/Message';
 import Timer from '@material-ui/icons/Timer';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
-// import { ProposalActionParam, RequestActionParam } from '../../../utils/types'; //  RequestActionParam, Ledger, ListTransactionsResult , DateTimeString, Address
 import VerificationMessage from '../modal/VerificationMessage';
 import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
@@ -172,9 +171,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   public render() {
     const multiline:boolean = true;
     console.log("Inside the RequestProposalFormBtns...", this.props);
-    const { classes, txType } = this.props;
 
-    console.log("this.state >> check for >> this.state.tx<< ", this.state);
+    const { classes, txType } = this.props;
     return (
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>

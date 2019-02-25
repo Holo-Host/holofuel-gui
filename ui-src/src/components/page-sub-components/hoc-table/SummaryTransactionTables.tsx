@@ -16,7 +16,7 @@ import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouter
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
 import mobile_pending_transaction_table_columns, { mobile_processed_transaction_table_columns } from './SummaryTransactionTableColsMobile';
 import { refactorListOfTransactions,refactorListOfPending } from '../../../utils/table-helper-functions/transaction-data-refactor';
-import SimpleTable from '../simple-table/MuiSimpleTable';
+import MuiSimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
@@ -36,7 +36,8 @@ export interface State {
   filter: any,
   data: {} | null,
   prevProps: any,
-  isMobile: boolean
+  isMobile: boolean,
+  refresh: boolean
 }
 
 // For the REACT TABLE Exapandable Version: Advanced HOC
@@ -53,7 +54,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       filter: null,
       data: {},
       prevProps: {},
-      isMobile: window.innerWidth < 768
+      isMobile: window.innerWidth < 768,
+      refresh : false
     };
     this.updateViewPortSize = this.updateViewPortSize.bind(this);
   }
@@ -110,6 +112,11 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     return refactorListOfPending(this.props.list_of_pending)
   }
 
+  resetPage = () => {
+    // Hach to reset page >> revisit...
+    this.setState({ refresh: !this.state.refresh });
+  }
+
 
   public render() {
     const { classes, ...newProps } = this.props;
@@ -131,12 +138,12 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 // Md/Lg Viewport
     const pending_table_data = this.displayData();
     const processed_table_data = this.displayData();
-    const pending_table_columns = pending_transaction_table_columns(this.props, this.state);
+    const pending_table_columns = pending_transaction_table_columns(this.props, this.state, this.resetPage);
     const processed_table_columns = processed_transaction_table_columns(this.props, this.state);
     console.log("table_data: ", pending_table_data);
     console.log("table_columns: ", pending_table_columns);
     console.log("FIRST LOG:list_of_pending_data_refactored ",list_of_pending_data_refactored)
-    
+
     return (
 
     // TODO: Look into integratng the infnite scroll with ReactTable...
@@ -196,11 +203,13 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       SubComponent={(row:any) => {
         // SubComponent LOGIC >> to display the tx details...
         console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
-          const currentRowData = ["due_date", "tx_notes"];
         return (
           <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
             <div className={classnames(classes.flexContainer)}>
-              <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+              <MuiSimpleTable classNames={classes.flexItem}
+                {...newProps}
+                rowInfo={row}
+              />
             </div>
           </div>
         );
@@ -216,7 +225,9 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   </Button>
 </div>
 
-/////////////////asd///////////////////////
+
+{/* /////////////////// List of Transaction Table :  ///////////////////// */}
+
           <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
             Pending Transactions
           </Typography>
@@ -256,35 +267,16 @@ class SummaryTransactionTables extends React.Component<Props, State> {
                  String(row[filter.id]) === filter.value
                }
               SubComponent={(row:any) => {
-                // SubComponent LOGIC >> to display the tx details...
                 console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
-                // refactor rows to include the tx deadline, tx notes, + tx commit_hash, and timestamp of last action commit (to record completion...).
-
-                /* const currentRowData = {
-                  row.deadline, row.notes
-                }; */
-                const currentRowData = ["due_date", "tx_notes"];
-
-
-                /* const seeDetails = (tx_type, transfer, interfaceforInstance) => {
-                  console.log("<><><><><> customAgentId <><><<><>", custom_agent_id);
-                  console.log("<><><><><> customInstanceId <><><<><>", custom_instance_id);
-                  console.log("<><><><><> interfaceforInstance <><><<><>", interfaceforInstance);
-
-                  const { dna_id } = row.original;
-                  const agent_id = custom_agent_id ? custom_agent_id : this.props.containerApiCalls.agent_list[0].id; // HC AGENT ID
-                  const instance_id = custom_instance_id ?  custom_instance_id : (dna_id + agent_id);
-                  const interface_id = interfaceforInstance;
-
-                  this.props.add_agent_dna_instance({id, dna_id, agent_id}).then(res => {
-                    this.props.add_instance_to_interface({instance_id, interface_id});
-                  })
-                } */
+                // refactor rows to include the + tx commit_hash, tx deadline, and tx notes, and  tx timestamp of last commit (for detailed view / record completion...).
 
                 return (
                   <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
                     <div className={classnames(classes.flexContainer)}>
-                      <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+                      <MuiSimpleTable classNames={classes.flexItem}
+                        {...newProps}
+                        rowInfo={row}
+                      />
                     </div>
                   </div>
                 );
@@ -345,13 +337,15 @@ class SummaryTransactionTables extends React.Component<Props, State> {
                  String(row[filter.id]) === filter.value
                }
               SubComponent={(row:any) => {
-                console.log("<><><><><> Processed TX SubComponent ROW out : >> <><><><><> ", row);
-                const currentRowData = ["completion_date", "tx_notes"];
+                /* console.log("<><><><><> Processed TX SubComponent ROW out : >> <><><><><> ", row); */
 
                 return (
                   <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
                     <div className={classes.flexContainer}>
-                      <SimpleTable classNames={classes.flexItem} {...newProps} currentRowData={currentRowData} />
+                      <MuiSimpleTable classNames={classes.flexItem}
+                        {...newProps}
+                        rowInfo={row}
+                      />
                     </div>
                   </div>
                 );

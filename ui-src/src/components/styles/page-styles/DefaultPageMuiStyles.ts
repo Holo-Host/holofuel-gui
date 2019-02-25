@@ -18,6 +18,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       minWidth: 300,
       fontWeight: 'bolder'
     },
+    flex: {
+      flex: 1,
+    },
     nextBtn: {
       position:'relative',
       left:'51.25%',
@@ -45,6 +48,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       top: 64,
       backgroundColor: '#0e3658',
       zIndex: 2
+    },
+    appBarFullPageModal:{
+      backgroundColor: '#1c2761f2', // alt:  #0e094b
+      position: 'relative'
     },
     bottomAppBar: {
       top: '84vh',
