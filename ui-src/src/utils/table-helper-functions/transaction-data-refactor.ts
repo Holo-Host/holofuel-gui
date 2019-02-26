@@ -66,18 +66,18 @@ const dataRefactor = (transaction_details: any) => {
           /* Data for Pending Transactions Table Overview */
 //////////////////////////////////////////////////////////////////////////////////
 
-export const refactorData = (list_of_transactions:any,list_of_pending:any)=>{
-
-  const pending = refactorListOfPending(list_of_pending);
-  const {list_of_refactored_transactions,list_of_refactored_processed} = refactorListOfTransactions(list_of_transactions);
-  // console.log("/////////////////////////////")
-  // console.log("DataRefactore list_of_refactored_transactions:",list_of_refactored_transactions)
-  // console.log("DataRefactore pending:",pen)
-  // console.log("DataRefactore list_of_refactored_processed:",list_of_refactored_processed)
-  // console.log("/////////////////////////////")
-  return {pending_table_data:list_of_refactored_transactions.concat(pending),
-    processed_table_data:list_of_refactored_processed}
-}
+// export const refactorData = (list_of_transactions:any,list_of_pending:any)=>{
+//
+//   const pending = refactorListOfPending(list_of_pending);
+//   const {list_of_refactored_transactions,list_of_refactored_processed} = refactorListOfTransactions(list_of_transactions);
+//   // console.log("/////////////////////////////")
+//   // console.log("DataRefactore list_of_refactored_transactions:",list_of_refactored_transactions)
+//   // console.log("DataRefactore pending:",pen)
+//   // console.log("DataRefactore list_of_refactored_processed:",list_of_refactored_processed)
+//   // console.log("/////////////////////////////")
+//   return {pending_table_data:list_of_refactored_transactions.concat(pending),
+//     processed_table_data:list_of_refactored_processed}
+// }
 
 
 let rowNumberType: string = 'odd';
@@ -217,181 +217,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
   console.log("list_of_processed-->", list_of_processed);
   console.log("list_of_refactored_transactions-->", list_of_refactored_transactions);
   return {
-  list_of_refactored_transactions:dataRefactor(list_of_pending),
-  list_of_refactored_processed:dataRefactor(list_of_processed)
+  pending_table_data:dataRefactor(list_of_pending),
+  processed_table_data:dataRefactor(list_of_processed)
   };
 };
-
-// MOCK Data
-// export const MOCK_list_of_transactions_requests_only = {
-//   ledger: {
-//       balance: 20,
-//       credit: 41,
-//       payable: 24,
-//       receivable: 15
-//   },
-//   newer: {
-//       state: null,
-//       since: "2018-04-12",
-//       until: "2018-07-01",
-//       limit: 50
-//   },
-//   older: {
-//       state: null,
-//       since: "2018-04-12",
-//       until: "2018-07-01",
-//       limit: 50
-//   },
-//   transactions: [
-//     {
-//       timestamp: "2018-07-19",
-//       state: "outgoing/completed",
-//       origin: "1GxHKZ8HCxKUBN7tQHTu75FN82g4sx2zP6",
-//       event: {Request:{
-//         amount: 40,
-//         to: "Alice",
-//         deadline: "Friday",
-//         notes: "Today is Friday"
-//       }},
-//       adjustment: {
-//           balance: 13,
-//           payable: 80,
-//           receivable: 93
-//         }
-//     },
-//     {
-//       timestamp: "2019-05-09",
-//       state: "incoming/completed",
-//       origin: "asdfas8HCijlkmxKUBN7tQHTu75FNp439joi",
-//       event: {Request:{
-//         amount: 40,
-//         to: "Bob",
-//         deadline: "Friday",
-//         notes: "Today is Friday"
-//       }},
-//       adjustment: {
-//           balance: 59,
-//           payable: 68,
-//           receivable: 4.1
-//         }
-//     },
-//     {
-//       timestamp: "2018-12-11",
-//       state: "outgoing/approved",
-//       origin: "1DEiFZ1kThW4AVtDmL1w2oDyEKYKcqBcRB",
-//       event: {Request:{
-//         amount: 40,
-//         to: "Alice",
-//         deadline: "Friday",
-//         notes: "Today is Friday"
-//       }},
-//       adjustment: {
-//           balance: 84,
-//           payable: 8,
-//           receivable: 12
-//         }
-//     },
-//     {
-//       timestamp: "2018-04-27",
-//       state: "incoming/approved",
-//       origin: "1MNMQcEsd3BkQpaFUyZrViQ26axooErWtc",
-//       event: {Request:{
-//         amount: 40,
-//         to: "Bob",
-//         deadline: "Friday",
-//         notes: "Today is Friday"
-//       }},
-//       adjustment: {
-//           balance: 47,
-//           payable: 79,
-//           receivable: 61
-//       }
-//     }
-//   ]
-// }
-
-
-
-
-// Locate Most Recent State for each Transaction : Helper Function
-// const listTxByOriginAddress = (tx_list: any) => {
-//   // iterate over tx_list, checking the Origin Commit Hash
-//   let arrayOfTxChains: Array<any> = [];
-//
-//   for (let tx of tx_list) {
-//     let transaction_obj = tx!.transactions;
-//     let tx_origin_address = tx!.transactions.origin;
-//     if (tx_origin_address !== [arrayOfTxChains]) {
-//       arrayOfTxChains.push({tx_origin_address:[transaction_obj]});
-//     }
-//     else if (tx_origin_address === [arrayOfTxChains]) {
-//         tx_origin_address.push({transaction_obj});
-//     }
-//   }
-//   console.log(">>>>>>>>> arrayOfTxChains <<<<<<<<< : ", arrayOfTxChains);
-// }
-
-
-
-
-// const isoloateTxMostRecentState = (txListByOriginAddress: any) => {
-//   let filtered_tx_list = [];
-//   filtered_tx_list = txListByOriginAddress.filter((tx: any) => {
-//       // currently sorting by date to locate the most recent event/state for each tx:
-//       // Luxon: d1 < d2 // is d1 before d2?
-//       // (Luxon Ref: https://moment.github.io/luxon/docs/manual/math.html#comparing-datetimes)
-//       let most_recent_event : any;
-//       let most_recent_event_date: any;
-//       for(let tx_event of tx ) {
-//         // let current_event_date = tx_event.timestamp.fromISO();
-//         if(!most_recent_event_date){
-//           most_recent_event_date = tx_event.timestamp;
-//           most_recent_event = tx_event;
-//         }
-//         else if (tx_event.timestamp > most_recent_event_date){
-//           most_recent_event_date = tx_event.timestamp;
-//           most_recent_event = tx_event;
-//         }
-//       }
-//       console.log("===>>>> most_recent_event_date", most_recent_event_date)
-//       return most_recent_event;
-//   });
-//
-//   console.log(" ====>>>> filtered_tx_list <<<===== ", filtered_tx_list);
-//   return filtered_tx_list;
-// }
-
-
-// mostRecentEvent = tx.filter(tx_event => {
-//   let current_event_date = tx_event.timestamp;
-//     return current_event_date > most_recent_event_date
-// });
-
-// ref, from hc-admin
-// const findDnaInstances = (dna_id, info_instances) => {
-//   let dna_instances = [];
-//   dna_instances = info_instances.filter(app => {
-//       return app.dna === dna_id
-//   });
-//   return dna_instances;
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//
