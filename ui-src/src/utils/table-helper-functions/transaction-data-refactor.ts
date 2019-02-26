@@ -22,7 +22,7 @@ const dataRefactor = (transaction_details: any) => {
     if (transaction !== parseInt(transaction, 10)) {
       const newTxObj = {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
-        originEvent: transaction.originEvent,
+        originEvent: transaction.originEvent === "Request" ? "Requested" : "Sent",
         counterparty: transaction.counterparty,
         amount:  transaction.amount,
         event: transaction.event,
@@ -65,6 +65,21 @@ const dataRefactor = (transaction_details: any) => {
 //////////////////////////////////////////////////////////////////////////////////
           /* Data for Pending Transactions Table Overview */
 //////////////////////////////////////////////////////////////////////////////////
+
+export const refactorData = (list_of_transactions:any,list_of_pending:any)=>{
+
+  const pending = refactorListOfPending(list_of_pending);
+  const {list_of_refactored_transactions,list_of_refactored_processed} = refactorListOfTransactions(list_of_transactions);
+  // console.log("/////////////////////////////")
+  // console.log("DataRefactore list_of_refactored_transactions:",list_of_refactored_transactions)
+  // console.log("DataRefactore pending:",pen)
+  // console.log("DataRefactore list_of_refactored_processed:",list_of_refactored_processed)
+  // console.log("/////////////////////////////")
+  return {pending_table_data:list_of_refactored_transactions.concat(pending),
+    processed_table_data:list_of_refactored_processed}
+}
+
+
 let rowNumberType: string = 'odd';
 const alternateEven = () => {
   if (rowNumberType === "odd") {
@@ -117,11 +132,9 @@ export const refactorListOfPending = (list_of_pending:any)=>{
 
 export const refactorListOfTransactions = (list_of_transactions: any) => {
   // console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
-
   const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
     const event = tx.event;
     // console.log("transaction.transactions.event", event);
-
     let txEvent:string | undefined = undefined;
     let originEvent:string | undefined = undefined;
     let amount: number | null = null;
@@ -183,8 +196,30 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       };
     });
 
-  // console.log("list of current TRANSACTIONS", list_of_refactored_transactions);
-  return dataRefactor(list_of_refactored_transactions);
+    // if state.split("/")[1] === "refunded", "rejected", / "declined" "completed" "recovered"
+    // then send the list_of_refactored_transactions result to the processed table refactor..
+
+      const list_of_processed = list_of_refactored_transactions.filter((tx:any)=>{
+        return status === "refunded" ||
+        status === "rejected" ||
+        status === "declined" ||
+        status === "completed" ||
+        status === "recovered"
+      })
+      const list_of_pending = list_of_refactored_transactions.filter((tx:any)=>{
+        return status !== "refunded" &&
+        status !== "rejected" &&
+        status !== "declined" &&
+        status !== "completed" &&
+        status !== "recovered"
+      })
+  console.log("list_of_processed-->", list_of_processed);
+  console.log("list_of_processed-->", list_of_processed);
+  console.log("list_of_refactored_transactions-->", list_of_refactored_transactions);
+  return {
+  list_of_refactored_transactions:dataRefactor(list_of_pending),
+  list_of_refactored_processed:dataRefactor(list_of_processed)
+  };
 };
 
 // MOCK Data

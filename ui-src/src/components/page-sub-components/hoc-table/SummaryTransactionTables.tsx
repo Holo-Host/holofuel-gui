@@ -15,7 +15,7 @@ import Refresh from '@material-ui/icons/Refresh';
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import pending_transaction_table_columns, { processed_transaction_table_columns } from './SummaryTransactionTableCols';
 import mobile_pending_transaction_table_columns, { mobile_processed_transaction_table_columns } from './SummaryTransactionTableColsMobile';
-import { refactorListOfTransactions,refactorListOfPending } from '../../../utils/table-helper-functions/transaction-data-refactor';
+import { refactorData } from '../../../utils/table-helper-functions/transaction-data-refactor';
 import MuiSimpleTable from '../simple-table/MuiSimpleTable';
 import ErrorMessage from '../error-message/ErrorMessage';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
@@ -89,27 +89,34 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     this.setState({ isMobile: window.innerWidth < 768})
   }
 
-  displayData = () => {
-    console.log("this.state inside displayData", this.state);
-    console.log("this.props inside displayData", this.props);
-    if (this.props.list_of_transactions) {
-      const table_pending_table_info =  refactorListOfTransactions(this.props.list_of_transactions);
+  // displayData = () => {
+  //   console.log("this.state inside displayData", this.state);
+  //   console.log("this.props inside displayData", this.props);
+  //   if (this.props.list_of_transactions) {
+  //     const table_pending_table_info =  refactorListOfTransactions(this.props.list_of_transactions);
+  //
+  //     console.log("DATA GOING TO INSTANCE MAIN TABLE >>>> !! table_pending_table_info !! <<<<<<<< : ", table_pending_table_info);
+  //
+  //     // const table_pending_table_info = [{}];
+  //     return table_pending_table_info;
+  //   }
+  // }
+  //
+  // getListOfPendingData=()=>{
+  //   console.log("#######################")
+  //   console.log("Getting pending data",this.props)
+  //   console.log("#######################")
+  //   if(!this.props.list_of_pending.proposals && !this.props.list_of_pending.requests)
+  //   return []
+  //   else
+  //   return refactorListOfPending(this.props.list_of_pending)
+  // }
 
-      console.log("DATA GOING TO INSTANCE MAIN TABLE >>>> !! table_pending_table_info !! <<<<<<<< : ", table_pending_table_info);
-
-      // const table_pending_table_info = [{}];
-      return table_pending_table_info;
-    }
-  }
-
-  getListOfPendingData=()=>{
-    console.log("#######################")
-    console.log("Getting pending data",this.props)
-    console.log("#######################")
+  fetchData=()=>{
     if(!this.props.list_of_pending.proposals && !this.props.list_of_pending.requests)
-    return []
+    return {pending_table_data:[],processed_table_data:[]}
     else
-    return refactorListOfPending(this.props.list_of_pending)
+    return refactorData(this.props.list_of_transactions,this.props.list_of_pending);
   }
 
   resetPage = () => {
@@ -130,19 +137,24 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       </div>
     }
 
-    const list_of_pending_data_refactored = this.getListOfPendingData();
   // Sm (mobile) Viewport
     const mobile_pending_table_columns = mobile_pending_transaction_table_columns(this.props, this.state);
     const mobile_processed_table_columns = mobile_processed_transaction_table_columns(this.props, this.state);
 
 // Md/Lg Viewport
-    const pending_table_data = this.displayData();
-    const processed_table_data = this.displayData();
     const pending_table_columns = pending_transaction_table_columns(this.props, this.state, this.resetPage);
     const processed_table_columns = processed_transaction_table_columns(this.props, this.state);
-    console.log("table_data: ", pending_table_data);
     console.log("table_columns: ", pending_table_columns);
-    console.log("FIRST LOG:list_of_pending_data_refactored ",list_of_pending_data_refactored)
+
+    // Data
+
+    // const list_of_pending_data_refactored = this.getListOfPendingData();
+    // const pending_table_data = this.displayData();
+
+    const {pending_table_data,processed_table_data}= this.fetchData();
+
+    console.log("table Pending_data: ", pending_table_data);
+    console.log("table Processed_data: ", processed_table_data);
 
     return (
 
@@ -161,73 +173,9 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       //         </InfiniteScroll>
       //     </div>
       // </div>
-/////////////////PENDING TRANSACTIONS//////////////////
 <div className={classes.transactionTablesContainer}>
 
-  <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
-    List Of Pending Transactions
-  </Typography>
-  <div className={classes.tableButtonBar}>
-    <Button variant="outlined" color="primary"
-      className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-      onClick={() => this.props.handleTableRefresh()}>
-      <Refresh className={classes.svgView}/>
-    </Button>
-  </div>
-
-{ isMobile ?
-  <div className={classnames(classes.tableContainer)}>
-    <ReactTable
-      className={classnames("-striped", "-highlight", classes.table)}
-      showPagination={false}
-      defaultPageSize={list_of_pending_data_refactored!.length}
-      data={ list_of_pending_data_refactored }
-      columns={ mobile_pending_table_columns }
-    />
-  </div>
-
-:
-
-/* // viewports >= Tablet Size (widths >=768) */
-  <div className={classnames(classes.tableContainer)}>
-    <AdvancedExpandReactTable
-      className={classnames("-striped", "-highlight", classes.table)}
-      showPagination={false}
-      defaultPageSize={list_of_pending_data_refactored!.length}
-      data={list_of_pending_data_refactored}
-      columns={ pending_table_columns }
-      filterable={filterable}
-      defaultFilterMethod={(filter:any, row:any) =>
-         String(row[filter.id]) === filter.value
-       }
-      SubComponent={(row:any) => {
-        // SubComponent LOGIC >> to display the tx details...
-        console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
-        return (
-          <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
-            <div className={classnames(classes.flexContainer)}>
-              <MuiSimpleTable classNames={classes.flexItem}
-                {...newProps}
-                rowInfo={row}
-              />
-            </div>
-          </div>
-        );
-      }}
-    />
-  </div>
-}
-<div className={classes.tableButtonBar}>
-  <Button variant="outlined" color="primary"
-  className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
-  onClick={() => this.props.handleTableRefresh()}>
-    <ExpandMore className={classes.svgMore}/>
-  </Button>
-</div>
-
-
-{/* /////////////////// List of Transaction Table :  ///////////////////// */}
-
+{/* /////////////////// List of Pending Transactions Table :  ///////////////////// */}
           <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
             Pending Transactions
           </Typography>
@@ -262,10 +210,19 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               defaultPageSize={pending_table_data!.length}
               data={pending_table_data}
               columns={ pending_table_columns }
-              filterable={filterable}
-              defaultFilterMethod={(filter:any, row:any) =>
-                 String(row[filter.id]) === filter.value
-               }
+              filter={this.state.filter}
+              defaultFilterMethod={(filter:any, row:any, column:any) => {
+                const id = filter.pivotId || filter.id;
+                if (typeof filter.value === "object") {
+                  return row[id] !== undefined
+                    ? filter.value.indexOf(row[id]) > -1
+                    : true;
+                } else {
+                  return row[id] !== undefined
+                    ? String(row[id].toUpperCase()).indexOf(filter.value.toUpperCase()) > -1
+                    : true;
+                }
+              }}
               SubComponent={(row:any) => {
                 console.log("<><><><><> SubComponent ROW out : >> <><><><><> ", row);
                 // refactor rows to include the + tx commit_hash, tx deadline, and tx notes, and  tx timestamp of last commit (for detailed view / record completion...).

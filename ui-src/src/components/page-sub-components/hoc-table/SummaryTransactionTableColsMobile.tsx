@@ -34,7 +34,7 @@ const mobile_pending_transaction_table_columns = (props: any, state: any) => {
     accessor: 'originEvent',
     Cell: (row: any) => (
       <div style={{ padding: '5px', marginTop:'-12px' }}>
-        <MobileMessageColumn originEvent={row.value} rowInfo={row} {...props} />
+        <MobileMessageColumn originEvent={row.value.display_value} rowInfo={row} {...props} />
       </div>
       )
     }, {

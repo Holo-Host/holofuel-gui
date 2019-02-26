@@ -45,7 +45,7 @@ class MuiSimpleTable extends React.Component<Props, State> {
   }
 
   createData = (due_date: string, tx_initiation_date: string, notes: string) => {
-    id += 1;
+    id =0;
     return { id, due_date, tx_initiation_date, notes };
   }
   public render() {
@@ -73,7 +73,7 @@ class MuiSimpleTable extends React.Component<Props, State> {
      ];
 
      const currentRow = this.createData(dueDate, transaction_timestamp, notes);
-
+     console.log("ROW Details:",currentRow)
     return (
       <div>
         <Paper className={classes.muiSimpleTableRoot}>

@@ -1,6 +1,6 @@
 // Main Imports
 import * as React from 'react';
-import * as matchSorter from 'match-sorter';
+// import * as matchSorter from 'match-sorter';
 // local imports :
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import TransactionDetailsButton from "../transaction-details-button/TransactionDetailsButton";
@@ -44,8 +44,6 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
           <SearchIcon />
         </div>
      ),
-     filterMethod: (filter:any, rows:any) =>
-       matchSorter(rows, filter.value, { keys: ["originTimeStamp"] }),
      FilterAll: true,
      Cell: (row: any) => (
         <div style={{ padding: '5px' }}>
@@ -71,8 +69,6 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
           <SearchIcon style={{color:"#799ab6"}} />
         </div>
     ),
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["counterparty"] }),
     FilterAll: true,
     Cell: (row: any) => (
         <div style={{ padding: '5px' }}>
@@ -105,13 +101,11 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
           <SearchIcon style={{color:"#799ab6"}} />
         </div>
     ),
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["originEvent"] }),
     FilterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
         {/* style={{ padding: '5px', color:{props.amountColor} }} */}
-      { row.value === "Request" ? "Requested" : "Sent"}
+      { row.value}
       </div>
       )
     }, {
@@ -133,8 +127,6 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
           <SearchIcon style={{color:"#799ab6"}} />
         </div>
     ),
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["amount"] }),
     FilterAll: true,
     Cell: (row: any) => (
       <div style={{ padding:'5px', fontSize:"1rem"}}>
@@ -168,24 +160,22 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
     Header: (row: any) => (<Info/>),
     id: 'status',
     accessor: 'status',
-    filterable: true,
-    Filter: ({filter, row, onChange}:any) => (
-        <div style={{position: 'relative'}}>
-          <input
-            onChange={event => onChange(event.target.value)}
-            value={filter ? filter.value : ''}
-            style={{
-              fontSize: '.8rem',
-              width: '100%',
-              backgroundColor: 'transparent'
-            }}
-          />
-          <SearchIcon style={{color:"#799ab6"}} />
-        </div>
-    ),
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["status"] }),
-    FilterAll: true,
+    // filterable: true,
+    // Filter: ({filter, row, onChange}:any) => (
+    //     <div style={{position: 'relative'}}>
+    //       <input
+    //         onChange={event => onChange(event.target.value)}
+    //         value={filter ? filter.value : ''}
+    //         style={{
+    //           fontSize: '.8rem',
+    //           width: '100%',
+    //           backgroundColor: 'transparent'
+    //         }}
+    //       />
+    //       <SearchIcon style={{color:"#799ab6"}} />
+    //     </div>
+    // ),
+    // FilterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
         <TransactionDetailsButton
@@ -201,24 +191,6 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
       Header: (row: any) => (<List/>),
     id: 'todo',
     accessor: 'status', // change to "todo" once created
-    filterable: true,
-    Filter: ({filter, row, onChange}:any) => (
-        <div style={{position: 'relative'}}>
-          <input
-            onChange={event => onChange(event.target.value)}
-            value={filter ? filter.value : ''}
-            style={{
-              fontSize: '.8rem',
-              width: '100%',
-              backgroundColor: 'transparent'
-            }}
-          />
-          <SearchIcon style={{color:"#799ab6"}} />
-        </div>
-    ),
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["todo"] }),
-    FilterAll: true,
     Cell: (row: any) => (
       <div>
         <TransactionDetailsButton
@@ -242,8 +214,6 @@ export const processed_transaction_table_columns = (props: Props, state: any) =>
   const table_columns = [{
     Header: 'Transaction Date',
     accessor: 'transaction_timestamp',
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["transaction_timestamp"] }),
     filterAll: true,
       Cell: (row: any) => (
         <div style={{ padding: '5px' }}>
@@ -253,8 +223,6 @@ export const processed_transaction_table_columns = (props: Props, state: any) =>
     }, {
     Header: 'Amount',
     accessor: 'amount',
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["amount"] }),
     filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
@@ -264,8 +232,6 @@ export const processed_transaction_table_columns = (props: Props, state: any) =>
     }, {
     Header: 'Action',
     accessor: 'action',
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["action"] }),
     filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
@@ -275,8 +241,6 @@ export const processed_transaction_table_columns = (props: Props, state: any) =>
     }, {
     Header: 'Counterparty',
     accessor: 'counterparty',
-    filterMethod: (filter:any, rows:any) =>
-      matchSorter(rows, filter.value, { keys: ["counterparty"] }),
     filterAll: true,
     Cell: (row: any) => (
       <div style={{ padding: '5px' }}>
