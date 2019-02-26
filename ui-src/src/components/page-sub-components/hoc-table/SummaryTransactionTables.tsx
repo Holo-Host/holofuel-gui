@@ -155,7 +155,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
     console.log("table Pending_data: ", pending_table_data);
     console.log("table Processed_data: ", processed_table_data);
-
+    console.log("ROW LENGTH: ",pending_table_data.length)
     return (
 
     // TODO: Look into integratng the infnite scroll with ReactTable...
@@ -206,8 +206,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
           <div className={classnames(classes.tableContainer)}>
             <AdvancedExpandReactTable
               className={classnames("-striped", "-highlight", classes.table)}
-              showPagination={false}
-              defaultPageSize={pending_table_data!.length}
+              showPagination={true}
+              defaultPageSize={5}
               data={pending_table_data}
               columns={ pending_table_columns }
               filter={this.state.filter}
@@ -287,8 +287,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               className={classnames("-striped", "-highlight", classes.table)}
               data={ processed_table_data }
               columns={ processed_table_columns }
-              showPagination={false}
-              defaultPageSize={processed_table_data!.length}
+              showPagination={true}
+              defaultPageSize={5}
               filterable={filterable}
               defaultFilterMethod={(filter:any, row:any) =>
                  String(row[filter.id]) === filter.value
