@@ -586,23 +586,20 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
      muiSimpleTableRoot: {
        width: '100%',
        overflowX: 'auto',
-       background: 'transparent',
-       color: '#13426a',
-       "&:hover": {
-         color: '#c3cdd6',
-       }
+       background: '#e9ecef',
      },
      muiSimpleTable:{
        margin: '0 auto',
        justifyContent: 'center',
-       minWidth: '80%',
+       minWidth: '80%'
      },
      tableCell: {
        fontSize: '.7rem',
+       textTransform: 'capitalize',
+       color: '#0e3658 !important',
        padding: 0,
-       "&:hover": {
-         color: '#c3cdd6'
-       }
+       minWidth: 20,
+       maxWidth: 71,
      },
      modal: {
       marginTop: 33,

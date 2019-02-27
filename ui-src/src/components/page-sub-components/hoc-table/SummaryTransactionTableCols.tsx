@@ -1,6 +1,6 @@
 // Main Imports
 import * as React from 'react';
-// import * as matchSorter from 'match-sorter';
+import * as moment from 'moment';
 // local imports :
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import TransactionDetailsButton from "../transaction-details-button/TransactionDetailsButton";
@@ -12,7 +12,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SwapVerticalCircle from '@material-ui/icons/SwapVerticalCircle';
 import ChangeHistory from '@material-ui/icons/ChangeHistory';
 import Info from '@material-ui/icons/Info';
-import List from '@material-ui/icons/List';
+// import List from '@material-ui/icons/List';
 // import Receipt from '@material-ui/icons/Receipt';
 
 export type Props = DispatchProps & StateProps;
@@ -21,8 +21,6 @@ export type Props = DispatchProps & StateProps;
 const pending_transaction_table_columns = (props: Props, state: any, cb:() => void) => {
   // console.log("Table Columns Props", props);
   // console.log("Table Columns State", state);
-
-  // const resetCB = cb("reset");
 
   const table_columns = [{
     Header: (row: any) => (<Today/>),
@@ -46,8 +44,15 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
      ),
      FilterAll: true,
      Cell: (row: any) => (
-        <div style={{ padding: '5px' }}>
-        { row.value }
+        <div style={{ padding: '5px', fontSize:".8rem" }}>
+          { parseInt(moment(row.value).startOf('day').fromNow().split(" ")[0]) > 23 ?
+            <h4>{ moment(row.value).format("LL")}</h4>
+
+          :  parseInt(moment(row.value).startOf('day').fromNow().split(" ")[0]) > 1 ?
+            <h4>{moment(row.value).calendar()}</h4>
+          :
+            <h4>{moment(row.value).startOf('hour').fromNow()}</h4>
+          }
         </div>
      )
     }, {
@@ -103,10 +108,32 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
     ),
     FilterAll: true,
     Cell: (row: any) => (
-      <div style={{ padding: '5px' }}>
-        {/* style={{ padding: '5px', color:{props.amountColor} }} */}
-      { row.value}
-      </div>
+      <div style={{ padding: '5px', marginTop:'13px', fontSize:".95rem" }}>
+        {row.original.status.split("/")[0] === "incoming" ?
+            <span className="increasedBalance" style={{color:"#00828d"}}>
+              { row.value }
+            </span>
+
+        : row.original.status.split("/")[0] === "outgoing" ?
+            <span className="decreasedBalance" style={{color:"#b85eb3"}}>
+              { row.value }
+            </span>
+
+        : row.original.status.split("/")[0] === "pending" &&
+          row.original.status.split("/")[1] === "spender" ?
+            <span className="decreasedBalance" style={{color:"#b85eb3"}}>
+          { row.value }
+            </span>
+
+        :  row.original.status.split("/")[0] === "pending" &&
+           row.original.status.split("/")[1] === "recipient" ?
+            <span className="increasedBalance" style={{color:"#00828d"}}>
+            { row.value }
+            </span>
+        :
+            <div/>
+        }
+        </div>
       )
     }, {
     Header: (row: any) => (<ChangeHistory/>),
@@ -119,7 +146,7 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
             onChange={event => onChange(event.target.value)}
             value={filter ? filter.value : ''}
             style={{
-              fontSize: '.8rem',
+              fontSize: '.95rem',
               width: '100%',
               backgroundColor: 'transparent'
             }}
@@ -129,7 +156,7 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
     ),
     FilterAll: true,
     Cell: (row: any) => (
-      <div style={{ padding:'5px', fontSize:"1rem"}}>
+      <div style={{ padding:'5px', marginTop:'13px', fontSize:".8rem"}}>
         {row.original.status.split("/")[0] === "incoming" ?
             <span className="increasedBalance" style={{color:"#00828d"}}>
               +{ row.value } HF
@@ -156,46 +183,14 @@ const pending_transaction_table_columns = (props: Props, state: any, cb:() => vo
         }
       </div>
       )
-    }, {
+    },{
     Header: (row: any) => (<Info/>),
     id: 'status',
     accessor: 'status',
-    // filterable: true,
-    // Filter: ({filter, row, onChange}:any) => (
-    //     <div style={{position: 'relative'}}>
-    //       <input
-    //         onChange={event => onChange(event.target.value)}
-    //         value={filter ? filter.value : ''}
-    //         style={{
-    //           fontSize: '.8rem',
-    //           width: '100%',
-    //           backgroundColor: 'transparent'
-    //         }}
-    //       />
-    //       <SearchIcon style={{color:"#799ab6"}} />
-    //     </div>
-    // ),
-    // FilterAll: true,
     Cell: (row: any) => (
-      <div style={{ padding: '5px' }}>
+      <div style={{ padding: '5px', marginTop:'0px'}}>
         <TransactionDetailsButton
           {...props}
-          column="status"
-          transactionState={row.value}
-          rowInfo={row}
-          resetPage={() => cb()}
-        />
-      </div>
-      )
-    }, {
-      Header: (row: any) => (<List/>),
-    id: 'todo',
-    accessor: 'status', // change to "todo" once created
-    Cell: (row: any) => (
-      <div>
-        <TransactionDetailsButton
-          {...props}
-          column="todo"
           transactionState={row.value}
           rowInfo={row}
           resetPage={() => cb()}

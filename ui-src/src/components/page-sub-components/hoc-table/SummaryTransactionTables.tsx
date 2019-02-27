@@ -138,7 +138,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     }
 
   // Sm (mobile) Viewport
-    const mobile_pending_table_columns = mobile_pending_transaction_table_columns(this.props, this.state);
+    const mobile_pending_table_columns = mobile_pending_transaction_table_columns(this.props, this.state, this.resetPage);
     const mobile_processed_table_columns = mobile_processed_transaction_table_columns(this.props, this.state);
 
 // Md/Lg Viewport
@@ -176,23 +176,25 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       //         </InfiniteScroll>
       //     </div>
       // </div>
-<div className={classes.transactionTablesContainer}>
 
-{/* /////////////////// List of Pending Transactions Table :  ///////////////////// */}
+    <div className={classes.transactionTablesContainer}>
+      {/* /////////////////// List of Pending (aka NEW) Transactions Table :  ///////////////////// */}
+      <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
+        New Transactions
+      </Typography>
 
-<Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
-            New Transactions
-          </Typography>
-          <div className={classes.tableButtonBar}>
-            <Button variant="outlined" color="primary"
-              className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-              onClick={() => this.props.handleTableRefresh()}>
-              <Refresh className={classes.svgView}/>
-            </Button>
-          </div>
+     {/* NOTE: // for the Refresh Buttons (adjacent to each table header)... do the following: */}
+       {/* UPDATE THIS BUTTON onClick functon to TRIGGER the handleTxBatchDuration() with params of SINCE and UNTIL (where since === the most recent currently tx date shown and until is date.now) */}
+      <div className={classes.tableButtonBar}>
+        <Button variant="outlined" color="primary"
+          className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
+          onClick={() => this.props.handleTableRefresh()}>
+          <Refresh className={classes.svgView}/>
+        </Button>
+      </div>
 
-    {/* ///// Pending-TX Table :  ///// */}
-    {/* // viewports === Mobile Size (widths <=767) */}
+      {/* ///// Pending-TX Table :  ///// */}
+      {/* // viewports === Mobile Size (widths <=767) */}
       { isMobile ?
           <div className={classnames(classes.tableContainer)}>
             <ReactTable
@@ -201,6 +203,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               defaultPageSize={new_data_table!.length}
               data={ pending_table_data }
               columns={ mobile_pending_table_columns }
+              NoDataComponent={() => null}
             />
           </div>
 
@@ -215,6 +218,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               data={new_data_table}
               columns={ pending_table_columns }
               filter={this.state.filter}
+              NoDataComponent={() => null}
               defaultFilterMethod={(filter:any, row:any, column:any) => {
                 const id = filter.pivotId || filter.id;
                 if (typeof filter.value === "object") {
@@ -232,13 +236,11 @@ class SummaryTransactionTables extends React.Component<Props, State> {
                 // refactor rows to include the + tx commit_hash, tx deadline, and tx notes, and  tx timestamp of last commit (for detailed view / record completion...).
 
                 return (
-                  <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
-                    <div className={classnames(classes.flexContainer)}>
-                      <MuiSimpleTable classNames={classes.flexItem}
-                        {...newProps}
-                        rowInfo={row}
-                      />
-                    </div>
+                  <div className={classes.subtable} style={{ padding: "10px", margin: '0 auto', marginBottom:"8px", width:'95%' }}>
+                    <MuiSimpleTable
+                      {...newProps}
+                      rowInfo={row}
+                    />
                   </div>
                 );
               }}
@@ -254,21 +256,21 @@ class SummaryTransactionTables extends React.Component<Props, State> {
         </div>
 
 
-{/* //// */}
-<Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
-            Pending Transactions
-          </Typography>
-          <div className={classes.tableButtonBar}>
-            <Button variant="outlined" color="primary"
-              className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-              onClick={() => this.props.handleTableRefresh()}>
-              <Refresh className={classes.svgView}/>
-            </Button>
-          </div>
+        {/* /////////////////// List of Transactions - Unprocessed (aka Pending) Table :  ///////////////////// */}
+        <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
+          Pending Transactions
+        </Typography>
+        <div className={classes.tableButtonBar}>
+          <Button variant="outlined" color="primary"
+            className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
+            onClick={() => this.props.handleTableRefresh()}>
+            <Refresh className={classes.svgView}/>
+          </Button>
+        </div>
 
-    {/* ///// Pending-TX Table :  ///// */}
-    {/* // viewports === Mobile Size (widths <=767) */}
-      { isMobile ?
+        {/* ///// Pending-TX Table :  ///// */}
+        {/* // viewports === Mobile Size (widths <=767) */}
+        { isMobile ?
           <div className={classnames(classes.tableContainer)}>
             <ReactTable
               className={classnames("-striped", "-highlight", classes.table)}
@@ -276,6 +278,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               defaultPageSize={pending_table_data!.length}
               data={ pending_table_data }
               columns={ mobile_pending_table_columns }
+              NoDataComponent={() => null}
             />
           </div>
 
@@ -289,6 +292,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               pageSize={pending_table_data.length}
               data={pending_table_data}
               columns={ pending_table_columns }
+              NoDataComponent={() => null}
               filter={this.state.filter}
               defaultFilterMethod={(filter:any, row:any, column:any) => {
                 const id = filter.pivotId || filter.id;
@@ -307,13 +311,11 @@ class SummaryTransactionTables extends React.Component<Props, State> {
                 // refactor rows to include the + tx commit_hash, tx deadline, and tx notes, and  tx timestamp of last commit (for detailed view / record completion...).
 
                 return (
-                  <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
-                    <div className={classnames(classes.flexContainer)}>
-                      <MuiSimpleTable classNames={classes.flexItem}
-                        {...newProps}
-                        rowInfo={row}
-                      />
-                    </div>
+                  <div className={classes.subtable} style={{ padding: "2px", width:'95%', margin: '0 auto', marginBottom:'8px' }}>
+                    <MuiSimpleTable
+                      {...newProps}
+                      rowInfo={row}
+                    />
                   </div>
                 );
               }}
@@ -329,7 +331,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
         </div>
 
 
-  {/* ///// Proccessed-TX Table :  ///// */}
+        {/* /////////////////// List of Transactions - Proccessed-TX Table : ///////////////////// */}
         <br/>
         <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
           Processed Transactions
@@ -342,6 +344,11 @@ class SummaryTransactionTables extends React.Component<Props, State> {
           </Button>
         </div>
 
+        {/* { if(processed_table_data!.length <= 0) {
+          <ErrorMessage>
+          }
+        }  */}
+
         { isMobile ?
           /* // viewports === Mobile Size (widths <=767) */
           <div className={classnames(classes.tableContainer)}>
@@ -349,12 +356,17 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               className={classnames("-striped", "-highlight", classes.table)}
               showPagination={false}
               defaultPageSize={processed_table_data!.length}
+              data={ processed_table_data }
+              columns={ mobile_processed_table_columns }
+              getNoDataProps={() => {
+                if(processed_table_data!.length <= 0) {
+                  return <ErrorMessage/>;
+                }
+              }}
               filterable={filterable}
               defaultFilterMethod={(filter:any, row:any) =>
                  String(row[filter.id]) === filter.value
                }
-              data={ processed_table_data }
-              columns={ mobile_processed_table_columns }
             />
           </div>
 
@@ -366,6 +378,11 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               className={classnames("-striped", "-highlight", classes.table)}
               data={ processed_table_data }
               columns={ processed_table_columns }
+              getNoDataProps={() => {
+                if(processed_table_data!.length <= 0) {
+                  return <ErrorMessage/>;
+                }
+              }}
               showPagination={false}
               pageSize={processed_table_data.length}
               filterable={filterable}
@@ -374,11 +391,10 @@ class SummaryTransactionTables extends React.Component<Props, State> {
                }
               SubComponent={(row:any) => {
                 /* console.log("<><><><><> Processed TX SubComponent ROW out : >> <><><><><> ", row); */
-
                 return (
-                  <div className={classes.subtable} style={{ paddingTop: "2px", marginBottom:"8px" }}>
+                  <div className={classes.subtable} style={{ padding: "2px", marginBottom:"8px" }}>
                     <div className={classes.flexContainer}>
-                      <MuiSimpleTable classNames={classes.flexItem}
+                      <MuiSimpleTable
                         {...newProps}
                         rowInfo={row}
                       />
@@ -403,6 +419,3 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(SummaryTransactionTables);
-
-// for the Refresh Buttons (adjacent to each table header)... do the following:
-// {/* UPDATE THIS BUTTON onClick functon to TRIGGER the handleTxBatchDuration() with params of SINCE and UNTIL (where since === the most recent currently tx date shown and until is date.now) */}

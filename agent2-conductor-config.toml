@@ -84,8 +84,8 @@ dna_interface = "websocket_interface"
 n3h_path = "/home/lisa/Documents/gitrepos/holochain/Networking/n3h-0.0.4-alpha1"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = [
-"/ip4/127.0.0.1/tcp/37369/ipfs/QmZscSkRRgp7GAYLURcDgTMGRiaWZqhaWHMv38ZUozufcx",
-"/ip4/192.168.0.7/tcp/37369/ipfs/QmZscSkRRgp7GAYLURcDgTMGRiaWZqhaWHMv38ZUozufcx"
+"/ip4/127.0.0.1/tcp/41371/ipfs/QmdLKrBvTQpmapmwPphtSHY5hNPZGScB8SBQgW4LiNqDuE",
+"/ip4/192.168.0.7/tcp/41371/ipfs/QmdLKrBvTQpmapmwPphtSHY5hNPZGScB8SBQgW4LiNqDuE"
 ]
 
 # -----------  Networking instructions  -----------

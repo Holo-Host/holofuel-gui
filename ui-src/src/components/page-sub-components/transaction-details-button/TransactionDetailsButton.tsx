@@ -16,7 +16,6 @@ type Moment = moment.Moment;
 export interface OwnProps {
   classes: any
   transactionState: any,
-  column: string,
   rowInfo: any,
   resetPage: () => void
 };
@@ -243,70 +242,47 @@ class TransactionDetailsButton extends React.Component<Props, State> {
   }
 
   public render() {
-    const { classes, column, ...newProps } = this.props;
+    const { classes, ...newProps } = this.props;
     // NOTE: uncomment below when testing button
     // console.log("TransactionDetailsButton props", this.props);
     // console.log("TransactionDetailsButton state", this.state);
 
     return (
       <div>
-        { column === "status" ?
-          <div style={{textTransform:"uppercase"}}>
-            { this.state.statusText }
+        <div>
+          <div style={{textTransform:"uppercase", width: '100%'}}>
+            { this.state.txStateStage }
           </div>
 
-        : column === "todo" ?
-          <div>
-            <Button
-              variant="outlined"
-              color="primary"
-              className={ classes.smallButton }
-              onClick={ this.handlePendingTransaction }
-              value={ this.state.nextApiCall }
-            >
+          <Button
+            variant="outlined"
+            color="primary"
+            className={ classes.colButton }
+            onClick={ this.handlePendingTransaction }
+            value={ this.state.nextApiCall }
+            style={{margin:"3px"}}
+          >
+            {this.state.todoText}
+          </Button>
+        </div>
 
-              {this.state.todoText}
-            </Button>
-          </div>
+        {/* Toggle Confirmation Message (aka. InformativeModal) */}
+          { this.state.message ?
+            <InformativeModal {...newProps} confirmMessage={  this.state.message } resetMessage={this.resetMessage}/>
+          :
+            <div/>
+          }
 
-        : column === "both" ?
-          <div className={classes.flexContainer}>
-            <div style={{textTransform:"uppercase", marginTop:'5px', marginBottom:'10px'}}>
-              { this.state.txStateStage }
-            </div>
-
-            <Button
-              variant="outlined"
-              color="primary"
-              className={ classes.mobileButton }
-              onClick={ this.handlePendingTransaction }
-              value={ this.state.nextApiCall }
-              style={{margin:"5px"}}
-            >
-              {this.state.todoText}
-            </Button>
-          </div>
-        :
-          <div/>
-        }
-
-      {/* Toggle Confirmation Message (aka. InformativeModal) */}
-        { this.state.message ?
-          <InformativeModal {...newProps} confirmMessage={  this.state.message } resetMessage={this.resetMessage}/>
-        :
-          <div/>
-        }
-
-      {/* Toggle Transaction Detail Full-Page Modal */}
-        { this.state.txDetailModal ?
-          <HoloFuelTransactionDetailPage
-            currentRowDataDetailed={this.state.currentRowDataDetailed}
-            toggleTxDetailModal={this.toggleTxDetailModal}
-            ledger_state={this.props.ledger_state}
-          />
-        :
-          <div/>
-        }
+        {/* Toggle Transaction Detail Full-Page Modal */}
+          { this.state.txDetailModal ?
+            <HoloFuelTransactionDetailPage
+              currentRowDataDetailed={this.state.currentRowDataDetailed}
+              toggleTxDetailModal={this.toggleTxDetailModal}
+              ledger_state={this.props.ledger_state}
+            />
+          :
+            <div/>
+          }
       </div>
     )
   }

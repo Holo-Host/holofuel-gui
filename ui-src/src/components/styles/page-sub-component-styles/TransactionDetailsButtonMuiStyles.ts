@@ -20,8 +20,9 @@ smallButton: {
      color: '#13426a'
    }
  },
- mobileButton : {
+ colButton : {
    fontFamily: 'Raleway',
+   fontSize: 10,
    fontWeight: 500,
    margin: theme.spacing.unit,
    textAlign: 'center',

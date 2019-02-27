@@ -10,7 +10,7 @@ import SwapVerticalCircle from '@material-ui/icons/SwapVerticalCircle';
 import Info from '@material-ui/icons/Info';
 
 /* Transaction Table Headers */
-const mobile_pending_transaction_table_columns = (props: any, state: any) => {
+const mobile_pending_transaction_table_columns = (props: any, state: any, cb:() => void) => {
   // console.log("Table Columns Props", props);
   // console.log("Table Columns State", state);
   const table_columns = [{
@@ -42,12 +42,12 @@ const mobile_pending_transaction_table_columns = (props: any, state: any) => {
     id: 'status',
     accessor: 'status',
     Cell: (row: any) => (
-      <div style={{ padding: '5px', marginTop:'10px' }}>
+      <div style={{ padding: '5px'}}>
         <TransactionDetailsButton
           {...props}
-          column="both"
           transactionState={row.value}
           rowInfo={row}
+          resetPage={() => cb()}
         />
       </div>
       )

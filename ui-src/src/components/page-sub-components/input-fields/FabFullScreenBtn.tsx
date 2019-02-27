@@ -4,36 +4,42 @@ import { withStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core/styles';
 import { StyleRulesCallback } from '@material-ui/core/';
 import Fab from '@material-ui/core/Fab';
-import CheckBox from '@material-ui/icons/CheckBox'
+import EnlargeViewIcon from '@material-ui/icons/OpenInNew'
 // local imports
 // import styles from '../../styles/page-styles/DefaultPageMuiStyles'
 
 const styles : StyleRulesCallback  = (theme: Theme) => ({
-  fab: {
+  enargeViewFab: {
     margin: theme.spacing.unit,
     color: "#799ab6",
+    width: 30,
+    height: 30,
+    minHeight:30,
     background: "#0e3658",
     "&:hover": {
       color: '#003087',
     }
+  },
+  enlargeViewIconSize: {
+    fontSize: 17,
   }
 });
 
-function FabSearchBtn(props: any) {
+function FabFullScreenBtn(props: any) {
   const { classes, handleClick } = props;
   return (
     <div>
       <Fab
         color="primary"
         aria-label="Add"
-        className={classes.fab}
+        className={classes.enargeViewFab}
         onClick={handleClick}
       >
-        <CheckBox />
+        <EnlargeViewIcon className={classes.enlargeViewIconSize}/>
       </Fab>
     </div>
   );
 }
 
-export default withStyles(styles)(FabSearchBtn);
+export default withStyles(styles)(FabFullScreenBtn);
         // {/* className={classnames(classes.button, classes.overlayTop, classes.smallButton)} */}

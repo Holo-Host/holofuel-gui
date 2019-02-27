@@ -1,8 +1,8 @@
 import * as React from 'react';
-// import { Link } from 'react-router-dom';
+import * as moment from 'moment';
 // mui custom styling :
 import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
+// import Typography from '@material-ui/core/Typography';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -14,12 +14,12 @@ import MessageIcon from '@material-ui/icons/Message';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import HoloFuelTransactionDetailPage from '../../page-views/HoloFuelTransactionDetailPage';
+import FabFullScreenBtn from '../input-fields/FabFullScreenBtn';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 
 export interface OwnProps {
   classes: any,
-  classNames: any,
   rowInfo: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
@@ -75,31 +75,55 @@ class MuiSimpleTable extends React.Component<Props, State> {
      const currentRow = this.createData(dueDate, transaction_timestamp, notes);
      console.log("ROW Details:",currentRow)
     return (
-      <div>
+      <div style={{ width:'100%' }}>
         <Paper className={classes.muiSimpleTableRoot}>
           <Table className={classes.muiSimpleTable}>
             <TableBody>
               <TableRow key={currentRow.id}>
-                <TableCell align="center" scope="currentRow">
-                <HourGlassIcon/> {currentRow.due_date}
+                <TableCell className={classes.tableCell} align="center" scope="currentRow">
+                  <Today/> Date Initiated
+                </TableCell>
+                <TableCell align="center" className={classes.tableCell}>
+                  <HourGlassIcon/> Due Date
+                </TableCell>
+                <TableCell align="center" className={classes.tableCell}>
+                  <MessageIcon/> Notes
                 </TableCell>
               </TableRow>
               <TableRow key={currentRow.id}>
-                <TableCell align="center">
-                  <Today/> {currentRow.tx_initiation_date}
+                <TableCell align="center" className={classes.tableCell}>
+                  { parseInt(moment(currentRow.tx_initiation_date).startOf('day').fromNow().split(" ")[0]) > 23 ?
+                    <h4>{ moment(currentRow.tx_initiation_date).format("LL")}</h4>
+
+                  :  parseInt(moment(currentRow.tx_initiation_date).startOf('day').fromNow().split(" ")[0]) > 1 ?
+                    <h4>{moment(currentRow.tx_initiation_date).calendar()}</h4>
+                  :
+                    <h4>{moment(currentRow.tx_initiation_date).startOf('hour').fromNow()}</h4>
+                  }
                 </TableCell>
-              </TableRow>
-              <TableRow key={currentRow.id}>
-                <TableCell align="center">
-                  <MessageIcon/> {currentRow.notes}
+                <TableCell align="center" className={classes.tableCell} scope="currentRow">
+                  { parseInt(moment(currentRow.due_date).startOf('day').fromNow().split(" ")[0]) > 23 ?
+                    <h4>{ moment(currentRow.due_date).format("LL")}</h4>
+
+                  :  parseInt(moment(currentRow.due_date).startOf('day').fromNow().split(" ")[0]) > 1 ?
+                    <h4>{moment(currentRow.due_date).calendar()}</h4>
+                  :
+                    <h4>{moment(currentRow.due_date).startOf('hour').fromNow()}</h4>
+                  }
+                </TableCell>
+                <TableCell align="center" className={classes.tableCell}>
+                  {currentRow.notes}
                 </TableCell>
               </TableRow>
             </TableBody>
           </Table>
           {/* Full Page Modal */}
-          <Typography className={classes.subtableHeader} onClick={this.toggleTxDetailModal} variant="caption" component="h4" >
-            Visit Detail Page
-          </Typography>
+          <FabFullScreenBtn handleClick={this.toggleTxDetailModal} />
+          {/* <button>
+            <Typography className={classes.subtableHeader} onClick={this.toggleTxDetailModal} variant="caption" component="h6" >
+              Visit Detail Page
+            </Typography>
+          <button> */}
         </Paper>
 
         {/* Toggle Transaction Detail Full-Page Modal */}

@@ -1,5 +1,6 @@
 // Main Imports
 import * as React from 'react';
+import * as moment from 'moment';
 // MUI styles
 import { withStyles } from '@material-ui/core/styles';
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
@@ -68,7 +69,16 @@ class MobileMesssageColumn extends React.Component<Props, State> {
          }
 
         <hr/>
-        <h5 style={{margin:'2px'}}>{currentRowInfo.originTimeStamp}</h5>
+        <div style={{ padding: '2px' }}>
+          { parseInt(moment(currentRowInfo.originTimeStamp).startOf('day').fromNow().split(" ")[0]) > 23 ?
+            <h4>{ moment(currentRowInfo.originTimeStamp).format("LL")}</h4>
+
+          :  parseInt(moment(currentRowInfo.originTimeStamp).startOf('day').fromNow().split(" ")[0]) > 1 ?
+            <h4>{moment(currentRowInfo.originTimeStamp).calendar()}</h4>
+          :
+            <h4>{moment(currentRowInfo.originTimeStamp).startOf('hour').fromNow()}</h4>
+          }
+        </div>
 
       </div>
     )
