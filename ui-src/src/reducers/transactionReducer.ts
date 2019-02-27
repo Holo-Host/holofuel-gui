@@ -232,11 +232,17 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state };
     }
 
-  // Call for PROPOSE_PAYMENT ()
+  // Call for PROPOSE_PAYMENT_SUCCESS ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/proposal_SUCCESS`: {
       console.log('PROPOSE_PAYMENT_SUCCESS (PROPOSAL_SUCCESS) payload', payload);
       return { ...state };
     }
+
+    // Call for PROPOSE_PAYMENT_FAILURE ()
+    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/proposal_FAILURE`: {
+        console.log('PROPOSE_PAYMENT_FAILURE (PROPOSAL_FAILURE) payload', payload);
+        return { ...state };
+      }
 
   // Call for RECEIVE_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/receive_payment_SUCCESS`: {

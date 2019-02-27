@@ -117,9 +117,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
       request_payment : (payload) => {
       // console.log("dispatching request");
        dispatch(RequestPaymentAsyncAction.create(payload))},
-
-  // NB: API not yet available...
-      // pay_request : () => {console.log("dispatching pay_request"); dispatch(PayRequestAsyncAction.create({}))},
+       
   // NB: API not yet available...
       // decline_request : () => {console.log("dispatching decline_request"); dispatch(DeclineRequestAsyncAction.create({}))},
 

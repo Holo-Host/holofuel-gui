@@ -175,32 +175,35 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         deadline: isoDeadline,
         request: originCommitHash
       }
-      // console.log("propose_tx_obj : ", approved_proposal_obj);
-      const proposalResult = await this.props.propose_payment(approved_proposal_obj); //sending as JSON
-      this.sendConfirmationMessage(proposalResult, approved_proposal_obj);
-    }
-    else if (this.state.nextApiCall === "receive_payment") {
-      const { counterparty, amount, notes, dueDate, originCommitHash } = this.props.rowInfo.original; // eventCommitHash
-      const isoDeadline: Moment = moment(dueDate, moment.ISO_8601);
-      const proposal: ProposalActionParam ={
-        to: counterparty,
-        amount,
-        notes,
-        deadline: isoDeadline,
-        request: originCommitHash
-      }
-
-      const approved_proposal_obj: any = {
-        proposal, // proposal obj.
-        proposal_sig: "", // proposal signature ??
-        proposal_commit: "" // commit address
-      }
       console.log("propose_tx_obj : ", approved_proposal_obj);
       const proposalResult = await this.props.propose_payment(approved_proposal_obj); //sending as JSON
       this.sendConfirmationMessage(proposalResult, approved_proposal_obj);
     }
+    else if (this.state.nextApiCall === "receive_payment") {
+      const { counterparty, amount, notes, dueDate, inResponseToTX, eventCommitHash, txAuthor,  proposalCommitSignature } = this.props.rowInfo.original; // eventCommitHash,
+      const isoDeadline: Moment = moment(dueDate, moment.ISO_8601);
+      const proposal = {
+        tx: {
+          to: counterparty,
+          from: txAuthor,
+          amount,
+          notes,
+          deadline: isoDeadline,
+        },
+        request: inResponseToTX ? inResponseToTX : null
+      }
+
+      const receive_payment_obj: any = {
+        proposal, // proposal obj.
+        proposal_sig: proposalCommitSignature, // proposal signature
+        proposal_commit: eventCommitHash // commit address
+      }
+      console.log("receive_payment_obj : ", receive_payment_obj);
+      const receivePaymentResult = await this.props.receive_payment(receive_payment_obj); //sending as JSON
+      this.sendConfirmationMessage(receivePaymentResult, receive_payment_obj);
+    }
     else if (this.state.nextApiCall === "") {
-      // if nextApiCall === "" (an empty sting), make btn access tx details page
+      // if nextApiCall === "" (an empty string), make btn access tx details page
       const { originTimeStamp, transaction_timestamp, dueDate, amount, status, counterparty, notes } = this.props.rowInfo.original; // /*originEvent*/
 
       this.setState({

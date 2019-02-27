@@ -24,6 +24,7 @@ const dataRefactor = (transaction_details: any) => {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
         originEvent: transaction.originEvent === "Request" ? "Requested" : "Sent",
         counterparty: transaction.counterparty,
+        txAuthor: transaction.txAuthor || undefined,
         amount:  transaction.amount,
         event: transaction.event,
         status: transaction.status,
@@ -32,7 +33,8 @@ const dataRefactor = (transaction_details: any) => {
         dueDate: transaction.dueDate,
         notes: transaction.notes,
         originCommitHash: transaction.originCommitHash,
-        // inResponseToTX?: transaction.inResponseToTX
+        proposalCommitSignature: transaction.proposalCommitSignature || undefined,
+        inResponseToTX: transaction.inResponseToTX,
         rowNumberType: transaction.rowNumberType
       };
       // console.log("newTxObj", newTxObj);
@@ -93,36 +95,40 @@ const alternateEven = () => {
 export const refactorListOfPending = (list_of_pending:any)=>{
   const  list_of_proposals =  list_of_pending.proposals.map((p:any) => {
     return {
-      originTimeStamp: p[1],
-      amount:p[2].Proposal.tx.amount,
-      originEvent:p[2].Proposal.request ? "Request" : "Proposal",
+      originTimeStamp: p[0][1],
+      amount:p[0][2].Proposal.tx.amount,
+      originEvent:p[0][2].Proposal.request ? "Request" : "Proposal",
       event: "Proposal",
-      counterparty:p[2].Proposal.tx.from,
+      counterparty:p[0][2].Proposal.tx.from,
+      txAuthor: p[0][2].Proposal.tx.to,
       status: "pending/recipient",
-      originCommitHash: p[0],
-      dueDate: p[2].Proposal.tx.deadline,
-      notes:  p[2].Proposal.tx.notes,
-      inResponseToTX:p[2].Proposal.request,
-      eventCommitHash: undefined,
-      transactionTimestamp: p[1],
+      dueDate: p[0][2].Proposal.tx.deadline,
+      notes:  p[0][2].Proposal.tx.notes,
+      originCommitHash: p[0][2].Proposal.request ? p[0][2].Proposal.request : p[0][0], // the tx origin commit hash
+      eventCommitHash: p[0][0], // the 'origin' proposal commit hash
+      inResponseToTX:p[0][2].Proposal.request || undefined, // the request hash that the proposal is in response to, should it exist...
+      transactionTimestamp: p[0][1],
+      proposalCommitSignature: p[1][1],
       rowNumberType
     };
   });
 
   const  list_of_requests =  list_of_pending.requests.map((r:any) => {
       return {
-      originTimeStamp: r[1],
-      amount:r[2].Request.amount,
+      originTimeStamp: r[0][1],
+      amount:r[0][2].Request.amount,
       originEvent:"Request",
       event: "Request",
-      counterparty:r[2].Request.to,
+      counterparty:r[0][2].Request.to,
+      txAuthor: r[0][2].Request.from,
       status: "pending/spender",
-      originCommitHash: r[0],
-      dueDate: r[2].Request.deadline,
-      notes:  r[2].Request.notes,
-      inResponseToTX:undefined,
-      eventCommitHash: undefined, // commit hash for the currently displayed Transaction
-      transactionTimestamp: r[1],
+      dueDate: r[0][2].Request.deadline,
+      notes:  r[0][2].Request.notes,
+      originCommitHash: r[0][0],
+      eventCommitHash: r[0][0], // commit hash for the currently displayed Transaction === the origin commit hash in this cirumstance
+      inResponseToTX: undefined,
+      transactionTimestamp: r[0][1],
+      requestCommitSignature: r[1][1],
       rowNumberType
     };
   });
@@ -142,7 +148,7 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
     let dueDate: string | undefined = undefined;
     // let txTimestamp: string; // FIND way to get acess to this for all tx types...
     let notes: string | undefined = undefined;
-    let eventCommitHash : string | undefined = undefined; // FIND way to get acess to this for all tx types...
+    let originCommitHash : string | undefined = undefined; // FIND way to get acess to this for all tx types...
     let inResponseToTX: string | undefined = undefined;
     let rowNumberType: string | undefined = alternateEven();
     // console.log("rowNumberType >> should oscilate between odd and even << :", rowNumberType);
@@ -154,8 +160,8 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       counterparty = event.Request.from;
       dueDate = event.Request.deadline;
       notes = event.Request.notes;
-      eventCommitHash =  tx.origin; // commit hash for the currently displayed Transaction
       inResponseToTX = undefined;
+      originCommitHash =  tx.timestamp.origin;
 
     }
     else if (event.Proposal){
@@ -166,58 +172,57 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       counterparty = event.Proposal.tx.to;
       dueDate = event.Proposal.tx.deadline;
       notes = event.Proposal.tx.notes;
-      inResponseToTX = event.Proposal.request;
-      // eventCommitHash = ;
+      inResponseToTX = event.Proposal.request;// the request hash that the proposal is in response to, should it exist...
+      originCommitHash = event.Proposal.request ? event.Proposal.request : tx.timestamp.origin; // tx origin commit hash
     }
+
         // case 'decline' :
         //   break;
-        //
+
         // case 'reject' :
         //   break;
-        //
+
         // case 'refund' :
         //   break;
 
 
       return {
-        originTimeStamp: tx.timestamp.origin,
+        originCommitHash, // tx origin commit hash
+        eventCommitHash: tx.origin, // 'origin' commit hash for the currently displayed Transaction
         amount,
         originEvent,
         event: txEvent,
         counterparty,
         status: tx.state,
-        originCommitHash: tx.origin,
+        originTimeStamp: tx.timestamp.origin,
         dueDate: dueDate,
         notes: notes,
         inResponseToTX,
-        eventCommitHash, // commit hash for the currently displayed Transaction
         transactionTimestamp: tx.timestamp.event,
         rowNumberType,
       };
     });
 
-    // if state.split("/")[1] === "refunded", "rejected", / "declined" "completed" "recovered"
-    // then send the list_of_refactored_transactions result to the processed table refactor..
+    const list_of_processed = list_of_refactored_transactions.filter((tx:any)=>{
+      return status === "refunded" ||
+      status === "rejected" ||
+      status === "declined" ||
+      status === "completed" ||
+      status === "recovered"
+    })
+    const list_of_pending = list_of_refactored_transactions.filter((tx:any)=>{
+      return status !== "refunded" &&
+      status !== "rejected" &&
+      status !== "declined" &&
+      status !== "completed" &&
+      status !== "recovered"
+    })
 
-      const list_of_processed = list_of_refactored_transactions.filter((tx:any)=>{
-        return status === "refunded" ||
-        status === "rejected" ||
-        status === "declined" ||
-        status === "completed" ||
-        status === "recovered"
-      })
-      const list_of_pending = list_of_refactored_transactions.filter((tx:any)=>{
-        return status !== "refunded" &&
-        status !== "rejected" &&
-        status !== "declined" &&
-        status !== "completed" &&
-        status !== "recovered"
-      })
-  console.log("list_of_processed-->", list_of_processed);
-  console.log("list_of_processed-->", list_of_processed);
-  console.log("list_of_refactored_transactions-->", list_of_refactored_transactions);
-  return {
-  pending_table_data:dataRefactor(list_of_pending),
-  processed_table_data:dataRefactor(list_of_processed)
-  };
+    // console.log("list_of_processed-->", list_of_processed);
+    // console.log("list_of_processed-->", list_of_processed);
+    // console.log("list_of_refactored_transactions-->", list_of_refactored_transactions);
+    return {
+      pending_table_data:dataRefactor(list_of_pending),
+      processed_table_data:dataRefactor(list_of_processed)
+    };
 };
