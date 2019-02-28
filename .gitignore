@@ -49,3 +49,9 @@ main.js.map
 
 .idea
 npm-debug.log.*
+
+tmp-storage
+ui-agent1
+ui-agent2
+ui
+build
