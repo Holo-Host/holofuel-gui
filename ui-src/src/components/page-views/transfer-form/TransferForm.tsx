@@ -5,8 +5,8 @@ import HiddenFields from '../../page-sub-components/hidden-fields/HiddenFields';
 import Memo from '../../page-sub-components/memo/Memo';
 import Select from '../../page-sub-components/select/Select';
 // utils import :
-import { toAccounts, fromAccounts } from '../../../utils/seed-data/mock-data';
-import { getToday } from '../../../utils/seed-data/helper-fns';
+// import { toAccounts, fromAccounts } from '../../../utils/seed-data/mock-data';
+import { getToday } from '../../../utils/helper-fns';
 // custom stylesheet :
 import '../../styles/page-styles/scaffold-styles.css';
 
@@ -91,8 +91,8 @@ class TransferForm extends React.Component<Props, State> {
     const date: any = getToday();
     this.setState({
       startDate: date,
-      toAccounts, // populate with live data (currently === mock-data)
-      fromAccounts
+      toAccounts:[], // populate with live data (currently === mock-data)
+      fromAccounts:[]
      });
   }
 

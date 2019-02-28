@@ -36,10 +36,10 @@ export type OriginalState = State | undefined;
 export const INITIAL_STATE: State = {
   list_of_instance_info: [],
   list_of_agents: [],
-  my_agent_string: 'Test Agent',
+  my_agent_string: '',
   mostRecentProposalCommit:'',
   mostRecentRequestCommit:'',
-  my_agent_hash: 'HoloTester2-----------------------------------------------------------------------AAAGy4WW9e',
+  my_agent_hash: '',
   hf_base_dna_hash: "QmcYtest",
   ledger_state: {
     balance: null,

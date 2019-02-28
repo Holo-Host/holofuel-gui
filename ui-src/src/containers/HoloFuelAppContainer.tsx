@@ -93,20 +93,20 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
        dispatch(TransactionListAsyncAction.create(payload))},
 
       list_pending : () => {
-        console.log("dispatching list_pending");
+        // console.log("dispatching list_pending");
        dispatch(PendingListAsyncAction.create({}))},
 
       list_requests : () => {
-        console.log("dispatching list_transactions");
+        // console.log("dispatching list_transactions");
        dispatch(ListRequestsAsyncAction.create({}))},
 
       list_proposals : () => {
-        console.log("dispatching list_proposals");
+        // console.log("dispatching list_proposals");
        dispatch(ListProposalsAsyncAction.create({}))},
 
   //// View Specific Transaction
       get_single_request : (request_payload) => {
-      console.log("dispatching get_single_request");
+      // console.log("dispatching get_single_request");
        dispatch(GetRequestAsyncAction.create(request_payload))},
 
       get_single_proposal : (proposal_payload) => {
@@ -117,7 +117,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
       request_payment : (payload) => {
       // console.log("dispatching request");
        dispatch(RequestPaymentAsyncAction.create(payload))},
-       
+
   // NB: API not yet available...
       // decline_request : () => {console.log("dispatching decline_request"); dispatch(DeclineRequestAsyncAction.create({}))},
 
