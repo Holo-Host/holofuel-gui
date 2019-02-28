@@ -67,7 +67,6 @@ class VerficationModal extends React.Component<Props, State>  {
     };
 
     handleMakeTransaction = () => {
-      console.log(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>> YOU CLICKED HANDLEMAKETRANSACTION <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<< !!!! ", this.state.messageAsObj);
       const { counterparty, amount, deadline, notes } = this.state.messageAsObj;
 
       if(this.props.tx === "proposal"){
@@ -93,9 +92,10 @@ class VerficationModal extends React.Component<Props, State>  {
     };
 
     public render() {
-      console.log("PROPS inside the Verfication-dialog-modal", this.props);
       const { classes } = this.props;
       const fullScreen: boolean = false;
+      console.log("VERIFCATION MODAL STATE - is the state set with txobj? ", this.state);
+      const { messageAsObj } = this.state;
       return (
           <Grid xs={12} >
             <div className={classnames(classes.modal, classes.modalRoot)}>
@@ -117,13 +117,25 @@ class VerficationModal extends React.Component<Props, State>  {
                     <hr/>
                     <br/>
 
-                    <DialogContentText id="alert-dialog-description">
-                       Transaction :
-                    </DialogContentText>
-                    <DialogContentText id="alert-dialog-description">
-                      {this.props.message}
+                    <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
+                       Your Transaction Details
                     </DialogContentText>
 
+                    <DialogContentText id="alert-dialog-description-2">
+                      Counterparty: {messageAsObj.counterparty}
+                    </DialogContentText>
+
+                    <DialogContentText id="alert-dialog-description-3">
+                      Amount: {messageAsObj.amount}
+                    </DialogContentText>
+
+                    <DialogContentText id="alert-dialog-description-4">
+                      Deadline: {messageAsObj.deadline}
+                    </DialogContentText>
+
+                    <DialogContentText id="alert-dialog-description-6">
+                      Notes: {messageAsObj.notes}
+                    </DialogContentText>
                 </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleMakeTransaction} color="primary">
