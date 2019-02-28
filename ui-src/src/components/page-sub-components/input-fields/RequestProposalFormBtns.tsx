@@ -2,21 +2,24 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import * as moment from 'moment';
+import {DateFormatInput, TimeFormatInput} from 'material-ui-next-pickers'
 // mui custom style imports
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import FormControl from '@material-ui/core/FormControl';
-import FormHelperText from '@material-ui/core/FormHelperText';
+// import FormHelperText from '@material-ui/core/FormHelperText';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
-import OutlinedInput from '@material-ui/core/OutlinedInput';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
 import PersonPin from '@material-ui/icons/PersonPin';
-// import AccountCircle from '@material-ui/icons/AccountCircle';
 import Message from '@material-ui/icons/Message';
+// import Today from '@material-ui/icons/Today';
+import HourGlassIcon from '@material-ui/icons/HourglassEmpty';
 import Timer from '@material-ui/icons/Timer';
+// import OutlinedInput from '@material-ui/core/OutlinedInput';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import VerificationMessage from '../modal/VerificationMessage';
@@ -24,12 +27,6 @@ import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 // import Memo from '../memo/Memo';
 
-// Recipient (known by their role in proposal >> only true they DID NOT initate the proposal (ie. there is no request value in propsoal struct)):
-//1.) Determine whether Local Agent is Recipient of current TX (ie. ...)
-//2.) Discern TX Event type
-//3.) Run conditional: If the event === "receive_payment or reject_payment"  && the  {
-  //    then the button action text should to "OK" or "Reject"
-  //  }
 
 type StateKeyType = string | number | symbol | any;
 type LabelRef = HTMLElement | null | undefined;
@@ -51,6 +48,8 @@ export interface State {
   amount: string,
   notes: string,
   deadline: string | Moment,
+  deadlineDate: Date,
+  deadlineTime: Date,
   message: any,
   errorMessage: string,
   transactionType: string // ,
@@ -66,6 +65,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       amount: "",
       notes: "",
       deadline: "",
+      deadlineDate: new Date(),
+      deadlineTime: new Date(new Date().getTime()),
       message: "",
       errorMessage: "",
       transactionType: ""
@@ -119,6 +120,15 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
         return "";
     }
   };
+
+  onChangeDate = (deadlineDate:Date) => {
+    console.log('deadlineDate: ', deadlineDate)
+    this.setState({deadlineDate})
+  }
+  onChangeTime = (deadlineTime:Date) => {
+    console.log('Time: ', deadlineTime)
+    this.setState({deadlineTime})
+  }
 
   handleMakePayment = (tx_obj: object) => {
     this.setState({
@@ -212,10 +222,16 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   }
 
   public render() {
-    const multiline:boolean = true;
+    const { deadlineTime, deadlineDate } = this.state;
+    const { classes, txType } = this.props;
     console.log("Inside the RequestProposalFormBtns...", this.props);
 
-    const { classes, txType } = this.props;
+    const dateTimeNow: Date = new Date();
+    const multiline:boolean = true;
+    const fullWidth:boolean = true;
+    const okToConfirm:boolean = true;
+    const dialog:boolean = true;
+
     return (
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>
@@ -233,15 +249,16 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                  <Input
                    id="recipient-input"
                    value={this.state.recipient}
+                   placeholder="Type in the Recipient ID."
                    onChange={this.handleChange('recipient')}
+                   fullWidth={fullWidth}
                    aria-describedby="recipient-input-text"
                    startAdornment={<InputAdornment position="start"><PersonPin/></InputAdornment>}
                    classes={{
-                     underline: classes.customFormUnderline
+                     underline: classes.customUnderline
                   }}
                  />
-                 <FormHelperText id="recipient-input-text">Type in the Recipient ID</FormHelperText>
-               </FormControl>
+              </FormControl>
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem)}>
@@ -258,76 +275,76 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                    id="amount-input"
                    type="number"
                    value={this.state.amount}
+                   placeholder="Type the amount you'll be sending."
                    onChange={this.handleChange('amount')}
+                   fullWidth={fullWidth}
                    aria-describedby="amount-input-number"
                    startAdornment={<InputAdornment position="start"><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/></InputAdornment>}
                    classes={{
-                     underline: classes.customFormUnderline
+                     underline: classes.customUnderline
                    }}
                  />
-                 <FormHelperText id="amount-input-text">Type the amount you'll be sending.</FormHelperText>
-               </FormControl>
+              </FormControl>
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem, classes, classes.areaTextBox)}>
-              <FormControl className={classnames(classes.formInputContainer, classes.formControl)} variant="outlined">
-                <InputLabel
-                  htmlFor="deadline-input"
-                  classes={{
-                     root: classes.root,
-                     input: classes.customFormInput,
-                     focused: classes.customFormFocused,
-                   }}
+              <div>
+                <DateFormatInput
+                  name='date-input'
+                  value={deadlineDate}
+                  onChange={this.onChangeDate}
+                  fullWidth={fullWidth}
+                  min={dateTimeNow}
+                  dialog={dialog}
+                  okToConfirm={okToConfirm}
+                  variant='outlined'
+                  transformOrigin={{vertical:'center', horizontal:'left'}}
+                  anchorOrigin={{vertical:'center', horizontal:'center'}}
+                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><HourGlassIcon/></InputAdornment> )}}
                 />
-                <Input
-                  id="deadline-input"
-                  type="date"
-                  value={this.state.deadline}
-                  onChange={this.handleChange('deadline')}
-                  aria-describedby="recipient-input-text"
-                  startAdornment={<InputAdornment position="start"><Timer/></InputAdornment>}
-                  classes={{
-                    root: classes.root,
-                    input: classes.customFormInput,
-                    underline: classes.customFormUnderline,
-                    focused: classes.customFormFocused,
-                  }}
+                <TimeFormatInput
+                  name='time-input'
+                  value={deadlineTime}
+                  onChange={this.onChangeTime}
+                  fullWidth={fullWidth}
+                  dialog={dialog}
+                  okToConfirm={okToConfirm}
+                  selectableMinutesInterval={5}
+                  variant='outlined'
+                  transformOrigin={{vertical:'center', horizontal:'left'}}
+                  anchorOrigin={{vertical:'center', horizontal:'left'}}
+                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><Timer/></InputAdornment> )}}
                 />
-                <FormHelperText id="deadline-input">Type in the transaction cut-off date</FormHelperText>
-              </FormControl>
+              </div>
             </li>
-           {/* </ul>
-         </div>
 
-          <div className={classnames(classes.txWrapper, classes.root)}>
-            <ul className={classes.flexContainer}> */}
             <li className={classnames(classes.formList, classes.flexItem)}>
-              <FormControl className={classnames(classes.formInputContainer, classes.formControl)} variant="outlined">
-                <InputLabel
-                  htmlFor="notes-input"
-                  classes={{
-                     root: classes.root,
-                     input: classes.customFormInput,
-                     focused: classes.customFormFocused,
-                   }}
-                >
-                  <Message/>
-                </InputLabel>
-                <OutlinedInput
-                  id="notes-input"
-                  multiline={multiline}
-                  rows="4"
-                  value={this.state.notes}
-                  onChange={this.handleChange('notes')}
-                  labelWidth={this.el ? this.el.offsetWidth : 3}
-                  classes={{
-                    root: classes.root,
+              <TextField
+                className={classes.margin}
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    /* root: classes.root, */
                     input: classes.customFormOutlinedInput,
-                    focused: classes.customFormFocused
-                 }}
-                />
-                <FormHelperText id="notes-input">Describe a few details about your transaction</FormHelperText>
-              </FormControl>
+                    focused: classes.customFormFocused,
+                    notchedOutline: classes.notchedOutline
+                  },
+                }}
+                id="notes-input"
+                label={(<Message/>)}
+                placeholder='My transaction notes.'
+                multiline={multiline}
+                rows="4"
+                value={this.state.notes}
+                onChange={this.handleChange('notes')}
+                variant="outlined"
+                fullWidth={fullWidth}
+              />z
             </li>
           </ul>
         </div>

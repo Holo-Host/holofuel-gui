@@ -1,4 +1,5 @@
 import * as React from 'react';
+import classnames from 'classnames';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -8,10 +9,10 @@ import Slide from '@material-ui/core/Slide';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import TransactionTables from '../page-sub-components/hoc-table/SummaryTransactionTables';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
+// import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
 import '../styles/page-styles/scaffold-styles.css';
-import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
+// import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
 // import * as moment from 'moment';
 // type Moment = moment.Moment;
 
@@ -57,67 +58,67 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     }
   }
 
-  static getDerivedStateFromProps(props: Props, state: State) {
-    const { list_of_transactions, list_of_proposals } = props;
-    if (!list_of_transactions || !list_of_proposals) {
-      return null;
-    }
-    else {
-      const transactionData = { list_of_transactions, list_of_proposals };
-      const prevProps = state.prevProps || {};
-      const data = prevProps.value !== transactionData ? transactionData : state.data
-      // console.log("data", data);
-
-      const { newer } = list_of_transactions;
-      const currentTxBatchInfo = Object.assign({newer}, {});
-      // console.log("------------------------>",list_of_transactions)
-      const txEndDate = newer!.until;
-      const txStartDate = newer!.since;
-      // console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
-      // console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
-
-      return ({
-        data,
-        prevProps: data,
-        currentTxBatchInfo,
-        txStartDate,
-        txEndDate,
-        txBatchType: 'All Transactions',
-      });
-    }
-  }
-
-  handleTxBatchType = (txState: string) => {
-    // console.log("TXTYPE for Batch -- inside of HoloFuelSummaryPage", txState);
-    this.setState({
-      txBatchType: txState
-    });
-    // reset table data with custom date filters :
-    this.handleTableRefresh();
-  }
-
-  handleTxBatchDuration = (txEndDate: any, txStartDate: any) => {
-    // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txEndDate);
-    // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txStartDate);
-    this.setState({
-      txEndDate,
-      txStartDate
-    });
-    // reset table data with custom date filters :
-    this.handleTableRefresh();
-  }
-
-  handleTableRefresh = () => {
-    // const { txBatchType, txStartDate, txEndDate } = this.state;
-    console.log("this is your TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
-    // console.log("this is your Transaction Batch StartDate >> !! >> ", txStartDate);
-    // console.log("this is your Transaction Batch EndDate >> !! >> ", txEndDate);
-    // console.log("this is your Transaction Batch Type >> !! >> ", txBatchType);
-
-    // Invoke list_transactions() WITH PARAMS :
-    // console.log("calling : list_transactions WITH PARAMS >> !! >> ");
-    // this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
-  }
+  // static getDerivedStateFromProps(props: Props, state: State) {
+  //   const { list_of_transactions, list_of_pending } = props;
+  //   if (!list_of_transactions || !list_of_pending) {
+  //     return null;
+  //   }
+  //   else {
+  //     const transactionData = { list_of_transactions, list_of_pending };
+  //     const prevProps = state.prevProps || {};
+  //     const data = prevProps.value !== transactionData ? transactionData : state.data
+  //     // console.log("data", data);
+  //
+  //     const { newer } = list_of_transactions;
+  //     const currentTxBatchInfo = Object.assign({newer}, {});
+  //     // console.log("------------------------>",list_of_transactions)
+  //     const txEndDate = newer!.until;
+  //     const txStartDate = newer!.since;
+  //     // console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
+  //     // console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
+  //
+  //     return ({
+  //       data,
+  //       prevProps: data,
+  //       currentTxBatchInfo,
+  //       txStartDate,
+  //       txEndDate,
+  //       txBatchType: 'All Transactions',
+  //     });
+  //   }
+  // }
+  //
+  // handleTxBatchType = (txState: string) => {
+  //   // console.log("TXTYPE for Batch -- inside of HoloFuelSummaryPage", txState);
+  //   this.setState({
+  //     txBatchType: txState
+  //   });
+  //   // reset table data with custom date filters :
+  //   this.handleTableRefresh();
+  // }
+  //
+  // handleTxBatchDuration = (txEndDate: any, txStartDate: any) => {
+  //   // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txEndDate);
+  //   // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txStartDate);
+  //   this.setState({
+  //     txEndDate,
+  //     txStartDate
+  //   });
+  //   // reset table data with custom date filters :
+  //   this.handleTableRefresh();
+  // }
+  //
+  // handleTableRefresh = () => {
+  //   // const { txBatchType, txStartDate, txEndDate } = this.state;
+  //   console.log("this is your TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
+  //   // console.log("this is your Transaction Batch StartDate >> !! >> ", txStartDate);
+  //   // console.log("this is your Transaction Batch EndDate >> !! >> ", txEndDate);
+  //   // console.log("this is your Transaction Batch Type >> !! >> ", txBatchType);
+  //
+  //   // Invoke list_transactions() WITH PARAMS :
+  //   // console.log("calling : list_transactions WITH PARAMS >> !! >> ");
+  //   // this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
+  // }
 
    public render () {
       const { classes, transferBtnBar, ...newProps } = this.props;
@@ -132,18 +133,18 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
             <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
               {this.props.ledger_state.balance ? `${this.props.ledger_state.balance} HF` : `Pending...`}
             </Typography>
-            <hr style={{color:"#0e094b"}} />
+            <hr style={{color:"#0e094b8f"}} />
             <h3 className={classes.h3}>Credit limit : {this.props.ledger_state.credit ? `${this.props.ledger_state.credit} HF`: `N/A`} </h3>
           </div>
 
           <div>
-            <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
+            <Typography className={classnames(classes.tableHeader, classes.pageHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
               Transaction History
             </Typography>
 
-            <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
+            {/* <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} /> */}
 
-            <TransactionTables txBatchType={this.state.txBatchType} txBatchDuration={{endDate:this.state.txEndDate, startDate:this.state.txStartDate}} handleTableRefresh={this.handleTableRefresh} {...newProps} />
+            <TransactionTables {...newProps} />
 
             { transferBtnBar ?
               <Portal>

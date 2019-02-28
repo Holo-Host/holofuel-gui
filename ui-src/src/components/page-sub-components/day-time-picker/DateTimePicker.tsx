@@ -102,17 +102,17 @@ class DateTimePicker extends React.Component<Props, State> {
 
     return (
       <div className={classnames(classes.datetimeinputdiv,"InputFromTo")}>
-        <div className={classnames(classes.flexContainer)}>
+        <div className={classnames(classes.flexContainer)} style={{marginTop:'-30px'}}>
           <div  className={classnames(classes.flexItem)}>
             <DropDownInputFilter dropdownListData={txStatesDropDownList} dropDownHeader={txStatesdropDownHeader}
             { ...newProps } handleNewType={this.handleNewType} defaultItem={this.state.txState} />
           </div>
 
-          <div className={classes.flexItem} style={{marginTop:"2.5%", borderColor:'#799ab6' }}>
+          <div className={classes.flexItem} style={{ borderColor:'#799ab6' }}>
             <Typography className={classes.filterTextTitle} variant="subheading" gutterBottom={gutterBottom} component="h4" >
               Filter Transactions by Day
             </Typography>
-            <FormControl className={classes.formControl} style={{marginTop:"8%", marginBottom:"5%"}}>
+            <FormControl className={classes.formControl}>
               <DateRangePicker
                 startDate={momentStartDate}
                 startDateId="unique_start-date_id"
@@ -135,11 +135,6 @@ class DateTimePicker extends React.Component<Props, State> {
               />
             </FormControl>
             <FabSearchBtn handleClick={this.submitNewDuration} />
-            {/* <Button variant="outlined" color="primary"
-            className={classnames(classes.button, classes.overlayTop, classes.smallButton)}
-            onClick={this.submitNewDuration}>
-              Apply Dates
-            </Button> */}
           </div>
         </div>
       </div>
@@ -148,13 +143,3 @@ class DateTimePicker extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(DateTimePicker);
-// customInputIcon={
-//   <img src={} alt="calendar_icon" />
-//   <svg className="icon icon-small">
-//     <IconHandler
-//       icon="CALENDER_ICON"
-//       className="icon icon-large"
-//       { ...newProps }
-//     />
-//   </svg>
-// }

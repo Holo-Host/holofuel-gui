@@ -12,8 +12,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import SwapVerticalCircle from '@material-ui/icons/SwapVerticalCircle';
 import ChangeHistory from '@material-ui/icons/ChangeHistory';
 import Info from '@material-ui/icons/Info';
-// import List from '@material-ui/icons/List';
 // import Receipt from '@material-ui/icons/Receipt';
+import '../../styles/page-styles/scaffold-styles.css';
 
 export type Props = DispatchProps & StateProps;
 

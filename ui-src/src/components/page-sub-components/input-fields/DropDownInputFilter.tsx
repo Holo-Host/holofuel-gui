@@ -52,7 +52,7 @@ class DropDownInputFilter extends React.Component<Props, State> {
     const select : boolean = true;
 
     return (
-      <FormControl variant="outlined" className={classes.filterFormControl} style={{  marginTop:'14px' }}>
+      <FormControl variant="outlined" className={classes.filterFormControl}>
         <Typography className={classes.filterTextTitle} variant="subheading" gutterBottom={gutterBottom} component="h4" >
           Filter { dropDownHeader }
         </Typography>
@@ -70,8 +70,8 @@ class DropDownInputFilter extends React.Component<Props, State> {
             }}
             margin="normal"
             variant="outlined"
-            className={classnames(classes.margin, classes.selectFitlerInput)}
-            style={{ borderColor:' #799ab6', color:'#799ab6', width:'248px', height:'40px',marginBottom:'14px', background:'#c3cdd6', border:'1px solid #799ab6', borderRadius:'4px' }}
+            className={classnames(classes.selectFitlerInput)}
+            style={{ color:'#799ab6', width:'248px', height:'48px', background:'#c3cdd6', borderRadius:'4px', margin:'0px' }}
          >
             {dropdownListData.map(dataItem => (
               <MenuItem className={classes.dropdownMenuItem} key={dataItem.name + [dataItem]} value={dataItem.name}>

@@ -17,25 +17,29 @@ import pending_transaction_table_columns, { processed_transaction_table_columns 
 import mobile_pending_transaction_table_columns, { mobile_processed_transaction_table_columns } from './SummaryTransactionTableColsMobile';
 import { refactorListOfTransactions ,refactorListOfPending } from '../../../utils/table-helper-functions/transaction-data-refactor';
 import MuiSimpleTable from '../simple-table/MuiSimpleTable';
+import DateTimePicker from '../day-time-picker/DateTimePicker';
 import ErrorMessage from '../error-message/ErrorMessage';
+import NoTransactionsMessage from '../error-message/NoTransactionsMessage';
+import { TABLE_DATA_BATCH_LIMIT } from '../../../utils/constants';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
-  classes: any,
-  txBatchType: any,
-  txBatchDuration: any,
-  handleTableRefresh: () => void
+  classes: any //,
+  // txBatchType: any,
+  // txBatchDuration: any,
+  // handleTableRefresh: () => void
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
 export interface State {
-  txEndDate: string,
-  txStartDate: string,
-  txBatchType: string,
   row: String,
   filter: any,
   data: {} | null,
   prevProps: any,
+  txEndDate: string | undefined,
+  txStartDate: string | undefined,
+  txBatchType: string | undefined,
+  currentTxBatchInfo: {newer:{}, over:{}} | null,
   isMobile: boolean,
   refresh: boolean
 }
@@ -47,13 +51,14 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
-      txEndDate: "",
-      txStartDate: "",
-      txBatchType: "",
       row: "",
       filter: null,
       data: {},
       prevProps: {},
+      txEndDate: "",
+      txStartDate: "",
+      txBatchType: "",
+      currentTxBatchInfo: null,
       isMobile: window.innerWidth < 768,
       refresh : false
     };
@@ -61,22 +66,68 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   }
 
   static getDerivedStateFromProps(props: Props, state: State) {
-    const { list_of_transactions, list_of_instance_info, list_of_proposals, list_of_requests } = props;
+    const { list_of_transactions, list_of_instance_info, list_of_proposals, list_of_requests, list_of_pending } = props;
     if (!list_of_transactions) {
       return null;
     }
     else {
-      const transactionData = { list_of_transactions, list_of_instance_info, list_of_proposals, list_of_requests };
+      const transactionData = { list_of_transactions, list_of_instance_info, list_of_proposals, list_of_requests, list_of_pending };
       const prevProps = state.prevProps || {};
       const data = prevProps.value !== transactionData ? transactionData : state.data
       console.log("data", data);
-      return ({ data, prevProps: data });
+
+      const { newer } = list_of_transactions;
+      const currentTxBatchInfo = Object.assign({newer}, {});
+      // console.log("------------------------>",list_of_transactions)
+      const txEndDate = newer!.until;
+      const txStartDate = newer!.since;
+      // console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
+      // console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
+
+      return ({
+        data,
+        prevProps: data,
+        currentTxBatchInfo,
+        txStartDate,
+        txEndDate,
+        txBatchType: 'All Transactions',
+      });
     }
   }
 
-  componentDidMount = () => {
-    // console.log("state within SummaryTransactionTables upon mount >> verify whether the list_of_transactions, list_of_requests, and list_of_proposals are present... ", this.state);
+  handleTxBatchType = (txState: string) => {
+  // console.log("TXTYPE for Batch -- inside of HoloFuelSummaryPage", txState);
+  this.setState({
+    txBatchType: txState
+  });
+  // reset table data with custom date filters :
+  this.handleTableRefresh();
+  }
 
+  handleTxBatchDuration = (txEndDate: any, txStartDate: any) => {
+  // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txEndDate);
+  // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txStartDate);
+  this.setState({
+    txEndDate,
+    txStartDate
+  });
+  // reset table data with custom date filters :
+  this.handleTableRefresh();
+  }
+
+  handleTableRefresh = () => {
+  // const { txBatchType, txStartDate, txEndDate } = this.state;
+  console.log("this is your TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
+  // console.log("this is your Transaction Batch StartDate >> !! >> ", txStartDate);
+  // console.log("this is your Transaction Batch EndDate >> !! >> ", txEndDate);
+  // console.log("this is your Transaction Batch Type >> !! >> ", txBatchType);
+
+  // Invoke list_transactions() WITH PARAMS :
+  // console.log("calling : list_transactions WITH PARAMS >> !! >> ");
+  // this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
+  }
+
+  componentDidMount = () => {
     this.updateViewPortSize();
     window.addEventListener("resize", this.updateViewPortSize);
   }
@@ -137,30 +188,24 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       </div>
     }
 
-  // Sm (mobile) Viewport
+    // Sm (mobile) Viewport
     const mobile_pending_table_columns = mobile_pending_transaction_table_columns(this.props, this.state, this.resetPage);
     const mobile_processed_table_columns = mobile_processed_transaction_table_columns(this.props, this.state);
 
-// Md/Lg Viewport
+    // Md/Lg Viewport
     const pending_table_columns = pending_transaction_table_columns(this.props, this.state, this.resetPage);
     const processed_table_columns = processed_transaction_table_columns(this.props, this.state);
     // console.log("table_columns: ", pending_table_columns);
 
     // Data
-
-    // const list_of_pending_data_refactored = this.getListOfPendingData();
-    // const pending_table_data = this.displayData();
-
-
     const new_data_table = this.fetchNewData();
     const {pending_table_data,processed_table_data}= this.fetchPendingAndProcessedData();
-
     // console.log("table new_data_table: ", new_data_table);
     // console.log("table pending_table_data: ", pending_table_data);
     // console.log("table Processed_data: ", processed_table_data);
     // console.log("ROW LENGTH: ",pending_table_data.length)
-    return (
 
+    return (
     // TODO: Look into integratng the infnite scroll with ReactTable...
       //   <div style="height:700px;overflow:auto;" ref={(ref) => this.scrollParentRef = ref}>
       //     <div>
@@ -179,23 +224,25 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
     <div className={classes.transactionTablesContainer}>
       {/* /////////////////// List of Pending (aka NEW) Transactions Table :  ///////////////////// */}
-      <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
+      <Typography className={classnames(classes.tableHeader, classes.leadingTitle, {'hidden': new_data_table!.length <= 0}, {'visible': new_data_table!.length > 0})} variant="display1" gutterBottom={gutterBottom} component="h4" >
         New Transactions
       </Typography>
 
      {/* NOTE: // for the Refresh Buttons (adjacent to each table header)... do the following: */}
        {/* UPDATE THIS BUTTON onClick functon to TRIGGER the handleTxBatchDuration() with params of SINCE and UNTIL (where since === the most recent currently tx date shown and until is date.now) */}
-      <div className={classes.tableButtonBar}>
+      <div className={classnames(classes.tableButtonBar, {'hidden': new_data_table!.length <= 0}, {'visible': new_data_table!.length > 0})}>
         <Button variant="outlined" color="primary"
           className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-          onClick={() => this.props.handleTableRefresh()}>
+          onClick={() => this.handleTableRefresh()}>
           <Refresh className={classes.svgView}/>
         </Button>
       </div>
 
-      {/* ///// Pending-TX Table :  ///// */}
-      {/* // viewports === Mobile Size (widths <=767) */}
-      { isMobile ?
+      { new_data_table!.length <= 0 ?
+        <NoTransactionsMessage tableText="New"/>
+      :
+      /* // viewports === Mobile Size (widths <=767) */
+       isMobile ?
           <div className={classnames(classes.tableContainer)}>
             <ReactTable
               className={classnames("-striped", "-highlight", classes.table)}
@@ -214,7 +261,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             <AdvancedExpandReactTable
               className={classnames("-striped", "-highlight", classes.table)}
               showPagination={false}
-              pageSize={new_data_table.length}
+              pageSize={new_data_table!.length}
               data={new_data_table}
               columns={ pending_table_columns }
               filter={this.state.filter}
@@ -247,31 +294,36 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             />
           </div>
         }
-        <div className={classes.tableButtonBar}>
+        <div className={classnames(classes.tableButtonBar, {'hidden': new_data_table!.length <= TABLE_DATA_BATCH_LIMIT}, {'visible': new_data_table!.length > TABLE_DATA_BATCH_LIMIT})}>
           <Button variant="outlined" color="primary"
           className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
-          onClick={() => this.props.handleTableRefresh()}>
+          onClick={() => this.handleTableRefresh()}>
             <ExpandMore className={classes.svgMore}/>
           </Button>
         </div>
 
 
         {/* /////////////////// List of Transactions - Unprocessed (aka Pending) Table :  ///////////////////// */}
-        <Typography className={classnames(classes.tableHeader, classes.leadingTitle)} variant="display1" gutterBottom={gutterBottom} component="h4" >
+        <Typography className={classnames(classes.tableHeader, classes.leadingTitle, {'hidden': pending_table_data!.length <= 0}, {'visible': pending_table_data!.length > 0})} variant="display1" gutterBottom={gutterBottom} component="h4" >
           Pending Transactions
         </Typography>
-        <div className={classes.tableButtonBar}>
+        <div className={classnames(classes.tableButtonBar, {'hidden': pending_table_data!.length <= 0}, {'visible': pending_table_data!.length > 0})}>
           <Button variant="outlined" color="primary"
             className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-            onClick={() => this.props.handleTableRefresh()}>
+            onClick={() => this.handleTableRefresh()}>
             <Refresh className={classes.svgView}/>
           </Button>
         </div>
 
-        {/* ///// Pending-TX Table :  ///// */}
-        {/* // viewports === Mobile Size (widths <=767) */}
-        { isMobile ?
+
+        { pending_table_data!.length <= 0 ?
+          <NoTransactionsMessage tableText="Pending"/>
+        :
+        /* // viewports === Mobile Size (widths <=767) */
+        isMobile ?
           <div className={classnames(classes.tableContainer)}>
+            <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
+
             <ReactTable
               className={classnames("-striped", "-highlight", classes.table)}
               showPagination={false}
@@ -284,12 +336,14 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
       :
 
-      /* // viewports >= Tablet Size (widths >=768) */
+          /* // viewports >= Tablet Size (widths >=768) */
           <div className={classnames(classes.tableContainer)}>
+            <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} />
+
             <AdvancedExpandReactTable
               className={classnames("-striped", "-highlight", classes.table)}
               showPagination={false}
-              pageSize={pending_table_data.length}
+              pageSize={pending_table_data!.length}
               data={pending_table_data}
               columns={ pending_table_columns }
               NoDataComponent={() => null}
@@ -322,10 +376,10 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             />
           </div>
         }
-        <div className={classes.tableButtonBar}>
+        <div className={classnames(classes.tableButtonBar, {'hidden': pending_table_data!.length <= TABLE_DATA_BATCH_LIMIT}, {'visible': pending_table_data!.length > TABLE_DATA_BATCH_LIMIT})}>
           <Button variant="outlined" color="primary"
           className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
-          onClick={() => this.props.handleTableRefresh()}>
+          onClick={() => this.handleTableRefresh()}>
             <ExpandMore className={classes.svgMore}/>
           </Button>
         </div>
@@ -333,23 +387,23 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
         {/* /////////////////// List of Transactions - Proccessed-TX Table : ///////////////////// */}
         <br/>
-        <Typography className={classes.tableHeader} variant="display1" gutterBottom={gutterBottom} component="h2" >
+        <Typography className={classnames(classes.tableHeader, {'hidden': processed_table_data!.length <= 0}, {'visible': processed_table_data!.length > 0})} variant="display1" gutterBottom={gutterBottom} component="h2" >
           Processed Transactions
         </Typography>
-        <div className={classes.tableButtonBar}>
+        <div className={classnames(classes.tableButtonBar, {'hidden': processed_table_data!.length <= 0}, {'visible': processed_table_data!.length > 0})}>
           <Button variant="outlined" color="primary"
             className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-            onClick={() => this.props.handleTableRefresh()}>
+            onClick={() => this.handleTableRefresh()}>
             <Refresh className={classes.svgView}/>
           </Button>
         </div>
 
-        {/* { if(processed_table_data!.length <= 0) {
-          <ErrorMessage>
-          }
-        }  */}
+        { processed_table_data!.length <= 0 ?
+          <NoTransactionsMessage tableText="Processed"/>
 
-        { isMobile ?
+        :
+
+        isMobile ?
           /* // viewports === Mobile Size (widths <=767) */
           <div className={classnames(classes.tableContainer)}>
             <ReactTable
@@ -358,11 +412,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               defaultPageSize={processed_table_data!.length}
               data={ processed_table_data }
               columns={ mobile_processed_table_columns }
-              getNoDataProps={() => {
-                if(processed_table_data!.length <= 0) {
-                  return <ErrorMessage/>;
-                }
-              }}
+              NoDataComponent={() => null}
               filterable={filterable}
               defaultFilterMethod={(filter:any, row:any) =>
                  String(row[filter.id]) === filter.value
@@ -378,11 +428,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
               className={classnames("-striped", "-highlight", classes.table)}
               data={ processed_table_data }
               columns={ processed_table_columns }
-              getNoDataProps={() => {
-                if(processed_table_data!.length <= 0) {
-                  return <ErrorMessage/>;
-                }
-              }}
+              NoDataComponent={() => null}
               showPagination={false}
               pageSize={processed_table_data.length}
               filterable={filterable}
@@ -405,10 +451,10 @@ class SummaryTransactionTables extends React.Component<Props, State> {
             />
           </div>
         }
-        <div className={classes.tableButtonBar}>
+        <div className={classnames(classes.tableButtonBar, {'hidden': processed_table_data!.length <= TABLE_DATA_BATCH_LIMIT}, {'visible': processed_table_data!.length > TABLE_DATA_BATCH_LIMIT})}>
           <Button variant="outlined" color="primary"
           className={classnames(classes.buttonSumTable, classes.moreBtn, classes.overlayTop)}
-          onClick={() => this.props.handleTableRefresh()}>
+          onClick={() => this.handleTableRefresh()}>
             <ExpandMore className={classes.svgMore}/>
           </Button>
         </div>

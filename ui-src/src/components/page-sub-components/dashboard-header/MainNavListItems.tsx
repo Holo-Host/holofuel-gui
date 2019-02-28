@@ -52,27 +52,27 @@ class MainListItems extends React.Component<Props, State> {
             <ListItemIcon style={{color:"#0e88efde"}}>
               <DashboardIcon />
             </ListItemIcon>
-            <Typography variant="subheading" style={{color:"#95b9ed", textDecoration: "none", display: "inline-block", marginLeft: "5px" }} gutterBottom={gutterBottom}>
+            <Typography variant="subheading" style={{color:"#95b9ed", paddingTop:'0px', textDecoration: "none", display: "inline-block", marginLeft: "5px" }} gutterBottom={gutterBottom}>
               Transaction Summary
             </Typography>
           </Link>
         </ListItem>
-        <ListItem button={button}>
+        <ListItem style={{paddingTop: "10px !important"}} button={button}>
           <Link to='/holofuelrequest'>
             <ListItemIcon style={{color:"#0e88efde"}}>
               <LayersIcon />
             </ListItemIcon>
-            <Typography variant="subheading" style={{color:"#95b9ed", textDecoration: "none", display: "inline-block", marginLeft: "5px" }} gutterBottom={gutterBottom}>
+            <Typography variant="subheading" style={{color:"#95b9ed", paddingTop:'0px', textDecoration: "none", display: "inline-block", marginLeft: "5px" }} gutterBottom={gutterBottom}>
               Account Transfer
             </Typography>
           </Link>
         </ListItem>
-        <ListItem button={button}>
+        <ListItem style={{paddingTop: "10px !important"}} button={button}>
           <Link to='/about'>
           <ListItemIcon style={{color:"#0e88efde"}}>
             <PeopleIcon />
           </ListItemIcon>
-          <Typography variant="subheading" style={{color:"#95b9ed", textDecoration: "none", display: "inline-block", marginLeft: "5px" }} gutterBottom={gutterBottom}>
+          <Typography variant="subheading" style={{color:"#95b9ed", paddingTop:'0px', textDecoration: "none", display: "inline-block", marginLeft: "5px" }} gutterBottom={gutterBottom}>
             About
           </Typography>
         </Link>

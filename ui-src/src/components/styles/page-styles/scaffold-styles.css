@@ -41,6 +41,13 @@ input {
   visibility: visible;
 }
 
+.increasedBalance:hover {
+  text-shadow: #001715 0.5px 0.8px 0px;
+}
+
+.decreasedBalance:hover {
+  text-shadow: #260124 0.5px 0.8px 0px;
+}
 /*******************************************************
               React-Table Custom styles
 *******************************************************/

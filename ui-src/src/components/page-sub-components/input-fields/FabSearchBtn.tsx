@@ -12,10 +12,16 @@ const styles : StyleRulesCallback  = (theme: Theme) => ({
   fab: {
     margin: theme.spacing.unit,
     color: "#799ab6",
+    width: 30,
+    height: 30,
+    minHeight:30,
     background: "#0e3658",
     "&:hover": {
       color: '#003087',
     }
+  },
+  checkBox: {
+    fontSize: 17,
   }
 });
 
@@ -29,7 +35,7 @@ function FabSearchBtn(props: any) {
         className={classes.fab}
         onClick={handleClick}
       >
-        <CheckBox />
+        <CheckBox className={classes.checkBox}/>
       </Fab>
     </div>
   );

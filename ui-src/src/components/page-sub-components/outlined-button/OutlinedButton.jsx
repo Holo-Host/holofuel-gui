@@ -9,21 +9,26 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 
 function OutlinedButton(props) {
-  const { classes } = props;
+  const { classes, link } = props;
+  const btnLink = link ? link : "#";
   return (
-      <Button variant="outlined" color={props.color}
-      onClick={() => props.showTransferBar(props.fnName)}
-      className={classnames(classes.button, classes.overlayTop)}>
-        {props.link ?
-          <Link to={props.link} className={classes.link}>
-            {props.text}
-          </Link>
-        :
+    <Link to={props.link} className={classes.link}>
+      {link ?
+          <Button variant="outlined" color={props.color}
+          onClick={() => props.showTransferBar(props.fnName)}
+          className={classnames(classes.button, classes.overlayTop)}>
+              {props.text}
+          </Button>
+      :
+        <Button variant="outlined" color={props.color}
+        onClick={() => props.showTransferBar(props.fnName)}
+        className={classnames(classes.button, classes.overlayTop)}>
           <span className={classes.innerBtnText}>
             {props.text}
           </span>
-        }
-      </Button>
+        </Button>
+      }
+    </Link>
   );
 }
 

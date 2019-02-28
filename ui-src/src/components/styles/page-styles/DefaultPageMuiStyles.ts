@@ -6,6 +6,11 @@ import { Theme } from '@material-ui/core/styles';
 // import purple from '@material-ui/core/colors/purple';
 // import green from '@material-ui/core/colors/green';
 
+// NoTransactionsMessage
+// NoTransactionsMessageText
+
+// #057266f2
+
 const styles: StyleRulesCallback  = (theme: Theme) => ({
     root: {
       display: 'flex',
@@ -18,8 +23,41 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       minWidth: 300,
       fontWeight: 'bolder'
     },
+    grid: {
+      width: '60%',
+    },
     flex: {
       flex: 1,
+    },
+    visible: {
+      visiblility: 'visible'
+    },
+    hidden: {
+      visiblility: 'hidden',
+    },
+    display: {
+      display: 'contents',
+    },
+    noDisplay: {
+      display: 'none',
+    },
+    NoTransactionsMessage: {
+      // margin: '0 auto',
+      // margin: -60,
+      padding: 5,
+      background: 'rgb(14, 9, 75)',
+      width: '35%',
+      border: '1px solid rgb(14, 54, 88)',
+      borderRadius: 6,
+      boxShadow: '0px 3px 5px -1px rgba(0,0,0,0.2), 0px 6px 10px 0px rgba(0,0,0,0.14), 0px 1px 18px 0px rgba(0,0,0,0.12)'
+    },
+    NoTransactionsMessageText:{
+      color: 'rgb(121, 154, 182)',// previously was "#0e094b"
+      justifyContent:'center',
+      fontWeight: 'lighter'
+    },
+    detailedTransaction:{
+      background: '#4b6a7d',
     },
     nextBtn: {
       position:'relative',
@@ -137,6 +175,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       fontWeight: 400,
       fontSize: '2.125rem',
       textShadow: '0px 1px 8px #09144b'
+    },
+    pageHeader: {
+      fontSize: '3.125rem',
     },
     leadingTitle: {
       marginTop: 50,
@@ -374,15 +415,15 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       }
     },
     filterFormControl: {
-      margin: theme.spacing.unit,
       minWidth: 120,
-      padding: 4,
       color: ' #799ab6',
+      // margin: theme.spacing.unit,
+      // padding: 4,
     },
     filterTextTitle : {
       color: '#e9ecef', // alts: #799ab6,  #0e3658
-      marginTop: '11px',
-      marginBottom: '3px',
+      // marginTop: '11px',
+      // marginBottom: '3px',
     },
     dialogContainer: {
       display: 'flex',
@@ -392,11 +433,6 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     dialogFilterFormControl: {
       margin: theme.spacing.unit,
       minWidth: 120
-    },
-    selectFitlerInput: {
-      padding: 4,
-      // border: '1px solid #799ab6',
-      // color: '#799ab6',
     },
     dropdownMenuItem : {
       color: '#bec4dd',
@@ -413,13 +449,13 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     },
     datetimeinputdiv : {
       margin: '0 auto',
-      marginTop: 15,
       padding: 15,
       paddingBottom: 45,
-      border: '1px solid #0e3658', //#e9ecef, #799ab6
+      // border: '1px solid #0e3658', //#e9ecef, #799ab6
       borderRadius: 46,
-      maxWidth: '50%',
-      minWidth: '40%',
+      width: '52%',
+      // minwidth:'32%',
+      height: 115, // smallview = 62px
       // display: 'inline-flex',
     },
     dateInput: {
@@ -446,7 +482,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       marginRight: '2%',
       color: '#799ab6',
       borderColor: '#799ab6',
-      marginBottom: 25
+      // marginBottom: 25
     },
     formList : {
       width: '100%',
@@ -501,26 +537,22 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       marginBottom: 30,
     },
     customFormLabel: {
-      color:'black',
+      color:'#ced4da',
       borderColor: '#799ab6',
       '&$customFormFocused': {
-        color:'black',
+        color:'#eee',
       },
     },
-    customFormFocused: {
-      visiblility: "visable",
-      color:'black',
-    },
+    customFormFocused: {},
     customFormUnderline: {
-      color: "black6",
+      color: "#ced4da",
       borderBottomColor:"#799ab6",
       '&:after': {
         borderBottomColor: '#799ab6',
       },
     },
     customFormInput: {
-      // visiblility:"hidden",
-      color: "black",
+      color: "#ced4da",
       borderColor: "#799ab6",
       '&$customFormFocused': {
         visiblility: "visable",
@@ -528,12 +560,51 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       },
     },
     customFormOutlinedInput: {
-      visiblility:"hidden",
-      color: "black",
-      borderColor: "#799ab6",
-      '&$customFormFocused' : { // To trigger application to multiple props: '&$cssFocused $notchedOutline'
-        visiblility: "visable",
-        borderColor: '#799ab6',
+      color: "#ced4da",
+      borderColor: "#ced4da",
+      '&$customFormFocused $notchedOutline' : {
+        borderColor: '#0e094b',
+      },
+    },
+    customUnderline: {
+      '&:after': {
+        borderBottom: `2px solid '#ced4da`,
+        left: 0,
+        bottom: 0,
+        content: '""',
+        position: 'absolute',
+        right: 0,
+        transform: 'scaleX(0)',
+        transition: theme.transitions.create('transform', {
+          duration: theme.transitions.duration.shorter,
+          easing: theme.transitions.easing.easeOut,
+        }),
+        pointerEvents: 'none',
+      },
+      '&$focused:after': {
+        transform: 'scaleX(1)',
+      },
+      '&:before': {
+        borderBottom: `1px solid #ced4da`,
+        left: 0,
+        bottom: 0,
+        content: '"\\00a0"',
+        position: 'absolute',
+        right: 0,
+        transition: theme.transitions.create('border-bottom-color', {
+          duration: theme.transitions.duration.shorter,
+        }),
+        pointerEvents: 'none', // Transparent to the hover style.
+      },
+      '&:hover:not($disabled):not($focused):not($error):before': {
+        borderBottom: `2px solid #ced4da`,
+        // Reset on touch devices, it doesn't add specificity
+        '@media (hover: none)': {
+          borderBottom: `1px solid #3f51b5`,
+        },
+      },
+      '&$disabled:before': {
+        borderBottomStyle: 'dotted',
       },
     },
     areaTextBox : {
@@ -604,6 +675,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
      modal: {
       marginTop: 33,
     },
+    notchedOutline:{},
    }
 );
 

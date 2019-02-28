@@ -92,7 +92,7 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
             </Toolbar>
           </AppBar>
 
-          <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>
+          <div className={classnames(classes.flexContainer, classes.reducedJumbotron)} style={{ marginTop: '50px'}}>
             <div className={classes.flexItem}>
               <h3 className={classes.h3}>Current Balance</h3>
               <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
@@ -108,9 +108,8 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
             </div>
           </div>
 
-          <div className={classnames(classes.flexContainer)}>
+          <div className={classnames(classes.flexContainer, classes.detailedTransaction)}>
             {/* <SimpleTable classNames={classes.flexItem} {...newProps} currentTxData={this.state.currentTxData} /> */}
-
             <List>
               <ListItem button>
                 <ListItemText primary="Due Date :" secondary="dueDate" />
