@@ -36,37 +36,12 @@ export const GetAgentListAsyncAction = createHolochainAsyncAction<{}, Array<any>
 //  for the remaining API calls using the Rust Conainter, RPC Websockets,
 //  and redux-hc-middleware..
 export const GetInfoInstancesAsyncAction = createHolochainAsyncAction<{}, Array<any>>('info', 'instances');
-// export function get_info_instances () {
-//   return {
-//     type: 'GET_INFO_INSTANCES',
-//     payload: [],
-//     meta: {
-//     	holochainAction: true,
-//     	callString: 'info/instances'
-//     }
-//   };
-// }
 
 ////////////////////////////////////////////////////////
             /* Reporting Transactions */
 ////////////////////////////////////////////////////////
 // Call for GET_LEDGER_STATE ()
 export const LedgerStateAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'ledger_state');
-
-// Call for LIST_OF_TRANSACTIONS ()
-// Action API Body Call Reference: (Legacy Method Call)
-// export function list_transactions () {
-//   console.log('>>LIST_TRANSACTIONS() invoked <<');
-//   return {
-//     type: 'LIST_OF_TRANSACTIONS',
-//     payload: {},
-//     meta: {
-//       holochainAction: true,
-//       callString: 'holofuel_pagination.hcpkg instance', 'transactions', 'list_transactions'
-//     }
-//   };
-// }
-
 
 // This will return a client's self-initiated transactions ONLY
 export const TransactionListAsyncAction = createHolochainAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_transactions');

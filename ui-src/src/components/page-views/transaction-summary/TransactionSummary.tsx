@@ -2,7 +2,7 @@ import * as React from 'react';
 // local imports :
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import SimpleTable from '../../page-sub-components/simple-table/SimpleTable';
-import { processedData, pendingData} from '../../../utils/seed-data/mock-data';
+// import { processedData, pendingData} from '../../../utils/seed-data/mock-data';
 // custom stylesheet
 import '../../styles/page-styles/scaffold-styles.css';
 
@@ -23,10 +23,10 @@ const TransactionSummary = (props: any) => {
     <div className='transfer-activity profile'>
       <h3>Transfer Activity</h3>
       <h4>Pending Transfers</h4>
-      <SimpleTable data={ pendingData } { ...props }/>
+      <SimpleTable  { ...props }/>
 
       <h4>Processed Transfers</h4>
-      <SimpleTable data={ processedData } { ...props }/>
+      <SimpleTable  { ...props }/>
     </div>
   );
 };

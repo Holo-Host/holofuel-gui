@@ -8,7 +8,7 @@ import SettingsHolo from "../components/page-views/SettingsHolo";
 import AgentProfile from "../components/page-views/AgentProfile";
 import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTransactionDetailPage';
 // import Dashboard from '../components/page-sub-components/dashboard-header/Dashboard';
-import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
+// import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
 import { Ledger, ListTransactionsResult, PendingResult } from '../utils/types'; // RequestActionParam, ProposalActionParam, Address, DateTimeString
 import AppNavBar from '../components/page-sub-components/app-nav-bar/AppNavBar';
 import SubNavBar from '../components/page-sub-components/app-nav-bar/SubNavBar';
@@ -28,7 +28,7 @@ export interface OwnProps {
 export interface StateProps {
   // Props that are set by mapStateToProps
   ledger_state: Ledger,
-  list_of_instance_info: typeof instanceListData,
+  list_of_instance_info: Array<any>,
   list_of_agents: Array<any>,
   my_agent_string: string,
   my_agent_hash: string,
@@ -37,10 +37,10 @@ export interface StateProps {
   mostRecentRequestCommit: string,
   list_of_transactions : ListTransactionsResult,
   list_of_pending: PendingResult,
-  list_of_requests: typeof createMockApiData.list_of_requests,
-  list_of_proposals: typeof createMockApiData.list_of_proposals,
-  view_specific_request: typeof createMockApiData.get_request_kv_store[0],
-  view_specific_proposal: typeof createMockApiData.get_proposal_kv_store[0]
+  list_of_requests: Array<any>,
+  list_of_proposals: Array<any>,
+  view_specific_request: Array<any>,
+  view_specific_proposal: Array<any>
 }
 export interface DispatchProps {
 // Props that are set by mapDispatchToProps
@@ -59,11 +59,6 @@ export interface DispatchProps {
     request_payment: ({request_tx_obj}: any) => void,
     propose_payment: ({propose_tx_obj}: any) => void,
     receive_payment: ({payment_obj}: any) => void,
-    // not yet avail:
-    // fetch_agent_hash: () => void,
-    // pay_request: () => void,
-    // decline_request: () => void,
-    // reject_payment: () => void
 }
 export type Props =  StateProps & DispatchProps & OwnProps;
 
@@ -90,7 +85,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   }
 
   toggleTransferBtnBar = (txType: any) => {
-    console.log("TRANSACTION TYPE arguments: ",txType)
     this.setState({
       chooseTxBtnBarOpen: !this.state.chooseTxBtnBarOpen,
       transactionType: txType
@@ -99,14 +93,10 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
 
 // Find a dynamic way to connect the ui to the dna >> play with info_instances && agent_string >> access prior to running?!?!
-
   public render() {
-    // console.log('State in HoloFuelAppContainer:', this.state);
-    console.log('Props in HoloFuelAppRouterContainer:', this.props);
-    // const { classes } = this.props;
+    console.log('State in HoloFuelAppContainer:', this.state);
     const { classes, staticContext, ...newProps } = this.props; //TODO: Locate staticContext.. AND REMOVE from outer props
     const { location } = this.props.history;
-    // console.log(">>>> location: >>>", location);
 
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>
@@ -119,7 +109,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
         <main className={classes.content}>
           <div className={classes.appBarSpacer} />
           <div>
-            {console.log("location.pathname",location.pathname)}
             {location.pathname === "/" || location.pathname === "/holofuelsummary" ?
             // default to HF Summary Page, if no path match
             <HoloFuelSummaryPage

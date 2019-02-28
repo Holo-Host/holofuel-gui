@@ -67,9 +67,14 @@ class HoloSettings extends React.Component<Props, State> {
 
     return (
     <div>
+      <br/>
       <Typography className={classnames(classes.tableHeader, classes.profileHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
         HoloFuel Settings
       </Typography>
+
+        <br/>
+        <br/>
+        <br/>
 
         <SettingFormParameters {...newProps}/>
 

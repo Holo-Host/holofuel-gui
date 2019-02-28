@@ -3,7 +3,6 @@ import { Store } from 'redux';
 import { Provider } from 'react-redux';
 import { ConnectedRouter } from 'connected-react-router';
 import { Switch, Route, Redirect } from 'react-router';
-// import TransactionOverviewContainer from './containers/TransactionOverviewContainer';
 import HoloFuelAppContainer from './containers/HoloFuelAppContainer';
 
 import BankViewAppContainer from './containers/BankViewAppContainer';
@@ -26,4 +25,3 @@ const Root = ({ store, history }: { store: Store, history: any }) => (
 );
 
 export default Root;
-// <Route path='/' component={TransactionOverviewContainer} />

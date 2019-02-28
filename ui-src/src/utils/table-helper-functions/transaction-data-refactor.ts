@@ -1,15 +1,3 @@
-// import { DateTime } from 'luxon';
-// To Parse from IS0-8601 (date as supplied by Rust Code) through use of Luxon :
-//   > DateTime.fromISO("2017-05-15")  //=> May 15, 2017 at midnight
-//   > DateTime.fromISO("2017-05-15T08:30:00")  //=> May 15, 2017 at 8:30
-// const dt = DateTime.local();
-// Luxon examples with local DateTime (ie:dt)
-  // dt.year     //=> 2017
-  // dt.month    //=> 9
-  // dt.day      //=> 14
-  // dt.second   //=> 47
-  // dt.weekday  //=> 4
-
 /*/////////////////////////////////////////////////////////////////
    Table Data Generation Refactor Helper Function - Final Obj
  //////////////////////////////////////////////////////////////////*/
@@ -218,9 +206,6 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       status !== "recovered"
     })
 
-    // console.log("list_of_processed-->", list_of_processed);
-    // console.log("list_of_processed-->", list_of_processed);
-    // console.log("list_of_refactored_transactions-->", list_of_refactored_transactions);
     return {
       pending_table_data:dataRefactor(list_of_pending),
       processed_table_data:dataRefactor(list_of_processed)
