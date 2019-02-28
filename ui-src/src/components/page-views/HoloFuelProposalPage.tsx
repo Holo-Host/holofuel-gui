@@ -94,13 +94,17 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
         <br/>
         <br/>
         {/* <hr className={classes.horizontalLine}/> */}
-        <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
+        <Typography className={classnames(classes.pageHeader,classes.tableHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
           Send Funds
        </Typography>
        <br/>
        <br/>
 
-        <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeProposal={this.sendProposal} invokeRequest={this.sendProposal}  />
+
+        <div style={{ margin:'0 auto' }}>
+          <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeProposal={this.sendProposal} invokeRequest={this.sendProposal}  />
+        </div>
+
         <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>
 
       {/* Toggle Transaction Sending */}

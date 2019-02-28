@@ -668,6 +668,22 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
        overflowX: 'auto',
        background: '#e9ecef',
      },
+     txPaperRoot: {
+       ...theme.mixins.gutters(),
+       margin: '0 auto',
+       padding: 0,
+       paddingTop: 15,
+       paddingBottom : 20,
+       width: '85%',
+       display:'flex',
+       background: '#2e4f6a',
+       border: '2px solid #0e3658',
+       borderRadius: 4,
+       marginBottom: 115
+     },
+     inputPaper: {
+       background: '#e9ecef',
+     },
      muiSimpleTable:{
        margin: '0 auto',
        justifyContent: 'center',

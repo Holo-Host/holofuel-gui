@@ -6,6 +6,7 @@ import {DateFormatInput, TimeFormatInput} from 'material-ui-next-pickers'
 // mui custom style imports
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 // import FormControl from '@material-ui/core/FormControl';
@@ -101,7 +102,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
 
       case 'notes':
         this.setState({
-          notes: event.target.value.trim(),
+          notes: event.target.value,
         });
         break;
 
@@ -181,37 +182,29 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
 
       if (!recipient || !amount || !txDeadline) {
         this.setState({
-          errorMessage: `Opps! /n It looks like we're missing some important transaction details. /n Please ensure that you have provided a counterparty, an amount, and a deadline for your transaction before submitting your transaction.`
+          errorMessage: `Opps! \n It looks like we're missing some important transaction details. \n Please ensure that you have provided a counterparty, an amount, and a deadline for your transaction before submitting your transaction.`
         });
 
         // TODO: Update Alert to custom MUI Dialog Box
-        alert(this.state.errorMessage);
+        return alert(this.state.errorMessage);
       }
       else if (recipient && amount && txDeadline) {
-        console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>> counterparty: ", recipient);
-        console.log("amount", amount);
-        console.log("deadline", txDeadline);
+        console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>>");
+        console.log(" TX Counterparty: ", recipient);
+        console.log("TX Amount", amount);
+        console.log("TX Deadline", txDeadline);
 
         if (parseInt(amount) <= 0){
           this.setState({
-            errorMessage: "Hmmmm... It looks like the amount you entered is invalid. /n Please review your transaction amount and ensure you provide a positive amount value."
+            errorMessage: "Hmmmm... It looks like the amount you entered is invalid. \n Please review your transaction amount and ensure you provide a positive amount value."
           });
 
           // TODO: Update Alert to custom MUI Dialog Box
-          alert(this.state.errorMessage);
+          return alert(this.state.errorMessage);
         }
 
         const validDeadlineDate = moment(deadline).isValid();
         console.log("validDeadlineDate", validDeadlineDate);
-
-        if (!validDeadlineDate || parseInt(moment(deadline).startOf('day').fromNow().split(" ")[0]) >  1) {
-           this.setState({
-              errorMessage: "Wait a minute... /n It looks like the date you entered is invalid. /n Please review your transaction deadline and ensure the date you provide is a present or future datetime."
-            });
-
-          // TODO: Update Alert to custom MUI Dialog Box
-          alert(this.state.errorMessage);
-        }
 
         const transactionObj = {
           counterparty: recipient,
@@ -220,7 +213,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
           deadline: isoDeadline
         };
 
-        this.setState({
+        return this.setState({
           message: transactionObj
         });
     }
@@ -246,63 +239,69 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     return (
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>
+          <Paper className={classes.txPaperRoot} square={false} elevation={4}>
           <ul className={classnames(classes.flexContainer, classes.inputContainer)}>
             <li className={classnames(classes.formList, classes.flexItem)}>
-               <TextField
-                className={classes.margin}
-                label={(<div><PersonPin/><span>Counterparty</span></div>)}
-                variant="outlined"
-                id="recipient-input"
-                value={this.state.recipient}
-                placeholder="HoloTester1--------------------------------------------------------------------------AAAEqzh31M"
-                onChange={this.handleChange('recipient')}
-                fullWidth={fullWidth}
-                aria-describedby="recipient-input-text"
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    input: classes.customFormOutlinedInput,
-                    focused: classes.customFormFocused,
-                    notchedOutline: classes.notchedOutline
-                  },
-                }}
-              />
+              <Paper className={classes.inputPaper} square={false} elevation={4}>
+                 <TextField
+                  className={classes.margin}
+                  label={(<div><PersonPin/><span>Counterparty</span></div>)}
+                  variant="outlined"
+                  id="recipient-input"
+                  value={this.state.recipient}
+                  placeholder="HoloTester1--------------------------------------------------------------------------AAAEqzh31M"
+                  onChange={this.handleChange('recipient')}
+                  fullWidth={fullWidth}
+                  aria-describedby="recipient-input-text"
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      input: classes.customFormOutlinedInput,
+                      focused: classes.customFormFocused,
+                      notchedOutline: classes.notchedOutline
+                    },
+                  }}
+                />
+              </Paper>
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem)}>
-               <TextField
-                className={classes.margin}
-                label={(<div><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/><span>Amount</span></div>)}
-                variant="outlined"
-                id="amount-input"
-                type='number'
-                value={this.state.amount}
-                placeholder="335678976"
-                onChange={this.handleChange('amount')}
-                fullWidth={fullWidth}
-                aria-describedby="amount-input-number"
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    input: classes.customFormOutlinedInput,
-                    focused: classes.customFormFocused,
-                    notchedOutline: classes.notchedOutline
-                  },
-                }}
-              />
+              <Paper className={classes.inputPaper} square={false} elevation={4}>
+                 <TextField
+                  className={classes.margin}
+                  label={(<div><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/><span>Amount</span></div>)}
+                  variant="outlined"
+                  id="amount-input"
+                  type='number'
+                  value={this.state.amount}
+                  placeholder="335678976"
+                  onChange={this.handleChange('amount')}
+                  fullWidth={fullWidth}
+                  aria-describedby="amount-input-number"
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      input: classes.customFormOutlinedInput,
+                      focused: classes.customFormFocused,
+                      notchedOutline: classes.notchedOutline
+                    },
+                  }}
+                />
+              </Paper>
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem, classes.datetimeInput)}>
+              <Paper className={classes.inputPaper} square={false} elevation={4}>
                 <DateFormatInput
                   InputLabelProps={{
                     classes: {
@@ -324,7 +323,9 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                   anchorOrigin={{vertical:'center', horizontal:'center'}}
                   InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><HourGlassIcon/><span>Date Due</span></div></InputAdornment> )}}
                 />
+              </Paper>
 
+              <Paper className={classes.inputPaper} square={false} elevation={4}>
                 <TimeFormatInput
                   InputLabelProps={{
                     classes: {
@@ -346,37 +347,41 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                   anchorOrigin={{vertical:'center', horizontal:'left'}}
                   InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><Timer/><span>Time Due</span></div></InputAdornment> )}}
                 />
+              </Paper>
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem)}>
-              <TextField
-                className={classes.margin}
-                InputLabelProps={{
-                  classes: {
-                    root: classes.cssLabel,
-                    focused: classes.cssFocused,
-                  },
-                }}
-                InputProps={{
-                  classes: {
-                    /* root: classes.root, */
-                    input: classes.customFormOutlinedInput,
-                    focused: classes.customFormFocused,
-                    notchedOutline: classes.notchedOutline
-                  },
-                }}
-                id="notes-input"
-                label={(<div><Message/><span>Notes</span></div>)}
-                placeholder="Fuel for the study session and lunch."
-                multiline={multiline}
-                rows="4"
-                value={this.state.notes}
-                onChange={this.handleChange('notes')}
-                variant="outlined"
-                fullWidth={fullWidth}
-              />
+              <Paper className={classes.inputPaper} square={false} elevation={4}>
+                <TextField
+                  className={classes.margin}
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.cssLabel,
+                      focused: classes.cssFocused,
+                    },
+                  }}
+                  InputProps={{
+                    classes: {
+                      /* root: classes.root, */
+                      input: classes.customFormOutlinedInput,
+                      focused: classes.customFormFocused,
+                      notchedOutline: classes.notchedOutline
+                    },
+                  }}
+                  id="notes-input"
+                  label={(<div><Message/><span>Notes</span></div>)}
+                  placeholder="Fuel for the study session and lunch."
+                  multiline={multiline}
+                  rows="4"
+                  value={this.state.notes}
+                  onChange={this.handleChange('notes')}
+                  variant="outlined"
+                  fullWidth={fullWidth}
+                />
+              </Paper>
             </li>
           </ul>
+          </Paper>
         </div>
 
         {/* Toggle Verification_Message Modal */}

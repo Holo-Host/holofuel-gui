@@ -65,7 +65,7 @@ class informativeModal extends React.Component<Props, State>  {
 
   public render() {
     console.log("PROPS inside the informative-dialog-modal", this.props);
-    const { classes } = this.props;
+    const { classes, confirmMessage } = this.props;
     const fullScreen: boolean = false;
 
     // const today: Moment = moment.format();
@@ -86,17 +86,40 @@ class informativeModal extends React.Component<Props, State>  {
             <DialogTitle id="responsive-dialog-title" style={{color:'#072dc3'}}>{"Transaction Sent"}</DialogTitle>
                 <DialogContent>
                   <DialogContentText id="alert-dialog-description">
-                    Your transfer has been successfully completed on { moment().format('LLLL') }.
+                  As of { moment().format('LLLL') }, your transfer has been successfully completed.
                   </DialogContentText>
+
+                  {confirmMessage}
 
                   <br/>
                   <br/>
-
-                  <DialogContentText id="alert-dialog-description">
-                     Transaction Message:
+                  <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
+                     Transaction Summary
                   </DialogContentText>
-                  <DialogContentText id="alert-dialog-description">
-                    {this.props.confirmMessage}
+
+                  <DialogContentText id="alert-dialog-description-3">
+                    Amount: {confirmMessage.amount}
+                  </DialogContentText>
+
+                  {confirmMessage.to ?
+                    <DialogContentText id="alert-dialog-description-2">
+                        To: {confirmMessage.to}
+                    </DialogContentText>
+
+                  :confirmMessage.from ?
+                    <DialogContentText id="alert-dialog-description-2">
+                        From: {confirmMessage.from}
+                    </DialogContentText>
+                  :
+                    <div/>
+                  }
+
+                  <DialogContentText id="alert-dialog-description-4">
+                    Deadline: {confirmMessage.deadline}
+                  </DialogContentText>
+
+                  <DialogContentText id="alert-dialog-description-6">
+                    Notes: {confirmMessage.notes}
                   </DialogContentText>
 
                   <DialogContentText id="alert-dialog-slide-description">
