@@ -8,15 +8,12 @@ import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
-import FormControl from '@material-ui/core/FormControl';
+// import FormControl from '@material-ui/core/FormControl';
 // import FormHelperText from '@material-ui/core/FormHelperText';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
 import PersonPin from '@material-ui/icons/PersonPin';
 import Message from '@material-ui/icons/Message';
-// import Today from '@material-ui/icons/Today';
 import HourGlassIcon from '@material-ui/icons/HourglassEmpty';
 import Timer from '@material-ui/icons/Timer';
 // import OutlinedInput from '@material-ui/core/OutlinedInput';
@@ -110,12 +107,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
         });
         break;
 
-      case 'deadline':
-        this.setState({
-          deadline: event.target.value.trim(),
-        });
-        break;
-
       default:
         return "";
     }
@@ -159,6 +150,15 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   verifyTx(transactionType: any) {
     return ((e: any) => {
       e.preventDefault();
+
+      const dateString = this.state.deadlineDate.toString();
+      const timeString = this.state.deadlineTime.toString();
+      const deadlineString = dateString + timeString;
+      const txDeadline = moment(deadlineString).format();
+      console.log("deadline", txDeadline);
+      this.setState({deadline: txDeadline});
+
+
       const { recipient, amount, deadline, notes } = this.state;
       const isoDeadline: Moment = moment(deadline, moment.ISO_8601);
 
@@ -167,21 +167,26 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
         // 2. Amount: ensure amount is not negative or zero AND exists (ie: !== NULL)
         // 3. Counterparty: Enusre exists (!== NULL)
 
+        console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>> counterparty: ", recipient);
+        console.log("amount", amount);
+        console.log("deadline", deadline);
+
         if (!recipient || !amount || !deadline) {
           this.setState({
-            errorMessage: "Opps! It looks like we're missing some important transaction details. Please ensure that you have provided a counterparty, an amount, and a deadline for your transaction before submitting your transaction."
+            errorMessage: `Opps! /n It looks like we're missing some important transaction details. /n Please ensure that you have provided a counterparty, an amount, and a deadline for your transaction before submitting your transaction.`
           });
           // TODO: Update Alert to custom MUI Dialog Box
+
           alert(this.state.errorMessage);
         }
         else if (recipient && amount && deadline) {
-          console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>> counterparty: ", recipient);
-          console.log("amount", amount);
-          console.log("deadline", deadline);
+          // console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>> counterparty: ", recipient);
+          // console.log("amount", amount);
+          // console.log("deadline", deadline);
 
           if (parseInt(amount) <= 0){
             this.setState({
-              errorMessage: "Hmmmm... It looks like the amount you entered is invalid. Please review your transaction amount and ensure you provide a positive amount value."
+              errorMessage: "Hmmmm... It looks like the amount you entered is invalid. /n Please review your transaction amount and ensure you provide a positive amount value."
             });
 
             // TODO: Update Alert to custom MUI Dialog Box
@@ -192,7 +197,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
           console.log("validDeadlineDate", validDeadlineDate);
           if (!validDeadlineDate || parseInt(moment(deadline).startOf('day').fromNow().split(" ")[0]) >  1) {
              this.setState({
-                errorMessage: "Wait a minute... It looks like the date you entered is invalid. Please review your transaction deadline and ensure the date you provide is a present or future datetime."
+                errorMessage: "Wait a minute... /n It looks like the date you entered is invalid. /n Please review your transaction deadline and ensure the date you provide is a present or future datetime."
               });
 
               // TODO: Update Alert to custom MUI Dialog Box
@@ -235,87 +240,106 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     return (
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>
-          <ul className={classes.flexContainer}>
+          <ul className={classnames(classes.flexContainer, classes.inputContainer)}>
             <li className={classnames(classes.formList, classes.flexItem)}>
-              <FormControl className={classnames(classes.formInputContainer, classes.formControl)}>
-                 <InputLabel
-                   htmlFor="recipient-input"
-                   classes={{
-                     root: classes.root,
-                     input: classes.customFormInput,
-                     focused: classes.customFormFocused,
-                    }}
-                  />
-                 <Input
-                   id="recipient-input"
-                   value={this.state.recipient}
-                   placeholder="Type in the Recipient ID."
-                   onChange={this.handleChange('recipient')}
-                   fullWidth={fullWidth}
-                   aria-describedby="recipient-input-text"
-                   startAdornment={<InputAdornment position="start"><PersonPin/></InputAdornment>}
-                   classes={{
-                     underline: classes.customUnderline
-                  }}
-                 />
-              </FormControl>
+               <TextField
+                className={classes.margin}
+                label={(<div><PersonPin/><span>Counterparty</span></div>)}
+                variant="outlined"
+                id="recipient-input"
+                value={this.state.recipient}
+                placeholder="HoloTester1--------------------------------------------------------------------------AAAEqzh31M"
+                onChange={this.handleChange('recipient')}
+                fullWidth={fullWidth}
+                aria-describedby="recipient-input-text"
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    input: classes.customFormOutlinedInput,
+                    focused: classes.customFormFocused,
+                    notchedOutline: classes.notchedOutline
+                  },
+                }}
+              />
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem)}>
-              <FormControl className={classnames(classes.formInputContainer, classes.formControl)}>
-                 <InputLabel
-                   htmlFor="amount-input"
-                   classes={{
-                      root: classes.root,
-                      input: classes.customFormInput,
-                      focused: classes.customFormFocused,
-                    }}
-                  />
-                 <Input
-                   id="amount-input"
-                   type="number"
-                   value={this.state.amount}
-                   placeholder="Type the amount you'll be sending."
-                   onChange={this.handleChange('amount')}
-                   fullWidth={fullWidth}
-                   aria-describedby="amount-input-number"
-                   startAdornment={<InputAdornment position="start"><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/></InputAdornment>}
-                   classes={{
-                     underline: classes.customUnderline
-                   }}
-                 />
-              </FormControl>
+               <TextField
+                className={classes.margin}
+                label={(<div><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/><span>Amount</span></div>)}
+                variant="outlined"
+                id="amount-input"
+                type='number'
+                value={this.state.amount}
+                placeholder="335678976"
+                onChange={this.handleChange('amount')}
+                fullWidth={fullWidth}
+                aria-describedby="amount-input-number"
+                InputLabelProps={{
+                  classes: {
+                    root: classes.cssLabel,
+                    focused: classes.cssFocused,
+                  },
+                }}
+                InputProps={{
+                  classes: {
+                    input: classes.customFormOutlinedInput,
+                    focused: classes.customFormFocused,
+                    notchedOutline: classes.notchedOutline
+                  },
+                }}
+              />
             </li>
 
-            <li className={classnames(classes.formList, classes.flexItem, classes, classes.areaTextBox)}>
-              <div>
+            <li className={classnames(classes.formList, classes.flexItem, classes.datetimeInput)}>
                 <DateFormatInput
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.datetimeRoot,
+                      input: classes.customFormOutlinedInput,
+                      focused: classes.customFormFocused,
+                      notchedOutline: classes.notchedOutline
+                    },
+                  }}
                   name='date-input'
                   value={deadlineDate}
                   onChange={this.onChangeDate}
-                  fullWidth={fullWidth}
                   min={dateTimeNow}
                   dialog={dialog}
                   okToConfirm={okToConfirm}
                   variant='outlined'
+                  fullWidth={fullWidth}
                   transformOrigin={{vertical:'center', horizontal:'left'}}
                   anchorOrigin={{vertical:'center', horizontal:'center'}}
-                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><HourGlassIcon/></InputAdornment> )}}
+                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><HourGlassIcon/><span>Date Due</span></div></InputAdornment> )}}
                 />
+
                 <TimeFormatInput
+                  InputLabelProps={{
+                    classes: {
+                      root: classes.datetimeRoot,
+                      input: classes.customFormOutlinedInput,
+                      focused: classes.customFormFocused,
+                      notchedOutline: classes.notchedOutline
+                    },
+                  }}
                   name='time-input'
                   value={deadlineTime}
                   onChange={this.onChangeTime}
-                  fullWidth={fullWidth}
                   dialog={dialog}
                   okToConfirm={okToConfirm}
                   selectableMinutesInterval={5}
                   variant='outlined'
+                  fullWidth={fullWidth}
                   transformOrigin={{vertical:'center', horizontal:'left'}}
                   anchorOrigin={{vertical:'center', horizontal:'left'}}
-                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><Timer/></InputAdornment> )}}
+                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><Timer/><span>Time Due</span></div></InputAdornment> )}}
                 />
-              </div>
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem)}>
@@ -336,15 +360,15 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                   },
                 }}
                 id="notes-input"
-                label={(<Message/>)}
-                placeholder='My transaction notes.'
+                label={(<div><Message/><span>Notes</span></div>)}
+                placeholder="Fuel for the study session and lunch."
                 multiline={multiline}
                 rows="4"
                 value={this.state.notes}
                 onChange={this.handleChange('notes')}
                 variant="outlined"
                 fullWidth={fullWidth}
-              />z
+              />
             </li>
           </ul>
         </div>
@@ -411,4 +435,3 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(RequestProposalFormBtns);
-// {/* ref={el => {this.handleRef(el)}} */}

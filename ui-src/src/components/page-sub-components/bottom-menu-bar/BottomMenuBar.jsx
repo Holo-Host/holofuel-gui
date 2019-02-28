@@ -22,7 +22,7 @@ function BottomMenuBar(props) {
       <AppBar position="fixed" className={classes.appBar}>
         <Toolbar className={classes.toolbar} >
           <div className={classes.closeBtn} onClick={() => props.showTransferBar("")}>X</div>
-          <div className={classnames(classes.buttonMenu)} style={{  margin:'5vh' }}>
+          <div className={classnames(classes.buttonMenu)}>
             <OutlinedButton text="Send" color="primary" link="/holofuelproposal" showTransferBar={props.showTransferBar} fnName="proposal"/>
             <OutlinedButton text="Request" color="primary" link="/holofuelrequest" showTransferBar={props.showTransferBar} fnName="request"/>
           </div>

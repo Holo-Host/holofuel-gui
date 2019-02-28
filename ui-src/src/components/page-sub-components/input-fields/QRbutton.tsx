@@ -30,6 +30,7 @@ class QRbutton extends React.Component<Props, State> {
           color="primary"
           aria-label="Add"
           className={classes.outlineBtn}
+          style={{marginBottom:'25px'}}
           onClick={this.handleClick}>
           {show ? 'Minimize QR Code' : 'See QR Code'}
         </Button>

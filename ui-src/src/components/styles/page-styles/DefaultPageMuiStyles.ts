@@ -23,6 +23,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       minWidth: 300,
       fontWeight: 'bolder'
     },
+    datetimeRoot:{
+      display:'inline !important',
+      minWidth:'48vw'
+    },
     grid: {
       width: '60%',
     },
@@ -112,6 +116,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     toolbar: {
       alignItems: 'center',
       justifyContent: 'center',
+      margin:'5vh'
     },
     title: {
       flexGrow: 1,
@@ -145,8 +150,8 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       height: 'auto'
     },
     horizontalLine : {
-      color:'#0e094b', // #00838d
-      background: '#0e094b'
+      color:'#ced4da', // #00838d
+      background: '#ced4da'
     },
     subheaderLink: {
       color: "#0e094b",
@@ -173,7 +178,8 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       textAlign: "center",
       color: '#d8dee3', // color : #d8dee3, // #909fb1 // rgba(0, 0, 0, 0.54)
       fontWeight: 400,
-      fontSize: '2.125rem',
+      marginBottom: 20,
+      fontSize: '2.175rem',
       textShadow: '0px 1px 8px #09144b'
     },
     pageHeader: {
@@ -285,6 +291,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       [theme.breakpoints.down('sm')]: {
         padding: '1.2rem'
       }
+    },
+    inputContainer: {
+      width: '60%',
     },
     flexContainer : {
       padding: 0,
@@ -537,38 +546,37 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       marginBottom: 30,
     },
     customFormLabel: {
-      color:'#ced4da',
-      borderColor: '#799ab6',
+      color:'#1c2b2e',
+      borderColor: '#0b1a42',
       '&$customFormFocused': {
         color:'#eee',
       },
     },
     customFormFocused: {},
     customFormUnderline: {
-      color: "#ced4da",
-      borderBottomColor:"#799ab6",
+      color: "#1c2b2e",
+      borderBottomColor:"#0b1a42",
       '&:after': {
-        borderBottomColor: '#799ab6',
+        borderBottomColor: '#0b1a42',
       },
     },
     customFormInput: {
-      color: "#ced4da",
-      borderColor: "#799ab6",
+      color: "#1c2b2e",
+      borderColor: "#0b1a42",
       '&$customFormFocused': {
-        visiblility: "visable",
-        borderColor: '#799ab6',
+        borderColor: '#0b1a42',
       },
     },
     customFormOutlinedInput: {
-      color: "#ced4da",
-      borderColor: "#ced4da",
+      color: "#1c2b2e",
+      borderColor: "#0b1a42",
       '&$customFormFocused $notchedOutline' : {
-        borderColor: '#0e094b',
+        borderColor: '#0b1a42',
       },
     },
     customUnderline: {
       '&:after': {
-        borderBottom: `2px solid '#ced4da`,
+        borderBottom: `2px solid  #0b1a42`, // '#ced4da
         left: 0,
         bottom: 0,
         content: '""',
@@ -585,7 +593,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
         transform: 'scaleX(1)',
       },
       '&:before': {
-        borderBottom: `1px solid #ced4da`,
+        borderBottom: `1px solid #0b1a42`, //  #ced4da
         left: 0,
         bottom: 0,
         content: '"\\00a0"',
@@ -597,7 +605,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
         pointerEvents: 'none', // Transparent to the hover style.
       },
       '&:hover:not($disabled):not($focused):not($error):before': {
-        borderBottom: `2px solid #ced4da`,
+        borderBottom: `2px solid #3f51b5`, //  #ced4da
         // Reset on touch devices, it doesn't add specificity
         '@media (hover: none)': {
           borderBottom: `1px solid #3f51b5`,
@@ -609,6 +617,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     },
     areaTextBox : {
       marginTop: 55,
+    },
+    datetimeInput:{
+      display:'inline !important',
+      minWidth:'48vw'
     },
     settingsInput: {
        borderRadius: 4,

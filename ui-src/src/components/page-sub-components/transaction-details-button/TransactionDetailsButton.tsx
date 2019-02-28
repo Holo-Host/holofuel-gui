@@ -224,7 +224,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
 
   sendConfirmationMessage = (txResult: any, txInfoObj: any) => {
     // console.log('The attempt to send money (the proposal) resolved to be : >>> ', txResult);
-    this.setState({ message: `You just made the following transaction: ${txInfoObj}.`});
+    this.setState({ message: `You just made the following transaction: ${JSON.stringify(txInfoObj)}.`});
     console.log("MESSAGE : Inside the TransactionDetailsButton component >> : ", this.state.message);
   }
 

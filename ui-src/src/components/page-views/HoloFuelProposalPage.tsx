@@ -91,7 +91,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
       <div>
         <QRbutton agentHash={this.props.my_agent_hash} {...newProps}/>
 
-        <hr className={classes.horizontalLine}/>
+        {/* <hr className={classes.horizontalLine}/> */}
         <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
           Send Funds
        </Typography>
