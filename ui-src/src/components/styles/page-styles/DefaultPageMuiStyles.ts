@@ -74,7 +74,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       background: '#6600ff',
       justifyContent: 'center',
       alignItems: 'center',
-      '&:hover, &$focusVisible': {
+      '&:hover': { // &$focusVisible
         fontSize: 18,
         border: '2px solid #10d6a9',
         background: 'rgba(0, 1, 127, 0.7)'
@@ -82,9 +82,6 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     },
     extraTopSpace: {
       marginTop: 16,
-    },
-    appBarSpacer:{
-      // minHeight: 95
     },
     appBar: {
       top: 64,
@@ -574,47 +571,47 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
         borderColor: '#0b1a42',
       },
     },
-    customUnderline: {
-      '&:after': {
-        borderBottom: `2px solid  #0b1a42`, // '#ced4da
-        left: 0,
-        bottom: 0,
-        content: '""',
-        position: 'absolute',
-        right: 0,
-        transform: 'scaleX(0)',
-        transition: theme.transitions.create('transform', {
-          duration: theme.transitions.duration.shorter,
-          easing: theme.transitions.easing.easeOut,
-        }),
-        pointerEvents: 'none',
-      },
-      '&$focused:after': {
-        transform: 'scaleX(1)',
-      },
-      '&:before': {
-        borderBottom: `1px solid #0b1a42`, //  #ced4da
-        left: 0,
-        bottom: 0,
-        content: '"\\00a0"',
-        position: 'absolute',
-        right: 0,
-        transition: theme.transitions.create('border-bottom-color', {
-          duration: theme.transitions.duration.shorter,
-        }),
-        pointerEvents: 'none', // Transparent to the hover style.
-      },
-      '&:hover:not($disabled):not($focused):not($error):before': {
-        borderBottom: `2px solid #3f51b5`, //  #ced4da
-        // Reset on touch devices, it doesn't add specificity
-        '@media (hover: none)': {
-          borderBottom: `1px solid #3f51b5`,
-        },
-      },
-      '&$disabled:before': {
-        borderBottomStyle: 'dotted',
-      },
-    },
+    // customUnderline: {
+    //   '&:after': {
+    //     borderBottom: `2px solid  #0b1a42`, // '#ced4da
+    //     left: 0,
+    //     bottom: 0,
+    //     content: '""',
+    //     position: 'absolute',
+    //     right: 0,
+    //     transform: 'scaleX(0)',
+    //     transition: theme.transitions.create('transform', {
+    //       duration: theme.transitions.duration.shorter,
+    //       easing: theme.transitions.easing.easeOut,
+    //     }),
+    //     pointerEvents: 'none',
+    //   },
+    //   '&$focused:after': {
+    //     transform: 'scaleX(1)',
+    //   },
+    //   '&:before': {
+    //     borderBottom: `1px solid #0b1a42`, //  #ced4da
+    //     left: 0,
+    //     bottom: 0,
+    //     content: '"\\00a0"',
+    //     position: 'absolute',
+    //     right: 0,
+    //     transition: theme.transitions.create('border-bottom-color', {
+    //       duration: theme.transitions.duration.shorter,
+    //     }),
+    //     pointerEvents: 'none', // Transparent to the hover style.
+    //   },
+    //   '&:hover:not($disabled):not($focused):not($error):before': {
+    //     borderBottom: `2px solid #3f51b5`, //  #ced4da
+    //     // Reset on touch devices, it doesn't add specificity
+    //     '@media (hover: none)': {
+    //       borderBottom: `1px solid #3f51b5`,
+    //     },
+    //   },
+    //   '&$disabled:before': {
+    //     borderBottomStyle: 'dotted',
+    //   },
+    // },
     areaTextBox : {
       marginTop: 55,
     },

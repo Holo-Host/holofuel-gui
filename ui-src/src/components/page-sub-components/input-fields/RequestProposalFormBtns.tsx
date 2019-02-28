@@ -28,6 +28,7 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 type StateKeyType = string | number | symbol | any;
 type LabelRef = HTMLElement | null | undefined;
 type Moment = moment.Moment;
+// type StateInput = Pick<State, StateKeyType>| null;
 
 export interface OwnProps {
   // These are props the component has received from its parent component
@@ -49,10 +50,8 @@ export interface State {
   deadlineTime: Date,
   message: any,
   errorMessage: string,
-  transactionType: string // ,
-  // requestIdReference: string
+  transactionType: string
 }
-// type StateInput = Pick<State, StateKeyType>| null;
 
 class RequestProposalFormBtns extends React.Component<Props, State> {
   constructor(props: Props) {
@@ -67,7 +66,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       message: "",
       errorMessage: "",
       transactionType: ""
-      // requestIdReference: ""
     };
   }
 
@@ -409,7 +407,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
 
                 <OutlinedButton
                   text="Cancel"
-                  olor="primary"
+                  color="primary"
                   link="/holofuelsummary"
                   showTransferBar={this.props.showTransferBar}
                   fnName=""

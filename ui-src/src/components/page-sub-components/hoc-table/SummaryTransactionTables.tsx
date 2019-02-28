@@ -24,10 +24,7 @@ import { TABLE_DATA_BATCH_LIMIT } from '../../../utils/constants';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
-  classes: any //,
-  // txBatchType: any,
-  // txBatchDuration: any,
-  // handleTableRefresh: () => void
+  classes: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 

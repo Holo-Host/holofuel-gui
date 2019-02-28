@@ -16,6 +16,7 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles'
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
+  showTransferBar: (txType:any) => void,
 
   allAgentEmailAddresses: [string] | null,
   currentAgent: { agent: { Hash: HashString, Name: string } },
@@ -175,8 +176,14 @@ class CreateNewSettings extends React.Component<Props, State>  {
             <br/>
             <br/>
 
-            <OutlinedButton text="Save" color="primary" link="/holofuelsummary"
-              style={{display: "block", margin:"auto", width:"5%", padding:"30px"}}
+            <OutlinedButton
+              text="Save"
+              color="primary"
+              link="/holofuelsummary"
+              showTransferBar={this.props.showTransferBar}
+              fnName=""
+              style={{display: "block", margin:"auto", width:"5%", padding:"30px"
+            }}
             />
 
             {this.state.submitted ?
