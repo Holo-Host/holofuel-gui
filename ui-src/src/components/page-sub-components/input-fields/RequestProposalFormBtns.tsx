@@ -117,7 +117,8 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     this.setState({deadlineDate})
   }
   onChangeTime = (deadlineTime:Date) => {
-    console.log('Time: ', deadlineTime)
+
+    console.log('deadlineTime: ', deadlineTime)
     this.setState({deadlineTime})
   }
 
@@ -150,74 +151,81 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   verifyTx(transactionType: any) {
     return ((e: any) => {
       e.preventDefault();
-
-      const dateString = this.state.deadlineDate.toString();
-      const timeString = this.state.deadlineTime.toString();
-      const deadlineString = dateString + timeString;
-      const txDeadline = moment(deadlineString).format();
+      const day = this.state.deadlineDate.getDate();
+      const month = this.state.deadlineDate.getMonth();
+      const year = this.state.deadlineDate.getFullYear();
+      const timeHours = this.state.deadlineTime.getHours();
+      const timeMinutes= this.state.deadlineTime.getMinutes();
+      const deadlineString  = new Date(year,month,day,timeHours,timeMinutes, 0);
+      const txDeadline = moment(deadlineString);
       console.log("deadline", txDeadline);
-      this.setState({deadline: txDeadline});
 
+      this.setState({
+        deadline: txDeadline,
+        transactionType
+      });
+      console.log('Check for Deadline in State', this.state);
+      this.digestTxContent(txDeadline);
+    });
+  }
 
-      const { recipient, amount, deadline, notes } = this.state;
-      const isoDeadline: Moment = moment(deadline, moment.ISO_8601);
+  digestTxContent = (txDeadline:Moment) => {
+    const { recipient, amount, deadline, notes } = this.state;
+    console.log("deadline", deadline);
 
-      // NOTE : verify the tx inputs here :
-        // 1. Deadline: make sure the deadline datetime is not less than current datetime (ie: cannot choose  past date as the datetime for the transaction deadline)
-        // 2. Amount: ensure amount is not negative or zero AND exists (ie: !== NULL)
-        // 3. Counterparty: Enusre exists (!== NULL)
+    const isoDeadline: Moment = moment(txDeadline, moment.ISO_8601);
+    console.log("deadline >> isoDeadline", isoDeadline);
 
+    // NOTE : verify the tx inputs here :
+      // 1. Deadline: make sure the deadline datetime is not less than current datetime (ie: cannot choose  past date as the datetime for the transaction deadline)
+      // 2. Amount: ensure amount is not negative or zero AND exists (ie: !== NULL)
+      // 3. Counterparty: Enusre exists (!== NULL)
+
+      if (!recipient || !amount || !txDeadline) {
+        this.setState({
+          errorMessage: `Opps! /n It looks like we're missing some important transaction details. /n Please ensure that you have provided a counterparty, an amount, and a deadline for your transaction before submitting your transaction.`
+        });
+
+        // TODO: Update Alert to custom MUI Dialog Box
+        alert(this.state.errorMessage);
+      }
+      else if (recipient && amount && txDeadline) {
         console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>> counterparty: ", recipient);
         console.log("amount", amount);
-        console.log("deadline", deadline);
+        console.log("deadline", txDeadline);
 
-        if (!recipient || !amount || !deadline) {
+        if (parseInt(amount) <= 0){
           this.setState({
-            errorMessage: `Opps! /n It looks like we're missing some important transaction details. /n Please ensure that you have provided a counterparty, an amount, and a deadline for your transaction before submitting your transaction.`
+            errorMessage: "Hmmmm... It looks like the amount you entered is invalid. /n Please review your transaction amount and ensure you provide a positive amount value."
           });
-          // TODO: Update Alert to custom MUI Dialog Box
 
+          // TODO: Update Alert to custom MUI Dialog Box
           alert(this.state.errorMessage);
         }
-        else if (recipient && amount && deadline) {
-          // console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>> counterparty: ", recipient);
-          // console.log("amount", amount);
-          // console.log("deadline", deadline);
 
-          if (parseInt(amount) <= 0){
-            this.setState({
-              errorMessage: "Hmmmm... It looks like the amount you entered is invalid. /n Please review your transaction amount and ensure you provide a positive amount value."
+        const validDeadlineDate = moment(deadline).isValid();
+        console.log("validDeadlineDate", validDeadlineDate);
+
+        if (!validDeadlineDate || parseInt(moment(deadline).startOf('day').fromNow().split(" ")[0]) >  1) {
+           this.setState({
+              errorMessage: "Wait a minute... /n It looks like the date you entered is invalid. /n Please review your transaction deadline and ensure the date you provide is a present or future datetime."
             });
 
-            // TODO: Update Alert to custom MUI Dialog Box
-            alert(this.state.errorMessage);
-          }
-
-          const validDeadlineDate = moment(deadline).isValid();
-          console.log("validDeadlineDate", validDeadlineDate);
-          if (!validDeadlineDate || parseInt(moment(deadline).startOf('day').fromNow().split(" ")[0]) >  1) {
-             this.setState({
-                errorMessage: "Wait a minute... /n It looks like the date you entered is invalid. /n Please review your transaction deadline and ensure the date you provide is a present or future datetime."
-              });
-
-              // TODO: Update Alert to custom MUI Dialog Box
-              alert(this.state.errorMessage);
-            }
-
-          const transactionObj = {
-            counterparty: recipient,
-            amount,
-            notes,
-            deadline: isoDeadline
-          };
-
-          this.setState({
-            message: transactionObj,
-            transactionType
-          });
+          // TODO: Update Alert to custom MUI Dialog Box
+          alert(this.state.errorMessage);
         }
-      }
-    );
+
+        const transactionObj = {
+          counterparty: recipient,
+          amount,
+          notes,
+          deadline: isoDeadline
+        };
+
+        this.setState({
+          message: transactionObj
+        });
+    }
   }
 
   resetMessage = () => {
@@ -229,7 +237,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   public render() {
     const { deadlineTime, deadlineDate } = this.state;
     const { classes, txType } = this.props;
-    console.log("Inside the RequestProposalFormBtns...", this.props);
+    // console.log("Inside the RequestProposalFormBtns...", this.props);
 
     const dateTimeNow: Date = new Date();
     const multiline:boolean = true;
