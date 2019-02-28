@@ -683,6 +683,8 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
      },
      inputPaper: {
        background: '#e9ecef',
+       padding:10,
+       margin:5
      },
      muiSimpleTable:{
        margin: '0 auto',

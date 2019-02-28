@@ -301,7 +301,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
             </li>
 
             <li className={classnames(classes.formList, classes.flexItem, classes.datetimeInput)}>
-              <Paper className={classes.inputPaper} square={false} elevation={4}>
+              <Paper className={classes.inputPaper} square={false} elevation={4} style={{ marginBottom:'15px' }}>
                 <DateFormatInput
                   InputLabelProps={{
                     classes: {
