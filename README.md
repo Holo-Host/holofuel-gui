@@ -13,14 +13,6 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 ---
 
 ## How to run :
-### Development:
-`npm install`
-`npm run dev`
-
-### Production:
-`npm install`
-`npm run build`
-`npm run start`
 
 ## Built With
 * [React](https://reactjs.org/)
