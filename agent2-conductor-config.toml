@@ -21,7 +21,7 @@ key_file = "holo_tester.key"
 # -----------  DNA  -----------
 [[dnas]]
 id = "fuel-dna"
-file = "dna/holofuel.dna.json"
+file = "dna/holofuel.working.dna.json"
 hash = "Qm328wyq38924y"
 
 # [[instances]]
@@ -81,11 +81,11 @@ dna_interface = "websocket_interface"
 
 # -----------  Networking  -----------
 [network]
-n3h_path = "/home/lisa/Documents/gitrepos/holochain/Networking/n3h-0.0.4-alpha1"
+n3h_path = "/home/zo-el/n3h"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = [
-"/ip4/127.0.0.1/tcp/43443/ipfs/QmP6JKin3CMQ8fxE1XBzNELwHevLuqAHXoEDQ1NNK35tqN",
- "/ip4/192.168.0.7/tcp/43443/ipfs/QmP6JKin3CMQ8fxE1XBzNELwHevLuqAHXoEDQ1NNK35tqN"
+"/ip4/127.0.0.1/tcp/43329/ipfs/QmRw6Rfjk3hx3ZrT62NBTSS4xa3VCT1siUsNsqpu3BCQRR",
+"/ip4/192.168.0.8/tcp/43329/ipfs/QmRw6Rfjk3hx3ZrT62NBTSS4xa3VCT1siUsNsqpu3BCQRR"
 ]
 
 # -----------  Networking instructions  -----------
