@@ -9,12 +9,8 @@ import Slide from '@material-ui/core/Slide';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import TransactionTables from '../page-sub-components/hoc-table/SummaryTransactionTables';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-// import DateTimePicker from '../page-sub-components/day-time-picker/DateTimePicker';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
 import '../styles/page-styles/scaffold-styles.css';
-// import { TABLE_DATA_BATCH_LIMIT } from '../../utils/constants';
-// import * as moment from 'moment';
-// type Moment = moment.Moment;
 
 export interface OwnProps {
   classes: any,
@@ -142,8 +138,6 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
               Transaction History
             </Typography>
 
-            {/* <DateTimePicker { ...newProps } setDateFilter={this.handleTxBatchDuration} setTxTypeFilter={this.handleTxBatchType} /> */}
-
             <TransactionTables {...newProps} />
 
             { transferBtnBar ?
@@ -162,18 +156,3 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(HoloFuelSummaryPage);
-
-
-// {/* <div className={classes.tableButtonBar}>
-//   <Button variant="outlined" color="primary"
-//   className={classnames(classes.buttonSumTable, classes.overlayTop)}
-//   onClick={this.handleTableRefresh}>
-//     <ExpandMore/>
-//   </Button>
-// </div> */}
-
-// {/* < div
-//   className={classes.alert}
-//   ref={ref => {
-//     this.container = ref;
-// }} */}

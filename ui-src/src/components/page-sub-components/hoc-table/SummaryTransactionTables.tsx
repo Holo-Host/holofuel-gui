@@ -24,7 +24,10 @@ import { TABLE_DATA_BATCH_LIMIT } from '../../../utils/constants';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
-  classes: any
+  classes: any //,
+  // txBatchType: any,
+  // txBatchDuration: any,
+  // handleTableRefresh: () => void
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -112,18 +115,6 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   this.handleTableRefresh();
   }
 
-  handleTableRefresh = () => {
-  // const { txBatchType, txStartDate, txEndDate } = this.state;
-  console.log("this is your TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
-  // console.log("this is your Transaction Batch StartDate >> !! >> ", txStartDate);
-  // console.log("this is your Transaction Batch EndDate >> !! >> ", txEndDate);
-  // console.log("this is your Transaction Batch Type >> !! >> ", txBatchType);
-
-  // Invoke list_transactions() WITH PARAMS :
-  // console.log("calling : list_transactions WITH PARAMS >> !! >> ");
-  // this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
-  }
-
   componentDidMount = () => {
     this.updateViewPortSize();
     window.addEventListener("resize", this.updateViewPortSize);
@@ -133,22 +124,37 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     window.removeEventListener("resize", this.updateViewPortSize);
   }
 
+  handleTableRefresh = () => {
+    const { txBatchType, txStartDate, txEndDate } = this.state;
+    console.log("this is your TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
+    console.log("this is your Transaction Batch StartDate >> !! >> ", txStartDate);
+    console.log("this is your Transaction Batch EndDate >> !! >> ", txEndDate);
+    console.log("this is your Transaction Batch Type >> !! >> ", txBatchType);
+
+    // Invoke list_transactions() WITH PARAMS :
+    console.log("calling : list_transactions WITH PARAMS >> !! >> ");
+    this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
+  }
+
+  handleReloadListOfTx = () => {
+    // REFRESH Filter Settings when making new call...
+    this.setState({ txBatchType:"", txStartDate:"", txEndDate:"" });
+    console.log("this is your Transaction Batch StartDate >> !! >> ",  this.state.txStartDate);
+    console.log("this is your Transaction Batch EndDate >> !! >> ",  this.state.txEndDate);
+    console.log("this is your Transaction Batch Type >> !! >> ", this.state.txBatchType);
+
+    // Call both lists to populate tables with any new data :
+    this.props.list_transactions();
+  }
+
+  reloadNewTxTable = () => {
+    this.props.list_pending();
+  }
+
   updateViewPortSize() {
     this.setState({ isMobile: window.innerWidth < 768})
   }
 
-  // displayData = () => {
-  //   console.log("this.state inside displayData", this.state);
-  //   console.log("this.props inside displayData", this.props);
-  //   if (this.props.list_of_transactions) {
-  //     const table_pending_table_info =  refactorListOfTransactions(this.props.list_of_transactions);
-  //
-  //     console.log("DATA GOING TO INSTANCE MAIN TABLE >>>> !! table_pending_table_info !! <<<<<<<< : ", table_pending_table_info);
-  //
-  //     // const table_pending_table_info = [{}];
-  //     return table_pending_table_info;
-  //   }
-  // }
 
   fetchNewData=()=>{
     // console.log("#######################")
@@ -203,7 +209,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     // console.log("ROW LENGTH: ",pending_table_data.length)
 
     return (
-    // TODO: Look into integratng the infnite scroll with ReactTable...
+    // TODO: INFINITE SCROLL >>>> Look into integratng the infnite scroll with ReactTable...
       //   <div style="height:700px;overflow:auto;" ref={(ref) => this.scrollParentRef = ref}>
       //     <div>
       //         <InfiniteScroll
@@ -230,7 +236,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       <div className={classnames(classes.tableButtonBar, {'hidden': new_data_table!.length <= 0}, {'visible': new_data_table!.length > 0})}>
         <Button variant="outlined" color="primary"
           className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-          onClick={() => this.handleTableRefresh()}>
+          onClick={() => this.reloadNewTxTable()}>
           <Refresh className={classes.svgView}/>
         </Button>
       </div>
@@ -307,7 +313,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
         <div className={classnames(classes.tableButtonBar, {'hidden': pending_table_data!.length <= 0}, {'visible': pending_table_data!.length > 0})}>
           <Button variant="outlined" color="primary"
             className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-            onClick={() => this.handleTableRefresh()}>
+            onClick={() => this.handleReloadListOfTx()}>
             <Refresh className={classes.svgView}/>
           </Button>
         </div>
@@ -390,7 +396,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
         <div className={classnames(classes.tableButtonBar, {'hidden': processed_table_data!.length <= 0}, {'visible': processed_table_data!.length > 0})}>
           <Button variant="outlined" color="primary"
             className={classnames(classes.buttonSumTable, classes.refreshBtn, classes.overlayTop)}
-            onClick={() => this.handleTableRefresh()}>
+            onClick={() => this.handleReloadListOfTx()}>
             <Refresh className={classes.svgView}/>
           </Button>
         </div>

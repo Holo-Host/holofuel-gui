@@ -85,4 +85,3 @@ class DropDownInputFilter extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(DropDownInputFilter);
-// {/* label="Transaction State" */}
