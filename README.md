@@ -27,11 +27,12 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
   `holochain -c agent2-conductor-config.toml`
 
 - Open it on http://localhost:9300
-  
+
 ## Built With
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
 * [Typescript](https://www.typescriptlang.org/)
+* [Material UI](https://material-ui.com/)
 * [Webpack](https://webpack.js.org/)
 
 ---

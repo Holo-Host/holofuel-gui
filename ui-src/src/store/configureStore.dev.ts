@@ -10,7 +10,7 @@ import { holochainMiddleware } from '@holochain/hc-redux-middleware';
 import { connect } from '@holochain/hc-web-client';  // '@holochain/hc-web-client'
 // import { setPort } from '../../utils/constants'
 
-const url = 'ws:localhost:3000';
+const url = 'ws:localhost:3100';
 // const url = `ws:localhost:${setPort()}`
 const hcWc = connect(url);
 

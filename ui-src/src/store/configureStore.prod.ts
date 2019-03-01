@@ -12,7 +12,7 @@ import { connect } from '@holochain/hc-web-client';  // '@holochain/hc-web-clien
 const history = createHashHistory();
 const rootReducer = createRootReducer(history);
 const router = routerMiddleware(history);
-const url = 'ws:localhost:3000';
+const url = 'ws:localhost:3100';
 // const url = `ws:localhost:${setPort()}`
 const hcWc = connect(url);
 const holochain = holochainMiddleware(hcWc);

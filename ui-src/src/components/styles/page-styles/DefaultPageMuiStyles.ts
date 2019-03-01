@@ -411,14 +411,18 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     closeBtn: {
       position: 'absolute',
       top: 4,
-      right: 2,
+      right: -16,
       padding: '4px 8px',
       color: '#799ab6',
+      fontSize: '1.5rem',
       // border: '1px solid #799ab6',
       // borderRadius: 4 ,
       "&:hover": {
         text: '#3a426d'
       }
+    },
+    svgCloseIcon:{
+      fontSize: 32
     },
     filterFormControl: {
       minWidth: 120,

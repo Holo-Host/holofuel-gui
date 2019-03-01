@@ -15,7 +15,7 @@
     "ui:test": " npm run build:scenario &&  holochain -c ./conductor-config.toml",
     "quick-start": "holochain -c ./conductor-config.toml"
   },
-  "author": [
+  "authors": [
     "Lisa Jetton",
     "Zo-el"
   ],
