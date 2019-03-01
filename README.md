@@ -1,4 +1,7 @@
 # holofuel-gui
+[![License: MIT](https://img.shields.io/apm/l/:packageName.svg)](https://opensource.org/licenses/MIT)
+
+
 **Status:** Pre-Alpha. Early development and testing.
 
 ## Purpose:
