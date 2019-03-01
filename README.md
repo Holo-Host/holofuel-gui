@@ -1,6 +1,4 @@
 # holofuel-gui
-[![License: MIT](https://img.shields.io/apm/l/:packageName.svg)](https://opensource.org/licenses/MIT)
-
 
 **Status:** Pre-Alpha. Early development and testing.
 
@@ -12,8 +10,24 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 
 ---
 
-## How to run :
+## How to Test :
+- Need to install
+  `cd ui-src && yarn install && cd ..`
+- Build agent 1
+  `yarn build:agent1`
+- Build agent 2
+  `yarn build:agent2`
 
+- Now to run Agent 1
+  `holochain -c agent1-conductor-config.toml`
+
+- Open it on http://localhost:8800
+
+- Now to run Agent 2
+  `holochain -c agent2-conductor-config.toml`
+
+- Open it on http://localhost:9300
+  
 ## Built With
 * [React](https://reactjs.org/)
 * [Redux](https://redux.js.org/)
