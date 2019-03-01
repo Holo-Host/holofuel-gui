@@ -4,9 +4,6 @@
 ## Purpose:
 Simple and intuitive interface allowing users to transact with Holofuel.  This app pairs with the Holochain DNA, [holofuel](https://github.com/Holo-Host/holofuel), for data processing and management.
 
-## Preview:
-![holofuel-gui](#)
-
 ## Design Decisions:
 * [HC-Admin UI ADR](https://hackmd.io/t7Y0H5eNQtycrsNyVRe3Ww?both)
 
