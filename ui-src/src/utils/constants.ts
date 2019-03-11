@@ -6,11 +6,10 @@ export let setInstance = ()=>{
   else
     return "ERROR: FAKE INSTANCE"
 };
-// export const DNA_INSTANCE = 'holofuel instance';
 
-export let setPort = ()=>{
-  if(process.env.PORT)
-    return process.env.PORT
-  else
-    return "ERROR: PORT not found"
+export const setPort = () => {
+  // return 3000
+  console.log("PORT: ",process.env);
+  if (process.env.REACT_APP_NODE_PORT) return process.env.REACT_APP_NODE_PORT;
+  return 'ERROR: REACT_APP_NODE_PORT not found at '+ process.env.REACT_APP_NODE_PORT;
 };

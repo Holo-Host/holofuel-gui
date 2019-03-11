@@ -6,13 +6,15 @@
   "scripts": {
     "hc:build": "mkdir -p dna && cd dna-src && hc package --strip-meta -o ../dna/holofuel.hcpkg",
     "hc:start": " npm run ui:build &&  holochain -c ./conductor-config.toml",
-    "build:scenario": "npm run build:agent1 && npm run build:agent2",
+    "ui:build": "cd ui-src && REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=agent1_dna_instance npm run build && cd ..",
+    "ui:build-agent1": "cd ui-src && REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=agent1_dna_instance npm run build && cd ..",
+    "ui:build-agent2": "cd ui-src && REACT_APP_NODE_PORT=3100 REACT_APP_DNA_INSTANCE=agent2_dna_instance npm run build && cd ..",
     "build:agent1": "npm run ui:build-agent1 && cp -a ./ui/. ./ui-agent1/",
     "build:agent2": "npm run ui:build-agent2 && cp -a ./ui/. ./ui-agent2/",
-    "ui:build": "cd ui-src && REACT_APP_DNA_INSTANCE=agent1_dna_instance npm run build && cd ..",
-    "ui:build-agent1": "cd ui-src && REACT_APP_DNA_INSTANCE=agent1_dna_instance npm run build && cd ..",
-    "ui:build-agent2": "cd ui-src && REACT_APP_DNA_INSTANCE=agent2_dna_instance npm run build && cd ..",
-    "ui:test": " npm run build:scenario &&  holochain -c ./conductor-config.toml",
+    "build:scenario": "npm run build:agent1 && npm run build:agent2",
+    "ui:start": " npm run build:scenario &&  holochain -c ./conductor-config.toml",
+    "start:agent1": " npm run build:scenario &&  holochain -c ./agent1-conductor-config.toml",
+    "start:agent2": " npm run build:scenario &&  holochain -c ./agent2-conductor-config.toml",
     "quick-start": "holochain -c ./conductor-config.toml"
   },
   "authors": [

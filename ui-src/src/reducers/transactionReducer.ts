@@ -147,6 +147,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
     case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_SUCCESS`: {
       console.log('FETCH_AGENT_STRING_SUCCESS payload', payload);
       const my_agent_string = payload.agent_id.nick;
+      // const my_agent_key = payload.pub_sign_key;
       const my_agent_hash = payload.agent_address;
       const hf_base_dna_hash = payload.dna_address;
       return {

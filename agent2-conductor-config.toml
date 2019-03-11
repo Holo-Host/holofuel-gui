@@ -9,8 +9,8 @@
 [[agents]]
 id = "test_agent2"
 name = "HoloTester2"
-public_address = "sandwich--------------------------------------------------------------------------AAAEqzh28L"
-key_file = "holo_tester.key"
+public_address = "HcSCJiFzn3rM5cjr7qI6QNZV7BtkiqhocdEMGyD6Q6w8e635qa9EMk9GrTmbikr"
+key_file = "/home/lisa/.config/holochain/keys/HcSCJiFzn3rM5cjr7qI6QNZV7BtkiqhocdEMGyD6Q6w8e635qa9EMk9GrTmbikr"
 
 # [[agents]]
 # id = "test_agent3"
@@ -21,7 +21,7 @@ key_file = "holo_tester.key"
 # -----------  DNA  -----------
 [[dnas]]
 id = "fuel-dna"
-file = "dna/holofuel.working.dna.json"
+file = "dna/holofuel.dna.json"
 hash = "Qm328wyq38924y"
 
 # [[instances]]
@@ -84,8 +84,8 @@ dna_interface = "websocket_interface"
 n3h_path = "/home/lisa/Documents/gitrepos/holochain/Networking/n3h-0.0.4-alpha1"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = [
-"/ip4/127.0.0.1/tcp/33433/ipfs/QmQaTsduDQvFG9KRTNHsHyeCRzKdTY31CfXCmw9DYDPv5K",
-"/ip4/192.168.0.7/tcp/33433/ipfs/QmQaTsduDQvFG9KRTNHsHyeCRzKdTY31CfXCmw9DYDPv5K"
+"/ip4/127.0.0.1/tcp/36065/ipfs/QmauCEw9AA9hxWRJvt4pUvR95iPqA8JNwzMeC4cFYsrce8",
+"/ip4/192.168.0.7/tcp/36065/ipfs/QmauCEw9AA9hxWRJvt4pUvR95iPqA8JNwzMeC4cFYsrce8"
 
 ]
 
