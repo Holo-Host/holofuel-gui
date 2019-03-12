@@ -44,13 +44,13 @@ type = "simple"
 file = "app_spec2.log"
 [instances.storage]
 type = "file"
-path = "tmp-storage"
+path = "tmp-storage-1"
 
 [[interfaces]]
 id = "websocket_interface"
 [interfaces.driver]
 type = "websocket"
-port = 3100
+port = 4100
 # [[interfaces.instances]]
 # id = "agent1_dna_instance"
 [[interfaces.instances]]
@@ -81,13 +81,12 @@ dna_interface = "websocket_interface"
 
 # -----------  Networking  -----------
 [network]
-n3h_path = "/home/lisa/Documents/gitrepos/holochain/Networking/n3h-0.0.4-alpha1"
+n3h_path = "/home/lisa/Documents/gitrepos/holochain/n3h"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = [
-"/ip4/127.0.0.1/tcp/36065/ipfs/QmauCEw9AA9hxWRJvt4pUvR95iPqA8JNwzMeC4cFYsrce8",
-"/ip4/192.168.0.7/tcp/36065/ipfs/QmauCEw9AA9hxWRJvt4pUvR95iPqA8JNwzMeC4cFYsrce8"
-
+"wss://192.168.43.161:36361/?a=hkbEagltNAKJ3INZ1OEMeE2z5O1nLUpqdl5e9Y5UJ7WJO4GRUsuYVw9zgzW5MncyOzX1vUv5nw13e8eLhlzLXMgEdzmvp_qP"
 ]
+n3h_ipc_uri="wss://127.0.0.1:37161/"
 
 # -----------  Networking instructions  -----------
 # To get networking running requires the following steps:

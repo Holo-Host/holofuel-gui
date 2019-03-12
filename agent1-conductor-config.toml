@@ -81,7 +81,7 @@ dna_interface = "websocket_interface"
 
 # -----------  Networking  -----------
 [network]
-n3h_path = "/home/lisa/Documents/gitrepos/holochain/Networking/n3h-0.0.4-alpha1"
+n3h_path = "/home/lisa/Documents/gitrepos/holochain/n3h"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = []
 
