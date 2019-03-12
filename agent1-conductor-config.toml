@@ -6,17 +6,6 @@ name = "HoloTester1"
 public_address = "HcScIgeOzUr8hbgeq7h9k4FwaMhIahonndUzt4qdF9fcjs4cJW4oOpURxm5sbqi"
 key_file = "/home/lisa/.config/holochain/keys/HcScIgeOzUr8hbgeq7h9k4FwaMhIahonndUzt4qdF9fcjs4cJW4oOpURxm5sbqi"
 
-# [[agents]]
-# id = "test_agent2"
-# name = "HoloTester2"
-# public_address = "sandwich--------------------------------------------------------------------------AAAEqzh28L"
-# key_file = "holo_tester.key"
-
-# [[agents]]
-# id = "test_agent3"
-# name = "HoloTester3"
-# public_address = "bagel-----------------------------------------------------------------------------AAADAq0mCu"
-# key_file = "holo_tester.key"
 
 # -----------  DNA  -----------
 [[dnas]]
@@ -34,17 +23,6 @@ file = "app_spec1.log"
 [instances.storage]
 type = "file"
 path = "tmp-storage"
-
-# [[instances]]
-# id = "agent2_dna_instance"
-# dna = "fuel-dna"
-# agent = "test_agent2"
-# [instances.logger]
-# type = "simple"
-# file = "app_spec2.log"
-# [instances.storage]
-# type = "file"
-# path = "tmp-storage"
 
 [[interfaces]]
 id = "websocket_interface"
@@ -66,18 +44,6 @@ id = "ui-interface"
 bundle = "main"
 port = 8800
 dna_interface = "websocket_interface"
-
-
-# [[ui_bundles]]
-# id = "main2"
-# root_dir = "./ui-agent2"
-# hash = "Qm000"
-#
-# [[ui_interfaces]]
-# id = "ui-interface2"
-# bundle = "main2"
-# port = 9300
-# dna_interface = "websocket_interface"
 
 # -----------  Networking  -----------
 [network]
