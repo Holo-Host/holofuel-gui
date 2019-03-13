@@ -1,1 +1,0 @@
-{"CapTokenGrant":{"assignees":null,"functions":{"transactions":["whoami","request","proposal","receive_payment","ledger_state","get_request","get_proposal","list_requests","list_proposals","list_pending","list_transactions"]}}}
