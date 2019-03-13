@@ -13,11 +13,13 @@
     "build:agent2": "npm run ui:build-agent2 && cp -a ./ui/. ./ui-agent2/",
     "build:scenario": "npm run build:agent1 && npm run build:agent2",
     "ui:start": " npm run build:scenario &&  holochain -c ./conductor-config.toml",
-    "start:agent1": " npm run build:agent1 &&  holochain -c ./agent1-conductor-config.toml",
+    "start:agent1": " npm run build:agent1 &&  holochain -c ./agent1-conductor-config.toml  && node scripts/start-scenario.js",
+    "start:agent1-node": " npm run build:agent1 && node scripts/start-scenario.js",
     "start:agent2": " npm run build:agent2 &&  holochain -c ./agent2-conductor-config.toml",
     "quick-start": "holochain -c ./conductor-config.toml",
-    "q1":"holochain -c ./agent1-conductor-config.toml",
-    "q2":"holochain -c ./agent2-conductor-config.toml"
+    "q1": "holochain -c ./agent1-conductor-config.toml && node scripts/start-scenario.js",
+    "q1-node": "node scripts/start-scenario.js",
+    "q2": "holochain -c ./agent2-conductor-config.toml"
   },
   "authors": [
     "Lisa Jetton",
@@ -25,6 +27,11 @@
   ],
   "license": "MIT",
   "dependencies": {
-    "classnames": "^2.2.6"
+    "bluebird": "^3.5.3",
+    "classnames": "^2.2.6",
+    "inquirer": "^6.2.2",
+    "node-cmd": "^3.0.0",
+    "toml": "^3.0.0",
+    "tomlify-j0.4": "^3.0.0"
   }
 }

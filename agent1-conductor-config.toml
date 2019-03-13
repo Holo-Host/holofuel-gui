@@ -3,8 +3,8 @@
 [[agents]]
 id = "test_agent1"
 name = "HoloTester1"
-public_address = "HcScIgeOzUr8hbgeq7h9k4FwaMhIahonndUzt4qdF9fcjs4cJW4oOpURxm5sbqi"
-key_file = "/home/lisa/.config/holochain/keys/HcScIgeOzUr8hbgeq7h9k4FwaMhIahonndUzt4qdF9fcjs4cJW4oOpURxm5sbqi"
+public_address = "HcSCIvIH4FDD3ksi95P94KIPftYd8uxgmkJ5643vNDn7sixhikOoSj5Qre846gr"
+key_file = "/home/lisa/.config/holochain/keys/HcSCIvIH4FDD3ksi95P94KIPftYd8uxgmkJ5643vNDn7sixhikOoSj5Qre846gr"
 
 
 # -----------  DNA  -----------

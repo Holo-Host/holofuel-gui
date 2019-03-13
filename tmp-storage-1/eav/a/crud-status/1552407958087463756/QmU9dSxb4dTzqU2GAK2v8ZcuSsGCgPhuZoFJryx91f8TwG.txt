@@ -1,0 +1,1 @@
+{"entity":"QmW6Tk1W2J2twqvNFvTQ1pBaDvNyz48Kk3n4f9x1Let6jv","attribute":"crud_status","value":"live","index":1552407958087463756}
