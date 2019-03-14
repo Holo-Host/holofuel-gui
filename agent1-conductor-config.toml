@@ -22,7 +22,7 @@ type = "simple"
 file = "app_spec1.log"
 [instances.storage]
 type = "file"
-path = "tmp-storage"
+path = "tmp-storage-1"
 
 [[interfaces]]
 id = "websocket_interface"
@@ -47,7 +47,7 @@ dna_interface = "websocket_interface"
 
 # -----------  Networking  -----------
 [network]
-n3h_path = "/home/lisa/Documents/gitrepos/holochain/n3h"
+n3h_path = "/home/lisa/n3h"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = []
 

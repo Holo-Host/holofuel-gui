@@ -998,10 +998,10 @@
     redux "^4.0.1"
     typesafe-actions "^2.0.4"
 
-"@holochain/hc-web-client@^0.0.1":
-  version "0.0.1"
-  resolved "https://registry.yarnpkg.com/@holochain/hc-web-client/-/hc-web-client-0.0.1.tgz#2ec4d1d3cfabf0d94908b4991f2adcc4c9ed0f21"
-  integrity sha512-pmbg7X5D4NCLFpzTyIVIjFA9mM49I0qaJ4Jb2r3Qare3HFWXBPn383GVBPXvnhFxDi0vnY3qeQ+GQG/eMyHqNA==
+"@holochain/hc-web-client@0.1.2":
+  version "0.1.2"
+  resolved "https://registry.yarnpkg.com/@holochain/hc-web-client/-/hc-web-client-0.1.2.tgz#066fea593733f785613067a787cdde05d33184cf"
+  integrity sha512-X09kBdFIljwpjCs1H1GARTCzB1LPeUCiXx15VMGT4WKKd8xgoo37VL8TyhlfOXxceXYSZc9dE1R6NCaI6ueuDw==
   dependencies:
     rpc-websockets "^4.3.3"
 

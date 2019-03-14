@@ -21,7 +21,7 @@ type = "simple"
 file = "app_spec2.log"
 [instances.storage]
 type = "file"
-path = "tmp-storage-1"
+path = "tmp-storage-2"
 
 [[interfaces]]
 id = "websocket_interface"
@@ -50,9 +50,9 @@ dna_interface = "websocket_interface"
 n3h_path = "/home/lisa/Documents/gitrepos/holochain/n3h"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = [
-"wss://192.168.0.7:34421/?a=hkbY7onOR6ej6JE_psua1LTucodEa67HAJidKbwW79kFhiqDrHvVAJ1Lgucu8lmAixF1PbFukKnsoXmryUJ2W-liCBZ5lots"
+"node-id hkYwRyLTIqVrEX09r4y5AAOR5n8EuIsTU8BovgbB7sN8PVawsn1HVsl0x5vkh9YWhSFSRZZeD6BT93Ib9k2lrZA3Mku1_l96"
 ]
-n3h_ipc_uri="wss://127.0.0.1:42943/"
+n3h_ipc_uri="wss://127.0.0.1:44117/"
 
 # -----------  Networking instructions  -----------
 # To get networking running requires the following steps:
