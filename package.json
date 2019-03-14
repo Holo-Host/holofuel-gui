@@ -17,7 +17,7 @@
     "start:agent1-node": " npm run build:agent1 && node scripts/start-scenario.js",
     "start:agent2": " npm run build:agent2 &&  holochain -c ./agent2-conductor-config.toml",
     "quick-start": "holochain -c ./conductor-config.toml",
-    "q1": "holochain -c ./agent1-conductor-config.toml && node scripts/start-scenario.js",
+    "q1": "holochain -c ./agent1-conductor-config.toml",
     "q1-node": "node scripts/start-scenario.js",
     "q2": "holochain -c ./agent2-conductor-config.toml"
   },
