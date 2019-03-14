@@ -4,7 +4,7 @@
 id = "test_agent1"
 name = "HoloTester1"
 public_address = "HcSCIvIH4FDD3ksi95P94KIPftYd8uxgmkJ5643vNDn7sixhikOoSj5Qre846gr"
-key_file = "/home/lisa/.config/holochain/keys/HcSCIvIH4FDD3ksi95P94KIPftYd8uxgmkJ5643vNDn7sixhikOoSj5Qre846gr"
+key_file = "/home/zo-el/.config/holochain/keys/HcSCIvIH4FDD3ksi95P94KIPftYd8uxgmkJ5643vNDn7sixhikOoSj5Qre846gr"
 
 
 # -----------  DNA  -----------
@@ -33,6 +33,13 @@ port = 3000
 id = "agent1_dna_instance"
 # [[interfaces.instances]]
 # id = "agent2_dna_instance"
+
+# -----------  Bridges  -----------
+[[bridges]]
+# caller_id = "app1"
+# callee_id = "app2"
+# handle = "happ-store"
+
 # -----------  UI  -----------
 [[ui_bundles]]
 id = "main"
@@ -45,9 +52,10 @@ bundle = "main"
 port = 8800
 dna_interface = "websocket_interface"
 
+
 # -----------  Networking  -----------
 [network]
-n3h_path = "/home/lisa/Documents/gitrepos/holochain/n3h"
+n3h_path = "/home/zo-el/n3h"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = []
 

@@ -4,7 +4,7 @@
 id = "test_agent2"
 name = "HoloTester2"
 public_address = "HcScJuDzSsGp5m7okmRrcIh76tKctdyckcnkbhOGTamy5yxjQX4Fe8nJVEv8bxz"
-key_file = "//home/lisa/.config/holochain/keys/HcScJuDzSsGp5m7okmRrcIh76tKctdyckcnkbhOGTamy5yxjQX4Fe8nJVEv8bxz"
+key_file = "/home/zo-el/.config/holochain/keys/HcScJuDzSsGp5m7okmRrcIh76tKctdyckcnkbhOGTamy5yxjQX4Fe8nJVEv8bxz"
 
 # -----------  DNA  -----------
 [[dnas]]
@@ -47,11 +47,12 @@ dna_interface = "websocket_interface"
 
 # -----------  Networking  -----------
 [network]
-n3h_path = "/home/lisa/Documents/gitrepos/holochain/n3h"
+n3h_path = "/home/zo-el/n3h"
 n3h_persistence_path = "/tmp"
 bootstrap_nodes = [
 "wss://192.168.0.7:34421/?a=hkbY7onOR6ej6JE_psua1LTucodEa67HAJidKbwW79kFhiqDrHvVAJ1Lgucu8lmAixF1PbFukKnsoXmryUJ2W-liCBZ5lots"
 ]
+# NOTE: ONLY input following into toml file whenever being used >> this key is read and digested by n3h EVEN IF it is empty.
 n3h_ipc_uri="wss://127.0.0.1:42943/"
 
 # -----------  Networking instructions  -----------
