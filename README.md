@@ -46,13 +46,13 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 
   2. Open two terminals at @holofuel-gui/ui-src
 
-  3. **Run Agent1** 
-        - Start agent1's UI : `npm run start-agent1`
-        - View agnet1's UI : Open @ http://localhost:8800/
+  3. Run Agent1's UI
+        - Start agent1 : `npm run start-agent1`
+        - View agnet1 : Open @ http://localhost:8800/
 
-  4. **Run Agent2**  
-      - Start agent2's UI : `npm run start-agent2`
-      - View agent2's UI : Open @ http://localhost:9300/ 
+  4. Run Agent2's UI
+      - Start agent2 : `npm run start-agent2`
+      - View agent2 : Open @ http://localhost:9300/ 
 
 
 ## Built With
