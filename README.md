@@ -14,6 +14,9 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 - Install dependencies:`cd ui-src && yarn install && cd ..`
   
 - *Next we will walk through the steps for spinning up two agents (i.e. two dnas and two UIs).*
+
+#
+
 #### Steps to run two DNAs:
    1. Pull the https://github.com/Holo-Host/holofuel repo
       - `git pull https://github.com/Holo-Host/holofuel.git`
