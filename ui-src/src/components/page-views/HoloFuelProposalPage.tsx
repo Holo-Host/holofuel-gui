@@ -42,7 +42,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
 
   sendProposal = async (txInfoObj: any) => {
     console.log("txInfoObj for Proposal Call : ", txInfoObj);
-    // create propose const that amkes call and stores the result..
+    // create propose_payment const that make call and stores the result..
     const proposalResult = await this.props.propose_payment(txInfoObj); // send as JSON
     this.sendConfirmationMessage(proposalResult, txInfoObj);
   }
@@ -50,7 +50,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
   sendConfirmationMessage = (proposalResult: any, txInfoObj: any) => {
     console.log('The attempt to send money (the proposal) resolved to be : >>> ', proposalResult);
 
-    this.setState({ confirmation: `You just made the following transaction: ${JSON.stringify(txInfoObj)}.`});
+    this.setState({ confirmation: txInfoObj});
 
     console.log("MESSAGE : Inside the proposal page >> : ", this.state.confirmation);
   }
@@ -62,12 +62,10 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
   }
 
   public render () {
-    const { confirmation } = this.state;
     // console.log('Props in HoloFuelTransferFormPage:', this.props);
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
 
-    console.log(" <><><>< Single Proposal Data ,><><><>", this.props.view_specific_proposal);
     console.log("************this.state inside HoloFuelProposalPage**********************", this.state)
 
     return (
@@ -119,8 +117,8 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
         }
 
       {/* Toggle Confirmation Message */}
-        { confirmation ?
-          <InformativeModal {...newProps} confirmMessage={ confirmation } resetMessage={this.resetMessage}/>
+        { this.state.confirmation ?
+          <InformativeModal {...newProps} confirmMessage={ JSON.stringify(this.state.confirmation) } resetMessage={this.resetMessage}/>
         :
           <div/>
         }

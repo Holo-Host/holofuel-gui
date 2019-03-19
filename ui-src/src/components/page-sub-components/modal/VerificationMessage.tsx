@@ -14,6 +14,7 @@ import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // local imports :
 import { ProposalActionParam, RequestActionParam } from '../../../utils/types';
+import { getDisplayName } from '../../../utils/global-helper-functions'
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
@@ -111,6 +112,7 @@ class VerficationModal extends React.Component<Props, State>  {
             >
               <DialogTitle id="responsive-dialog-title" style={{color:'#072dc3'}}>{"Verify Transaction"}</DialogTitle>
                   <DialogContent>
+                    <hr/>
                     <DialogContentText id="alert-dialog-description">
                       Does everything look right?
                     </DialogContentText>
@@ -122,7 +124,7 @@ class VerficationModal extends React.Component<Props, State>  {
                     </DialogContentText>
 
                     <DialogContentText id="alert-dialog-description-2">
-                      Counterparty: {messageAsObj.counterparty}
+                      Counterparty: {getDisplayName(messageAsObj.counterparty)}
                     </DialogContentText>
 
                     <DialogContentText id="alert-dialog-description-3">

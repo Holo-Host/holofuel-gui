@@ -66,6 +66,7 @@ class informativeModal extends React.Component<Props, State>  {
   public render() {
     console.log("PROPS inside the informative-dialog-modal", this.props);
     const { classes, confirmMessage } = this.props;
+    const parsedMessage = JSON.parse(confirmMessage);
     const fullScreen: boolean = false;
 
     // const today: Moment = moment.format();
@@ -85,43 +86,44 @@ class informativeModal extends React.Component<Props, State>  {
           >
             <DialogTitle id="responsive-dialog-title" style={{color:'#072dc3'}}>{"Transaction Sent"}</DialogTitle>
                 <DialogContent>
+                  <hr/>
                   <DialogContentText id="alert-dialog-description">
-                  As of { moment().format('LLLL') }, your transfer has been successfully completed.
+                  As of { `${moment().format('LLLL')}, \n`} your transfer has been successfully completed.
                   </DialogContentText>
-
-                  {confirmMessage}
-
+                  <hr/>
                   <br/>
-                  <br/>
+
                   <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
                      Transaction Summary
                   </DialogContentText>
 
                   <DialogContentText id="alert-dialog-description-3">
-                    Amount: {confirmMessage.amount}
+                    Amount: {parsedMessage.amount}
                   </DialogContentText>
 
                   {confirmMessage.to ?
                     <DialogContentText id="alert-dialog-description-2">
-                        To: {confirmMessage.to}
+                        To: {parsedMessage.to}
                     </DialogContentText>
 
                   :confirmMessage.from ?
                     <DialogContentText id="alert-dialog-description-2">
-                        From: {confirmMessage.from}
+                        From: {parsedMessage.from}
                     </DialogContentText>
                   :
                     <div/>
                   }
 
                   <DialogContentText id="alert-dialog-description-4">
-                    Deadline: {confirmMessage.deadline}
+                    Deadline: {parsedMessage.deadline}
                   </DialogContentText>
 
                   <DialogContentText id="alert-dialog-description-6">
-                    Notes: {confirmMessage.notes}
+                    Notes: {parsedMessage.notes}
                   </DialogContentText>
 
+                  <br/>
+                  <hr/>
                   <DialogContentText id="alert-dialog-slide-description">
                     Please check your transaction history for updates.
                   </DialogContentText>

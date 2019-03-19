@@ -30,3 +30,12 @@ export const toDateTimeString = (date: any): DateTimeString => {
   }
   throw new Error(`The following invalid DateTimeString was provided: ${date}`);
 }
+
+export const getDisplayName = (agentHash: string) => {
+  if (agentHash.length > 15 ) {
+    return agentHash.substring(0,15) + "...";
+  }
+  else {
+    return agentHash;
+  }
+}

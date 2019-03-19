@@ -620,6 +620,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       marginTop: 55,
     },
     datetimeInput:{
+      textAlign:'left',
       display:'inline !important',
       minWidth:'48vw'
     },

@@ -11,6 +11,7 @@ import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterCon
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
 import QRbutton from '../page-sub-components/input-fields/QRbutton';
+import InformativeModal from '../page-sub-components/modal/InformativeModal';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
 // import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
 
@@ -23,11 +24,17 @@ export interface OwnProps {
   showTransferBar: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
-export interface State {}
+export interface State {
+// The components optional internal state
+  confirmation: string
+}
 
 class HoloFuelRequestPage extends React.Component<Props, State> {
   constructor(props:Props){
     super(props);
+    this.state = {
+      confirmation: ""
+    }
   };
 
   componentDidMount () {
@@ -35,12 +42,29 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
     // set the this.state.agentHash value  !!!!
   }
 
-  makeRequest = (txInfoObj: any) => {
+  makeRequest = async (txInfoObj: any) => {
     console.log("txInfo for Request Call : ", txInfoObj);
     // make make_payment API call
-    this.props.request_payment(txInfoObj);  // sending as JSON
+    // this.props.request_payment(txInfoObj);  // sending as JSON
+
+    // creates request_payment const that make call and stores the result..
+    const requestResult = await this.props.request_payment(txInfoObj); // send as JSON
+    this.sendConfirmationMessage(requestResult, txInfoObj);
   }
 
+  sendConfirmationMessage = (requestResult: any, txInfoObj: any) => {
+    console.log('The attempt to send money (the request) resolved to be : >>> ', requestResult);
+
+    this.setState({ confirmation: txInfoObj});
+
+    console.log("MESSAGE : Inside the request page >> : ", this.state.confirmation);
+  }
+
+  resetMessage = () => {
+    // resetting the message to blank after confirmed transaction result in modal...
+    console.log('resetting the confirmation propety on the request page... >>> ');
+    this.setState({ confirmation: "" });
+  }
 
   public render () {
     console.log('HoloFuelRequestPage PROPS upon componentDidMount:', this.props);
@@ -92,6 +116,13 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
         :
           <div/>
         }
+
+        {/* Toggle Confirmation Message */}
+          { this.state.confirmation ?
+            <InformativeModal {...newProps} confirmMessage={ JSON.stringify(this.state.confirmation) } resetMessage={this.resetMessage}/>
+          :
+            <div/>
+          }
       </div>
     </div>
     );

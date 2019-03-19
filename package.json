@@ -4,6 +4,8 @@
   "description": "Simple and intuitive interface allowing users to transact with HoloFuel.",
   "main": "index.js",
   "scripts": {
+    "start-dna-agent1":"cd ./holofuel && HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent1 hc run --port 3000",
+    "start-dna-agent2":"cd ./holofuel && HC_N3H_BOOTSTRAP_NODE=wss://192.168.0.7:42667/?a=hkaJbQcAuVfzRsRGgKJOJcgdxshP6-5JWpj5rgloY-hE_F0jmzywYXepT0focvQY1zYyOw3PDMNGGN7TLbDxJi1koMdsZlFN HC_N3H_IPC_URI=wss://127.0.0.1:37897/ HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent2 hc run --port 3100",
     "hc:build": "mkdir -p dna && cd dna-src && hc package --strip-meta -o ../dna/holofuel.hcpkg",
     "hc:start": " npm run ui:build &&  holochain -c ./conductor-config.toml",
     "ui:build": "cd ui-src && REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=agent1_dna_instance npm run build && cd ..",

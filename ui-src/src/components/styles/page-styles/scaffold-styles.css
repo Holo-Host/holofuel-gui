@@ -149,6 +149,20 @@ input {
   background: #015363;
 }
 
+.DateRangePicker_picker {
+  position: absolute !important;
+  top:52px !important;
+}
+
+.DateRangePicker_picker .DateRangePicker_picker_1 .DateRangePicker_picker__directionLeft .DateRangePicker_picker__directionLeft_2 {
+  position: absolute !important;
+  top:52px !important;
+}
+
+.DateInput_fang {
+  position: relative !important;
+}
+
 /*******************************************************
    Transaction-Type MUI Dropdown Button Custom styles
 *******************************************************/

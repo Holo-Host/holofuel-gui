@@ -236,6 +236,9 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
     const okToConfirm:boolean = true;
     const dialog:boolean = true;
 
+
+    console.log("new Date().setMonth(new Date().getMonth() + 1): ", new Date());
+
     return (
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>
@@ -321,7 +324,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                   fullWidth={fullWidth}
                   transformOrigin={{vertical:'center', horizontal:'left'}}
                   anchorOrigin={{vertical:'center', horizontal:'center'}}
-                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><HourGlassIcon/><span>Date Due</span></div></InputAdornment> )}}
+                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><HourGlassIcon/><span>Delivery Date: </span></div></InputAdornment> )}}
                 />
               </Paper>
 
@@ -345,7 +348,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                   fullWidth={fullWidth}
                   transformOrigin={{vertical:'center', horizontal:'left'}}
                   anchorOrigin={{vertical:'center', horizontal:'left'}}
-                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><Timer/><span>Time Due</span></div></InputAdornment> )}}
+                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><Timer/><span>Delivery Time: </span></div></InputAdornment> )}}
                 />
               </Paper>
             </li>
