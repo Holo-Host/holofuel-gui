@@ -19,16 +19,16 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 #
 
 #### Steps to run two DNAs:
-   1. Pull the https://github.com/Holo-Host/holofuel repo
+  1. Pull the https://github.com/Holo-Host/holofuel repo
       - `git pull https://github.com/Holo-Host/holofuel.git`
       - `git checkout develop`
       - `cd test`
+      
+  2. Open two terminals at @holofuel/test
 
-2. Update the `start-agent1` script in the `package.json`
+  3. Update the `start-agent1` script in the `package.json`
       - Find the `start-agent1` script inside the `package.json`
       - Update the HC_N3H_PATH
-
-  3. Open two terminals at @holofuel/test
 
   4. Run agent1's DNA 
         - `npm run start-agent1`
