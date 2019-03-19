@@ -61,10 +61,14 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       fontWeight: 'lighter'
     },
     detailedTransaction:{
-      background: '#eee',
-      border: "1px solid #273269",
       margin: 50,
-      borderRadius: 4
+      width: '97%',
+      height: '60%',
+      background: '#4b6a7d',
+      border: "3px solid #273269",
+      borderRadius: 4,
+      padding: 50,
+      color: '#ffffff'
     },
     nextBtn: {
       position:'relative',
@@ -92,7 +96,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       zIndex: 2
     },
     appBarFullPageModal:{
-      backgroundColor: '#1c2761f2', // alt:  #0e094b
+      backgroundColor: '#4b6a7d', // alt:  #0e094b 4b6a7d 0e3658
       position: 'relative'
     },
     bottomAppBar: {

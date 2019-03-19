@@ -112,28 +112,28 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
           <div className={classnames(classes.flexContainer, classes.detailedTransaction)}>
             {/* <SimpleTable classNames={classes.flexItem} {...newProps} currentTxData={this.state.currentTxData} /> */}
 
-            <List>
-              <ListItem button>
+            <List style={{ marginTop:'5%'}}>
+              <ListItem button style={{ marginTop:'#fff'}}>
                 <ListItemText primary="Due Date :" secondary={currentRowDataDetailed[0]} />
               </ListItem>
               <Divider />
-              <ListItem button>
+              <ListItem button style={{ marginTop:'#fff'}}>
                 <ListItemText primary="Current Transaction Date" secondary={currentRowDataDetailed[1]} />
               </ListItem>
               <Divider />
-              <ListItem button>
+              <ListItem button style={{ marginTop:'#fff'}}>
                 <ListItemText primary="Date Transaction Initiated:" secondary={currentRowDataDetailed[2]} />
               </ListItem>
               <Divider />
-              <ListItem button>
+              <ListItem button style={{ marginTop:'#fff'}}>
                 <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed[3]} />
               </ListItem>
               <Divider />
-              <ListItem button>
+              <ListItem button style={{ marginTop:'#fff'}}>
                 <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed[4]} />
               </ListItem>
               <Divider />
-              <ListItem button>
+              <ListItem button style={{ marginTop:'#fff'}}>
                 <ListItemText primary="Transaction Notes" secondary={currentRowDataDetailed[5]} />
               </ListItem>
               <Divider />
