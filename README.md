@@ -38,7 +38,7 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
   6. Run agent2's DNA
         - `npm run start-agent2`
 
----
+# 
 
 #### Steps to run two UIs:
   1. Pull the https://github.com/Holo-Host/holofuel-gui repo
