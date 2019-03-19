@@ -22,18 +22,18 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
           `cd test`
           
       2. Update the `start-agent1` script in the `package.json`
-            a.) Find the `start-agent1` script inside the `package.json`
-            b.) Update the HC_N3H_PATH
+            - a.) Find the `start-agent1` script inside the `package.json`
+            - b.) Update the HC_N3H_PATH
             
       3. Open two terminals at @holofuel/test
       
       4. Run agent1's DNA : `npm run start-agent1`
       
       5. Update the `start-agent2` script in the `package.json` BEFORE running agent2
-            a.) Find the `start-agent2` script inside the `package.json`
-            b.) Update the HC_N3H_PATH
-            c.) Add the HC_N3H_BOOTSTRAP_NODE
-            d.) Add the HC_N3H_IPC_URI
+            - a.) Find the `start-agent2` script inside the `package.json`
+            - b.) Update the HC_N3H_PATH
+            - c.) Add the HC_N3H_BOOTSTRAP_NODE
+            - d.) Add the HC_N3H_IPC_URI
         
       6. Run agent2's DNA : `npm run start-agent2`
     
@@ -45,17 +45,13 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
           
       2. Open two terminals at @holofuel-gui/ui-src
       
-      
-     **Run Agent1** 
-      3. Start agent1's UI : `npm run start-agent1`
-      
-      4. View agnet1's UI : Open @ http://localhost:8800/
+      3. **Run Agent1** 
+            - Start agent1's UI : `npm run start-agent1`
+            - View agnet1's UI : Open @ http://localhost:8800/
           
-          
-      **Run Agent2**    
-      5. Start agent2's UI : `npm run start-agent2`
-      
-      6. View agnet2's UI : Open @ http://localhost:9300/
+      4. **Run Agent2**  
+          - Start agent2's UI : `npm run start-agent2`
+          - View agnet2's UI : Open @ http://localhost:9300/ 
 
 ## Built With
 * [React](https://reactjs.org/)
