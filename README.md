@@ -15,44 +15,44 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
   
 - *Next we will walk through the steps for spinning up two agents (i.e. two dnas and two UIs).*
 ### Steps to run two DNAs:
-    1. Pull the https://github.com/Holo-Host/holofuel repo
-        - `git pull https://github.com/Holo-Host/holofuel.git`
-        - `git checkout develop`
-        - `cd test`
+   1. Pull the https://github.com/Holo-Host/holofuel repo
+      - `git pull https://github.com/Holo-Host/holofuel.git`
+      - `git checkout develop`
+      - `cd test`
 
-    2. Update the `start-agent1` script in the `package.json`
-          - Find the `start-agent1` script inside the `package.json`
-          - Update the HC_N3H_PATH
+2. Update the `start-agent1` script in the `package.json`
+      - Find the `start-agent1` script inside the `package.json`
+      - Update the HC_N3H_PATH
 
-    3. Open two terminals at @holofuel/test
+  3. Open two terminals at @holofuel/test
 
-    4. Run agent1's DNA 
-          - `npm run start-agent1`
+  4. Run agent1's DNA 
+        - `npm run start-agent1`
 
-    5. Update the `start-agent2` script in the `package.json` BEFORE running agent2
-          - Find the `start-agent2` script inside the `package.json`
-          - Update the HC_N3H_PATH
-          - Add the HC_N3H_BOOTSTRAP_NODE
-          - Add the HC_N3H_IPC_URI
+  5. Update the `start-agent2` script in the `package.json` BEFORE running agent2
+        - Find the `start-agent2` script inside the `package.json`
+        - Update the HC_N3H_PATH
+        - Add the HC_N3H_BOOTSTRAP_NODE
+        - Add the HC_N3H_IPC_URI
 
-    6. Run agent2's DNA
-          - `npm run start-agent2`
+  6. Run agent2's DNA
+        - `npm run start-agent2`
 
 
-### Steps torun two UIs:
-    1. Pull the https://github.com/Holo-Host/holofuel-gui repo
-        - `git pull https://github.com/Holo-Host/holofuel-gui.git`
-        - `cd ui-src`
+### Steps to run two UIs:
+  1. Pull the https://github.com/Holo-Host/holofuel-gui repo
+      - `git pull https://github.com/Holo-Host/holofuel-gui.git`
+      - `cd ui-src`
 
-    2. Open two terminals at @holofuel-gui/ui-src
+  2. Open two terminals at @holofuel-gui/ui-src
 
-    3. **Run Agent1** 
-          - Start agent1's UI : `npm run start-agent1`
-          - View agnet1's UI : Open @ http://localhost:8800/
+  3. **Run Agent1** 
+        - Start agent1's UI : `npm run start-agent1`
+        - View agnet1's UI : Open @ http://localhost:8800/
 
-    4. **Run Agent2**  
-        - Start agent2's UI : `npm run start-agent2`
-        - View agent2's UI : Open @ http://localhost:9300/ 
+  4. **Run Agent2**  
+      - Start agent2's UI : `npm run start-agent2`
+      - View agent2's UI : Open @ http://localhost:9300/ 
 
 
 ## Built With
