@@ -13,7 +13,8 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 ## How to Test :
 - Install dependencies:`cd ui-src && yarn install && cd ..`
   
-- Spin up two agents. *NOTE: Below, we will walk through the steps for spinning up two agents (i.e. two dnas and two UIs).*
+- Spin up two agents. 
+    > *Note: Below, we will walk through the steps for spinning up two agents (i.e. two dnas and two UIs).*
 
 #
 
