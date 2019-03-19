@@ -48,6 +48,11 @@ input {
 .decreasedBalance:hover {
   text-shadow: #260124 0.5px 0.8px 0px;
 }
+
+.dialogPaper {
+  background: #4b6a7d;
+}
+
 /*******************************************************
               React-Table Custom styles
 *******************************************************/

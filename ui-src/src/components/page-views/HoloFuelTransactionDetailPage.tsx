@@ -14,7 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 // local imports
-import styles from '../styles/page-styles/DefaultPageMuiStyles'
+import styles from '../styles/page-styles/DefaultPageMuiStyles';
+import '../styles/page-styles/scaffold-styles.css';
 import { Ledger } from '../../utils/types';
 // import SimpleTable from '../page-sub-components/bottom-menu-bar/SimpleTable';
 
@@ -33,7 +34,6 @@ export interface State {
   open: boolean
 }
 
-
 function Transition(props:any) {
   return <Slide direction="up" {...props} />;
 }
@@ -45,7 +45,6 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
       open: false,
     };
   };
-
 
   componentDidMount () {
     console.log("PROPS : ", this.props);
@@ -61,8 +60,6 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
     this.props.toggleTxDetailModal();
   };
 
-// due_date: string, tx_initiation_date: string, origin_time_stamp: string, amount: any, notes: string, counterparty:string, status: string
-
   render() {
     const { classes, currentRowDataDetailed } = this.props;
     const rowData = currentRowDataDetailed.forEach(txDetail => {return txDetail});
@@ -73,26 +70,30 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
     return (
       <div>
         <Dialog
+          style={{background:"#4b6a7d"}}
           fullScreen
           open={this.state.open}
           onClose={this.handleClose}
           TransitionComponent={Transition}
+          className="dialogPaper"
         >
           <AppBar className={classes.appBarFullPageModal}>
             <Toolbar>
               <Typography variant="h6" color="inherit" className={classes.flex}>
                 Transaction Details
               </Typography>
+
               {/* <Typography className={classes.tableHeader} variant="display2" gutterBottom={gutterBottom} component="h3" >
                 Transaction Details
               </Typography> */}
+
               <IconButton color="inherit" onClick={this.handleClose} aria-label="Close">
                 <CloseIcon />
               </IconButton>
             </Toolbar>
           </AppBar>
 
-          <div className={classnames(classes.flexContainer, classes.reducedJumbotron)} style={{ marginTop: '50px'}}>
+          <div className={classnames(classes.flexContainer, classes.reducedJumbotron)} style={{ marginTop: '50px',  marginBottom:'50px', width:'80%'}}>
             <div className={classes.flexItem}>
               <h3 className={classes.h3}>Current Balance</h3>
               <Typography className={classes.balanceHeader} variant="caption" gutterBottom={gutterBottom} component="h3" >
@@ -110,43 +111,34 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
 
           <div className={classnames(classes.flexContainer, classes.detailedTransaction)}>
             {/* <SimpleTable classNames={classes.flexItem} {...newProps} currentTxData={this.state.currentTxData} /> */}
+
             <List>
               <ListItem button>
-                <ListItemText primary="Due Date :" secondary="dueDate" />
+                <ListItemText primary="Due Date :" secondary={currentRowDataDetailed[0]} />
               </ListItem>
               <Divider />
-
+              <ListItem button>
+                <ListItemText primary="Current Transaction Date" secondary={currentRowDataDetailed[1]} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Date Transaction Initiated:" secondary={currentRowDataDetailed[2]} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed[3]} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed[4]} />
+              </ListItem>
+              <Divider />
+              <ListItem button>
+                <ListItemText primary="Transaction Notes" secondary={currentRowDataDetailed[5]} />
+              </ListItem>
+              <Divider />
               {/* <ListItem button>
-                <ListItemText primary="Due Date :" secondary={currentRowDataDetailed.dueDate} />
-              </ListItem>
-              <Divider />
-              <ListItem button>
-                <ListItemText primary="Current Transaction Date" secondary={currentRowDataDetailed.transaction_timestamp} />
-              </ListItem>
-              <Divider />
-              <ListItem button>
-                <ListItemText primary="Date Transaction Initiated:" secondary={currentRowDataDetailed.originTimeStamp} />
-              </ListItem>
-              <Divider />
-              <ListItem button>
-                <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed.amount} />
-              </ListItem>
-              <Divider />
-              <ListItem button>
-                <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed.coumterparty} />
-              </ListItem>
-              <Divider />
-              <ListItem button>
-                <ListItemText primary="Transaction Notes" secondary={currentRowDataDetailed.notes} />
-              </ListItem>
-              <Divider />
-              <ListItem button>
-                <ListItemText primary="Transaction Status:" secondary={currentRowDataDetailed.status.split("/")[1]} />
-              </ListItem> */}
-
-              {/* <Divider />
-              <ListItem button>
-                <ListItemText primary="Transaction Intiator:" secondary={} />
+                <ListItemText primary="Transaction Status:" secondary={currentRowDataDetailed.[6]} />
               </ListItem> */}
             </List>
           </div>
@@ -158,3 +150,8 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
 }
 
 export default withStyles(styles)(HoloFuelTransactionDetailPage);
+
+/* <Divider />
+  <ListItem button>
+  <ListItemText primary="Transaction Intiator:" secondary={} />
+  </ListItem> */

@@ -61,7 +61,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       fontWeight: 'lighter'
     },
     detailedTransaction:{
-      background: '#4b6a7d',
+      background: '#eee',
+      border: "1px solid #273269",
+      margin: 50,
+      borderRadius: 4
     },
     nextBtn: {
       position:'relative',
@@ -708,7 +711,10 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       marginTop: 33,
     },
     notchedOutline:{},
-   }
+    PaperFullScreen: {
+      background: '#4b6a7d'
+    }
+  }
 );
 
 export default styles;
