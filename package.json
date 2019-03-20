@@ -5,35 +5,13 @@
   "main": "index.js",
   "scripts": {
     "start-dna-agent1":"cd ./holofuel && HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent1 hc run --port 3000",
-    "start-dna-agent2":"cd ./holofuel && HC_N3H_BOOTSTRAP_NODE=wss://192.168.0.7:45431/?a=hkZdTt7-tbo4TeUuNNSNilsM95dLxVZCf38aJYU2q5oAL8YHO3HgfnUPsq8F6ucX5nssOi6_pz9B9nv21t7X_aAoiRvcwIwn HC_N3H_IPC_URI=wss://127.0.0.1:36105/ HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent2 hc run --port 3100",
-    "hc:build": "mkdir -p dna && cd dna-src && hc package --strip-meta -o ../dna/holofuel.hcpkg",
-    "hc:start": " npm run ui:build &&  holochain -c ./conductor-config.toml",
-    "ui:build": "cd ui-src && REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=agent1_dna_instance npm run build && cd ..",
-    "ui:build-agent1": "cd ui-src && REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=agent1_dna_instance npm run build && cd ..",
-    "ui:build-agent2": "cd ui-src && REACT_APP_NODE_PORT=4100 REACT_APP_DNA_INSTANCE=agent2_dna_instance npm run build && cd ..",
-    "build:agent1": "npm run ui:build-agent1 && cp -a ./ui/. ./ui-agent1/",
-    "build:agent2": "npm run ui:build-agent2 && cp -a ./ui/. ./ui-agent2/",
-    "build:scenario": "npm run build:agent1 && npm run build:agent2",
-    "ui:start": " npm run build:scenario &&  holochain -c ./conductor-config.toml",
-    "start:agent1": " npm run build:agent1 &&  holochain -c ./agent1-conductor-config.toml  && node scripts/start-scenario.js",
-    "start:agent1-node": " npm run build:agent1 && node scripts/start-scenario.js",
-    "start:agent2": " npm run build:agent2 &&  holochain -c ./agent2-conductor-config.toml",
-    "quick-start": "holochain -c ./conductor-config.toml",
-    "q1": "holochain -c ./agent1-conductor-config.toml",
-    "q1-node": "node scripts/start-scenario.js",
-    "q2": "holochain -c ./agent2-conductor-config.toml"
+    "start-dna-agent2":"cd ./holofuel && HC_N3H_BOOTSTRAP_NODE=wss://192.168.0.8:35551/?a=hkZ2m0MuNrmDhRkilo7qQZmFLjz_9OK5VE6qINrReLuXTvGWRacYXumO98PYHnBicTFsDrSOFbz523lNQwUM3l0IdvuBMDNz HC_N3H_IPC_URI=wss://127.0.0.1:33719/ HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent2 hc run --port 3100",
+    "start-ui-agent1":"cd ui-src && npm run start-agent1",
+    "start-ui-agent2":"cd ui-src && npm run start-agent2"
   },
   "authors": [
     "Lisa Jetton",
     "Zo-el"
   ],
   "license": "MIT",
-  "dependencies": {
-    "bluebird": "^3.5.3",
-    "classnames": "^2.2.6",
-    "inquirer": "^6.2.2",
-    "node-cmd": "^3.0.0",
-    "toml": "^3.0.0",
-    "tomlify-j0.4": "^3.0.0"
-  }
 }
