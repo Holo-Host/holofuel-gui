@@ -11,8 +11,6 @@ import Info from '@material-ui/icons/Info';
 
 /* Transaction Table Headers */
 const mobile_tx_table_columns = (props: any, state: any, cb:() => void) => {
-  // console.log("Table Columns Props", props);
-  // console.log("Table Columns State", state);
   const table_columns = [{
     Header: (row: any) => (<Today/>),
     id: 'originTimeStamp',

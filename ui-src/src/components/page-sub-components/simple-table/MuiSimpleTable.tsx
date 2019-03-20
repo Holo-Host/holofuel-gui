@@ -73,8 +73,7 @@ class MuiSimpleTable extends React.Component<Props, State> {
      ];
 
      const currentRow = this.createData(dueDate, transaction_timestamp, notes);
-     console.log("ROW Details:",currentRow)
-    return (
+     return (
       <div style={{ width:'100%' }}>
         <Paper className={classes.muiSimpleTableRoot}>
           <Table className={classes.muiSimpleTable}>

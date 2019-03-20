@@ -46,7 +46,6 @@ class HoloFuelAppContainer extends React.Component<Props> {
 }
 
 const mapStateToProps = ({ transactionReducer }: any): StateProps => {
-  // console.log("transactionReducer", transactionReducer);
   return {
 // global identifiers :
   list_of_instance_info: transactionReducer.list_of_instance_info,
@@ -70,52 +69,41 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
-  // console.log("GetInfoInstancesAsyncAction", GetInfoInstancesAsyncAction);
-  // console.log("TransactionListAsyncAction", TransactionListAsyncAction);
   return {
       get_info_instances : () => {
-        // console.log("dispatching get_info_instances");
        dispatch(GetInfoInstancesAsyncAction.create([]))},
 
       get_agent_list : () => {
-        // console.log("dispatching get_agent_list");
        dispatch(GetAgentListAsyncAction.create([]))},
 
       fetch_agent_string: () => {
-        console.log("dispatching fetch_agent_string");
        dispatch(FetchAgentStringAsyncAction.create([]))},
 
   // TRANSACTION STATES
-      get_ledger_state : () => {console.log("dispatching get_ledger_state");dispatch(LedgerStateAsyncAction.create({}))},
+      get_ledger_state : () => {
+      dispatch(LedgerStateAsyncAction.create({}))},
 
       list_transactions : (payload?) => {
-        // console.log("dispatching list_transactions");
        dispatch(TransactionListAsyncAction.create(payload))},
 
       list_pending : () => {
-        // console.log("dispatching list_pending");
        dispatch(PendingListAsyncAction.create({}))},
 
       list_requests : () => {
-        // console.log("dispatching list_transactions");
        dispatch(ListRequestsAsyncAction.create({}))},
 
       list_proposals : () => {
-        // console.log("dispatching list_proposals");
        dispatch(ListProposalsAsyncAction.create({}))},
 
   //// View Specific Transaction
       get_single_request : (request_payload) => {
-      // console.log("dispatching get_single_request");
        dispatch(GetRequestAsyncAction.create(request_payload))},
 
       get_single_proposal : (proposal_payload) => {
-        // console.log("dispatching get_single_proposal");
        dispatch(GetProposalAsyncAction.create(proposal_payload))},
 
   // TRANSACTION EVENTS (ACTIONS):
       request_payment : (payload) => {
-      // console.log("dispatching request");
        dispatch(RequestPaymentAsyncAction.create(payload))},
 
   // NB: API not yet available...
@@ -124,7 +112,6 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   //// PROPOSAL CASE :
       // payload === {to, amount, notes?, deadline?, request?}
       propose_payment : (payload) => {console.log("dispatching proposal"); dispatch(ProposalAsyncAction.create(payload))},
-      // payload === {proposal, proposal_sig, proposal_commit_hash}
       receive_payment : (payload) => {console.log("dispatching receive_payment"); dispatch(ReceivePaymentAsyncAction.create(payload))},
 
   // NB: API not yet available...

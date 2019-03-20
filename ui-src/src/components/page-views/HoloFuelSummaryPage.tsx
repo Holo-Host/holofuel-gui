@@ -57,9 +57,6 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
    public render () {
       const { classes, transferBtnBar, ...newProps } = this.props;
       const gutterBottom : boolean = true;
-
-      console.log('Props in HoloFuelSummaryPage:', this.props);
-
       return (
         <div>
           <div className={classes.jumbotron}>

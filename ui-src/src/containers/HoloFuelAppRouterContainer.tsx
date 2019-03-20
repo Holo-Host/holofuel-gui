@@ -94,10 +94,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
 // Find a dynamic way to connect the ui to the dna >> play with info_instances && agent_string >> access prior to running?!?!
   public render() {
-    console.log('State in HoloFuelAppContainer:', this.state);
     const { classes, staticContext, ...newProps } = this.props; //TODO: Locate staticContext.. AND REMOVE from outer props
     const { location } = this.props.history;
-
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>
     }

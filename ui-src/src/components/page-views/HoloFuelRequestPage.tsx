@@ -35,12 +35,9 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
   };
 
   componentDidMount () {
-    console.log("holofuel REQUEST PAGE PROPS : ", this.props);
-    // set the this.state.agentHash value  !!!!
   }
 
   makeRequest = async (txInfoObj: any) => {
-    console.log("txInfo for Request Call : ", txInfoObj);
     // make make_payment API call
     // this.props.request_payment(txInfoObj);  // sending as JSON
 
@@ -50,21 +47,17 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
   }
 
   sendConfirmationMessage = (requestResult: any, txInfoObj: any) => {
-    console.log('The attempt to send money (the request) resolved to be : >>> ', requestResult);
 
     this.setState({ confirmation: txInfoObj});
-    console.log("MESSAGE : Inside the request page >> : ", this.state.confirmation);
-    // Can prompt for a confirm message here with request info...
+  // Can prompt for a confirm message here with request info...
   }
 
   resetMessage = () => {
     // resetting the message to blank after confirmed transaction result in modal...
-    console.log('resetting the confirmation propety on the request page... >>> ');
     this.setState({ confirmation: "" });
   }
 
   public render () {
-    console.log('HoloFuelRequestPage PROPS upon componentDidMount:', this.props);
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
 

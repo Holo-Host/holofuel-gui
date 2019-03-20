@@ -22,7 +22,6 @@ class QrGenerator extends React.Component{
    generateQR = async text => {
     try {
       const qrPng = await QRCode.toDataURL(text);
-      console.log(qrPng);
       this.setState({ qrPng });
     } catch (err) {
       console.error(err)
@@ -32,7 +31,6 @@ class QrGenerator extends React.Component{
   render () {
     const { qrPng } = this.state;
     const { classes } = this.props;
-    // console.log('Props in QrGenerator:', this.props);
 
     return (
       <div>

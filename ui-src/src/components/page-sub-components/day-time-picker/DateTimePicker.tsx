@@ -58,10 +58,6 @@ class DateTimePicker extends React.Component<Props, State> {
   };
 
   handleDateChange = (momentStartDate: Moment | null, momentEndDate: Moment | null ) => {
-    console.log(" >>>>>>>>> momentStartDate within the handleDateChange fn <<<<<<< ", momentStartDate);
-    console.log(" >>>>>>>>> momentEndDate within the handleDateChange fn <<<<<<< ", momentEndDate);
-
-    console.log("CURRENT STATE UPON CALL IN handleDateChange", this.state);
     // Change the startDate date and focus the "endDate" input field
     const startDateString = momentStartDate !== null ? momentStartDate.format('YYYY-MM-DD') : null;
     const endDateString = momentEndDate !== null ? momentEndDate.format('YYYY-MM-DD') : null;
@@ -75,13 +71,10 @@ class DateTimePicker extends React.Component<Props, State> {
   }
 
   handleNewType = () => {
-    console.log("Day Time Picker STATE: ", this.state);
     this.props.setTxTypeFilter(this.state.txState);
   };
 
   submitNewDuration = () => {
-    console.log("Day Time Picker STATE: ", this.state);
-
     this.props.setDateFilter(this.state.endDateString, this.state.startDateString);
   };
 

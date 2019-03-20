@@ -68,13 +68,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   // }
 
   handleChange = (name: StateKeyType) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    // console.log("selected event : ", event);
-    // console.log("selected name : ", name);
-  //TODO: Find a typed solution that allows the following instead of switch case:
-  // The non-ts way:
-    // this.setState({
-    //   [name]: event.target.value,
-    // });
     switch (name) {
       case 'recipient':
         this.setState({
@@ -100,12 +93,9 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   };
 
   onChangeDate = (deadlineDate:Date) => {
-    console.log('deadlineDate: ', deadlineDate)
     this.setState({deadlineDate})
   }
   onChangeTime = (deadlineTime:Date) => {
-
-    console.log('deadlineTime: ', deadlineTime)
     this.setState({deadlineTime})
   }
 
@@ -116,9 +106,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       notes: "",
       deadline: ""
     })
-
-    // Now send obj to parent component for API invocation :
-    console.log("propose_tx_obj : ", tx_obj);
     this.props.invokeProposal(tx_obj);
   };
 
@@ -129,9 +116,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       notes: "",
       deadline: ""
     })
-
-    // Now send obj to parent component for API invocation :
-    console.log("request_tx_obj : ", tx_obj);
     this.props.invokeRequest(tx_obj);
   };
 
@@ -145,23 +129,19 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       const timeMinutes= this.state.deadlineTime.getMinutes();
       const deadlineString  = new Date(year,month,day,timeHours,timeMinutes, 0);
       const txDeadline = moment(deadlineString);
-      console.log("deadline", txDeadline);
 
       this.setState({
         deadline: txDeadline,
         transactionType
       });
-      console.log('Check for Deadline in State', this.state);
       this.digestTxContent(txDeadline);
     });
   }
 
   digestTxContent = (txDeadline:Moment) => {
-    const { recipient, amount, deadline, notes } = this.state;
-    console.log("deadline", deadline);
+    const { recipient, amount, notes } = this.state;
 
     const isoDeadline: Moment = moment(txDeadline, moment.ISO_8601);
-    console.log("deadline >> isoDeadline", isoDeadline);
 
     // NOTE : verify the tx inputs here :
       // 1. Deadline: make sure the deadline datetime is not less than current datetime (ie: cannot choose  past date as the datetime for the transaction deadline)
@@ -177,11 +157,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
         return alert(this.state.errorMessage);
       }
       else if (recipient && amount && txDeadline) {
-        console.log("Counterparty(AKA.Recipient), Amount, and Deadline SHOULD NOT BE an empty string || undefined ===>>");
-        console.log(" TX Counterparty: ", recipient);
-        console.log("TX Amount", amount);
-        console.log("TX Deadline", txDeadline);
-
         if (parseInt(amount) <= 0){
           this.setState({
             errorMessage: "Hmmmm... It looks like the amount you entered is invalid. \n Please review your transaction amount and ensure you provide a positive amount value."
@@ -191,9 +166,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
           return alert(this.state.errorMessage);
         }
 
-        const validDeadlineDate = moment(deadline).isValid();
-        console.log("validDeadlineDate", validDeadlineDate);
-
+        // const validDeadlineDate = moment(deadline).isValid();
         const transactionObj = {
           counterparty: recipient,
           amount,
@@ -208,19 +181,13 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   }
 
   resetMessage = () => {
-    // resetting the message to blank after confirmed transaction result in modal...
-    console.log('resetting the message property in the RequestProposalFormBtns component... >>> ');
     this.setState({ message: "" });
   }
 
   public render() {
     const { classes, txType } = this.props;
-
     const multiline:boolean = true;
     const fullWidth:boolean = true;
-
-    console.log("new Date().setMonth(new Date().getMonth() + 1): ", new Date());
-
     return (
       <div>
         <div className={classnames(classes.txWrapper, classes.root)}>

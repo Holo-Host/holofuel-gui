@@ -2,12 +2,9 @@
    Table Data Generation Refactor Helper Function - Final Obj
  //////////////////////////////////////////////////////////////////*/
 const dataRefactor = (transaction_details: any) => {
-  // console.log("APPDETAILS:-------------->",transaction_details);
   const APP_LIST_LENGTH = transaction_details.length;
 
   const insertAppDetails = (transaction: any) => {
-    console.log("transaction", transaction);
-
     if (transaction !== parseInt(transaction, 10)) {
       const newTxObj = {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
@@ -26,8 +23,6 @@ const dataRefactor = (transaction_details: any) => {
         inResponseToTX: transaction.inResponseToTX,
         rowNumberType: transaction.rowNumberType
       };
-      
-      console.log("newTxObj", newTxObj);
       return newTxObj;
     }
     else {
@@ -114,24 +109,19 @@ const refactorListOfPending = (list_of_pending:any) => {
 
 
 export const refactorListOfTransactions = (list_of_transactions: any, list_of_pending: any) => {
-  // console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
   const list_of_refactored_tx_unprocessed = refactorListOfPending(list_of_pending);
 
   const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
     const event = tx.event;
-    // console.log("transaction.transactions.event", event);
     let txEvent:string | undefined = undefined;
     let originEvent:string | undefined = undefined;
     let amount: number | null = null;
     let counterparty: string | undefined = undefined;
     let dueDate: string | undefined = undefined;
-    // let txTimestamp: string; // FIND way to get acess to this for all tx types...
     let notes: string | undefined = undefined;
     let originCommitHash : string | undefined = undefined; // FIND way to get acess to this for all tx types...
     let inResponseToTX: string | undefined = undefined;
     let rowNumberType: string | undefined = alternateEven();
-    // console.log("rowNumberType >> should oscilate between odd and even << :", rowNumberType);
-
     if (event.Request){
       txEvent = "Request";
       originEvent = "Request";
@@ -141,10 +131,8 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       notes = event.Request.notes;
       inResponseToTX = undefined;
       originCommitHash =  tx.timestamp.origin;
-
     }
     else if (event.Proposal){
-      // if a request commit hash exists, then the request was the original transaction in tx-chain.
       txEvent="Proposal"
       originEvent = event.Proposal.request ? "Request" : "Proposal";
       amount =  event.Proposal.tx.amount;
@@ -199,6 +187,5 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
 
     const all_unprocessed_tx = list_of_pending_tx.concat(list_of_refactored_tx_unprocessed);
     const all_transactions = all_unprocessed_tx.concat(list_of_processed_tx);
-    console.log(">>>>>>>>>>>>>>>>>>>>> ALL TX >> About to go to the dataRefactor... <<<<<<<<<<<<<<<<<<<<<", all_transactions);
     return dataRefactor(all_transactions);
 };

@@ -32,38 +32,25 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
   };
 
   componentDidMount () {
-    console.log("ProposalPage PROPS upon componentDidMount : ", this.props);
-    // set the this.state.agentHash value  !!!!
   }
 
   sendProposal = async (txInfoObj: any) => {
-    console.log("txInfoObj for Proposal Call : ", txInfoObj);
-    // create propose_payment const that make call and stores the result..
     const proposalResult = await this.props.propose_payment(txInfoObj); // send as JSON
     this.sendConfirmationMessage(proposalResult, txInfoObj);
   }
 
   sendConfirmationMessage = (proposalResult: any, txInfoObj: any) => {
-    console.log('The attempt to send money (the proposal) resolved to be : >>> ', proposalResult);
-
     this.setState({ confirmation: txInfoObj});
-
-    console.log("MESSAGE : Inside the proposal page >> : ", this.state.confirmation);
   }
 
   resetMessage = () => {
     // resetting the message to blank after confirmed transaction result in modal...
-    console.log('resetting the confirmation propety on the proposal page... >>> ');
     this.setState({ confirmation: "" });
   }
 
   public render () {
-    // console.log('Props in HoloFuelTransferFormPage:', this.props);
     const { classes, transferBtnBar, ...newProps } = this.props;
     const gutterBottom : boolean = true;
-
-    console.log("************this.state inside HoloFuelProposalPage**********************", this.state)
-
     return (
     <div>
       <div className={classnames(classes.flexContainer, classes.reducedJumbotron)}>

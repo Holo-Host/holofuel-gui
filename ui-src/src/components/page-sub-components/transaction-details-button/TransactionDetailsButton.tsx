@@ -60,7 +60,6 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         txStateStage
       };
     }
-    // console.log("transactionState >>>> ", state.transactionState);
     return ({ transactionState: state.transactionState });
   }
 
@@ -73,8 +72,6 @@ class TransactionDetailsButton extends React.Component<Props, State> {
     let todoText = "";
     let statusText = "";
 
-    // console.log("!>!>!>!>!>>!INSIDE configureTransactionState!!>!>!>!>!", this.state);
-    // if author of tx === recipient
     if(this.state.txStateDirection === "recipient"){
         switch (this.state.txStateStage) {
         case 'requested': {
@@ -174,7 +171,6 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         deadline: isoDeadline,
         request: originCommitHash
       }
-      console.log("propose_tx_obj : ", approved_proposal_obj);
       this.props.propose_payment(approved_proposal_obj);
       // const proposalResult = await this.props.propose_payment(approved_proposal_obj); //sending as JSON
       // this.sendConfirmationMessage(proposalResult, approved_proposal_obj);
@@ -198,7 +194,6 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         proposal_sig: proposalCommitSignature, // proposal signature
         proposal_commit: eventCommitHash // commit address
       }
-      console.log("receive_payment_obj : ", receive_payment_obj);
       this.props.receive_payment(receive_payment_obj);
       // const receivePaymentResult = await this.props.receive_payment(receive_payment_obj); //sending as JSON
       // this.sendConfirmationMessage(receivePaymentResult, receive_payment_obj);
@@ -225,14 +220,10 @@ class TransactionDetailsButton extends React.Component<Props, State> {
   };
 
   sendConfirmationMessage = (txResult: any, txInfoObj: any) => {
-    // console.log('The attempt to send money (the proposal) resolved to be : >>> ', txResult);
     this.setState({ message: `You just made the following transaction: ${JSON.stringify(txInfoObj)}.`});
-    console.log("MESSAGE : Inside the TransactionDetailsButton component >> : ", this.state.message);
   }
 
   resetMessage = () => {
-    // resetting the message to blank after confirmed transaction result in modal...
-    console.log('resetting the message property in the RequestProposalFormBtns component... >>> ');
     this.setState({ message: "" });
     this.props.resetPage();
   }
@@ -246,9 +237,6 @@ class TransactionDetailsButton extends React.Component<Props, State> {
   public render() {
     const { classes, ...newProps } = this.props;
     // NOTE: uncomment below when testing button
-    // console.log("TransactionDetailsButton props", this.props);
-    // console.log("TransactionDetailsButton state", this.state);
-
     return (
       <div>
         <div>

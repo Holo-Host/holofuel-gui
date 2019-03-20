@@ -64,7 +64,6 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       return [];
     }
     else {
-      console.log("INSIDE DATA FN ... ABOUT TO GO TO THE DATA REFACTOR");
       return refactorListOfTransactions(this.props.list_of_transactions, this.props.list_of_pending);
     }
   }
@@ -83,14 +82,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     const mobile_table_columns = mobile_tx_table_columns(this.props, this.state, this.resetPage);
     // Md/Lg Viewport
     const table_columns = tx_table_columns(this.props, this.state, this.resetPage);
-    // console.log("table_columns: ", table_columns);
-
     // Data
     const table_data = this.fetchPendingAndProcessedData();
-    console.log("table_data ", table_data );
-
-    console.log('this.props.list_of_pending.proposals && this.props.list_of_pending.requests TRUE ?!?!?', this.props.list_of_pending.proposals && this.props.list_of_pending.requests);
-
     return (
     <div className={classes.transactionTablesContainer}>
         { isMobile ?

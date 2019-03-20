@@ -3,7 +3,6 @@ import * as luxon from 'luxon';
 
 export const get_current_datetime = () => {
   const today = luxon.DateTime.local();
-  console.log("LUXON `TODAY` OBJECT", today);
   return today;
 }
 

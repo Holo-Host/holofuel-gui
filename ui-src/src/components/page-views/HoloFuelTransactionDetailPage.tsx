@@ -47,7 +47,6 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
   };
 
   componentDidMount () {
-    console.log("PROPS : ", this.props);
     this.handleClickOpen();
   }
 
@@ -62,11 +61,8 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
 
   render() {
     const { classes, currentRowDataDetailed } = this.props;
-    const rowData = currentRowDataDetailed.forEach(txDetail => {return txDetail});
-    console.log("ROW DATA >> are there 7 separate strings ??", rowData );
-
+    // const rowData = currentRowDataDetailed.forEach(txDetail => {return txDetail});
     const gutterBottom: boolean = true;
-
     return (
       <div>
         <Dialog

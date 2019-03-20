@@ -78,15 +78,11 @@ class CreateNewSettings extends React.Component<Props, State>  {
   }
 
   public handleChange = (eventCurrentTarget: any) => {
-       // console.log("the event currentTarget: ", eventCurrentTarget);
        switch(eventCurrentTarget.id) {
          case "primaryEmailAddress":
             this.setState({ primaryEmailAddress: eventCurrentTarget!.value });
              break;
-
-          // other cases go here...
-
-          default:
+        default:
              break;
         }
      }
@@ -94,18 +90,10 @@ class CreateNewSettings extends React.Component<Props, State>  {
      public createPrimaryEmail = async (event:any) => {
        event.preventDefault();
        const { primaryEmailAddress } = this.state;
-       console.log("HERE IS >> this.state.primaryEmailAddress : ", primaryEmailAddress);
-
        const validateEmail = this.validateEmail(primaryEmailAddress);
-       console.log("Is Agent Email Validated? >>>", validateEmail);
-
        if(primaryEmailAddress && validateEmail ) {
-         console.log("Here are the primaryEmailAddress details: ", primaryEmailAddress);
-
          const genEmailBundle = { email: primaryEmailAddress }
          JSON.stringify(genEmailBundle);
-         console.log("genEmailBundle foragenty Email API CALL", genEmailBundle);
-         // await this.props.genprimaryEmailAddress(genEmailBundle);
        }
      }
 
@@ -115,15 +103,12 @@ class CreateNewSettings extends React.Component<Props, State>  {
 
     public handleSubmit = (event: any) => {
       event.preventDefault(event);
-      // console.log("HANDLESUBMIT event >>> ", event);
-      // console.log("HANDLESUBMIT this.state >>> ", this.state);
       // this.createAgentEmail(event);
     }
 
   public render() {
     const { classes } = this.props;
     const gutterBottom : boolean = true;
-    // console.log("SETTINGS this.props : ", this.props);
     const { primaryEmailAddress} = this.state;
 
       return (

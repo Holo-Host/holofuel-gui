@@ -48,29 +48,20 @@ class AgentProfile extends React.Component<Props, State> {
       const data = { agentHash: my_agent_hash, agentString: my_agent_string };
       const prevProps = state.prevProps || {};
       const agentData = prevProps.value !== data ? data : state.agentData
-      console.log("agentData", agentData);
       return ({ agentData, prevProps: agentData });
     }
   }
 
   componentDidMount () {
-    console.log("PROPS : ", this.props);
-    // call for the agentHash and agentString..!!!!
-    // this.props.fetch_agent_hash();
-
-// instead of props API call to fetch Agent Hash (currently awaiting Profiles Zome), set state for moment..
+    // instead of props API call to fetch Agent Hash (currently awaiting Profiles Zome), set state for moment..
     let newAccess = Object.assign({}, this.state.agentData);
     newAccess.agentHash = this.props.my_agent_hash;
     this.setState({agentData: newAccess});
   }
 
   public render () {
-    console.log('Props in AgentProfile:', this.props);
     const { classes, transferBtnBar, showTransferBar, txType, ...newProps } = this.props;
     const gutterBottom : boolean = true;
-    // const { agentHash, agentString } = this.state.agentData;
-    console.log("check out the contents / body of the state.agentData obj: ", this.state.agentData)
-
     let today = moment(new Date());
     const MOCK_AGENT_JOIN_DATE = today.toString().substring(0, 16);
     const MOCK_EMAIL = `${this.state.agentData!.agentString}@holo.host`;

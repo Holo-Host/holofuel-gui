@@ -42,8 +42,6 @@ class MainListItems extends React.Component<Props, State> {
 }
 
   public render () {
-    // console.log("PROPS inside the MAIN-NAVV--LIST-ITEMS file...", this.props);
-
     return (
       <div>
         <br />
