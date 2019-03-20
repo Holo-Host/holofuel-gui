@@ -51,8 +51,8 @@ main.js.map
 .idea
 npm-debug.log.*
 
-tmp-storage
 tmp-storage-1
+tmp-storage-2
 ui-agent1
 ui-agent2
 ui
