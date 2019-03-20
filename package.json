@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start-dna-agent1":"cd ./holofuel && HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent1 hc run --port 3000",
-    "start-dna-agent2":"cd ./holofuel && HC_N3H_BOOTSTRAP_NODE=wss://192.168.0.8:35551/?a=hkZ2m0MuNrmDhRkilo7qQZmFLjz_9OK5VE6qINrReLuXTvGWRacYXumO98PYHnBicTFsDrSOFbz523lNQwUM3l0IdvuBMDNz HC_N3H_IPC_URI=wss://127.0.0.1:33719/ HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent2 hc run --port 3100",
+    "start-dna-agent2":"cd ./holofuel && HC_N3H_BOOTSTRAP_NODE=wss://192.168.0.7:40297/?a=hkb2XZPgAa4cnrVSmXQ3MjVFr7mk-u4dWvcJDjxqT_g8doUdQTzEAuQk-6t3h-M7XVkF4UZy7mYTBMsEuTCvLV5q2fpmiMEc HC_N3H_IPC_URI=wss://127.0.0.1:35321/ HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent2 hc run --port 3100",
     "start-ui-agent1":"cd ui-src && npm run start-agent1",
     "start-ui-agent2":"cd ui-src && npm run start-agent2"
   },
