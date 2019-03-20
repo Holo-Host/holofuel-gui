@@ -165,20 +165,6 @@ class AppNavBar extends React.Component {
 
                   <Grow in={scrolledUp}
                     style={{ transformOrigin: '0 0 0' }}
-                    {...(scrolledUp ? { timeout: 1200 } : {})}
-                  >
-                    <IconButton
-                      className={classes.icon}
-                      aria-haspopup="false"
-                    >
-                      <Link to='/settings'>
-                        <img src="/assets/icons/settings.png" alt="settings-logo" width="18px" height="18px"/>
-                      </Link>
-                    </IconButton>
-                  </Grow>
-
-                  <Grow in={scrolledUp}
-                    style={{ transformOrigin: '0 0 0' }}
                     {...(scrolledUp ? { timeout: 1400 } : {})}
                   >
                     <IconButton
@@ -246,4 +232,17 @@ class AppNavBar extends React.Component {
 }
 
 export default withStyles(styles)(AppNavBar);
-// <MenuItem onClick={this.handleClose}>Sign Out</MenuItem>
+
+// <Grow in={scrolledUp}
+//   style={{ transformOrigin: '0 0 0' }}
+//   {...(scrolledUp ? { timeout: 1200 } : {})}
+// >
+//   <IconButton
+//     className={classes.icon}
+//     aria-haspopup="false"
+//   >
+//     <Link to='/settings'>
+//       <img src="/assets/icons/settings.png" alt="settings-logo" width="18px" height="18px"/>
+//     </Link>
+//   </IconButton>
+// </Grow>

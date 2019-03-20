@@ -70,7 +70,7 @@ class SubNavBar extends React.Component<Props, State> {
                 </Typography>
               </Link>
             </ListItem>
-            <ListItem style={{display: 'inline', paddingTop: "10px"}} button={button}>
+            {/* <ListItem style={{display: 'inline', paddingTop: "10px"}} button={button}>
               <Link to='/settings' className={classes.subheaderLink}>
               <ListItemIcon style={{color:"#799ab6"}}>
                 <img src="/assets/icons/settings.png" alt="settings-logo" width="25px" height="25px"/>
@@ -79,7 +79,7 @@ class SubNavBar extends React.Component<Props, State> {
                 Settings
               </Typography>
             </Link>
-            </ListItem>
+            </ListItem> */}
           </div>
         </Toolbar>
       </AppBar>

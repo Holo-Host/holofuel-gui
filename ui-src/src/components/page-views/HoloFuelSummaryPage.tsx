@@ -54,68 +54,6 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     }
   }
 
-  // static getDerivedStateFromProps(props: Props, state: State) {
-  //   const { list_of_transactions, list_of_pending } = props;
-  //   if (!list_of_transactions || !list_of_pending) {
-  //     return null;
-  //   }
-  //   else {
-  //     const transactionData = { list_of_transactions, list_of_pending };
-  //     const prevProps = state.prevProps || {};
-  //     const data = prevProps.value !== transactionData ? transactionData : state.data
-  //     // console.log("data", data);
-  //
-  //     const { newer } = list_of_transactions;
-  //     const currentTxBatchInfo = Object.assign({newer}, {});
-  //     // console.log("------------------------>",list_of_transactions)
-  //     const txEndDate = newer!.until;
-  //     const txStartDate = newer!.since;
-  //     // console.log(" <><><><><>< TXENDDATE UPON getDerivedStateFromProps <><><><><", txEndDate);
-  //     // console.log(" <><><><><>< TXSTARTDATE UPON getDerivedStateFromProps <><><><><", txStartDate);
-  //
-  //     return ({
-  //       data,
-  //       prevProps: data,
-  //       currentTxBatchInfo,
-  //       txStartDate,
-  //       txEndDate,
-  //       txBatchType: 'All Transactions',
-  //     });
-  //   }
-  // }
-  //
-  // handleTxBatchType = (txState: string) => {
-  //   // console.log("TXTYPE for Batch -- inside of HoloFuelSummaryPage", txState);
-  //   this.setState({
-  //     txBatchType: txState
-  //   });
-  //   // reset table data with custom date filters :
-  //   this.handleTableRefresh();
-  // }
-  //
-  // handleTxBatchDuration = (txEndDate: any, txStartDate: any) => {
-  //   // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txEndDate);
-  //   // console.log(">> TXDURATION :: ENDDATE << for Batch -- inside of HoloFuelSummaryPage", txStartDate);
-  //   this.setState({
-  //     txEndDate,
-  //     txStartDate
-  //   });
-  //   // reset table data with custom date filters :
-  //   this.handleTableRefresh();
-  // }
-  //
-  // handleTableRefresh = () => {
-  //   // const { txBatchType, txStartDate, txEndDate } = this.state;
-  //   console.log("this is your TABLE_DATA_BATCH_LIMIT >> !! >> ", TABLE_DATA_BATCH_LIMIT);
-  //   // console.log("this is your Transaction Batch StartDate >> !! >> ", txStartDate);
-  //   // console.log("this is your Transaction Batch EndDate >> !! >> ", txEndDate);
-  //   // console.log("this is your Transaction Batch Type >> !! >> ", txBatchType);
-  //
-  //   // Invoke list_transactions() WITH PARAMS :
-  //   // console.log("calling : list_transactions WITH PARAMS >> !! >> ");
-  //   // this.props.list_transactions({state: txBatchType, since:txStartDate, until: txEndDate, limit: TABLE_DATA_BATCH_LIMIT });
-  // }
-
    public render () {
       const { classes, transferBtnBar, ...newProps } = this.props;
       const gutterBottom : boolean = true;

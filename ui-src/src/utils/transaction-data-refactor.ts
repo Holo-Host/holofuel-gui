@@ -6,7 +6,8 @@ const dataRefactor = (transaction_details: any) => {
   const APP_LIST_LENGTH = transaction_details.length;
 
   const insertAppDetails = (transaction: any) => {
-    // console.log("transaction", transaction);
+    console.log("transaction", transaction);
+
     if (transaction !== parseInt(transaction, 10)) {
       const newTxObj = {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
@@ -25,7 +26,8 @@ const dataRefactor = (transaction_details: any) => {
         inResponseToTX: transaction.inResponseToTX,
         rowNumberType: transaction.rowNumberType
       };
-      // console.log("newTxObj", newTxObj);
+      
+      console.log("newTxObj", newTxObj);
       return newTxObj;
     }
     else {
@@ -53,23 +55,8 @@ const dataRefactor = (transaction_details: any) => {
 }
 
 //////////////////////////////////////////////////////////////////////////////////
-          /* Data for Pending Transactions Table Overview */
+          /* Data for Transactions Table Overview */
 //////////////////////////////////////////////////////////////////////////////////
-
-// export const refactorData = (list_of_transactions:any,list_of_pending:any)=>{
-//
-//   const pending = refactorListOfPending(list_of_pending);
-//   const {list_of_refactored_transactions,list_of_refactored_processed} = refactorListOfTransactions(list_of_transactions);
-//   // console.log("/////////////////////////////")
-//   // console.log("DataRefactore list_of_refactored_transactions:",list_of_refactored_transactions)
-//   // console.log("DataRefactore pending:",pen)
-//   // console.log("DataRefactore list_of_refactored_processed:",list_of_refactored_processed)
-//   // console.log("/////////////////////////////")
-//   return {pending_table_data:list_of_refactored_transactions.concat(pending),
-//     processed_table_data:list_of_refactored_processed}
-// }
-
-
 let rowNumberType: string = 'odd';
 const alternateEven = () => {
   if (rowNumberType === "odd") {
@@ -80,7 +67,7 @@ const alternateEven = () => {
   }
 }
 
-export const refactorListOfPending = (list_of_pending:any)=>{
+const refactorListOfPending = (list_of_pending:any) => {
   const  list_of_proposals =  list_of_pending.proposals.map((p:any) => {
     return {
       originTimeStamp: p[0][1],
@@ -121,11 +108,15 @@ export const refactorListOfPending = (list_of_pending:any)=>{
     };
   });
 
-  return dataRefactor(list_of_proposals.concat(list_of_requests));
+  const refactored_transactions = list_of_proposals.concat(list_of_requests);
+  return refactored_transactions;
 }
 
-export const refactorListOfTransactions = (list_of_transactions: any) => {
+
+export const refactorListOfTransactions = (list_of_transactions: any, list_of_pending: any) => {
   // console.log("list_of_transactions >> check to see list of TRANSACTIONS : ", list_of_transactions);
+  const list_of_refactored_tx_unprocessed = refactorListOfPending(list_of_pending);
+
   const list_of_refactored_transactions = list_of_transactions.transactions.map((tx: any) => {
     const event = tx.event;
     // console.log("transaction.transactions.event", event);
@@ -191,14 +182,14 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       };
     });
 
-    const list_of_processed = list_of_refactored_transactions.filter((tx:any)=>{
+    const list_of_processed_tx = list_of_refactored_transactions.filter((tx:any)=>{
       return status === "refunded" ||
       status === "rejected" ||
       status === "declined" ||
       status === "completed" ||
       status === "recovered"
     })
-    const list_of_pending = list_of_refactored_transactions.filter((tx:any)=>{
+    const list_of_pending_tx = list_of_refactored_transactions.filter((tx:any)=>{
       return status !== "refunded" &&
       status !== "rejected" &&
       status !== "declined" &&
@@ -206,8 +197,8 @@ export const refactorListOfTransactions = (list_of_transactions: any) => {
       status !== "recovered"
     })
 
-    return {
-      pending_table_data:dataRefactor(list_of_pending),
-      processed_table_data:dataRefactor(list_of_processed)
-    };
+    const all_unprocessed_tx = list_of_pending_tx.concat(list_of_refactored_tx_unprocessed);
+    const all_transactions = all_unprocessed_tx.concat(list_of_processed_tx);
+    console.log(">>>>>>>>>>>>>>>>>>>>> ALL TX >> About to go to the dataRefactor... <<<<<<<<<<<<<<<<<<<<<", all_transactions);
+    return dataRefactor(all_transactions);
 };

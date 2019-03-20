@@ -5,14 +5,11 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Switch, Route, Redirect } from 'react-router';
 import HoloFuelAppContainer from './containers/HoloFuelAppContainer';
 
-import BankViewAppContainer from './containers/BankViewAppContainer';
-
 const Root = ({ store, history }: { store: Store, history: any }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
       <Switch>
         <Redirect exact path='/' to='holofuelsummary' />
-        <Route path = '/bankstyleapp' component={BankViewAppContainer} />
         <Route path = '/holofuelsummary' component={HoloFuelAppContainer} />
         <Route path = '/holofuelproposal' component={HoloFuelAppContainer} />
         <Route path = '/holofuelrequest' component={HoloFuelAppContainer} />

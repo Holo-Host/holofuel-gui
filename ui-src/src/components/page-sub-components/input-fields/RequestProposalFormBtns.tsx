@@ -2,38 +2,26 @@ import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 import classnames from 'classnames';
 import * as moment from 'moment';
-import {DateFormatInput, TimeFormatInput} from 'material-ui-next-pickers'
 // mui custom style imports
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Paper from '@material-ui/core/Paper';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
-// import FormControl from '@material-ui/core/FormControl';
-// import FormHelperText from '@material-ui/core/FormHelperText';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import Button from '@material-ui/core/Button';
 import PersonPin from '@material-ui/icons/PersonPin';
 import Message from '@material-ui/icons/Message';
-import HourGlassIcon from '@material-ui/icons/HourglassEmpty';
-import Timer from '@material-ui/icons/Timer';
-// import OutlinedInput from '@material-ui/core/OutlinedInput';
 // local imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import VerificationMessage from '../modal/VerificationMessage';
 import OutlinedButton from '../outlined-button/OutlinedButton';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
-// import Memo from '../memo/Memo';
-
 
 type StateKeyType = string | number | symbol | any;
 type LabelRef = HTMLElement | null | undefined;
 type Moment = moment.Moment;
-// type StateInput = Pick<State, StateKeyType>| null;
 
 export interface OwnProps {
-  // These are props the component has received from its parent component
-  // e.g. what you write in <ExampleComponent ...>
   classes: any,
   txType: string,
   showTransferBar: (txType:any) => void,
@@ -226,16 +214,10 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   }
 
   public render() {
-    const { deadlineTime, deadlineDate } = this.state;
     const { classes, txType } = this.props;
-    // console.log("Inside the RequestProposalFormBtns...", this.props);
 
-    const dateTimeNow: Date = new Date();
     const multiline:boolean = true;
     const fullWidth:boolean = true;
-    const okToConfirm:boolean = true;
-    const dialog:boolean = true;
-
 
     console.log("new Date().setMonth(new Date().getMonth() + 1): ", new Date());
 
@@ -299,56 +281,6 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
                       notchedOutline: classes.notchedOutline
                     },
                   }}
-                />
-              </Paper>
-            </li>
-
-            <li className={classnames(classes.formList, classes.flexItem, classes.datetimeInput)}>
-              <Paper className={classes.inputPaper} square={false} elevation={4} style={{ marginBottom:'15px' }}>
-                <DateFormatInput
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.datetimeRoot,
-                      input: classes.customFormOutlinedInput,
-                      focused: classes.customFormFocused,
-                      notchedOutline: classes.notchedOutline
-                    },
-                  }}
-                  name='date-input'
-                  value={deadlineDate}
-                  onChange={this.onChangeDate}
-                  min={dateTimeNow}
-                  dialog={dialog}
-                  okToConfirm={okToConfirm}
-                  variant='outlined'
-                  fullWidth={fullWidth}
-                  transformOrigin={{vertical:'center', horizontal:'left'}}
-                  anchorOrigin={{vertical:'center', horizontal:'center'}}
-                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><HourGlassIcon/><span>Delivery Date: </span></div></InputAdornment> )}}
-                />
-              </Paper>
-
-              <Paper className={classes.inputPaper} square={false} elevation={4}>
-                <TimeFormatInput
-                  InputLabelProps={{
-                    classes: {
-                      root: classes.datetimeRoot,
-                      input: classes.customFormOutlinedInput,
-                      focused: classes.customFormFocused,
-                      notchedOutline: classes.notchedOutline
-                    },
-                  }}
-                  name='time-input'
-                  value={deadlineTime}
-                  onChange={this.onChangeTime}
-                  dialog={dialog}
-                  okToConfirm={okToConfirm}
-                  selectableMinutesInterval={5}
-                  variant='outlined'
-                  fullWidth={fullWidth}
-                  transformOrigin={{vertical:'center', horizontal:'left'}}
-                  anchorOrigin={{vertical:'center', horizontal:'left'}}
-                  InputProps={{ endAdornment: ( <InputAdornment position="end"></InputAdornment> ), startAdornment: ( <InputAdornment position="start"><div><Timer/><span>Delivery Time: </span></div></InputAdornment> )}}
                 />
               </Paper>
             </li>
