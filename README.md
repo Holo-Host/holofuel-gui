@@ -22,7 +22,7 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 
 #
 
-#### Steps to run two DNAs:
+### Steps to run two DNAs:
   1. Open two terminals at @holofuel-gui
 
   2. Update the `start-dna-agent1` script in the `package.json`
@@ -55,7 +55,7 @@ Reading DNA from /home/lisa/Documents/gitrepos/holochain/holo/HoloFuel/holoFuelU
         - `npm run start-dna-agent2`
 
 # 
-#### Steps to run two UIs:
+### Steps to run two UIs:
 
   1. Open two more terminals at @holofuel-gui
 
@@ -66,6 +66,9 @@ Reading DNA from /home/lisa/Documents/gitrepos/holochain/holo/HoloFuel/holoFuelU
   4. In the second terminal, run Agent2's UI
       - Start agent2 : `npm run start-ui-agent2`
       - View agent2 : Open at http://localhost:9300/ 
+
+#
+> Tip: If you notice that the UI is not able to successfully connect to the websocket, then stop your DNA instances in the termainal and redo the 'Steps to run two DNAs.'
 
 ---
 ## Built With
