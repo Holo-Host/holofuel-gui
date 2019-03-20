@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classnames from 'classnames';
-// import { QRCode, ErrorCorrectLevel, QRNumber, QRAlphaNum, QR8BitByte, QRKanji } from 'qrcode-generator-ts/js';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
 import Portal from '@material-ui/core/Portal';
@@ -10,8 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
-import QRbutton from '../page-sub-components/input-fields/QRbutton';
-import InformativeModal from '../page-sub-components/modal/InformativeModal';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
 // import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
 
@@ -56,8 +53,8 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
     console.log('The attempt to send money (the request) resolved to be : >>> ', requestResult);
 
     this.setState({ confirmation: txInfoObj});
-
     console.log("MESSAGE : Inside the request page >> : ", this.state.confirmation);
+    // Can prompt for a confirm message here with request info...
   }
 
   resetMessage = () => {
@@ -90,9 +87,6 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
       </div>
 
       <div>
-        <QRbutton agentHash={this.props.my_agent_hash} {...newProps}/>
-        <br/>
-        <br/>
         <br/>
         <hr className={classes.horizontalLine}/>
         <Typography className={classnames(classes.pageHeader,classes.tableHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
@@ -117,12 +111,6 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
           <div/>
         }
 
-        {/* Toggle Confirmation Message */}
-          { this.state.confirmation ?
-            <InformativeModal {...newProps} confirmMessage={ JSON.stringify(this.state.confirmation) } resetMessage={this.resetMessage}/>
-          :
-            <div/>
-          }
       </div>
     </div>
     );

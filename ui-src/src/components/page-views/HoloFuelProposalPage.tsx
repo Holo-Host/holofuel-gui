@@ -1,6 +1,5 @@
 import * as React from 'react';
 import classnames from 'classnames';
-// import { QRCode, ErrorCorrectLevel, QRNumber, QRAlphaNum, QR8BitByte, QRKanji } from 'qrcode-generator-ts/js';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
 import styles from '../styles/page-styles/DefaultPageMuiStyles'
@@ -11,9 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
-import QRbutton from '../page-sub-components/input-fields/QRbutton';
-import InformativeModal from '../page-sub-components/modal/InformativeModal';
-
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
@@ -87,8 +83,6 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
       </div>
 
       <div>
-        <QRbutton agentHash={this.props.my_agent_hash} {...newProps}/>
-        <br/>
         <br/>
         <br/>
         {/* <hr className={classes.horizontalLine}/> */}
@@ -116,12 +110,6 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
           <div/>
         }
 
-      {/* Toggle Confirmation Message */}
-        { this.state.confirmation ?
-          <InformativeModal {...newProps} confirmMessage={ JSON.stringify(this.state.confirmation) } resetMessage={this.resetMessage}/>
-        :
-          <div/>
-        }
       </div>
     </div>
     );
