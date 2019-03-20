@@ -57,7 +57,3 @@ ui-agent1
 ui-agent2
 ui
 build
-
-agent1-conductor-config.toml
-agent2-conductor-config.toml
-package-lock.json
