@@ -18,7 +18,7 @@ export type Props = DispatchProps & StateProps;
 /* Transaction Table Headers */
 export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
   const table_columns = [{
-    Header: (row: any) => (<Today/>),
+    Header: (row: any) => (<Today style={{color:'#0e094b'}}/>),
     id: 'originTimeStamp',
     accessor: 'originTimeStamp',
      Cell: (row: any) => (
@@ -34,7 +34,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
         </div>
      )
     }, {
-    Header: (row: any) => (<AccountCircle/>),
+    Header: (row: any) => (<AccountCircle style={{color:'#0e094b'}} />),
     accessor: 'counterparty',
     id: 'counterparty',
     Cell: (row: any) => (
@@ -42,7 +42,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
           {row.value ?
             <span>
               {/* <Jdenticon hash={row.value} size="35px" {...props}/> */}
-              <p style={{fontSize:'.5rem', margin:'0 auto', marginTop:'2px'}}>{ row.value }</p>
+              <p style={{fontSize:'.8rem', margin:'0 auto', marginTop:'15px'}}>{ row.value }</p>
             </span>
           :
             <span/>
@@ -50,7 +50,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
         </div>
       )
     }, {
-    Header: (row: any) => (<SwapVerticalCircle/>),
+    Header: (row: any) => (<SwapVerticalCircle style={{color:'#0e094b'}} />),
     id: 'originEvent',
     accessor: 'originEvent',
     Cell: (row: any) => (
@@ -82,7 +82,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
         </div>
       )
     }, {
-    Header: (row: any) => (<ChangeHistory/>),
+    Header: (row: any) => (<ChangeHistory style={{color:'#0e094b'}} />),
     id: "amount",
     accessor: (d:any) => d.amount,
     Cell: (row: any) => (
@@ -114,7 +114,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
       </div>
       )
     },{
-    Header: (row: any) => (<Info/>),
+    Header: (row: any) => (<Info style={{color:'#0e094b'}} />),
     id: 'status',
     accessor: 'status',
     Cell: (row: any) => (

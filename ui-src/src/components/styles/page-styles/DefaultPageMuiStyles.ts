@@ -2,14 +2,9 @@
 import { StyleRulesCallback } from '@material-ui/core/';
 import { Theme } from '@material-ui/core/styles';
 
-// MUI Custom Colors:
-// import purple from '@material-ui/core/colors/purple';
-// import green from '@material-ui/core/colors/green';
-
-// NoTransactionsMessage
-// NoTransactionsMessageText
-
+// Custom Colors:
 // #057266f2
+// #0e3658
 
 const styles: StyleRulesCallback  = (theme: Theme) => ({
     root: {
@@ -201,7 +196,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       margin: 20,
       marginTop: 20,
       marginBottom: 5,
-      backgroundColor: 'transparent', // #c3cdd6
+      backgroundColor: '#dadfe2', // #c3cdd6
       border: 3,
       borderRadius: 4,
       zIndex: 2,

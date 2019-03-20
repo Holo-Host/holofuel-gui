@@ -240,8 +240,18 @@ class TransactionDetailsButton extends React.Component<Props, State> {
     return (
       <div>
         <div>
-          <div style={{textTransform:"uppercase", width: '100%'}}>
-            { this.state.txStateStage }
+          <div>
+            { this.state.txStateStage === "recipient" || this.state.txStateStage === "spender"  ?
+              <div style={{textTransform:"uppercase", width: '100%'}}>
+                Pending
+              </div>
+            :
+              <div style={{textTransform:"uppercase", width: '100%'}}>
+                { this.state.txStateStage }
+              </div>
+            }
+
+
           </div>
 
           <Button

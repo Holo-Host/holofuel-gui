@@ -181,6 +181,7 @@ export const advancedExpandTableHOC = TableComponent =>
             this.handleClick(rowInfo.index);
           },
           onMouseOver: (e) => {
+            console.log("YOU SUCK AT COLOR...")
             this.setState({
               selected: rowInfo.index
             })
