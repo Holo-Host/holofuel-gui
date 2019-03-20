@@ -10,7 +10,7 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 
 ---
 
-## How to Test :
+## How to Run :
 - Pull the https://github.com/Holo-Host/holofuel-gui repo
     - `git pull https://github.com/Holo-Host/holofuel-gui.git`
       
