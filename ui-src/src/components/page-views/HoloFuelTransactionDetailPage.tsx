@@ -59,9 +59,24 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
     this.props.toggleTxDetailModal();
   };
 
+  //  determineDateFormat = (date) => {
+  //     parseInt(moment(date).startOf('day').fromNow().split(" ")[0]) > 23 ?
+  //      moment(date).format("LL")
+  //
+  //   : parseInt(moment(date).startOf('day').fromNow().split(" ")[0]) > 1 ?
+  //     moment(date).calendar()
+  //
+  //   :
+  //     moment(date).startOf('hour').fromNow()
+  // }
+
   render() {
     const { classes, currentRowDataDetailed } = this.props;
-    // const rowData = currentRowDataDetailed.forEach(txDetail => {return txDetail});
+
+    // const currentDueDate = determineDateFormat(currentRowDataDetailed[0]);
+    // const currentTxDate = determineDateFormat(currentRowDataDetailed[1]);
+    // const txInitiationDate = determineDateFormat(currentRowDataDetailed[2]);
+
     const gutterBottom: boolean = true;
     return (
       <div>

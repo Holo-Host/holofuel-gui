@@ -93,8 +93,13 @@ class TransactionDetailsButton extends React.Component<Props, State> {
           statusText="Payment Proposed";
           break;
         }
+        case 'completed': {
+          nextApiCall = '';
+          todoText = 'Review Final Payment';
+          statusText = "Payment Completed";
+          break;
+        }
         case 'refunded': {
-           // no api call ... only need to review details
           nextApiCall = '';
           todoText = 'Review Refund';
           statusText="Payment Refunded";
@@ -108,13 +113,13 @@ class TransactionDetailsButton extends React.Component<Props, State> {
     if(this.state.txStateDirection === "spender"){
       switch (this.state.txStateStage) {
         case 'approved': {
+          // no api call ... only need to review details
           nextApiCall = '';
           todoText = 'Review Payment';
           statusText = "Payment Sent"
           break;
         }
         case 'declined': {
-          // no api call ... only need to review details
           nextApiCall = '';
           todoText = 'Review Decline';
           statusText = "Payment Declined";
@@ -128,7 +133,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         }
         case 'recovered': {
           // TODO: determine if there is an API for this:
-          nextApiCall = '???';
+          nextApiCall = '';
           todoText = 'Review Recovery';
           statusText = "Payment Recovered";
           break;
@@ -137,7 +142,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
           return null;
       }
     }
-    // if counterparty of tx recieves tx from author
+    // if counterparty of tx recieves tx from author (counterparty is not yet taken action within the tx-cycle).
     if(this.state.txStateDirection === "pending"){
       switch (this.state.txStateStage) {
         case 'recipient': {
@@ -180,8 +185,8 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       const isoDeadline: Moment = moment(dueDate, moment.ISO_8601);
       const proposal = {
         tx: {
-          to: counterparty,
-          from: txAuthor,
+          to: txAuthor,
+          from: counterparty,
           amount,
           notes,
           deadline: isoDeadline,

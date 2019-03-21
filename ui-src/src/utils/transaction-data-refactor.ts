@@ -152,6 +152,16 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       inResponseToTX = event.Invoice.proposal.request;// the request hash that the proposal is in response to, should it exist...
       originCommitHash = event.Invoice.proposal.request ? event.Invoice.proposal.request : tx.timestamp.origin; // tx origin commit hash
     }
+    else if (event.Receipt){
+      txEvent="Receipt"
+      originEvent = event.Receipt.cheque.invoice.proposal.request ? "Request" : "Proposal";
+      amount =  event.Receipt.cheque.invoice.proposal.tx.amount;
+      counterparty = event.Receipt.cheque.invoice.proposal.tx.to;
+      dueDate = event.Receipt.cheque.invoice.proposal.tx.deadline;
+      notes = event.Receipt.cheque.invoice.proposal.tx.notes;
+      inResponseToTX = event.Receipt.cheque.invoice.proposal.request;// the request hash that the proposal is in response to, should it exist...
+      originCommitHash = event.Receipt.cheque.invoice.proposal.request ? event.Receipt.cheque.invoice.proposal.request : tx.timestamp.origin; // tx origin commit hash
+    }
 
         // case 'decline' :
         //   break;
