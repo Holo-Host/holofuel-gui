@@ -35,8 +35,8 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
   4. Update the `start-dna-agent2` script in the `package.json` BEFORE running agent2
         - Find the `start-dna-agent2` script inside the `package.json`
         - Update the **HC_N3H_PATH** to path of the n3h repo on your local device.
-        - Add the **HC_N3H_BOOTSTRAP_NODE** as provided in the networking details within the terminal when running agent1's DNA. (As shown on line #3 in the terminal snippet below.)
-        - Add the **HC_N3H_IPC_URI** as provided in the networking details within the terminal when running agent1's DNA. (As shown on line #9 in the terminal snippet below.)
+        - Add the **HC_N3H_BOOTSTRAP_NODE** as provided in the networking details within the terminal when running agent1's DNA. (As shown on line #9 in the terminal snippet below.)
+        - Add the **HC_N3H_IPC_URI** as provided in the networking details within the terminal when running agent1's DNA. (As shown on line #3 in the terminal snippet below.)
         
 ```terminal=
 (wss-connection) [i] listening at wss://127.0.0.1:41249/
