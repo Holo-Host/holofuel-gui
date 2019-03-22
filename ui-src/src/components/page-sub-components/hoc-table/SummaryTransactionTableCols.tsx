@@ -42,7 +42,8 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
           {row.value ?
             <span>
               {/* <Jdenticon hash={row.value} size="35px" {...props}/> */}
-              <p style={{fontSize:'.8rem', margin:'0 auto', marginTop:'15px'}}>{ row.value }</p>
+              <p style={{fontSize:'1rem', margin:'0 auto', marginTop:'8px', textDecoration:'underline'}}>Counterparty</p>
+              <p style={{fontSize:'.8rem', margin:'0 auto', marginTop:'3px'}}>{ row.value }</p>
             </span>
           :
             <span/>

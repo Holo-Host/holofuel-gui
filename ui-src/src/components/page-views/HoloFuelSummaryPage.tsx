@@ -57,6 +57,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
    public render () {
       const { classes, transferBtnBar, ...newProps } = this.props;
       const gutterBottom : boolean = true;
+
       return (
         <div>
           <div className={classes.jumbotron}>
@@ -69,9 +70,10 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
             </Typography>
             <hr style={{color:"#0e094b8f"}} />
             <h3 className={classes.h3}>
-              Credit limit : {this.props.ledger_state.credit ?
+              Credit limit : {this.props.ledger_state.credit && this.props.ledger_state.credit.toString().split(" ")[0] === "-" ?
+                <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm} style={{color:'#ac62bb'}}/> {`${this.props.ledger_state.credit}`}</div>
+              :
                 <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm}/> {`${this.props.ledger_state.credit}`}</div>
-              : `N/A`
               }
             </h3>
           </div>

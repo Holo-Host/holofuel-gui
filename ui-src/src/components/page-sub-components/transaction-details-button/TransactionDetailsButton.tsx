@@ -30,7 +30,8 @@ export interface State {
   message: string,
   statusText: string,
   currentRowDataDetailed: Array<any> | null,
-  txDetailModal: boolean
+  txDetailModal: boolean,
+  reset: boolean
 };
 
 class TransactionDetailsButton extends React.Component<Props, State> {
@@ -45,7 +46,8 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       message: "",
       statusText: "",
       currentRowDataDetailed: null,
-      txDetailModal: false
+      txDetailModal: false,
+      reset: false
     };
     this.configureTransactionState();
   }
@@ -65,6 +67,15 @@ class TransactionDetailsButton extends React.Component<Props, State> {
 
   componentDidMount = () => {
     this.configureTransactionState();
+  }
+
+  forceReset = (apiResult: any) => {
+    console.log("apiResult", apiResult);
+
+    // hack to force a reset >> refactor with modal...
+    this.setState({
+      reset: !this.state.reset
+    })
   }
 
   configureTransactionState = () => {
@@ -176,9 +187,10 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         deadline: isoDeadline,
         request: originCommitHash
       }
-      this.props.propose_payment(approved_proposal_obj);
-      // const proposalResult = await this.props.propose_payment(approved_proposal_obj); //sending as JSON
+      // this.props.propose_payment(approved_proposal_obj);
+      const proposalResult = await this.props.propose_payment(approved_proposal_obj); //sending as JSON
       // this.sendConfirmationMessage(proposalResult, approved_proposal_obj);
+      this.forceReset(proposalResult);
     }
     else if (this.state.nextApiCall === "receive_payment") {
       const { counterparty, amount, notes, dueDate, inResponseToTX, eventCommitHash, txAuthor,  proposalCommitSignature } = this.props.rowInfo.original; // eventCommitHash,
@@ -199,9 +211,11 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         proposal_sig: proposalCommitSignature, // proposal signature
         proposal_commit: eventCommitHash // commit address
       }
-      this.props.receive_payment(receive_payment_obj);
-      // const receivePaymentResult = await this.props.receive_payment(receive_payment_obj); //sending as JSON
+      // this.props.receive_payment(receive_payment_obj);
+
+      const receivePaymentResult = await this.props.receive_payment(receive_payment_obj); //sending as JSON
       // this.sendConfirmationMessage(receivePaymentResult, receive_payment_obj);
+      this.forceReset(receivePaymentResult);
     }
     else if (this.state.nextApiCall === "") {
       // if nextApiCall === "" (an empty string), make btn access tx details page
