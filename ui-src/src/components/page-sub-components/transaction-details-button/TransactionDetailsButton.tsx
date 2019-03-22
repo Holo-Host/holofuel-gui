@@ -158,7 +158,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       switch (this.state.txStateStage) {
         case 'recipient': {
           nextApiCall = 'receive_payment';
-          todoText = 'Accept Final Payment';
+          todoText = 'Request Payment';
           statusText = "Payment Proposed";
           break;
         }
