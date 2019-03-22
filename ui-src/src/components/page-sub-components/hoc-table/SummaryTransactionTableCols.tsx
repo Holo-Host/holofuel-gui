@@ -55,7 +55,12 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
     accessor: 'originEvent',
     Cell: (row: any) => (
       <div style={{ padding: '5px', marginTop:'13px', fontSize:".95rem" }}>
-        {row.original.status.split("/")[0] === "incoming" ?
+        {row.original.status === "incoming/requested" ?
+            <span className="increasedBalance" style={{color:"#00828d"}}>
+              was asked for
+            </span>
+
+        : row.original.status.split("/")[0] === "incoming" ?
             <span className="increasedBalance" style={{color:"#00828d"}}>
               is offering
             </span>
