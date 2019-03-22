@@ -57,12 +57,12 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
       <div style={{ padding: '5px', marginTop:'13px', fontSize:".95rem" }}>
         {row.original.status.split("/")[0] === "incoming" ?
             <span className="increasedBalance" style={{color:"#00828d"}}>
-              recieved offer for
+              is offering
             </span>
 
         : row.original.status.split("/")[0] === "outgoing" ?
             <span className="decreasedBalance" style={{color:"#b85eb3"}}>
-              recieved request for
+              was offered
             </span>
 
         : row.original.status.split("/")[0] === "pending" &&
