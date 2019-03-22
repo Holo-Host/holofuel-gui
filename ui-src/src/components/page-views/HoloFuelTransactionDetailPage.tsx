@@ -141,7 +141,7 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
               </ListItem>
               <Divider />
               <ListItem button style={{ marginTop:'#fff'}}>
-                <ListItemText primary="Transaction Amount:" secondary={currentRowDataDetailed[4]} />
+                <ListItemText primary="Counterparty:" secondary={currentRowDataDetailed[4]} />
               </ListItem>
               <Divider />
               <ListItem button style={{ marginTop:'#fff'}}>

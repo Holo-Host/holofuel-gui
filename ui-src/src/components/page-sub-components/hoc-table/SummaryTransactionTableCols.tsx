@@ -56,6 +56,8 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
     accessor: 'originEvent',
     Cell: (row: any) => (
       <div style={{ padding: '5px', marginTop:'13px', fontSize:".95rem" }}>
+        <p style={{fontSize:'1rem', margin:'0 auto', marginTop:'8px', textDecoration:'underline'}}>{row.original.status}</p>
+
         {row.original.status === "incoming/requested" ?
             <span className="increasedBalance" style={{color:"#00828d"}}>
               was asked for
@@ -83,7 +85,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
               offered
             </span>
         :
-            <div/>
+            <span/>
         }
         </div>
       )
@@ -115,7 +117,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
             +{ row.value } HF
             </span>
         :
-            <div/>
+            <span/>
         }
       </div>
       )
