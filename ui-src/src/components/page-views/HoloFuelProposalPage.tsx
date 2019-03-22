@@ -13,6 +13,7 @@ import RequestProposalFormBtns from '../page-sub-components/input-fields/Request
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
+  location:any,
   transferBtnBar: boolean,
   txType: string,
   showTransferBar: (txType:any) => void,
@@ -81,7 +82,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
 
 
         <div style={{ margin:'0 auto' }}>
-          <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeProposal={this.sendProposal} invokeRequest={this.sendProposal}  />
+          <RequestProposalFormBtns {...newProps} location={this.props.location} txType={this.props.txType} invokeProposal={this.sendProposal} invokeRequest={this.sendProposal}  />
         </div>
 
         <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>

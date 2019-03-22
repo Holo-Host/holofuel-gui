@@ -16,6 +16,7 @@ import styles from '../styles/page-styles/DefaultPageMuiStyles';
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
+  location:any,
   transferBtnBar: boolean,
   txType: string,
   showTransferBar: (txType:any) => void,
@@ -81,7 +82,6 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
 
       <div>
         <br/>
-        <hr className={classes.horizontalLine}/>
         <Typography className={classnames(classes.pageHeader,classes.tableHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
           Request Funds
        </Typography>
@@ -89,7 +89,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
          <br/>
 
          <div style={{ margin:'0 auto' }}>
-           <RequestProposalFormBtns {...newProps} txType={this.props.txType} invokeRequest={this.makeRequest} invokeProposal={this.makeRequest}/>
+           <RequestProposalFormBtns {...newProps} location={this.props.location} txType={this.props.txType} invokeRequest={this.makeRequest} invokeProposal={this.makeRequest}/>
         </div>
 
         <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>

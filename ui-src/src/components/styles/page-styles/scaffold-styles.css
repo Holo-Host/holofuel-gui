@@ -18,10 +18,7 @@ body {
 body, html{
 	padding:0;
 	margin:0;
-	background: #4b6a7d; /* // 0e3658 */
-	/* background: -moz-linear-gradient(top, #fbfbfb 0%, #ededed 46%, #ededed 100%); */
-	/* background: -webkit-linear-gradient(top, #fbfbfb 0%, #ededed 46%, #ededed 100%); */
-	/* background: linear-gradient(to bottom, #fbfbfb 0%, #ededed 46%, #ededed 100%); */
+	background: #4b6a7d;
 	text-align:center;
 }
 
@@ -77,9 +74,6 @@ input {
   color: #13426a
 }
 
-.ReactTable :hover {
-  color: #c3cdd6
-}
 
 .ReactTable .rt-tr {
   border: 1px solid #d8dee3;
@@ -117,6 +111,17 @@ input {
   padding: 3px;
   margin: 0 auto;
 }
+
+/* .ReactTable :hover {
+  color: #c3cdd6
+} */
+
+/*********** * ADDED ONLY TO REMOVE TABLE HEADERS FOR V1 * **********/
+.ReactTable .rt-thead {
+  display: none !important
+}
+/*******************************************************/
+
 
 /*******************************************************
               Calendar Custom styles

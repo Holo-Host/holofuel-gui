@@ -14,6 +14,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import FormGroup from '@material-ui/core/FormGroup';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
+import Tooltip from '@material-ui/core/Tooltip';
 import Grow from '@material-ui/core/Grow';
 import Slide from '@material-ui/core/Slide';
 
@@ -65,25 +66,27 @@ class AppNavBar extends React.Component {
   state = {
     // auth: true,
     anchorEl: null,
-    scrolledUp: false,
+    scrolledUp: true,
     chooseTxBtnBarOpen: false
   };
 
   componentDidMount = () => {
-    document.addEventListener('scroll', this.handleScrollTop);
+    // NOTE: Commented out the sub appbar for version ...0.0.1 of App... thus the icons must ALWAYS show in top AppBar, regardless of scroll...
+    // document.addEventListener('scroll', this.handleScrollTop);
   }
 
   componentWillUnmount = () => {
-    document.removeEventListener('scroll', this.handleScrollTop);
+    // NOTE: Commented out the sub appbar for version ...0.0.1 of App... thus the icons must ALWAYS show in top AppBar, regardless of scroll...
+    // document.removeEventListener('scroll', this.handleScrollTop);
   }
 
-  handleScrollTop = () => {
-    // (window as any)
-    let scrolledUp = window.scrollY > 70;
-    if(scrolledUp !== this.state.scrolledUp) {
-      this.setState({ scrolledUp })
-    }
-  }
+  // handleScrollTop = () => {
+  //   // (window as any)
+  //   let scrolledUp = window.scrollY > 70;
+  //   if(scrolledUp !== this.state.scrolledUp) {
+  //     this.setState({ scrolledUp })
+  //   }
+  // }
 
   handleTransferBtnClick = () => {
     this.props.showTransferBar("");
@@ -111,15 +114,17 @@ class AppNavBar extends React.Component {
         <AppBar position="fixed" style={{margin: '0 auto',  background: "#0e094b"}}>
           <Toolbar>
             <div>
-              <IconButton
-                className={classes.iconButton}
-                color="inherit"
-                aria-label="Icon"
-              >
-                <Link to='/holofuelsummary'>
-                  <img src="/assets/icons/holo-logo.png" alt="holo-logo" width="50"/>
-                </Link>
-              </IconButton>
+              <Tooltip title="See Transaction Summary" aria-label="See Transaction Summary" classes={{ tooltip: classes.lightTooltip }}>
+                <IconButton
+                  className={classes.iconButton}
+                  color="inherit"
+                  aria-label="Icon"
+                >
+                  <Link to='/holofuelsummary'>
+                    <img src="/assets/icons/holo-logo.png" alt="holo-logo" width="50"/>
+                  </Link>
+                </IconButton>
+              </Tooltip>
             </div>
 
             { scrolledUp ?
@@ -140,41 +145,47 @@ class AppNavBar extends React.Component {
                     style={{ transformOrigin: '0 0 0' }}
                     {...(scrolledUp ? { timeout: 800 } : {})}
                   >
-                    <IconButton
-                      className={classes.icon}
-                      aria-haspopup="false"
-                    >
-                      <Link to='/holofuelsummary'>
-                        <img src="/assets/icons/tx-history.png" alt="tx-history-logo" width="18px" height="18px"/>
-                      </Link>
-                    </IconButton>
+                    <Tooltip title="See Transaction Summary" aria-label="See Transaction Summary">
+                      <IconButton
+                        className={classes.icon}
+                        aria-haspopup="false"
+                      >
+                        <Link to='/holofuelsummary'>
+                          <img src="/assets/icons/tx-history.png" alt="tx-history-logo" width="18px" height="18px"/>
+                        </Link>
+                      </IconButton>
+                    </Tooltip>
                   </Grow>
 
                   <Grow in={scrolledUp}
                     style={{ transformOrigin: '0 0 0' }}
                     {...(scrolledUp ? { timeout: 1000 } : {})}
                   >
-                    <IconButton
-                      className={classes.icon}
-                      aria-haspopup="false"
-                      onClick={this.handleTransferBtnClick}
-                    >
-                      <img src="/assets/icons/transfer.png" alt="transfer-logo" width="18px" height="18px"/>
-                    </IconButton>
+                    <Tooltip title="Make New Transacton" aria-label="Make New Transacton">
+                      <IconButton
+                        className={classes.icon}
+                        aria-haspopup="false"
+                        onClick={this.handleTransferBtnClick}
+                      >
+                        <img src="/assets/icons/transfer.png" alt="transfer-logo" width="18px" height="18px"/>
+                      </IconButton>
+                    </Tooltip>
                   </Grow>
 
                   <Grow in={scrolledUp}
                     style={{ transformOrigin: '0 0 0' }}
                     {...(scrolledUp ? { timeout: 1400 } : {})}
                   >
-                    <IconButton
-                        className={classes.icon}
-                        aria-owns={open ? 'profile-appbar' : undefined}
-                        aria-haspopup="true"
-                        onClick={this.handleMenu}
-                      >
-                        <AccountCircle />
-                    </IconButton>
+                    <Tooltip title="Visit Profile" aria-label="Visit Profile">
+                      <IconButton
+                          className={classes.icon}
+                          aria-owns={open ? 'profile-appbar' : undefined}
+                          aria-haspopup="true"
+                          onClick={this.handleMenu}
+                        >
+                          <AccountCircle />
+                      </IconButton>
+                    </Tooltip>
                   </Grow>
                   <Menu
                     id="profile-appbar"

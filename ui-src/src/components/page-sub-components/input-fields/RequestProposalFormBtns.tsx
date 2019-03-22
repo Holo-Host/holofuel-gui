@@ -23,6 +23,7 @@ type Moment = moment.Moment;
 
 export interface OwnProps {
   classes: any,
+  location: any,
   txType: string,
   showTransferBar: (txType:any) => void,
   invokeProposal: (txType:any) => void,
@@ -302,7 +303,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
         <AppBar position="fixed" className={classes.bottomAppBar}>
           <Toolbar className={classes.toolbar}>
             <div className={classnames(classes.buttonMenu)}>
-              {txType === "proposal" ?
+              {txType === "proposal" || this.props.location === "/holofuelproposal" ?
               <span>
                 <Button variant="outlined"
                   color="primary"

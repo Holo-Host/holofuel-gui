@@ -8,13 +8,13 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
+// import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // local imports :
 import { ProposalActionParam, RequestActionParam } from '../../../utils/types';
-import { getDisplayName } from '../../../utils/global-helper-functions'
+// import { getDisplayName } from '../../../utils/global-helper-functions'
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
@@ -96,6 +96,8 @@ class VerficationModal extends React.Component<Props, State>  {
       const { classes } = this.props;
       const fullScreen: boolean = false;
       const { messageAsObj } = this.state;
+      console.log("tx body: ", messageAsObj);
+
       return (
           <Grid xs={12} >
             <div className={classnames(classes.modal, classes.modalRoot)}>
@@ -110,15 +112,15 @@ class VerficationModal extends React.Component<Props, State>  {
                 className={classes.modalContainer}
             >
               <DialogTitle id="responsive-dialog-title" style={{color:'#072dc3'}}>{"Verify Transaction"}</DialogTitle>
-                  <DialogContent>
+                  <DialogContent style={{marginBottom:'-5px'}}>
                     <hr/>
-                    <DialogContentText id="alert-dialog-description">
+                    {/* <DialogContentText id="alert-dialog-description">
                       Does everything look right?
                     </DialogContentText>
                     <hr/>
-                    <br/>
+                    <br/> */}
 
-                    <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
+                    {/* <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
                        Your Transaction Details
                     </DialogContentText>
 
@@ -136,7 +138,7 @@ class VerficationModal extends React.Component<Props, State>  {
 
                     <DialogContentText id="alert-dialog-description-6">
                       Notes: {messageAsObj.notes}
-                    </DialogContentText>
+                    </DialogContentText> */}
                 </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleMakeTransaction} color="primary">

@@ -250,25 +250,33 @@ class TransactionDetailsButton extends React.Component<Props, State> {
               <div style={{textTransform:"uppercase", width: '100%'}}>
                 Pending
               </div>
+
+            : this.state.txStateStage === "completed"  ?
+              <div style={{textTransform:"uppercase", width: '100%', marginTop:'13px'}}>
+                { this.state.txStateStage }
+              </div>
+
             :
               <div style={{textTransform:"uppercase", width: '100%'}}>
                 { this.state.txStateStage }
               </div>
             }
-
-
           </div>
 
-          <Button
-            variant="outlined"
-            color="primary"
-            className={ classes.colButton }
-            onClick={ this.handlePendingTransaction }
-            value={ this.state.nextApiCall }
-            style={{margin:"3px"}}
-          >
-            {this.state.todoText}
-          </Button>
+          { this.state.txStateStage !== "completed" ?
+              <Button
+                variant="outlined"
+                color="primary"
+                className={ classes.colButton }
+                onClick={ this.handlePendingTransaction }
+                value={ this.state.nextApiCall }
+                style={{margin:"3px"}}
+              >
+                {this.state.todoText}
+              </Button>
+          :
+              <div/>
+          }
         </div>
 
         {/* Toggle Confirmation Message (aka. InformativeModal) */}

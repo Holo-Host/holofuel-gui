@@ -34,7 +34,7 @@ smallButton: {
      border: '1px solid #c3cdd6', // #0e094b
      background:'#4b6a7d', // #210c49
      fontWeight: 'bolder',
-     color: '#13426a'
+     color: '#fff'
    }
  },
  input: {

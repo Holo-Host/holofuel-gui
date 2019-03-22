@@ -11,7 +11,7 @@ import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTran
 // import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
 import { Ledger, ListTransactionsResult, PendingResult } from '../utils/types'; // RequestActionParam, ProposalActionParam, Address, DateTimeString
 import AppNavBar from '../components/page-sub-components/app-nav-bar/AppNavBar';
-import SubNavBar from '../components/page-sub-components/app-nav-bar/SubNavBar';
+// import SubNavBar from '../components/page-sub-components/app-nav-bar/SubNavBar';
 // custom styles :
 import { withStyles } from '@material-ui/core/styles';
 import styles from '../components/styles/page-styles/DefaultPageMuiStyles';
@@ -103,8 +103,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     return (
       <div>
         <AppNavBar showTransferBar={this.toggleTransferBtnBar} {...newProps}/>
-        <SubNavBar showTransferBar={this.toggleTransferBtnBar} {...newProps}/>
-        <main className={classes.content}>
+        {/* <SubNavBar showTransferBar={this.toggleTransferBtnBar} {...newProps}/> */}
+        <main className={classes.content} style={{marginTop:'75px'}}>
           <div className={classes.appBarSpacer} />
           <div>
             {location.pathname === "/" || location.pathname === "/holofuelsummary" ?
@@ -125,6 +125,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               txType={this.state.transactionType}
               className={classes.appTable}
               {...newProps}
+              location={location.pathname} 
             />
           :
             location.pathname === "/holofuelproposal" ?
@@ -133,7 +134,9 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              className={classes.appTable} {...this.props}
+              className={classes.appTable}
+              {...this.props}
+              location={location.pathname}
             />
           :
             location.pathname === "/holofueltransactiondetails" ?

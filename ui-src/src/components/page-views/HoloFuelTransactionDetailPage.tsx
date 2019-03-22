@@ -81,7 +81,7 @@ class HoloFuelTransactionDetailPage extends React.Component<OwnProps, State> {
     return (
       <div>
         <Dialog
-          style={{background:"#4b6a7d"}}
+          style={{background:"#c3cdd6"}}
           fullScreen
           open={this.state.open}
           onClose={this.handleClose}

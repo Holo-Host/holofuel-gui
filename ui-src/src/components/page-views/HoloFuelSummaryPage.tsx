@@ -1,5 +1,5 @@
 import * as React from 'react';
-import classnames from 'classnames';
+// import classnames from 'classnames';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
@@ -62,16 +62,28 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
           <div className={classes.jumbotron}>
             <h3 className={classes.h3}>Current Balance</h3>
             <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
-              {this.props.ledger_state.balance ? `${this.props.ledger_state.balance} HF` : `Pending...`}
+              {this.props.ledger_state.balance ?
+                <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="85" className={classes.hcLogoLg} /> {`${this.props.ledger_state.balance}`}</div>
+              : `Pending...`
+              }
             </Typography>
             <hr style={{color:"#0e094b8f"}} />
-            <h3 className={classes.h3}>Credit limit : {this.props.ledger_state.credit ? `${this.props.ledger_state.credit} HF`: `N/A`} </h3>
+            <h3 className={classes.h3}>
+              Credit limit : {this.props.ledger_state.credit ?
+                <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm}/> {`${this.props.ledger_state.credit}`}</div>
+              : `N/A`
+              }
+            </h3>
           </div>
 
           <div>
-            <Typography className={classnames(classes.tableHeader, classes.pageHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
-              Transaction History
-            </Typography>
+            {/* { this.props.list_of_pending.proposals && this.props.list_of_pending.requests ?
+              <Typography className={classnames(classes.tableHeader, classes.pageHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
+                Transaction History
+              </Typography>
+            :
+              <div/>
+            } */}
 
             <TransactionTables {...newProps} />
 

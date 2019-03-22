@@ -57,24 +57,24 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
       <div style={{ padding: '5px', marginTop:'13px', fontSize:".95rem" }}>
         {row.original.status.split("/")[0] === "incoming" ?
             <span className="increasedBalance" style={{color:"#00828d"}}>
-              { row.value }
+              recieved offer for
             </span>
 
         : row.original.status.split("/")[0] === "outgoing" ?
             <span className="decreasedBalance" style={{color:"#b85eb3"}}>
-              { row.value }
+              recieved request for
             </span>
 
         : row.original.status.split("/")[0] === "pending" &&
           row.original.status.split("/")[1] === "spender" ?
             <span className="decreasedBalance" style={{color:"#b85eb3"}}>
-          { row.value }
+              { row.value.toLowerCase() }
             </span>
 
         :  row.original.status.split("/")[0] === "pending" &&
            row.original.status.split("/")[1] === "recipient" ?
             <span className="increasedBalance" style={{color:"#00828d"}}>
-            { row.value }
+              { row.value.toLowerCase()}
             </span>
         :
             <div/>

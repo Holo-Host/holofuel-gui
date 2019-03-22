@@ -18,6 +18,16 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       minWidth: 300,
       fontWeight: 'bolder'
     },
+    hcLogoLg: {
+      position: 'relative',
+      top: '.5387rem',
+      left: '.25124rem'
+    },
+    hcLogoSm: {
+      position: 'relative',
+      top: '.1287rem',
+      left: '.05124rem'
+    },
     datetimeRoot:{
       display:'inline !important',
       minWidth:'48vw'
@@ -117,6 +127,12 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       justifyContent: 'center',
       margin:'5vh'
     },
+    lightTooltip: {
+      backgroundColor: theme.palette.common.white,
+      color: 'rgba(0, 0, 0, 0.87)',
+      boxShadow: theme.shadows[1],
+      fontSize: 11,
+    },
     title: {
       flexGrow: 1,
       color: '',
@@ -146,7 +162,9 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
     },
     verticalLine : {
       borderLeft:' 1px solid #0e094b', // #00838d
-      height: 'auto'
+      height: 'auto',
+      position: 'relative',
+      bottom: '4px'
     },
     horizontalLine : {
       color:'#ced4da', // #00838d
@@ -408,7 +426,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       display: 'inline'
     },
     innerBtnText: {
-      color: "#799ab6",
+      color: "#eee", // alt: #799ab6
     },
     closeBtn: {
       position: 'absolute',
