@@ -65,40 +65,40 @@ const alternateEven = () => {
 const refactorListOfPending = (list_of_pending:any) => {
   const  list_of_proposals =  list_of_pending.proposals.map((p:any) => {
     return {
-      originTimeStamp: p[0][1],
-      amount:p[0][2].Proposal.tx.amount,
-      originEvent:p[0][2].Proposal.request ? "Request" : "Proposal",
+      originTimeStamp: p.event[1],
+      amount:p.event[2].Proposal.tx.amount,
+      originEvent:p.event[2].Proposal.request ? "Request" : "Proposal",
       event: "Proposal",
-      counterparty:p[0][2].Proposal.tx.from,
-      txAuthor: p[0][2].Proposal.tx.to,
+      counterparty:p.event[2].Proposal.tx.from,
+      txAuthor: p.event[2].Proposal.tx.to,
       status: "pending/recipient",
-      dueDate: p[0][2].Proposal.tx.deadline,
-      notes:  p[0][2].Proposal.tx.notes,
-      originCommitHash: p[0][2].Proposal.request ? p[0][2].Proposal.request : p[0][0], // the tx origin commit hash
-      eventCommitHash: p[0][0], // the 'origin' proposal commit hash
-      inResponseToTX:p[0][2].Proposal.request || undefined, // the request hash that the proposal is in response to, should it exist...
-      transactionTimestamp: p[0][1],
-      proposalCommitSignature: p[1][1],
+      dueDate: p.event[2].Proposal.tx.deadline,
+      notes:  p.event[2].Proposal.tx.notes,
+      originCommitHash: p.event[2].Proposal.request ? p.event[2].Proposal.request : p.event[0], // the tx origin commit hash
+      eventCommitHash: p.event[0], // the 'origin' proposal commit hash
+      inResponseToTX:p.event[2].Proposal.request || undefined, // the request hash that the proposal is in response to, should it exist...
+      transactionTimestamp: p.event[1],
+      proposalCommitSignature: p.provenance[1],
       rowNumberType
     };
   });
 
   const  list_of_requests =  list_of_pending.requests.map((r:any) => {
       return {
-      originTimeStamp: r[0][1],
-      amount:r[0][2].Request.amount,
+      originTimeStamp: r.event[1],
+      amount:r.event[2].Request.amount,
       originEvent:"Request",
       event: "Request",
-      counterparty:r[0][2].Request.to,
-      txAuthor: r[0][2].Request.from,
+      counterparty:r.event[2].Request.to,
+      txAuthor: r.event[2].Request.from,
       status: "pending/spender",
-      dueDate: r[0][2].Request.deadline,
-      notes:  r[0][2].Request.notes,
-      originCommitHash: r[0][0],
-      eventCommitHash: r[0][0], // commit hash for the currently displayed Transaction === the origin commit hash in this cirumstance
+      dueDate: r.event[2].Request.deadline,
+      notes:  r.event[2].Request.notes,
+      originCommitHash: r.event[0],
+      eventCommitHash: r.event[0], // commit hash for the currently displayed Transaction === the origin commit hash in this cirumstance
       inResponseToTX: undefined,
-      transactionTimestamp: r[0][1],
-      requestCommitSignature: r[1][1],
+      transactionTimestamp: r.event[1],
+      requestCommitSignature: r.provenance[1],
       rowNumberType
     };
   });

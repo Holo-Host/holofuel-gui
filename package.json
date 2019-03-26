@@ -4,14 +4,15 @@
   "description": "Simple and intuitive interface allowing users to transact with HoloFuel.",
   "main": "index.js",
   "scripts": {
-    "start-dna-agent1":"cd ./holofuel && HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent1 hc run --port 3000",
-    "start-dna-agent2":"cd ./holofuel && HC_N3H_BOOTSTRAP_NODE=wss://192.168.0.7:46243/?a=hkZ4t3y-ymMC3lJfo1B3hNBqbrQUacWWHZY12oqDJnE8-ftsBZvjdmoNB32NzU_LxS6afkhE99SmlXvSdQLV5Z4e3p-Poqc3 HC_N3H_IPC_URI=wss://127.0.0.1:42809/ HC_N3H_PATH=/home/lisa/n3h HC_AGENT=testAgent2 hc run --port 3100",
-    "start-ui-agent1":"cd ui-src && npm run start-agent1",
-    "start-ui-agent2":"cd ui-src && npm run start-agent2"
+    "start-dna-agent1": "cd ./holofuel && HC_N3H_PATH=~/src/n3h HC_AGENT=testAgent1 hc run --logging --port 3000",
+    "start-dna-agent2": "cd ./holofuel && HC_N3H_PATH=~/src/n3h HC_AGENT=testAgent2 HC_N3H_BOOTSTRAP_NODE=wss://192.168.0.2:44057/?a=HcSciVXUA9wTceq4wtJIwyUFWmgb6mc8v76uaMcBaOYhj6dzrQ5Z9brdO9bamya HC_N3H_IPC_URI=wss://127.0.0.1:38059/ hc run --logging --port 3100",
+    "start-ui-agent1": "cd ui-src && npm run start-agent1",
+    "start-ui-agent2": "cd ui-src && npm run start-agent2"
   },
   "authors": [
     "Lisa Jetton",
-    "Zo-el"
+    "Zo-el",
+    "Perry Kundert"
   ],
   "license": "MIT"
 }
