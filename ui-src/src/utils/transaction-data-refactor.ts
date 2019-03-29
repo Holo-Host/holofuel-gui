@@ -12,6 +12,7 @@ const dataRefactor = (transaction_details: any) => {
         counterparty: transaction.counterparty,
         txAuthor: transaction.txAuthor || undefined,
         amount:  transaction.amount,
+        fee:  transaction.fee,
         event: transaction.event,
         status: transaction.status,
         transaction_timestamp: transaction.transactionTimestamp, //timestamp of the current Transaction
@@ -66,10 +67,11 @@ const refactorListOfPending = (list_of_pending:any) => {
   const  list_of_proposals =  list_of_pending.proposals.map((p:any) => {
     return {
       originTimeStamp: p.event[1],
-      amount:p.event[2].Proposal.tx.amount,
+      amount: p.event[2].Proposal.tx.amount,
+      fee: p.event[2].Proposal.tx.fee,
       originEvent:p.event[2].Proposal.request ? "Request" : "Proposal",
       event: "Proposal",
-      counterparty:p.event[2].Proposal.tx.from,
+      counterparty: p.event[2].Proposal.tx.from,
       txAuthor: p.event[2].Proposal.tx.to,
       status: "pending/recipient",
       dueDate: p.event[2].Proposal.tx.deadline,
@@ -86,7 +88,8 @@ const refactorListOfPending = (list_of_pending:any) => {
   const  list_of_requests =  list_of_pending.requests.map((r:any) => {
       return {
       originTimeStamp: r.event[1],
-      amount:r.event[2].Request.amount,
+      amount: r.event[2].Request.amount,
+      fee: r.event[2].Request.fee,
       originEvent:"Request",
       event: "Request",
       counterparty:r.event[2].Request.to,
@@ -116,6 +119,7 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
     let txEvent:string | undefined = undefined;
     let originEvent:string | undefined = undefined;
     let amount: number | null = null;
+    let fee: number | null = null;
     let counterparty: string | undefined = undefined;
     let dueDate: string | undefined = undefined;
     let notes: string | undefined = undefined;
@@ -126,6 +130,7 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       txEvent = "Request";
       originEvent = "Request";
       amount =  event.Request.amount;
+      fee = event.Request.fee;
       counterparty = event.Request.from;
       dueDate = event.Request.deadline;
       notes = event.Request.notes;
@@ -136,6 +141,7 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       txEvent="Proposal"
       originEvent = event.Proposal.request ? "Request" : "Proposal";
       amount =  event.Proposal.tx.amount;
+      fee = event.Proposal.tx.fee;
       counterparty = event.Proposal.tx.to;
       dueDate = event.Proposal.tx.deadline;
       notes = event.Proposal.tx.notes;
@@ -146,6 +152,7 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       txEvent="Invoice"
       originEvent = event.Invoice.proposal.request ? "Request" : "Proposal";
       amount =  event.Invoice.proposal.tx.amount;
+      fee = event.Invoice.proposal.tx.fee;
       counterparty = event.Invoice.proposal.tx.from;
       dueDate = event.Invoice.proposal.tx.deadline;
       notes = event.Invoice.proposal.tx.notes;
@@ -156,6 +163,7 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       txEvent="Receipt"
       originEvent = event.Receipt.cheque.invoice.proposal.request ? "Request" : "Proposal";
       amount =  event.Receipt.cheque.invoice.proposal.tx.amount;
+      fee = event.Receipt.cheque.invoice.proposal.tx.fee;
       counterparty = event.Receipt.cheque.invoice.proposal.tx.from;
       dueDate = event.Receipt.cheque.invoice.proposal.tx.deadline;
       notes = event.Receipt.cheque.invoice.proposal.tx.notes;
@@ -166,6 +174,7 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       txEvent="Cheque"
       originEvent = event.Cheque.invoice.proposal ? "Request" : "Proposal";
       amount =  event.Cheque.invoice.proposal.tx.amount;
+      fee = event.Cheque.invoice.proposal.tx.fee;
       counterparty = event.Cheque.invoice.proposal.tx.to;
       dueDate = event.Cheque.invoice.proposal.tx.deadline;
       notes = event.Cheque.invoice.proposal.tx.notes;
@@ -187,6 +196,7 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
         originCommitHash, // tx origin commit hash
         eventCommitHash: tx.origin, // 'origin' commit hash for the currently displayed Transaction
         amount,
+	fee,
         originEvent,
         event: txEvent,
         counterparty,

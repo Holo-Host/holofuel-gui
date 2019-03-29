@@ -69,6 +69,7 @@ export type ProposalActionParam = {
 export type Transaction = {
     to: Address,
     amount: string,
+    fee: string,
     notes?: string,
     deadline?: DateTimeString | Moment | string | undefined,
     // transaction should not have request.. track what requires this and refactor/rework...
@@ -105,13 +106,15 @@ export type Ledger = {
   balance: number | null,
   credit: number | null,
   payable: number | null,
-  receivable: number | null
+  receivable: number | null,
+  fees: number | null
 }
 
 export type Adjustment = {
   balance: number,
   payable: number,
   receivable: number,
+  fees: number,
   credit?: number
 }
 

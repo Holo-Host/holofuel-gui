@@ -112,7 +112,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   //// PROPOSAL CASE :
       // payload === {to, amount, notes?, deadline?, request?}
       propose_payment : (payload) => {console.log("dispatching proposal"); dispatch(ProposalAsyncAction.create(payload))},
-      receive_payment : (payload) => {console.log("dispatching receive_payment"); dispatch(ReceivePaymentAsyncAction.create(payload))},
+      receive_payment : (payload) => {console.log("dispatching receive_payment" + JSON.stringify(payload)); dispatch(ReceivePaymentAsyncAction.create(payload))},
 
   // NB: API not yet available...
       // reject_payment : () => {console.log("dispatching reject_payment"); dispatch(RejectPaymentAsyncAction.create({}))}

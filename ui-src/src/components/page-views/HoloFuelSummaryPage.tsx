@@ -61,20 +61,35 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       return (
         <div>
           <div className={classes.jumbotron}>
-            <h3 className={classes.h3}>Current Balance</h3>
             <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
-              {this.props.ledger_state.balance ?
-                <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="85" className={classes.hcLogoLg} /> {`${this.props.ledger_state.balance}`}</div>
-              : `Pending...`
+              {
+		this.props.ledger_state.balance && this.props.ledger_state.credit && this.props.ledger_state.payable
+		? <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="85" className={classes.hcLogoLg} /> {`${this.props.ledger_state.balance + this.props.ledger_state.credit - this.props.ledger_state.payable}`}</div>
+                : `Pending...`
               }
             </Typography>
             <hr style={{color:"#0e094b8f"}} />
             <h3 className={classes.h3}>
-              Credit limit : {this.props.ledger_state.credit && this.props.ledger_state.credit.toString().split(" ")[0] === "-" ?
-                <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm} style={{color:'#ac62bb'}}/> {`${this.props.ledger_state.credit}`}</div>
-              :
-                <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm}/> {`${this.props.ledger_state.credit}`}</div>
+              {this.props.ledger_state.credit
+                ? <span>(<img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm}/>{`${this.props.ledger_state.credit}`} Credit)</span>
+                : <span>Credit</span>
               }
+	      <span> + </span>
+	      {this.props.ledger_state.balance
+                ? <span>(<img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm}/>{`${this.props.ledger_state.balance}`} Balance)</span>
+                : <span>Balance</span>
+              }
+	      <span> - </span>
+              { this.props.ledger_state.payable
+                ? <span>(<img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm}/>{`${this.props.ledger_state.payable}`} Payable)</span>
+                : <span>Payable</span>
+              }
+              <div>
+	      { this.props.ledger_state.fees
+                ? <span>(<img src="/assets/icons/holo-logo.png" alt="holo-logo" width="25" className={classes.hcLogoSm}/>{`${this.props.ledger_state.fees}`} Fees)</span>
+                : <span>(Fees)</span>
+              }
+	      </div>
             </h3>
           </div>
 

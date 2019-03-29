@@ -193,13 +193,14 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       this.forceReset(proposalResult);
     }
     else if (this.state.nextApiCall === "receive_payment") {
-      const { counterparty, amount, notes, dueDate, inResponseToTX, eventCommitHash, txAuthor,  proposalCommitSignature } = this.props.rowInfo.original; // eventCommitHash,
+      const { counterparty, amount, fee, notes, dueDate, inResponseToTX, eventCommitHash, txAuthor,  proposalCommitSignature } = this.props.rowInfo.original; // eventCommitHash,
       const isoDeadline: Moment = moment(dueDate, moment.ISO_8601);
       const proposal = {
         tx: {
           to: txAuthor,
           from: counterparty,
           amount,
+	  fee,
           notes,
           deadline: isoDeadline,
         },

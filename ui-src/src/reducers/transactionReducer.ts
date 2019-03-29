@@ -45,7 +45,8 @@ export const INITIAL_STATE: State = {
     balance: null,
     credit: null,
     payable: null,
-    receivable: null
+    receivable: null,
+    fees: null
   },
   list_of_pending  : {},
   list_of_transactions: {
@@ -53,7 +54,8 @@ export const INITIAL_STATE: State = {
       balance: null,
       credit: null,
       payable: null,
-      receivable: null
+      receivable: null,
+      fees: null
     },
     newer: {
       since: "",
@@ -78,6 +80,7 @@ export const INITIAL_STATE: State = {
           Request: {
             to: "",
             amount: "",
+	    fee: "",
             notes: "",
             deadline: "",
             request: ""
@@ -87,6 +90,7 @@ export const INITIAL_STATE: State = {
           balance: 0,
           payable: 0,
           receivable: 0,
+          fees: 0,
           credit: 0 // ** added **
         }
     }]
@@ -96,6 +100,7 @@ export const INITIAL_STATE: State = {
   view_specific_request:{
       to: "",
       amount: "",
+      fee: "",
       notes: "",
       deadline: ""
   },
@@ -105,6 +110,7 @@ export const INITIAL_STATE: State = {
       tx: {
         to: "",
         amount: "",
+	fee: "",
         notes: "",
         deadline: ""
       }
