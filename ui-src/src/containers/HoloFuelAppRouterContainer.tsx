@@ -79,6 +79,13 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     }
   };
 
+  hClient.installLoginDialog();
+
+  // hClient.triggerLoginPrompt().then(() => {
+  //   console.log('Holo login complete')
+  //   this.actions.initializeHolochain()
+  // })
+
   componentDidMount () {
     this.props.fetch_agent_string();
     this.props.get_ledger_state();
@@ -125,7 +132,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               txType={this.state.transactionType}
               className={classes.appTable}
               {...newProps}
-              location={location.pathname} 
+              location={location.pathname}
             />
           :
             location.pathname === "/holofuelproposal" ?

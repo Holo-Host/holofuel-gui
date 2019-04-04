@@ -5,14 +5,28 @@ import { routerMiddleware, routerActions } from 'connected-react-router';
 import { createLogger } from 'redux-logger';
 import createRootReducer from '../reducers/index';
 import * as transactionActions from '../actions/transactionActions';
+
 // ** Middleware for HC Rust Container Communication ** >> Reference Holochain-UI //
 import { holochainMiddleware } from '@holochain/hc-redux-middleware';
-import { connect } from '@holochain/hc-web-client';  // '@holochain/hc-web-client'
-import { setPort } from '../utils/constants'
+import * as holochainclient from '@holochain/hc-web-client';
+import * as hClient from '@holo-host/hclient';
+
+// import { connect } from '@holochain/hc-web-client';  // '@holochain/hc-web-client'
+// import { setPort } from '../utils/constants'
 
 // const url = 'ws:localhost:3000';
-const url = `ws:localhost:${setPort()}`;
-const hcWc = connect(url);
+// const url = `ws:localhost:${setPort()}`;
+// const hcWc = connect(url);
+ //*********************** Use this for intrceptr server ********************//
+const URL = 'ws://' + window.location.host;
+
+// const DNA = 'Qmd3zeMA5S5YWQ4QAZ6JTBPEEAEJwGmoSxkYn6y2Pm4PNV'
+// If have a DNA-STRING, supplement the params with this: { url:URL, dnaHash:DNA })
+const holochainConnection =
+  hClient.makeWebClient(holochainclient, 'holofuel', { url:URL })
+  .then(holoClient => holoClient.connect());
+
+ //******************* ********************************** ******************//
 
 const history = createHashHistory();
 const rootReducer = createRootReducer(history);
@@ -41,7 +55,8 @@ const configureStore = (initialState?: any) => {
   middleware.push(router);
 
   // ** HC Rust Container Middleware ** >> Push HC middleware into middleware array //
-  middleware.push(holochainMiddleware(hcWc));
+  // middleware.push(holochainMiddleware(hcWc));
+  middleware.push(holochainMiddleware(holochainConnection));
 
   // Redux DevTools Configuration
   const actionCreators = {
