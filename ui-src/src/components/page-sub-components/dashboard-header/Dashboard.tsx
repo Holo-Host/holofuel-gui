@@ -48,7 +48,7 @@ class Dashboard extends React.Component<Props, State> {
             </Typography>
 
             <List className={classnames(classes.navMenuItemsWrapper, "nav-links")}>
-              <MainNavListItems className={classnames(classes.navMenuItems, "nav-links")} {...this.props}/>
+              <MainNavListItems {...this.props}/>
             </List>
 
             <div className={classes.search}>

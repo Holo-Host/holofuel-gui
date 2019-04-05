@@ -113,7 +113,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              className={classes.appTable}
               {...newProps}
             />
           :
@@ -123,9 +122,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              className={classes.appTable}
               {...newProps}
-              location={location.pathname} 
+              location={location.pathname}
             />
           :
             location.pathname === "/holofuelproposal" ?
@@ -134,7 +132,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              className={classes.appTable}
               {...this.props}
               location={location.pathname}
             />
@@ -145,7 +142,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
                 transferBtnBar={this.state.chooseTxBtnBarOpen}
                 showTransferBar={this.toggleTransferBtnBar}
                 txType={this.state.transactionType}
-                className={classes.appTable}
                 {...this.props}
               />
           :
@@ -155,7 +151,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              className={classes.appTable}
               {...this.props}
             />
           :
@@ -164,7 +159,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              className={classes.appTable}
               {...this.props}
             />
           }
