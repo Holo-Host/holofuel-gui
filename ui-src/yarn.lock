@@ -1002,10 +1002,10 @@
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-free/-/fontawesome-free-5.8.1.tgz#cbafbfe8894c4e3e3c3a9da6774e249ac1f2da8b"
   integrity sha512-GJtx6e55qLEOy2gPOsok2lohjpdWNGrYGtQx0FFT/++K4SYx+Z8LlPHdQBaFzKEwH5IbBB4fNgb//uyZjgYXoA==
 
-"@holochain/hc-redux-middleware@^1.0.9":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@holochain/hc-redux-middleware/-/hc-redux-middleware-1.0.9.tgz#76da8aea2beefbaf8bcb4983f82755c36d63a089"
-  integrity sha512-CuZ9HoJUNzbZjOiWvZs2IoMYc+c36BOlnwLsZ7aolMiYHLb0BA3CnKlGXEMB1Pfo7S4hxJW+GVFcKutYagw+Mw==
+"@holochain/hc-redux-middleware@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@holochain/hc-redux-middleware/-/hc-redux-middleware-1.1.1.tgz#238f433ee989cbe026c36361788d130a0ba5c481"
+  integrity sha512-bMzBjjOfeIlg8Vkhx5C9gm1RFJ3nUBfvc9+9UZBNknFAAvZNqgoheDVKmC0W2Lt8UWomWoyC+ZDMFpNcsXUw5g==
   dependencies:
     redux "^4.0.1"
     typesafe-actions "^2.0.4"
