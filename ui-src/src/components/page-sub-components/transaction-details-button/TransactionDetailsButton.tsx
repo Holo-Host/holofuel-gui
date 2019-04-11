@@ -6,7 +6,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 // Local Imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
-import { ProposalActionParam } from '../../../utils/types';
+import { PromiseActionParam } from '../../../utils/types';
 import InformativeModal from '../modal/InformativeModal';
 import HoloFuelTransactionDetailPage from '../../page-views/HoloFuelTransactionDetailPage';
 import styles from '../../styles/page-sub-component-styles/TransactionDetailsButtonMuiStyles';
@@ -101,7 +101,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         case 'accepted': {
           nextApiCall = 'receive_payment';
           todoText = 'Accept Final Payment';
-          statusText="Payment Proposed";
+          statusText="Payment Promised";
           break;
         }
         case 'completed': {
@@ -159,11 +159,11 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         case 'recipient': {
           nextApiCall = 'receive_payment';
           todoText = 'Request Payment';
-          statusText = "Payment Proposed";
+          statusText = "Payment Promised";
           break;
         }
         case 'spender': {
-          nextApiCall = 'propose_payment';
+          nextApiCall = 'promise_payment';
           todoText = 'Send Funds';
           statusText = "Payment Requested";
           break;
@@ -177,25 +177,25 @@ class TransactionDetailsButton extends React.Component<Props, State> {
   };
 
   handlePendingTransaction = async () => {
-    if (this.state.nextApiCall === "propose_payment") {
+    if (this.state.nextApiCall === "promise_payment") {
       const { counterparty, amount, notes, dueDate, originCommitHash } = this.props.rowInfo.original;
       const isoDeadline: Moment = moment(dueDate, moment.ISO_8601);
-      const approved_proposal_obj: ProposalActionParam = {
+      const approved_promise_obj: PromiseActionParam = {
         to: counterparty,
         amount,
         notes,
         deadline: isoDeadline,
         request: originCommitHash
       }
-      // this.props.propose_payment(approved_proposal_obj);
-      const proposalResult = await this.props.propose_payment(approved_proposal_obj); //sending as JSON
-      // this.sendConfirmationMessage(proposalResult, approved_proposal_obj);
-      this.forceReset(proposalResult);
+      // this.props.promise_payment(approved_promise_obj);
+      const promiseResult = await this.props.promise_payment(approved_promise_obj); //sending as JSON
+      // this.sendConfirmationMessage(promiseResult, approved_promise_obj);
+      this.forceReset(promiseResult);
     }
     else if (this.state.nextApiCall === "receive_payment") {
-      const { counterparty, amount, fee, notes, dueDate, inResponseToTX, eventCommitHash, txAuthor,  proposalCommitSignature } = this.props.rowInfo.original; // eventCommitHash,
+      const { counterparty, amount, fee, notes, dueDate, inResponseToTX, eventCommitHash, txAuthor,  promiseCommitSignature } = this.props.rowInfo.original; // eventCommitHash,
       const isoDeadline: Moment = moment(dueDate, moment.ISO_8601);
-      const proposal = {
+      const promise = {
         tx: {
           to: txAuthor,
           from: counterparty,
@@ -208,9 +208,9 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       }
 
       const receive_payment_obj: any = {
-        proposal, // proposal obj.
-        proposal_sig: proposalCommitSignature, // proposal signature
-        proposal_commit: eventCommitHash // commit address
+        promise, // promise obj.
+        promise_sig: promiseCommitSignature, // promise signature
+        promise_commit: eventCommitHash // commit address
       }
       // this.props.receive_payment(receive_payment_obj);
 

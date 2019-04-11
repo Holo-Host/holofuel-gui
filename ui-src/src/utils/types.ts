@@ -38,7 +38,7 @@ export type Event = {
     Receipt? : Receipt,
     Refund? : object,
     // Spender
-    Proposal? : Proposal,
+    Promise? : Promise,
     Cheque? : Cheque,
     Decline? : object,
     Recover? : object,
@@ -58,7 +58,7 @@ export type RequestActionParam = {
   deadline?: DateTimeString | Moment | string
 }
 
-export type ProposalActionParam = {
+export type PromiseActionParam = {
   to: Address, // this was from >> shouldn't it be "to" ?!?!?!
   amount: string,
   notes?: string,
@@ -76,18 +76,18 @@ export type Transaction = {
     request?: Address
 }
 
-export type Proposal = {
-   // from === the agent_hash of the PROPOSER.
+export type Promise = {
+   // from === the agent_hash of the PROMISER.
    from: Address,
    tx: Transaction,
-    // request === the commit_hash/address of the request (if prosposal is in response to a request...)
+    // request === the commit_hash/address of the request (if promise is in response to a request...)
   request?: Address
 };
 
 export type Invoice = {
-  proposal: Proposal,
-  proposal_sig: Signature,
-  proposal_commit: Address
+  promise: Promise,
+  promise_sig: Signature,
+  promise_commit: Address
 }
 
 export type Cheque = {
@@ -121,10 +121,10 @@ export type Adjustment = {
 export type AddressArray = Array<Address>; // an array of the commit hashes/ dht addresses
 
 
-// The details of each pending request/proposal includes its TxOrigin Address, the ChainHeader timestamp of the Event commit, and the Event details. 
+// The details of each pending request/promise includes its TxOrigin Address, the ChainHeader timestamp of the Event commit, and the Event details. 
 export type PendingResult = {
   requests?: [ Address, DateTimeString | Moment | string, Event ],
-  proposals?: [ Address, DateTimeString | Moment | string, Event ]
+  promises?: [ Address, DateTimeString | Moment | string, Event ]
 }
 
 export type ListTransactionOptions = {

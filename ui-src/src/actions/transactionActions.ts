@@ -46,7 +46,7 @@ export const LedgerStateAsyncAction = createHolochainZomeCallAsyncAction<{}, Arr
 // This will return a client's self-initiated transactions ONLY
 export const TransactionListAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_transactions');
 
-// This will return ONLY those transactions (requests/proposals/refunds) that are not yet converted to transactions, ie. only the initating party has made a transaction and has mentioned the current user as the counterparty, yet the current user still has yet to engage in the transaction...
+// This will return ONLY those transactions (requests/promises/refunds) that are not yet converted to transactions, ie. only the initating party has made a transaction and has mentioned the current user as the counterparty, yet the current user still has yet to engage in the transaction...
 export const PendingListAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_pending');
 
 ////////////////////////////////////////////////////////
@@ -56,8 +56,8 @@ export const PendingListAsyncAction = createHolochainZomeCallAsyncAction<{}, Arr
 // Call for REQUEST_PAYMENT ()
 export const RequestPaymentAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'request');
 
-// Call for PROPOSE_PAYMENT ()
-export const ProposalAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'proposal');
+// Call for PROMISE_PAYMENT ()
+export const PromiseAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'promise');
 
 // Call for RECEIVE_PAYMENT ()
 export const ReceivePaymentAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'receive_payment');
@@ -74,11 +74,11 @@ export const DeclineRequestAsyncAction = createHolochainZomeCallAsyncAction<{}, 
 // Call for LIST_REQUESTS ()
 export const ListRequestsAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_requests');
 
-// Call for LIST_PROPOSALS ()
-export const ListProposalsAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_proposals');
+// Call for LIST_PROMISES ()
+export const ListPromisesAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'list_promises');
 
 // Call for GET_SINGLE_REQUEST ()
 export const GetRequestAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'get_request');
 
-// Call for GET_SINGLE_PROPOSAL ()
-export const GetProposalAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'get_proposal');
+// Call for GET_SINGLE_PROMISE ()
+export const GetPromiseAsyncAction = createHolochainZomeCallAsyncAction<{}, Array<any>>(DNA_INSTANCE, TX_ZOME_NAME, 'get_promise');
