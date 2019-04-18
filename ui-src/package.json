@@ -8,7 +8,7 @@
     "start-agent1": "PORT=8800 REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=test-instance react-scripts-ts start",
     "start-agent2": "PORT=9300 REACT_APP_NODE_PORT=3100 REACT_APP_DNA_INSTANCE=test-instance react-scripts-ts start",
     "start-web": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.base.js",
-    "build": "react-scripts-ts build && node copy-to-ui.js",
+    "build": " REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=holofuel-instance react-scripts-ts build && node copy-to-ui.js",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-prod": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "test": "react-scripts-ts test --env=jsdom",
