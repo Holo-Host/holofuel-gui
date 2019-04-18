@@ -8,7 +8,7 @@ const dataRefactor = (transaction_details: any) => {
     if (transaction !== parseInt(transaction, 10)) {
       const newTxObj = {
         originTimeStamp: transaction.originTimeStamp, // timestamp of the intial Transaction
-        originEvent: transaction.originEvent === "Request" ? "Requested" : "Sent", // determine whether it is better to say sent or proposed here...
+        originEvent: transaction.originEvent === "Request" ? "Requested" : "Promised", // TODO: determine whether it is better to say sent or promised here...
         counterparty: transaction.counterparty,
         txAuthor: transaction.txAuthor || undefined,
         amount:  transaction.amount,
@@ -20,7 +20,7 @@ const dataRefactor = (transaction_details: any) => {
         dueDate: transaction.dueDate,
         notes: transaction.notes,
         originCommitHash: transaction.originCommitHash,
-        proposalCommitSignature: transaction.proposalCommitSignature || undefined,
+        promiseCommitSignature: transaction.promiseCommitSignature || undefined,
         inResponseToTX: transaction.inResponseToTX,
         rowNumberType: transaction.rowNumberType
       };
@@ -64,23 +64,23 @@ const alternateEven = () => {
 }
 
 const refactorListOfPending = (list_of_pending:any) => {
-  const  list_of_proposals =  list_of_pending.proposals.map((p:any) => {
+  const  list_of_promises =  list_of_pending.promises.map((p:any) => {
     return {
       originTimeStamp: p.event[1],
-      amount: p.event[2].Proposal.tx.amount,
-      fee: p.event[2].Proposal.tx.fee,
-      originEvent:p.event[2].Proposal.request ? "Request" : "Proposal",
-      event: "Proposal",
-      counterparty: p.event[2].Proposal.tx.from,
-      txAuthor: p.event[2].Proposal.tx.to,
+      amount: p.event[2].Promise.tx.amount,
+      fee: p.event[2].Promise.tx.fee,
+      originEvent:p.event[2].Promise.request ? "Request" : "Promise",
+      event: "Promise",
+      counterparty: p.event[2].Promise.tx.from,
+      txAuthor: p.event[2].Promise.tx.to,
       status: "pending/recipient",
-      dueDate: p.event[2].Proposal.tx.deadline,
-      notes:  p.event[2].Proposal.tx.notes,
-      originCommitHash: p.event[2].Proposal.request ? p.event[2].Proposal.request : p.event[0], // the tx origin commit hash
-      eventCommitHash: p.event[0], // the 'origin' proposal commit hash
-      inResponseToTX:p.event[2].Proposal.request || undefined, // the request hash that the proposal is in response to, should it exist...
+      dueDate: p.event[2].Promise.tx.deadline,
+      notes:  p.event[2].Promise.tx.notes,
+      originCommitHash: p.event[2].Promise.request ? p.event[2].Promise.request : p.event[0], // the tx origin commit hash
+      eventCommitHash: p.event[0], // the 'origin' promise commit hash
+      inResponseToTX:p.event[2].Promise.request || undefined, // the request hash that the promise is in response to, should it exist...
       transactionTimestamp: p.event[1],
-      proposalCommitSignature: p.provenance[1],
+      promiseCommitSignature: p.provenance[1],
       rowNumberType
     };
   });
@@ -106,7 +106,7 @@ const refactorListOfPending = (list_of_pending:any) => {
     };
   });
 
-  const refactored_transactions = list_of_proposals.concat(list_of_requests);
+  const refactored_transactions = list_of_promises.concat(list_of_requests);
   return refactored_transactions;
 }
 
@@ -137,49 +137,49 @@ export const refactorListOfTransactions = (list_of_transactions: any, list_of_pe
       inResponseToTX = undefined;
       originCommitHash =  tx.timestamp.origin;
     }
-    else if (event.Proposal){
-      txEvent="Proposal"
-      originEvent = event.Proposal.request ? "Request" : "Proposal";
-      amount =  event.Proposal.tx.amount;
-      fee = event.Proposal.tx.fee;
-      counterparty = event.Proposal.tx.to;
-      dueDate = event.Proposal.tx.deadline;
-      notes = event.Proposal.tx.notes;
-      inResponseToTX = event.Proposal.request;// the request hash that the proposal is in response to, should it exist...
-      originCommitHash = event.Proposal.request ? event.Proposal.request : tx.timestamp.origin; // tx origin commit hash
+    else if (event.Promise){
+      txEvent="Promise"
+      originEvent = event.Promise.request ? "Request" : "Promise";
+      amount =  event.Promise.tx.amount;
+      fee = event.Promise.tx.fee;
+      counterparty = event.Promise.tx.to;
+      dueDate = event.Promise.tx.deadline;
+      notes = event.Promise.tx.notes;
+      inResponseToTX = event.Promise.request;// the request hash that the promise is in response to, should it exist...
+      originCommitHash = event.Promise.request ? event.Promise.request : tx.timestamp.origin; // tx origin commit hash
     }
     else if (event.Invoice){
       txEvent="Invoice"
-      originEvent = event.Invoice.proposal.request ? "Request" : "Proposal";
-      amount =  event.Invoice.proposal.tx.amount;
-      fee = event.Invoice.proposal.tx.fee;
-      counterparty = event.Invoice.proposal.tx.from;
-      dueDate = event.Invoice.proposal.tx.deadline;
-      notes = event.Invoice.proposal.tx.notes;
-      inResponseToTX = event.Invoice.proposal.request;// the request hash that the proposal is in response to, should it exist...
-      originCommitHash = event.Invoice.proposal.request ? event.Invoice.proposal.request : tx.timestamp.origin; // tx origin commit hash
+      originEvent = event.Invoice.promise.request ? "Request" : "Promise";
+      amount =  event.Invoice.promise.tx.amount;
+      fee = event.Invoice.promise.tx.fee;
+      counterparty = event.Invoice.promise.tx.from;
+      dueDate = event.Invoice.promise.tx.deadline;
+      notes = event.Invoice.promise.tx.notes;
+      inResponseToTX = event.Invoice.promise.request;// the request hash that the promise is in response to, should it exist...
+      originCommitHash = event.Invoice.promise.request ? event.Invoice.promise.request : tx.timestamp.origin; // tx origin commit hash
     }
     else if (event.Receipt){
       txEvent="Receipt"
-      originEvent = event.Receipt.cheque.invoice.proposal.request ? "Request" : "Proposal";
-      amount =  event.Receipt.cheque.invoice.proposal.tx.amount;
-      fee = event.Receipt.cheque.invoice.proposal.tx.fee;
-      counterparty = event.Receipt.cheque.invoice.proposal.tx.from;
-      dueDate = event.Receipt.cheque.invoice.proposal.tx.deadline;
-      notes = event.Receipt.cheque.invoice.proposal.tx.notes;
-      inResponseToTX = event.Receipt.cheque.invoice.proposal.request;// the request hash that the proposal is in response to, should it exist...
-      originCommitHash = event.Receipt.cheque.invoice.proposal.request ? event.Receipt.cheque.invoice.proposal.request : tx.timestamp.origin; // tx origin commit hash
+      originEvent = event.Receipt.cheque.invoice.promise.request ? "Request" : "Promise";
+      amount =  event.Receipt.cheque.invoice.promise.tx.amount;
+      fee = event.Receipt.cheque.invoice.promise.tx.fee;
+      counterparty = event.Receipt.cheque.invoice.promise.tx.from;
+      dueDate = event.Receipt.cheque.invoice.promise.tx.deadline;
+      notes = event.Receipt.cheque.invoice.promise.tx.notes;
+      inResponseToTX = event.Receipt.cheque.invoice.promise.request;// the request hash that the promise is in response to, should it exist...
+      originCommitHash = event.Receipt.cheque.invoice.promise.request ? event.Receipt.cheque.invoice.promise.request : tx.timestamp.origin; // tx origin commit hash
     }
     else if (event.Cheque){
       txEvent="Cheque"
-      originEvent = event.Cheque.invoice.proposal ? "Request" : "Proposal";
-      amount =  event.Cheque.invoice.proposal.tx.amount;
-      fee = event.Cheque.invoice.proposal.tx.fee;
-      counterparty = event.Cheque.invoice.proposal.tx.to;
-      dueDate = event.Cheque.invoice.proposal.tx.deadline;
-      notes = event.Cheque.invoice.proposal.tx.notes;
-      inResponseToTX = event.Cheque.invoice.proposal.request;// the request hash that the proposal is in response to, should it exist...
-      originCommitHash = event.Cheque.invoice.proposal.request ? event.Cheque.invoice.proposal.request : tx.timestamp.origin; // tx origin commit hash
+      originEvent = event.Cheque.invoice.promise ? "Request" : "Promise";
+      amount =  event.Cheque.invoice.promise.tx.amount;
+      fee = event.Cheque.invoice.promise.tx.fee;
+      counterparty = event.Cheque.invoice.promise.tx.to;
+      dueDate = event.Cheque.invoice.promise.tx.deadline;
+      notes = event.Cheque.invoice.promise.tx.notes;
+      inResponseToTX = event.Cheque.invoice.promise.request;// the request hash that the promise is in response to, should it exist...
+      originCommitHash = event.Cheque.invoice.promise.request ? event.Cheque.invoice.promise.request : tx.timestamp.origin; // tx origin commit hash
     }
 
         // case 'decline' :

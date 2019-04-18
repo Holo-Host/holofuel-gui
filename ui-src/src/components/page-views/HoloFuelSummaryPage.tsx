@@ -43,7 +43,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
 
   public componentDidMount () {
     this.props.list_transactions({});
-    this.props.list_proposals();
+    this.props.list_promises();
     this.props.list_requests();
     this.props.list_pending();
   }
@@ -94,7 +94,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
           </div>
 
           <div>
-            {/* { this.props.list_of_pending.proposals && this.props.list_of_pending.requests ?
+            {/* { this.props.list_of_pending.promises && this.props.list_of_pending.requests ?
               <Typography className={classnames(classes.tableHeader, classes.pageHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
                 Transaction History
               </Typography>

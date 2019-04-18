@@ -26,7 +26,7 @@ export interface OwnProps {
   location: any,
   txType: string,
   showTransferBar: (txType:any) => void,
-  invokeProposal: (txType:any) => void,
+  invokePromise: (txType:any) => void,
   invokeRequest: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
@@ -43,7 +43,7 @@ export interface State {
   transactionType: string
 }
 
-class RequestProposalFormBtns extends React.Component<Props, State> {
+class RequestPromiseFormBtns extends React.Component<Props, State> {
   constructor(props: Props) {
     super(props);
     this.state = {
@@ -107,7 +107,7 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
       notes: "",
       deadline: ""
     })
-    this.props.invokeProposal(tx_obj);
+    this.props.invokePromise(tx_obj);
   };
 
   handleRequestPayment = (tx_obj: object) => {
@@ -303,11 +303,11 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
         <AppBar position="fixed" className={classes.bottomAppBar}>
           <Toolbar className={classes.toolbar}>
             <div className={classnames(classes.buttonMenu)}>
-              {txType === "proposal" || this.props.location === "/holofuelproposal" ?
+              {txType === "promise" || this.props.location === "/holofuelpromise" ?
               <span>
                 <Button variant="outlined"
                   color="primary"
-                  onClick={this.verifyTx("proposal")}
+                  onClick={this.verifyTx("promise")}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
                   <span className={classes.innerBtnText}>Send</span>
@@ -348,4 +348,4 @@ class RequestProposalFormBtns extends React.Component<Props, State> {
   }
 }
 
-export default withStyles(styles)(RequestProposalFormBtns);
+export default withStyles(styles)(RequestPromiseFormBtns);

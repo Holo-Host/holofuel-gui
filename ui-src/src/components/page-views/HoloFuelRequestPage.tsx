@@ -8,7 +8,7 @@ import Typography from '@material-ui/core/Typography';
 // local imports :
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
+import RequestPromiseFormBtns from '../page-sub-components/input-fields/RequestPromiseFormBtns';
 import styles from '../styles/page-styles/DefaultPageMuiStyles';
 // import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
 
@@ -89,7 +89,7 @@ class HoloFuelRequestPage extends React.Component<Props, State> {
          <br/>
 
          <div style={{ margin:'0 auto' }}>
-           <RequestProposalFormBtns {...newProps} location={this.props.location} txType={this.props.txType} invokeRequest={this.makeRequest} invokeProposal={this.makeRequest}/>
+           <RequestPromiseFormBtns {...newProps} location={this.props.location} txType={this.props.txType} invokeRequest={this.makeRequest} invokePromise={this.makeRequest}/>
         </div>
 
         <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>

@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 // local imports :
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
-import RequestProposalFormBtns from '../page-sub-components/input-fields/RequestProposalFormBtns';
+import RequestPromiseFormBtns from '../page-sub-components/input-fields/RequestPromiseFormBtns';
 export interface OwnProps {
   // These are props the component has received from its parent component
   classes: any,
@@ -35,12 +35,12 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
   componentDidMount () {
   }
 
-  sendProposal = async (txInfoObj: any) => {
-    const proposalResult = await this.props.propose_payment(txInfoObj); // send as JSON
-    this.sendConfirmationMessage(proposalResult, txInfoObj);
+  sendPromise = async (txInfoObj: any) => {
+    const promiseResult = await this.props.promise_payment(txInfoObj); // send as JSON
+    this.sendConfirmationMessage(promiseResult, txInfoObj);
   }
 
-  sendConfirmationMessage = (proposalResult: any, txInfoObj: any) => {
+  sendConfirmationMessage = (promiseResult: any, txInfoObj: any) => {
     this.setState({ confirmation: txInfoObj});
   }
 
@@ -82,7 +82,7 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
 
 
         <div style={{ margin:'0 auto' }}>
-          <RequestProposalFormBtns {...newProps} location={this.props.location} txType={this.props.txType} invokeProposal={this.sendProposal} invokeRequest={this.sendProposal}  />
+          <RequestPromiseFormBtns {...newProps} location={this.props.location} txType={this.props.txType} invokePromise={this.sendPromise} invokeRequest={this.sendPromise}  />
         </div>
 
         <hr className={classnames(classes.horizontalLine, classes.txBottomLineSpace)}/>

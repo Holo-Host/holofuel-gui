@@ -3,13 +3,13 @@ import * as React from 'react';
 import HoloFuelSummaryPage from '../components/page-views/HoloFuelSummaryPage';
 // import HoloFuelTxSummary from '../components/page-views/HoloFuelTxSummary';
 import HoloFuelRequestPage from '../components/page-views/HoloFuelRequestPage';
-import HoloFuelProposalPage from '../components/page-views/HoloFuelProposalPage';
+import HoloFuelPromisePage from '../components/page-views/HoloFuelPromisePage';
 import SettingsHolo from "../components/page-views/SettingsHolo";
 import AgentProfile from "../components/page-views/AgentProfile";
 import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTransactionDetailPage';
 // import Dashboard from '../components/page-sub-components/dashboard-header/Dashboard';
 // import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
-import { Ledger, ListTransactionsResult, PendingResult } from '../utils/types'; // RequestActionParam, ProposalActionParam, Address, DateTimeString
+import { Ledger, ListTransactionsResult, PendingResult } from '../utils/types'; // RequestActionParam, PromiseActionParam, Address, DateTimeString
 import AppNavBar from '../components/page-sub-components/app-nav-bar/AppNavBar';
 // import SubNavBar from '../components/page-sub-components/app-nav-bar/SubNavBar';
 // custom styles :
@@ -33,14 +33,14 @@ export interface StateProps {
   my_agent_string: string,
   my_agent_hash: string,
   hf_base_dna_hash: string,
-  mostRecentProposalCommit: string,
+  mostRecentPromiseCommit: string,
   mostRecentRequestCommit: string,
   list_of_transactions : ListTransactionsResult,
   list_of_pending: PendingResult,
   list_of_requests: Array<any>,
-  list_of_proposals: Array<any>,
+  list_of_promises: Array<any>,
   view_specific_request: Array<any>,
-  view_specific_proposal: Array<any>
+  view_specific_promise: Array<any>
 }
 export interface DispatchProps {
 // Props that are set by mapDispatchToProps
@@ -53,11 +53,11 @@ export interface DispatchProps {
     list_transactions: (payload? : any) => void,
     list_pending: () => void,
     list_requests: () => void,
-    list_proposals: () => void,
+    list_promises: () => void,
     get_single_request: ({request_address}: any) => void,
-    get_single_proposal: ({proposal_address}: any) => void,
+    get_single_promise: ({promise_address}: any) => void,
     request_payment: ({request_tx_obj}: any) => void,
-    propose_payment: ({propose_tx_obj}: any) => void,
+    promise_payment: ({promise_tx_obj}: any) => void,
     receive_payment: ({payment_obj}: any) => void,
 }
 export type Props =  StateProps & DispatchProps & OwnProps;
@@ -126,9 +126,9 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               location={location.pathname}
             />
           :
-            location.pathname === "/holofuelproposal" ?
+            location.pathname === "/holofuelpromise" ?
             // this should be the HoloFuel Transaction Details Page
-            <HoloFuelProposalPage
+            <HoloFuelPromisePage
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}

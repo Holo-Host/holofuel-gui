@@ -11,13 +11,13 @@ TransactionListAsyncAction,
 PendingListAsyncAction,
 LedgerStateAsyncAction,
 ListRequestsAsyncAction,
-ListProposalsAsyncAction,
+ListPromisesAsyncAction,
 GetRequestAsyncAction,
-GetProposalAsyncAction,
+GetPromiseAsyncAction,
 RequestPaymentAsyncAction,
 // PayRequestAsyncAction,
 // DeclineRequestAsyncAction,
-ProposalAsyncAction,
+PromiseAsyncAction,
 ReceivePaymentAsyncAction,
 // RejectPaymentAsyncAction
 } from '../actions/transactionActions';
@@ -58,12 +58,12 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   ledger_state: transactionReducer.ledger_state,
   list_of_transactions: transactionReducer.list_of_transactions,
   list_of_pending:transactionReducer.list_of_pending,
-  mostRecentProposalCommit:transactionReducer.mostRecentProposalCommit,
+  mostRecentPromiseCommit:transactionReducer.mostRecentPromiseCommit,
   mostRecentRequestCommit:transactionReducer.mostRecentRequestCommit,
   list_of_requests: transactionReducer.list_of_requests,
-  list_of_proposals: transactionReducer.list_of_proposals,
+  list_of_promises: transactionReducer.list_of_promises,
   view_specific_request: transactionReducer.view_specific_request,
-  view_specific_proposal: transactionReducer.view_specific_proposal // ,
+  view_specific_promise: transactionReducer.view_specific_promise // ,
   // status
   };
 }
@@ -92,15 +92,15 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
       list_requests : () => {
        dispatch(ListRequestsAsyncAction.create({}))},
 
-      list_proposals : () => {
-       dispatch(ListProposalsAsyncAction.create({}))},
+      list_promises : () => {
+       dispatch(ListPromisesAsyncAction.create({}))},
 
   //// View Specific Transaction
       get_single_request : (request_payload) => {
        dispatch(GetRequestAsyncAction.create(request_payload))},
 
-      get_single_proposal : (proposal_payload) => {
-       dispatch(GetProposalAsyncAction.create(proposal_payload))},
+      get_single_promise : (promise_payload) => {
+       dispatch(GetPromiseAsyncAction.create(promise_payload))},
 
   // TRANSACTION EVENTS (ACTIONS):
       request_payment : (payload) => {
@@ -109,9 +109,9 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   // NB: API not yet available...
       // decline_request : () => {console.log("dispatching decline_request"); dispatch(DeclineRequestAsyncAction.create({}))},
 
-  //// PROPOSAL CASE :
+  //// PROMISE CASE :
       // payload === {to, amount, notes?, deadline?, request?}
-      propose_payment : (payload) => {console.log("dispatching proposal"); dispatch(ProposalAsyncAction.create(payload))},
+      promise_payment : (payload) => {console.log("dispatching promise"); dispatch(PromiseAsyncAction.create(payload))},
       receive_payment : (payload) => {console.log("dispatching receive_payment" + JSON.stringify(payload)); dispatch(ReceivePaymentAsyncAction.create(payload))},
 
   // NB: API not yet available...
