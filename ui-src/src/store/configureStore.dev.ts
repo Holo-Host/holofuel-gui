@@ -13,12 +13,16 @@ import * as transactionActions from '../actions/transactionActions';
 // ** Middleware for HC Rust Container Communication ** >> Reference Holochain-UI //
 import { holochainMiddleware } from '@holochain/hc-redux-middleware';
 import * as holochainclient from '@holochain/hc-web-client';
-import * as hClient from '@holo-host/hclient';
+import * as hClient from '../utils/hclient';
 
-(async function findAgentID () {
-  const agent_id = await hClient.getCurrentAgentId();
-  console.log("YOUR agent_id === ", agent_id);
-})();
+const HOSTURL = 'ws://' + window.location.host;
+// console.log(" >>> HOST URL <<<<", HOSTURL);
+const KV_STORE_HAPPHASH = "QmYhReByy4kHs3tAdUGSSfUBhvkhTTcfFvnSBCqAr2KZpq";
+
+// (async function findAgentID () {
+//   const agent_id = await hClient.getCurrentAgentId();
+//   console.log("YOUR agent_id === ", agent_id);
+// })();
 
 // const url = 'ws:localhost:3000';
 // const url = `ws:localhost:${setPort()}`;
@@ -27,11 +31,11 @@ import * as hClient from '@holo-host/hclient';
 const history = createHashHistory();
 const rootReducer = createRootReducer(history);
 
-const configureStore = (initialState?: any) => {
-  console.log("in it init")
+const configureStore =  (initialState?: any) => {
+  console.log("in it INIT")
 
   // Redux Configuration
-  const middleware = [];
+  const middleware:any[] = [];
   const enhancers = [];
 
   // Thunk Middleware
@@ -53,22 +57,23 @@ const configureStore = (initialState?: any) => {
   middleware.push(router);
 
   //*********************** Use this for intrceptr server ********************//
-  // const HOSTURL = 'ws://' + window.location.host;
-  const HOSTURL = 'http://holofuel6example.holohost.net'
-   console.log(" >>> HOST URL <<<<", HOSTURL);
-
-   const KV_STORE_HAPPHASH = "holofuel";
+   // const KV_STORE_HAPPHASH = "holofuel"
    // const KV_STORE_HAPPHASH = "holofuel3_dna"
 
-   /***********************  CALLING `makeWebClient` WITH OPTIONALS **************************/
-   // If have a DNA-STRING, supplement the options/params with this: { url:URL, dnaHash:DNA })
+   /***********************  CALLING `makeWebClient` WITH hostUrl (& DNA) OPTIONALS **************************/
+   // If have a DNA-STRING, supplement the options/params with this: { hostUrl:URL, dnaHash:DNA })
    // const HAPPHASH:any = 'Qmd3zeMA5S5YWQ4QAZ6JTBPEEAEJwGmoSxkYn6y2Pm4PNV';
-   hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, { hostUrl:HOSTURL })
-   .then((holoClient:any) => holochainMiddleware(holoClient.connect()));
+  hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, { hostUrl:HOSTURL }).then((h:any)=>{
+    middleware.push(holochainMiddleware(h.connect()));
+    console.log("Pushed to middleware")
+  })
 
-   /***************************** WITHOUT OPTIONALS *****************************/
-   // If NO `hostUrl` optional is provided in `makeWebClient`, then the function should triggr the Resolver to locate a host & host-url/host-domain
-   // hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH)
+   /***************************** WITH hAppUrl OPTIONAL *****************************/
+   // If NO `hostUrl` and, instead, a `hAppURL` optional is provided in `makeWebClient`, then the function should trigger the Resolver to locate a host & host-url/host-domain
+   // const HAPPURL = 'http://172.26.166.34:48080'
+   //  console.log(" >>> HAPP URL <<<<", HAPPURL);
+   //
+   // hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, {hAppUrl: HAPPURL})
    // .then((holoClient:any) => holochainMiddleware(holoClient.connect()));
 
   //******************* ********************************** ******************//

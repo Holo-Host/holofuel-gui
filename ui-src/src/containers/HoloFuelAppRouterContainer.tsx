@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as hClient from '@holo-host/hclient';
+import * as hClient from '../utils/hclient';
 // local page-views imports :
 import HoloFuelSummaryPage from '../components/page-views/HoloFuelSummaryPage';
 // import HoloFuelTxSummary from '../components/page-views/HoloFuelTxSummary';
