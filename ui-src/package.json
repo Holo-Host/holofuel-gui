@@ -60,6 +60,7 @@
     "react-table": "^6.8.6",
     "recompose": "^0.30.0",
     "redux": "latest",
+    "redux-async-initial-state": "^0.3.0",
     "redux-axios-middleware": "^4.0.0",
     "redux-logger": "^3.0.6",
     "save": "^2.3.3",

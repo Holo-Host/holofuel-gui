@@ -9,7 +9,7 @@
     "start-ui-agent1": "cd ui-src && npm run start-agent1",
     "start-ui-agent2": "cd ui-src && npm run start-agent2",
     "build": "cd ui-src && npm run build",
-      "build-holo": "cd ui-src && npm run build-holo"
+    "build-holo": "cd ui-src && npm run build-holo"
   },
   "authors": [
     "Lisa Jetton",
@@ -17,5 +17,7 @@
     "Perry Kundert"
   ],
   "license": "MIT",
-  "dependencies": {}
+  "dependencies": {
+    "@holochain/hc-web-client": "^0.4.0"
+  }
 }

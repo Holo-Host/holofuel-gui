@@ -1,7 +1,45 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import * as hClient from './utils/hclient';
+import * as holochainclient from '@holochain/hc-web-client';
+import { Store } from 'redux';
 import Root from './root';
 import { configureStore, history } from './store/configureStore';
-const store = configureStore();
+// import { setHoloClient } from './utils/storeValues';
 
-ReactDOM.render(<Root history={history} store={store} />, document.querySelector('#root'));
+// const store:Store = configureStore();
+let hClientConnected:boolean = false;
+let hStore:Store;
+
+// const HOSTURL = 'ws://' + window.location.host;
+const HAPPURL = 'http://holofuel6example.holohost.net'
+const KV_STORE_HAPPHASH = "QmTK25g1aWaMMWzTFYMB49KNRFdfDBkkVjnSYAXLUex7SZ"
+const DNAHASH = 'QmYhReByy4kHs3tAdUGSSfUBhvkhTTcfFvnSBCqAr2KZpq';
+// const HAPPHASH = 'QmTK25g1aWaMMWzTFYMB49KNRFdfDBkkVjnSYAXLUex7SZ';
+// console.log(" >>> HOST URL <<<<", HOSTURL);
+
+// function setHoloClient(): Promise<string> {
+//   return new Promise<string>(async (fulfill, reject) => {
+//     const holoClient = await hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, { hostUrl:HOSTURL});
+//     fulfill(holoClient);
+//   })
+// };
+
+const setHoloClient = new Promise<string>(async (fulfill, reject) => {
+  const holoClient = await hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, { hAppUrl:HAPPURL, dnaHash:DNAHASH });
+  fulfill(holoClient);
+});
+setHoloClient.then(holoClient => {
+  console.log("holoClient", holoClient);
+  hStore = configureStore(holoClient);
+
+  console.log("hClientConnected", hClientConnected);
+  hClientConnected = true;
+  console.log("hClientConnected", hClientConnected);
+
+  if(hClientConnected === true){
+    ReactDOM.render(<Root history={history} store={hStore} />, document.querySelector('#root'));
+  }
+});
+
+ReactDOM.render(<div>Loading...</div>, document.querySelector('#root'));

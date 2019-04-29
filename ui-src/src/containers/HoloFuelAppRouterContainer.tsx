@@ -1,5 +1,5 @@
 import * as React from 'react';
-import * as hClient from '../utils/hclient';
+// import * as hClient from '../utils/hclient';
 // local page-views imports :
 import HoloFuelSummaryPage from '../components/page-views/HoloFuelSummaryPage';
 // import HoloFuelTxSummary from '../components/page-views/HoloFuelTxSummary';
@@ -88,15 +88,15 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   initializeHolofuel = () => {
     this.setState({ loggedIn: true })
     console.log("INSIDE of initializeHolofuel >>", this.state);
-    // this.props.fetch_agent_string();
-    // this.props.get_ledger_state();
+    this.props.fetch_agent_string();
+    this.props.get_ledger_state();
   }
   // --------------------------------------
 
 
 
   async componentDidMount () {
-    await hClient.installLoginDialog();
+    // await hClient.installLoginDialog();
     this.initializeHolofuel()
     console.log("Completed");
 
