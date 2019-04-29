@@ -18,13 +18,6 @@ const DNAHASH = 'QmYhReByy4kHs3tAdUGSSfUBhvkhTTcfFvnSBCqAr2KZpq';
 // const HAPPHASH = 'QmTK25g1aWaMMWzTFYMB49KNRFdfDBkkVjnSYAXLUex7SZ';
 // console.log(" >>> HOST URL <<<<", HOSTURL);
 
-// function setHoloClient(): Promise<string> {
-//   return new Promise<string>(async (fulfill, reject) => {
-//     const holoClient = await hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, { hostUrl:HOSTURL});
-//     fulfill(holoClient);
-//   })
-// };
-
 const setHoloClient = new Promise<string>(async (fulfill, reject) => {
   const holoClient = await hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, { hAppUrl:HAPPURL, dnaHash:DNAHASH });
   fulfill(holoClient);
@@ -42,4 +35,4 @@ setHoloClient.then(holoClient => {
   }
 });
 
-ReactDOM.render(<div>Loading...</div>, document.querySelector('#root'));
+ReactDOM.render(<div/>, document.querySelector('#root'));
