@@ -148,6 +148,8 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
     // FETCH_AGENT_STRING  >> Success message & Result
     case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_SUCCESS`: {
+      console.log("whoami_SUCCESS >> inside reducer");
+
       const my_agent_string = payload.agent_id.nick;
       // const my_agent_key = payload.pub_sign_key;
       const my_agent_hash = payload.agent_address;
@@ -162,6 +164,7 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
     // FETCH_AGENT_STRING >> Failure message
     case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_FAILURE`: {
+      console.log("whoami_FAILURE >> inside reducer");
     }
 
 ////////////////////////////////////////////////////////

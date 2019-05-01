@@ -5,6 +5,8 @@ import { ConnectedRouter } from 'connected-react-router';
 import { Switch, Route, Redirect } from 'react-router';
 import HoloFuelAppContainer from './containers/HoloFuelAppContainer';
 
+// export type ReduxStore = Store | null;
+
 const Root = ({ store, history }: { store: Store, history: any }) => (
   <Provider store={store}>
     <ConnectedRouter history={history}>
