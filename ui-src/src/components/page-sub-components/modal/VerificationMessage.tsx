@@ -13,7 +13,7 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // local imports :
-import { ProposalActionParam, RequestActionParam } from '../../../utils/types';
+import { PromiseActionParam, RequestActionParam } from '../../../utils/types';
 // import { getDisplayName } from '../../../utils/global-helper-functions'
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
@@ -70,8 +70,8 @@ class VerficationModal extends React.Component<Props, State>  {
     handleMakeTransaction = () => {
       const { counterparty, amount, deadline, notes } = this.state.messageAsObj;
 
-      if(this.props.tx === "proposal"){
-        const tx_obj: ProposalActionParam = {
+      if(this.props.tx === "promise"){
+        const tx_obj: PromiseActionParam = {
           to: counterparty,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
           amount,
           notes,

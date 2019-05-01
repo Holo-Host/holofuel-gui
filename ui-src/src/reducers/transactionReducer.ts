@@ -1,6 +1,6 @@
 import { ActionType } from 'typesafe-actions';
 import * as actions from '../actions/transactionActions';
-import { Ledger, ListTransactionsResult, Address, Proposal, Transaction, PendingResult } from '../utils/types';
+import { Ledger, ListTransactionsResult, Address, Promise, Transaction, PendingResult } from '../utils/types';
 // import createMockApiData from '../utils/seed-data/mock-api-data';
 import { setInstance, TABLE_DATA_BATCH_LIMIT } from '../utils/constants'
 export type Action = ActionType<typeof actions>;
@@ -23,11 +23,11 @@ export type State = {
   list_of_transactions: ListTransactionsResult,
   list_of_pending:PendingResult,
   list_of_requests: Array<Address>,
-  list_of_proposals: Array<Address>,
-  mostRecentProposalCommit:Address,
+  list_of_promises: Array<Address>,
+  mostRecentPromiseCommit:Address,
   mostRecentRequestCommit:Address,
-  view_specific_request: Transaction, // this include metadata from propsal commit hash (ie ZomeApiResult<AppEntryValue>)
-  view_specific_proposal: Proposal, // this include metadata from propsal commit hash
+  view_specific_request: Transaction, // this include metadata from promise commit hash (ie ZomeApiResult<AppEntryValue>)
+  view_specific_promise: Promise, // this include metadata from promise commit hash
   readonly status: string
 };
 
@@ -37,7 +37,7 @@ export const INITIAL_STATE: State = {
   list_of_instance_info: [],
   list_of_agents: [],
   my_agent_string: '',
-  mostRecentProposalCommit:'',
+  mostRecentPromiseCommit:'',
   mostRecentRequestCommit:'',
   my_agent_hash: '',
   hf_base_dna_hash: "QmcYtest",
@@ -96,7 +96,7 @@ export const INITIAL_STATE: State = {
     }]
   },
   list_of_requests: [],
-  list_of_proposals: [],
+  list_of_promises: [],
   view_specific_request:{
       to: "",
       amount: "",
@@ -104,7 +104,7 @@ export const INITIAL_STATE: State = {
       notes: "",
       deadline: ""
   },
-  view_specific_proposal: {
+  view_specific_promise: {
       from: "",
       request: "",
       tx: {
@@ -183,15 +183,15 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state, list_of_pending : payload };
     }
 
-// View List of Transaction by Type (Request/Proposal) //
+// View List of Transaction by Type (Request/Promise) //
    // LIST_REQUESTS ()
    case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_requests_SUCCESS`: {
      return { ...state, list_of_requests : payload };
    }
 
-   // LIST_PROPOSALS ()
-   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_proposals_SUCCESS`: {
-     return { ...state, list_of_proposals : payload };
+   // LIST_PROMISES ()
+   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/list_promises_SUCCESS`: {
+     return { ...state, list_of_promises : payload };
    }
 
 // View Specific Transaction
@@ -205,9 +205,9 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
     return { ...state };
   }
 
-  // GET_SINGLE_PROPOSAL ()
-  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/get_proposal_SUCCESS`: {
-    return { ...state, view_specific_proposal : payload };
+  // GET_SINGLE_PROMISE ()
+  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/get_promise_SUCCESS`: {
+    return { ...state, view_specific_promise : payload };
   }
 
 ////////////////////////////////////////////////////////
@@ -224,19 +224,19 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state };
     }
 
-  // Call for PROPOSE_PAYMENT_SUCCESS ()
-  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/proposal_SUCCESS`: {
+  // Call for PROMISE_PAYMENT_SUCCESS ()
+  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/promise_SUCCESS`: {
       return { ...state };
     }
 
-    // Call for PROPOSE_PAYMENT_FAILURE ()
-  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/proposal_FAILURE`: {
+    // Call for PROMISE_PAYMENT_FAILURE ()
+  case `${DNA_INSTANCE}/${TX_ZOME_NAME}/promise_FAILURE`: {
         return { ...state };
       }
 
   // Call for RECEIVE_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/receive_payment_SUCCESS`: {
-      return { ...state, mostRecentProposalCommit: payload };
+      return { ...state, mostRecentPromiseCommit: payload };
     }
 
   // Call for REJECT_PAYMENT ()

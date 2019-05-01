@@ -60,7 +60,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   }
 
   fetchPendingAndProcessedData=()=>{
-    if(!this.props.list_of_pending.proposals && !this.props.list_of_pending.requests) {
+    if(!this.props.list_of_pending.promises && !this.props.list_of_pending.requests) {
       return [];
     }
     else {
@@ -72,7 +72,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     const { classes } = this.props;
     const { isMobile } = this.state;
 
-    if (!this.props.list_of_pending.proposals && !this.props.list_of_pending.requests){
+    if (!this.props.list_of_pending.promises && !this.props.list_of_pending.requests){
       return <div>
         <ErrorMessage />
       </div>

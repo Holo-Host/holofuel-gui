@@ -11,7 +11,7 @@ const Root = ({ store, history }: { store: Store, history: any }) => (
       <Switch>
         <Redirect exact path='/' to='holofuelsummary' />
         <Route path = '/holofuelsummary' component={HoloFuelAppContainer} />
-        <Route path = '/holofuelproposal' component={HoloFuelAppContainer} />
+        <Route path = '/holofuelpromise' component={HoloFuelAppContainer} />
         <Route path = '/holofuelrequest' component={HoloFuelAppContainer} />
         <Route path = '/holofueltransactiondetails' component={HoloFuelAppContainer} />
         <Route path = '/profile' component={HoloFuelAppContainer} />
