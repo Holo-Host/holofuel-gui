@@ -13,8 +13,8 @@ let hStore:Store;
 
 // const HOSTURL = 'ws://' + window.location.host;
 const HAPPURL = 'http://holofuel6example.holohost.net'
-const KV_STORE_HAPPHASH = "QmTK25g1aWaMMWzTFYMB49KNRFdfDBkkVjnSYAXLUex7SZ"
-const DNAHASH = 'QmYhReByy4kHs3tAdUGSSfUBhvkhTTcfFvnSBCqAr2KZpq';
+const KV_STORE_HAPPHASH = "QmeqALBa93pXGoTcMxXaGwk2ovqQFLTvkFANZExMEAw6CA"
+const DNAHASH = 'QmUrd3q8fF71VM3eA1mSEhcEzRsAiE8XiLnMZXBW6omHdV';
 // const HAPPHASH = 'QmTK25g1aWaMMWzTFYMB49KNRFdfDBkkVjnSYAXLUex7SZ';
 // console.log(" >>> HOST URL <<<<", HOSTURL);
 
