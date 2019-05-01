@@ -1,6 +1,6 @@
 # holofuel-gui
 
-**Use Case:** This version of holofuel-gui is intended for use in the Holo infrastructur as a Holo-enabled app.  It is fully connected with hClient and the envoy.
+**Use Case:** This version of holofuel-gui is intended for use in the Holo infrastructure as a Holo-enabled app.  It is fully connected with hClient and the envoy.
 
 **Status:** Pre-Alpha. Early development and testing.
 
