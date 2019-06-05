@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import * as hClient from '../utils/hclient';
 // local page-views imports :
 import HoloFuelSummaryPage from '../components/page-views/HoloFuelSummaryPage';
 // import HoloFuelTxSummary from '../components/page-views/HoloFuelTxSummary';
@@ -82,32 +81,9 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     }
   };
 
-  // --------------------------------------
-  // Holo Connection
-  // --------------------------------------
-  initializeHolofuel = () => {
-    this.setState({ loggedIn: true })
-    console.log("INSIDE of initializeHolofuel >>", this.state);
+  componentDidMount () {
     this.props.fetch_agent_string();
     this.props.get_ledger_state();
-  }
-  // --------------------------------------
-
-
-
-  async componentDidMount () {
-    // await hClient.installLoginDialog();
-    this.initializeHolofuel()
-    console.log("Completed");
-
-    // await hClient.triggerLoginPrompt().then(() => {
-    //   console.log('HOLO LOGIN is cooooomplete!!')
-    //   this.initializeHolofuel()
-    // })
-
-
-    // this.props.fetch_agent_string();
-    // this.props.get_ledger_state();
   }
 
   toggleTransferBtnBar = (txType: any) => {

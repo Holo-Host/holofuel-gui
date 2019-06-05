@@ -10,7 +10,6 @@
     "start-web": "cross-env NODE_ENV=development webpack-dev-server --config configs/webpack.config.base.js",
     "build": " REACT_APP_NODE_PORT=3000 REACT_APP_DNA_INSTANCE=holofuel-instance react-scripts-ts build && node copy-to-ui.js",
     "build-master_holo": "REACT_APP_NODE_PORT=1111 REACT_APP_DNA_INSTANCE=holofuel react-scripts-ts build && node copy-to-ui.js",
-    "build-holo": "REACT_APP_NODE_PORT=48080 REACT_APP_DNA_INSTANCE=QmUrd3q8fF71VM3eA1mSEhcEzRsAiE8XiLnMZXBW6omHdV react-scripts-ts build && node copy-to-ui.js",
     "build-dll": "cross-env NODE_ENV=development webpack --config ./configs/webpack.config.renderer.dev.dll.babel.js --colors",
     "build-prod": "cross-env NODE_ENV=production webpack --config ./configs/webpack.config.main.prod.babel.js --colors",
     "test": "react-scripts-ts test --env=jsdom",
