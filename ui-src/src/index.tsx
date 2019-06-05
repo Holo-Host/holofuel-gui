@@ -5,21 +5,19 @@ import * as holochainclient from '@holochain/hc-web-client';
 import { Store } from 'redux';
 import Root from './root';
 import { configureStore, history } from './store/configureStore';
-// import { setHoloClient } from './utils/storeValues';
+// import { HOSTURL, KV_STORE_HAPPHASH } from './utils/constants';
 
 // const store:Store = configureStore();
 let hClientConnected:boolean = false;
 let hStore:Store;
 
-// const HOSTURL = 'ws://' + window.location.host;
-const HAPPURL = 'http://holofuel6example.holohost.net'
-const KV_STORE_HAPPHASH = "QmeqALBa93pXGoTcMxXaGwk2ovqQFLTvkFANZExMEAw6CA"
-const DNAHASH = 'QmUrd3q8fF71VM3eA1mSEhcEzRsAiE8XiLnMZXBW6omHdV';
-// const HAPPHASH = 'QmTK25g1aWaMMWzTFYMB49KNRFdfDBkkVjnSYAXLUex7SZ';
-// console.log(" >>> HOST URL <<<<", HOSTURL);
+// console.log("process.env.REACT_APP_KV_STORE_HAPPHASH", KV_STORE_HAPPHASH);
+//
+// console.log("window.location.host >> HOSTURL:", HOSTURL);
 
 const setHoloClient = new Promise<string>(async (fulfill, reject) => {
-  const holoClient = await hClient.makeWebClient(holochainclient, KV_STORE_HAPPHASH, { hAppUrl:HAPPURL, dnaHash:DNAHASH });
+  // NOTE: Removed KV_STORE_HAPPHASH due to hClient updates that change the happId param from a required input to an optional one that defaults to hha has fetched from the resolver & KV Store.
+  const holoClient = await hClient.makeWebClient(holochainclient, { hAppUrl:'http://holofuel6example.holohost.net'});
   fulfill(holoClient);
 });
 setHoloClient.then(holoClient => {

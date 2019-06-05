@@ -31,3 +31,24 @@ export const setPort = () => {
   if (process.env.REACT_APP_NODE_PORT) return process.env.REACT_APP_NODE_PORT;
   return 'ERROR: REACT_APP_NODE_PORT not found at '+ process.env.REACT_APP_NODE_PORT;
 };
+
+/****************************************************/
+            /*   hClient Constants   */
+/***************************************************/
+export const CURRENTURL = window.location.href;
+// console.log("CURRENT URL", CURRENTURL);
+
+// const happHashId = CURRENTURL.split("/")[4];
+// console.log("happHashId", happHashId);
+
+export const HOSTURL = 'ws://' + window.location.host;
+console.log("HOST URL", HOSTURL);
+
+// window.location.hash = "/";
+
+// export const DNAHASH = 'QmUrd3q8fF71VM3eA1mSEhcEzRsAiE8XiLnMZXBW6omHdV';
+// export const HAPPURL = 'http://holofuel6example.holohost.net'
+
+export const KV_STORE_HAPPHASH = process.env.REACT_APP_KV_STORE_HAPPHASH;
+// console.log("Global var: APP_KV_STORE_HAPPHASH", process.env.REACT_APP_KV_STORE_HAPPHASH);
+// const KV_STORE_HAPPHASH = "QmcGzWw37s9jYFZE5RGxn19tRtDbD3WFMDnosxWAxBgzqT"

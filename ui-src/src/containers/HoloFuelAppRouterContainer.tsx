@@ -1,5 +1,5 @@
 import * as React from 'react';
-// import * as hClient from '../utils/hclient';
+import * as hClient from '../utils/hclient';
 // local page-views imports :
 import HoloFuelSummaryPage from '../components/page-views/HoloFuelSummaryPage';
 // import HoloFuelTxSummary from '../components/page-views/HoloFuelTxSummary';
@@ -85,29 +85,40 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   // --------------------------------------
   // Holo Connection
   // --------------------------------------
-  initializeHolofuel = () => {
-    this.setState({ loggedIn: true })
+  initializeHolofuel = async () => {
+    const myAgentID = await hClient.getCurrentAgentId();
+    console.log("myAgentID >> from hClient :", myAgentID)
+    this.setState({ loggedIn: true });
     console.log("INSIDE of initializeHolofuel >>", this.state);
-    this.props.fetch_agent_string();
-    this.props.get_ledger_state();
+
+    try{
+      const myAgentString = await this.props.fetch_agent_string();
+      console.log("myAgentString from HF DNA : ", myAgentString);
+    }catch(e){
+      alert(e)
+    }
+
+    try{
+      this.props.get_ledger_state();
+    }catch(e){
+      alert(e)
+    }
   }
   // --------------------------------------
 
 
 
   async componentDidMount () {
-    // await hClient.installLoginDialog();
-    this.initializeHolofuel()
+    // NB: `initializeHolofuel` "installs" the login dialog for hClient, allowing hClient to automatically detect when a user is trying to take an action that requires a keypair (such as making a commit) and modally display the login page. Completing the login will generate/regenerate the user's keypair stored in the browser.
+    await hClient.installLoginDialog();
+    // this.initializeHolofuel()
     console.log("Completed");
 
-    // await hClient.triggerLoginPrompt().then(() => {
-    //   console.log('HOLO LOGIN is cooooomplete!!')
-    //   this.initializeHolofuel()
-    // })
-
-
-    // this.props.fetch_agent_string();
-    // this.props.get_ledger_state();
+  // NB: `triggerLoginPrompt` manually triggers login dialog >> compare to `installLoginDialog`... :
+    await hClient.triggerLoginPrompt().then(() => {
+      console.log('HOLO LOGIN is cooooomplete!!')
+      this.initializeHolofuel()
+    })
   }
 
   toggleTransferBtnBar = (txType: any) => {

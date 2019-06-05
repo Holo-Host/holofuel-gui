@@ -1,6 +1,6 @@
 {
-  "name": "HoloFuel",
-  "version": "1.0.0",
+  "name": "holofuel-gui",
+  "version": "0.1.0",
   "description": "Simple and intuitive interface allowing users to transact with HoloFuel.",
   "main": "index.js",
   "scripts": {
