@@ -8,69 +8,25 @@
 Simple and intuitive interface allowing users to transact with Holofuel.  This app pairs with the Holochain DNA, [holofuel](https://github.com/Holo-Host/holofuel), for data processing and management.
 
 ## Design Decisions:
-* [HC-Admin UI ADR](https://hackmd.io/t7Y0H5eNQtycrsNyVRe3Ww?both)
+* [HoloFuel UI ADR](https://hackmd.io/t7Y0H5eNQtycrsNyVRe3Ww?both)
 
 ---
 
-## How to Run :
-- Pull the https://github.com/Holo-Host/holofuel-gui repo
-    - `git pull https://github.com/Holo-Host/holofuel-gui.git`
-      
-- Install dependencies:
-    - `cd ui-src && npm install && cd ..`
-  
-- Spin up two agents. 
-    > *Note: Below, we will walk through the steps for spinning up two agents (i.e. two dnas and two UIs).*
+## How to Run in Holo Dev Mode:
+> ##### Pre-requisite: You will first need to have a Holo Host environment running on your local device. Look [here](https://hackmd.io/TlzylZCqR_GJ3Tjs5ZPvqQ) for more information or to get started.
 
-#
+- Register the holofuel-gui/holofuel apps together as one hApp Entry within the hApp Store.  (Be sure to reference the holofuel-gui hash and link to `ui.zip` located in the release assets as well as the holfuel hash and link to the `dna.json` found at the holofuel release tab [here]().
 
-### Steps to run two DNAs:
-  1. Open two terminals at @holofuel-gui
+- Register as a hApp Provider in the HHA
+- Register the hAppStoreID of this newly created hApp in the Holo Hosting Application.
+- Register as a Host in the HHA.
+- Enable the the newly created holofuel hApp (take note of the newly minted HoloHostingID for this hApp).
 
-  2. Update the `start-dna-agent1` script in the `package.json`
-      - Find the `start-dna-agent1` script inside the `package.json`
-      - Update the **HC_N3H_PATH** to path of the n3h repo on your local device.(eg: HC_N3H_PATH=/home/lisa/n3h)
+- Set up your proxies and index.html file to mock Holo's Loader and Resolver service.  Visit ['How to set up a hosted hApp'](https://hackmd.io/TlzylZCqR_GJ3Tjs5ZPvqQ#3-Setup-a-hosted-hApp).
 
-  3. In the first terminal, run agent1's DNA 
-        - `npm run start-dna-agent1`
+- Start your envoy conductor and server. Visit ['How to set up a hosted hApp'](https://hackmd.io/TlzylZCqR_GJ3Tjs5ZPvqQ#3-Setup-a-hosted-hApp).
 
-  4. Update the `start-dna-agent2` script in the `package.json` BEFORE running agent2
-        - Find the `start-dna-agent2` script inside the `package.json`
-        - Update the **HC_N3H_PATH** to path of the n3h repo on your local device.
-        - Add the **HC_N3H_BOOTSTRAP_NODE** as provided in the networking details within the terminal when running agent1's DNA. (As shown on line #9 in the terminal snippet below.)
-        - Add the **HC_N3H_IPC_URI** as provided in the networking details within the terminal when running agent1's DNA. (As shown on line #3 in the terminal snippet below.)
-        
-```terminal=
-(wss-connection) [i] listening at wss://127.0.0.1:41249/
-Network spawned with bindings:
-	 - ipc: wss://127.0.0.1:41249/
-	 - p2p: []
-Reading DNA from /home/lisa/Documents/gitrepos/holochain/holo/HoloFuel/holoFuelUI/holofuel-gui/holofuel/dist/holofuel.dna.json
-(p2p-hackmode) [i] node-id hkaQGtTemslrK79wHSwqQONetfVxUenB-ElgD1-RnnmxguJO_VCPdK2ZPKADdIjpu0xvI1yF6HTjD132jLA3rOMWTZKVR605
-(wss-server-utils) [i] loaded rsa fingerprint faqnfO4LeJSOWCvVLLjXSN+7TPQ=
-(wss-connection) [i] listening at wss://192.168.0.7:42179/
-(@hackmode@) [i] p2p bound wss://192.168.0.7:42179/?a=hkaQGtTemslrK79wHSwqQONetfVxUenB-ElgD1-RnnmxguJO_VCPdK2ZPKADdIjpu0xvI1yF6HTjD132jLA3rOMWTZKVR605
-
-```
-
-  5. In the second terminal, run agent2's DNA
-        - `npm run start-dna-agent2`
-
-# 
-### Steps to run two UIs:
-
-  1. Open two more terminals at @holofuel-gui
-
-  3. In the second terminal, run Agent1's UI
-        - Start agent1 : `npm run start-ui-agent1`
-        - View agnet1 : Open at http://localhost:8800/
-
-  4. In the second terminal, run Agent2's UI
-      - Start agent2 : `npm run start-ui-agent2`
-      - View agent2 : Open at http://localhost:9300/ 
-
-#
-> Tip: If you notice that the UI is not able to successfully connect to the websocket, then stop your DNA instances in the termainal and redo the 'Steps to run two DNAs.'
+- Proceed to http://localhost:48080 to visit your hosted instance of the holofuel-gui/holofuel hApp!
 
 ---
 ## Built With
