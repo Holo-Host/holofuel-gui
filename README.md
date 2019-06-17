@@ -15,7 +15,7 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 ## How to Run in Holo Dev Mode:
 > ##### Pre-requisite: You will first need to have a Holo Host environment running on your local device. Look [here](https://hackmd.io/TlzylZCqR_GJ3Tjs5ZPvqQ) for more information or to get started.
 
-- Register the holofuel-gui/holofuel apps together as one hApp Entry within the hApp Store.  (Be sure to reference the holofuel-gui hash and link to `ui.zip` located in the release assets as well as the holfuel hash and link to the `dna.json` found at the holofuel release tab [here]().
+- Register the holofuel-gui/holofuel apps together as one hApp Entry within the hApp Store.  (Be sure to reference the holofuel-gui hash and link to `ui.zip` located in the release assets as well as the holfuel hash and link to the `dna.json` found at the holofuel release tab [here](https://github.com/Holo-Host/holofuel/releases).
 
 - Register as a hApp Provider in the HHA
 - Register the hAppStoreID of this newly created hApp in the Holo Hosting Application.
