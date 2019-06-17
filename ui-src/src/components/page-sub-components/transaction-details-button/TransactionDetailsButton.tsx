@@ -158,7 +158,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       switch (this.state.txStateStage) {
         case 'recipient': {
           nextApiCall = 'receive_payment';
-          todoText = 'Request Payment';
+          todoText = 'Accept Payment';
           statusText = "Payment Promised";
           break;
         }
@@ -200,7 +200,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
           to: txAuthor,
           from: counterparty,
           amount,
-	  fee,
+	         fee,
           notes,
           deadline: isoDeadline,
         },
@@ -262,23 +262,23 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         <div>
           <div>
             { this.state.txStateStage === "recipient" || this.state.txStateStage === "spender"  ?
-              <div style={{textTransform:"uppercase", width: '100%'}}>
+              <div style={{textTransform:"uppercase", width: '100%', fontSize:'.8rem', marginBottom:"5px"}}>
                 Pending
               </div>
 
             : this.state.txStateStage === "completed"  ?
-              <div style={{textTransform:"uppercase", width: '100%', marginTop:'13px'}}>
+              <div style={{textTransform:"uppercase", width: '100%', fontSize:'.8rem'}}>
                 { this.state.txStateStage }
               </div>
 
             :
-              <div style={{textTransform:"uppercase", width: '100%'}}>
+              <div style={{textTransform:"uppercase", width: '100%', fontSize:'.8rem'}}>
                 { this.state.txStateStage }
               </div>
             }
           </div>
 
-          { this.state.txStateStage !== "completed" ?
+          { this.state.txStateDirection === "pending" ?
               <Button
                 variant="outlined"
                 color="primary"
