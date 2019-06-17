@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 
 const NotRegistered = () => (
   <div className="error-container text-center" style={{margin:"20vh"}}>
-    <div className="error" style={{justifyContent:'center', color:"#0e094b", padding: 20, width: '50%', margin: '0 auto', background:'#fcfeff', border: '2px solid #bec4dd', minWidth:'150px'}}>
+    <div className="error" style={{justifyContent:'center', color:"#0e094b", padding: 20, width: '60%', margin: '0 auto', background:'#fcfeff', border: '2px solid #bec4dd', minWidth:'150px'}}>
       <h2 style={{justifyContent:'center', color:"#0e094b"}}>You currently have no transaction history.</h2>
       <div style={{display:'flex', flexDirection:'row'}}>
         <Link to='/holofuelrequest' style={{textDecoration:'none', margin:'1px'}}>

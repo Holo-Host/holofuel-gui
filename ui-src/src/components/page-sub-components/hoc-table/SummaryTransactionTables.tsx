@@ -87,12 +87,14 @@ class SummaryTransactionTables extends React.Component<Props, State> {
 
 
     if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.newprofile === true){
+      console.log("this.props.newprofile in tx summary dash : ", this.props.newprofile);
       return <div>
         <SignUpModal />
       </div>
     }
 
     if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.newprofile !== true){
+      console.log("this.props.newprofile in tx summary dash : ", this.props.newprofile);
       return <div>
         <NoTxMsessage />
       </div>

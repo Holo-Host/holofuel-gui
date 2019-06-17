@@ -26,9 +26,9 @@ export interface OwnProps {
   txType: string,
   newprofile: boolean,
   persistedAgentInfo : {
-    agentHash: string,
-    agentName: string,
-    email: string
+    agentHash: string | null,
+    agentName: string | null,
+    email: string | null
   } | null
 }
 export type Props = OwnProps & StateProps & DispatchProps;

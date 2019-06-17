@@ -77,9 +77,9 @@ export interface State {
   prevProps: any,
   loggedIn: boolean,
   retrievedPersistedProfile: {
-    agentHash: string,
-    agentName: string,
-    email: string
+    agentHash: string | null,
+    agentName: string | null,
+    email: string | null
   } | null
 }
 
@@ -91,7 +91,11 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
       transactionType: "",
       prevProps: {},
       loggedIn: false,
-      retrievedPersistedProfile: null
+      retrievedPersistedProfile:  {
+        agentHash: null,
+        agentName: null,
+        email: null
+      }
     }
   };
 
@@ -102,7 +106,9 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
     const persistedGlobalAppState = await findPersistedState()
     console.log("persistedGlobalAppState : ", persistedGlobalAppState);
-    this.setState({retrievedPersistedProfile:persistedGlobalAppState!.transactionReducer.agent_profile});
+    if(persistedGlobalAppState!.transactionReducer){
+      this.setState({retrievedPersistedProfile:persistedGlobalAppState!.transactionReducer!.agent_profile});
+    }
   }
 
   toggleTransferBtnBar = (txType: any) => {
@@ -120,6 +126,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>
     }
+    console.log("this.state.retrievedPersistedProfile!.agentName === : ", this.state.retrievedPersistedProfile!.agentName);
 
     return (
       <div>
@@ -134,7 +141,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              newprofile={this.state.retrievedPersistedProfile ? false : true}
+              newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
               {...newProps}
             />
           :
@@ -181,7 +188,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
-              newprofile={this.state.retrievedPersistedProfile ? false : true}
+              newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
               persistedAgentInfo={this.state.retrievedPersistedProfile || null}
               {...this.props}
             />
