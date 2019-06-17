@@ -2,6 +2,8 @@
 
 **Status:** Pre-Alpha. Early development and testing.
 
+**Use Case:** This version of holofuel-gui is intended for use in the Holo infrastructure as a Holo-enabled app.  It is fully connected with hClient and the envoy.
+
 ## Purpose:
 Simple and intuitive interface allowing users to transact with Holofuel.  This app pairs with the Holochain DNA, [holofuel](https://github.com/Holo-Host/holofuel), for data processing and management.
 
