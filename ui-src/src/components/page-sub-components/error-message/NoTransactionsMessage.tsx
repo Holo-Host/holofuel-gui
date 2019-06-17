@@ -15,7 +15,7 @@ const NoTransaction = (props:any) => {
   const { classes, tableText } = props;
     return(
     <div className={classnames(classes.NoTransactionsMessage, "error-container", "text-center")} style={{ margin:'0 auto', marginTop:'-130px'}}>
-      <div className="error" style={{textAlign:'center', margin:'0 auto'}}>
+      <div className="error" style={{textAlign:'center', margin:'0 auto', minWidth:'120px'}}>
         <h2 className={classes.NoTransactionsMessageText} >No {tableText} Transactions</h2>
       </div>
     </div>

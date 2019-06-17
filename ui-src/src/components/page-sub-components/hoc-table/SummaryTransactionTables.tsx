@@ -12,10 +12,13 @@ import { tx_table_columns } from './SummaryTransactionTableCols';
 import mobile_tx_table_columns from './SummaryTransactionTableColsMobile';
 import { refactorListOfTransactions } from  '../../../utils/transaction-data-refactor';
 import ErrorMessage from '../error-message/ErrorMessage';
+import NoTxMsessage from '../error-message/NoTxMessage';
+import SignUpModal from '../modal/SignUpModal';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
-  classes: any //,
+  classes: any,
+  newprofile: boolean
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -75,6 +78,23 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     if (!this.props.list_of_pending.promises && !this.props.list_of_pending.requests){
       return <div>
         <ErrorMessage />
+      </div>
+    }
+
+
+    // console.log("LENGTH OF : this.props.list_of_pending.requests", this.props.list_of_pending.requests!.length);
+    // console.log("LENGTH OF : this.props.list_of_pending.promises", this.props.list_of_pending.promises!.length);
+
+
+    if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.newprofile === true){
+      return <div>
+        <SignUpModal />
+      </div>
+    }
+
+    if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.newprofile !== true){
+      return <div>
+        <NoTxMsessage />
       </div>
     }
 

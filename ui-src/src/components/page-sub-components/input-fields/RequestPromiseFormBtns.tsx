@@ -202,7 +202,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
                   variant="outlined"
                   id="recipient-input"
                   value={this.state.recipient}
-                  placeholder="HoloTester1--------------------------------------------------------------------------AAAEqzh31M"
+                  placeholder="HCQmYhReByy4kHs3tAdUGSSfUBhvkhTTcfFvnSBCqAr2KZpq"
                   onChange={this.handleChange('recipient')}
                   fullWidth={fullWidth}
                   aria-describedby="recipient-input-text"
@@ -227,7 +227,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
               <Paper className={classes.inputPaper} square={false} elevation={4}>
                  <TextField
                   className={classes.margin}
-                  label={(<div><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/><span>Amount</span></div>)}
+                  label={(<div><img style={{ color:"#799ab6"}} width="20px" height="20px" src="/assets/icons/holo-icon_black.png" alt="holofuel_icon"/><span>HoloFuel Amount</span></div>)}
                   variant="outlined"
                   id="amount-input"
                   type='number'
@@ -310,7 +310,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
                   onClick={this.verifyTx("promise")}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
-                  <span className={classes.innerBtnText}>Send</span>
+                  <span className={classes.innerBtnText}>Send HoloFuel</span>
                 </Button>
 
                 <OutlinedButton
@@ -328,7 +328,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
                   onClick={this.verifyTx("request")}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
-                  <span className={classes.innerBtnText}>Request</span>
+                  <span className={classes.innerBtnText}>Request HoloFuel</span>
                 </Button>
 
                 <OutlinedButton

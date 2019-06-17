@@ -38,3 +38,26 @@ export const getDisplayName = (agentHash: string) => {
     return agentHash;
   }
 }
+
+// ===============================================================
+let retrievedState: any;
+export const findPersistedState = () => {
+  try {
+    retrievedState = JSON.parse(localStorage.getItem('persist:root')!);
+    if (retrievedState === null || undefined){
+      retrievedState = {};
+    }
+    else {
+      let {transactionReducer} = retrievedState;
+      const localStorageValue = [transactionReducer].toString();
+      const parsedValue = JSON.parse(localStorageValue);
+      // console.log(parsedValue);
+      retrievedState = {transactionReducer: parsedValue};
+    }
+  } catch (err){
+    // console.log("retrievedState IN ERROR block : ", retrievedState);
+    console.log("An error occured when fetching locally persisted state. ERROR: ", err);
+    retrievedState = {};
+  }
+  return retrievedState
+}
