@@ -12,7 +12,9 @@ import Typography from '@material-ui/core/Typography';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import ProfileInfoCard from '../page-sub-components/info-card/ProfileInfoCard';
-import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
+import ProfileRegistrationForm from '../page-sub-components/info-card/ProfileRegistrationForm';
+// import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
+
 // import ProfileInfoCard from './page-sub-components/info-card/ProfileAccountOptsCard';
 // import Jdenticon from '../page-sub-components/avatar-generator/Jdenticon';
 
@@ -22,6 +24,12 @@ export interface OwnProps {
   showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
   txType: string,
+  newprofile: boolean,
+  persistedAgentInfo : {
+    agentHash: string | null,
+    agentName: string | null,
+    email: string | null
+  } | null
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
@@ -46,7 +54,7 @@ class AgentProfile extends React.Component<Props, State> {
     }
     else {
       const data = { agentHash: my_agent_hash, agentString: my_agent_string };
-      const prevProps = state.prevProps || {};
+      const prevProps = state.prevProps || null;
       const agentData = prevProps.value !== data ? data : state.agentData
       return ({ agentData, prevProps: agentData });
     }
@@ -60,11 +68,11 @@ class AgentProfile extends React.Component<Props, State> {
   }
 
   public render () {
-    const { classes, transferBtnBar, showTransferBar, txType, ...newProps } = this.props;
+    const { classes, transferBtnBar, showTransferBar, txType, persistedAgentInfo, ...newProps } = this.props;
     const gutterBottom : boolean = true;
     let today = moment(new Date());
     const MOCK_AGENT_JOIN_DATE = today.toString().substring(0, 16);
-    const MOCK_EMAIL = `${this.state.agentData!.agentString}@holo.host`;
+    const DEFAULT_EMAIL = `${this.state.agentData!.agentString}@holo.host`;
 
     return (
     <div>
@@ -75,17 +83,28 @@ class AgentProfile extends React.Component<Props, State> {
       <br/>
       <br/>
 
-      <ProfileInfoCard
-        {...newProps}
-        agentHash={this.state.agentData!.agentHash}
-        name={this.state.agentData!.agentString}
-        email={MOCK_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}
-      />
+      {this.props.newprofile ?
+        <ProfileRegistrationForm
+          {...newProps}
+          agentData={this.state.agentData || null}
+          agentHash={this.state.agentData!.agentHash}
+          email={DEFAULT_EMAIL}
+        />
 
-      <div className={classes.jumbotronImg}>
+      :
+        <ProfileInfoCard
+          {...newProps}
+          agentData={this.state.agentData || null}
+          agentHash={this.state.agentData!.agentHash}
+          name={this.props.persistedAgentInfo!.agentName || this.state.agentData!.agentString}
+          email={this.props.persistedAgentInfo!.email || DEFAULT_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}
+        />
+      }
+
+      {/* <div className={classes.jumbotronImg}>
         <h4 className={classes.h4}> Your HoloFuel ID</h4>
         <QrGenerator agentHash={this.state.agentData!.agentHash}/>
-      </div>
+      </div> */}
 
         <div>
         { transferBtnBar ?
@@ -101,7 +120,7 @@ class AgentProfile extends React.Component<Props, State> {
     </div>
   );
 
-    // /* TODO: Add profile (with update ability) once the API funcationality exists....*/
+    // /* TODO: Add profile (with update ability) once the API functionality exists....*/
 
   }
 }

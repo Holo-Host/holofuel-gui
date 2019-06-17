@@ -28,12 +28,15 @@ export type State = {
   mostRecentRequestCommit:Address,
   view_specific_request: Transaction, // this include metadata from promise commit hash (ie ZomeApiResult<AppEntryValue>)
   view_specific_promise: Promise, // this include metadata from promise commit hash
-  readonly status: string
+  readonly status: string,
+  //
+  agent_profile: {}
 };
 
 export type OriginalState = State | undefined;
 
 export const INITIAL_STATE: State = {
+  agent_profile: {},
   list_of_instance_info: [],
   list_of_agents: [],
   my_agent_string: '',
@@ -123,12 +126,18 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
   switch (type) {
 ////////////////////////////////////////////////////////////////////////////
-                      /* Verfiy State - TESTING */
+              /* Verfiy State & Temp Agent Profile - TESTING */
 ////////////////////////////////////////////////////////////////////////////
   // STATE CHECK
     // case actions.FETCH_STATE: {
     //   return { ...state };
     // }
+
+  // Profile Update
+    case actions.UPDATE_PROFILE: {
+      console.log("UPDATE_PROFILE payload: ", payload );
+      return { ...state, agent_profile : payload };
+    }
 
 ////////////////////////////////////////////////////////////////////////////
           /* Confirm GLobal App Constants from Container*/

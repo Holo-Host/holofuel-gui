@@ -17,6 +17,7 @@ export interface OwnProps {
   txType: any,
   showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
+  newprofile:boolean
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
@@ -102,7 +103,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
               <div/>
             } */}
 
-            <TransactionTables {...newProps} />
+            <TransactionTables newprofile={this.props.newprofile} {...newProps} />
 
             { transferBtnBar ?
               <Portal>

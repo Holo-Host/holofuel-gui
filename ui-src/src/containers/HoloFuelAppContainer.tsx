@@ -20,7 +20,10 @@ RequestPaymentAsyncAction,
 PromiseAsyncAction,
 ReceivePaymentAsyncAction,
 // RejectPaymentAsyncAction
+//
+UpdateProfile
 } from '../actions/transactionActions';
+
 import HoloFuelAppRouterContainer, { StateProps, DispatchProps } from './HoloFuelAppRouterContainer';
 
 export interface OwnProps {
@@ -63,13 +66,16 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   list_of_requests: transactionReducer.list_of_requests,
   list_of_promises: transactionReducer.list_of_promises,
   view_specific_request: transactionReducer.view_specific_request,
-  view_specific_promise: transactionReducer.view_specific_promise // ,
+  view_specific_promise: transactionReducer.view_specific_promise,
   // status
+  agent_profile: {} //,
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
+      update_profile : (payload) => dispatch(UpdateProfile(payload)),
+
       get_info_instances : () => {
        dispatch(GetInfoInstancesAsyncAction.create([]))},
 

@@ -1,5 +1,4 @@
 import * as React from 'react';
-// import * as hClient from '../utils/hclient';
 // local page-views imports :
 import HoloFuelSummaryPage from '../components/page-views/HoloFuelSummaryPage';
 // import HoloFuelTxSummary from '../components/page-views/HoloFuelTxSummary';
@@ -8,6 +7,9 @@ import HoloFuelPromisePage from '../components/page-views/HoloFuelPromisePage';
 import SettingsHolo from "../components/page-views/SettingsHolo";
 import AgentProfile from "../components/page-views/AgentProfile";
 import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTransactionDetailPage';
+
+import { findPersistedState } from "../utils/global-helper-functions";
+
 // import Dashboard from '../components/page-sub-components/dashboard-header/Dashboard';
 // import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
 import { Ledger, ListTransactionsResult, PendingResult } from '../utils/types'; // RequestActionParam, PromiseActionParam, Address, DateTimeString
@@ -42,6 +44,8 @@ export interface StateProps {
   list_of_promises: Array<any>,
   view_specific_request: Array<any>,
   view_specific_promise: Array<any>
+  // TODO: Finish adding this, once a zome is made for profiles
+  agent_profile: any,
 }
 export interface DispatchProps {
 // Props that are set by mapDispatchToProps
@@ -60,6 +64,9 @@ export interface DispatchProps {
     request_payment: ({request_tx_obj}: any) => void,
     promise_payment: ({promise_tx_obj}: any) => void,
     receive_payment: ({payment_obj}: any) => void,
+
+// Set agent profile in-app (Priof to zome exisiting)
+    update_profile:({profile_obj}: any) => void
 }
 export type Props =  StateProps & DispatchProps & OwnProps;
 
@@ -68,7 +75,12 @@ export interface State {
   chooseTxBtnBarOpen: boolean,
   transactionType: string,
   prevProps: any,
-  loggedIn: boolean
+  loggedIn: boolean,
+  retrievedPersistedProfile: {
+    agentHash: string | null,
+    agentName: string | null,
+    email: string | null
+  } | null
 }
 
 class HoloFuelAppRouterContainer extends React.Component<Props, State> {
@@ -78,36 +90,25 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
       chooseTxBtnBarOpen: false,
       transactionType: "",
       prevProps: {},
-      loggedIn: false
+      loggedIn: false,
+      retrievedPersistedProfile:  {
+        agentHash: null,
+        agentName: null,
+        email: null
+      }
     }
   };
 
-  // --------------------------------------
-  // Holo Connection
-  // --------------------------------------
-  initializeHolofuel = () => {
-    this.setState({ loggedIn: true })
-    console.log("INSIDE of initializeHolofuel >>", this.state);
+  async componentDidMount () {
+    console.log("this.props ON componentDidMount : ", this.props);
     this.props.fetch_agent_string();
     this.props.get_ledger_state();
-  }
-  // --------------------------------------
 
-
-
-  async componentDidMount () {
-    // await hClient.installLoginDialog();
-    this.initializeHolofuel()
-    console.log("Completed");
-
-    // await hClient.triggerLoginPrompt().then(() => {
-    //   console.log('HOLO LOGIN is cooooomplete!!')
-    //   this.initializeHolofuel()
-    // })
-
-
-    // this.props.fetch_agent_string();
-    // this.props.get_ledger_state();
+    const persistedGlobalAppState = await findPersistedState()
+    console.log("persistedGlobalAppState : ", persistedGlobalAppState);
+    if(persistedGlobalAppState!.transactionReducer){
+      this.setState({retrievedPersistedProfile:persistedGlobalAppState!.transactionReducer!.agent_profile});
+    }
   }
 
   toggleTransferBtnBar = (txType: any) => {
@@ -117,14 +118,15 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     });
   }
 
-
-// Find a dynamic way to connect the ui to the dna >> play with info_instances && agent_string >> access prior to running?!?!
   public render() {
+    // console.log("this.props : ", this.props);
+    // console.log("this.state : ", this.state);
     const { classes, staticContext, ...newProps } = this.props; //TODO: Locate staticContext.. AND REMOVE from outer props
     const { location } = this.props.history;
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>
     }
+    console.log("this.state.retrievedPersistedProfile!.agentName === : ", this.state.retrievedPersistedProfile!.agentName);
 
     return (
       <div>
@@ -139,6 +141,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
+              newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
               {...newProps}
             />
           :
@@ -185,6 +188,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
+              newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
+              persistedAgentInfo={this.state.retrievedPersistedProfile || null}
               {...this.props}
             />
           }
@@ -196,3 +201,5 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(HoloFuelAppRouterContainer);
+
+// condition for line 172 : this.props.agent_profile!.agentName
