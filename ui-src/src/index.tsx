@@ -17,7 +17,10 @@ let hStore:Store;
 
 const setHoloClient = new Promise<string>(async (fulfill, reject) => {
   // NOTE: Removed KV_STORE_HAPPHASH due to hClient updates that change the happId param from a required input to an optional one that defaults to hha has fetched from the resolver & KV Store.
-  const holoClient = await hClient.makeWebClient(holochainclient, { hAppUrl:'http://holofuel6example.holohost.net'});
+  const holoClient = await hClient.makeWebClient(holochainclient);
+
+  // TODO: remove happURL once loader iframe isupdated to account for new holo dns/proxy architecture.
+  // const holoClient = await hClient.makeWebClient(holochainclient,  { hAppUrl:'http://holofuel6example.holohost.net'});
   fulfill(holoClient);
 });
 setHoloClient.then(holoClient => {
