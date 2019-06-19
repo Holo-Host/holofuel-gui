@@ -9,8 +9,7 @@
     "start-ui-agent1": "cd ui-src && npm run start-agent1",
     "start-ui-agent2": "cd ui-src && npm run start-agent2",
     "build": "cd ui-src && npm run build",
-    "build-holo": "cd ui-src && npm run build-holo",
-    "build-master_holo": "cd ui-src && npm run build-master_holo"
+    "build-holo": "cd ui-src && npm run build-holo"
   },
   "authors": [
     "Lisa Jetton",
