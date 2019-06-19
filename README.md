@@ -26,7 +26,7 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
 
 - Start your envoy conductor and server. Visit ['How to set up a hosted hApp'](https://hackmd.io/TlzylZCqR_GJ3Tjs5ZPvqQ#3-Setup-a-hosted-hApp).
 
-- Proceed to http://localhost:48080 to visit your hosted instance of the holofuel-gui/holofuel hApp!
+- Proceed to http://<holohostingId>.<yourHostpubkey>.holohost.net (or http://localhost:48080) to visit your hosted instance of the holofuel-gui/holofuel hApp!
 
 ---
 ## Built With
