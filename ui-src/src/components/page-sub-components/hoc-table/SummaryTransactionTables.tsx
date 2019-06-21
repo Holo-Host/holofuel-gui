@@ -93,7 +93,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       </div>
     }
 
-    if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.newprofile !== true){
+    if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.newprofile !== true && this.props.list_of_transactions.transactions!.length<=0){
       console.log("this.props.newprofile in tx summary dash : ", this.props.newprofile);
       return <div>
         <NoTxMsessage />
@@ -106,6 +106,10 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     const table_columns = tx_table_columns(this.props, this.state, this.resetPage);
     // Data
     const table_data = this.fetchPendingAndProcessedData();
+    console.log("=============================================")
+    console.log("TABLE DATA: ",table_data);
+    console.log("=============================================")
+
     return (
     <div className={classes.transactionTablesContainer}>
         { isMobile ?
