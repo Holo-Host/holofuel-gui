@@ -17,7 +17,7 @@ Simple and intuitive interface allowing users to transact with Holofuel.  This a
     - `git pull https://github.com/Holo-Host/holofuel-gui.git`
       
 - Install dependencies:
-    - `cd ui-src && npm install && cd ..`
+    - `cd ui-src && yarn install && cd ..`
   
 - Spin up two agents. 
     > *Note: Below, we will walk through the steps for spinning up two agents (i.e. two dnas and two UIs).*
