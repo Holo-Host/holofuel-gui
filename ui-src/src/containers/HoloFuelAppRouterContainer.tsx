@@ -111,6 +111,13 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     }
   }
 
+// TODO: Implement the spinning modal from hAPps store...
+  componentDidUpdate(prevProps:any, prevState:any ) {
+    if (prevProps.list_transactions !== this.props.list_transactions || prevProps.list_pending !== this.props.list_pending ) {
+      this.render();
+    }
+  }
+
   toggleTransferBtnBar = (txType: any) => {
     this.setState({
       chooseTxBtnBarOpen: !this.state.chooseTxBtnBarOpen,
@@ -126,7 +133,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>
     }
-    console.log("this.state.retrievedPersistedProfile!.agentName === : ", this.state.retrievedPersistedProfile!.agentName);
 
     return (
       <div>
@@ -142,6 +148,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
               newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
+              location = {location}
               {...newProps}
             />
           :

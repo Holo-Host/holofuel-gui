@@ -17,7 +17,8 @@ export interface OwnProps {
   txType: any,
   showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
-  newprofile:boolean
+  newprofile:boolean,
+  location: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {

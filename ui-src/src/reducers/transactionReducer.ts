@@ -1,10 +1,8 @@
 import { ActionType } from 'typesafe-actions';
 import * as actions from '../actions/transactionActions';
 import { Ledger, ListTransactionsResult, Address, Promise, Transaction, PendingResult } from '../utils/types';
-// import createMockApiData from '../utils/seed-data/mock-api-data';
 import { setInstance, TABLE_DATA_BATCH_LIMIT } from '../utils/constants'
 export type Action = ActionType<typeof actions>;
-
 // FILE CONSTANTS:
 const DNA_INSTANCE = setInstance();
 const TX_ZOME_NAME = 'transactions';

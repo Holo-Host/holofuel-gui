@@ -1,7 +1,6 @@
 import { createHolochainZomeCallAsyncAction, createHolochainAdminAsyncAction } from '@holochain/hc-redux-middleware';
 // export const FETCH_STATE = 'FETCH_STATE';
 export const UPDATE_PROFILE= 'UPDATE_PROFILE';
-export const FETCH_PROFILE= 'FETCH_PROFILE';
 
 // FILE CONSTANTS:
 import { setInstance } from '../utils/constants'

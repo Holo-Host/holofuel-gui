@@ -71,7 +71,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
 
   forceReset = (apiResult: any) => {
     console.log("apiResult", apiResult);
-
+    location.reload(true);
     // hack to force a reset >> refactor with modal...
     this.setState({
       reset: !this.state.reset
@@ -187,7 +187,12 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         deadline: isoDeadline,
         request: originCommitHash
       }
+
+      ///////////
+      // TODO: Implement the spinning modal from hAPps store...
       // this.props.promise_payment(approved_promise_obj);
+      ///////////
+
       const promiseResult = await this.props.promise_payment(approved_promise_obj); //sending as JSON
       // this.sendConfirmationMessage(promiseResult, approved_promise_obj);
       this.forceReset(promiseResult);
