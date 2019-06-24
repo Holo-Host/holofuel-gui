@@ -80,7 +80,8 @@ export interface State {
     agentHash: string | null,
     agentName: string | null,
     email: string | null
-  } | null
+  } | null,
+  refresh: boolean
 }
 
 class HoloFuelAppRouterContainer extends React.Component<Props, State> {
@@ -95,7 +96,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
         agentHash: null,
         agentName: null,
         email: null
-      }
+      },
+      refresh: false
     }
   };
 
@@ -112,9 +114,18 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   }
 
 // TODO: Implement the spinning modal from hAPps store...
+// NOTE: Current hack to ensure refresh.
   componentDidUpdate(prevProps:any, prevState:any ) {
-    if (prevProps.list_transactions !== this.props.list_transactions || prevProps.list_pending !== this.props.list_pending ) {
-      this.render();
+    console.log("================================================");
+    console.log("prevProps list_of_pending : ", prevProps.list_of_pending);
+    console.log("this.props list_of_pending : ", this.props.list_of_pending);
+    console.log("-----------------------------------------------");
+    console.log("prevProps.list_of_transactions !== this.props.list_of_transactions || prevProps.list_of_pending !== this.props.list_of_pending : ", prevProps.list_of_transactions !== this.props.list_of_transactions || prevProps.list_of_pending !== this.props.list_of_pending);
+    console.log('this.state.refresh : ', this.state.refresh);
+    console.log("================================================");
+
+    if (prevProps.list_of_transactions !== this.props.list_of_transactions || prevProps.list_of_pending !== this.props.list_of_pending ) {
+      this.setState({refresh: !this.state.refresh});
     }
   }
 

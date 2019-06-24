@@ -71,7 +71,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
 
   forceReset = (apiResult: any) => {
     console.log("apiResult", apiResult);
-    location.reload(true);
+    // location.reload(true);
     // hack to force a reset >> refactor with modal...
     this.setState({
       reset: !this.state.reset

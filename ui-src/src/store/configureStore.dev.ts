@@ -10,10 +10,9 @@ import createRootReducer from '../reducers/index';
 import * as transactionActions from '../actions/transactionActions';
 // ** Middleware for HC Rust Container Communication ** >> Reference Holochain-UI //
 import { holochainMiddleware } from '@holochain/hc-redux-middleware';
-import { connect } from '@holochain/hc-web-client';  // '@holochain/hc-web-client'
+import { connect } from '@holochain/hc-web-client';
 import { setPort } from '../utils/constants'
 
-// const url = 'ws:localhost:3000';
 const url = `ws:localhost:${setPort()}`;
 const hcWc = connect(url);
 
@@ -34,7 +33,6 @@ const migrations = {
 const persistConfig = {
   key: 'root',
   storage,
-  // whitelist: ['transactionReducer'], // only transactionReducer will be persisted
   debug: true,
   version: 0,
   migrate: createMigrate(migrations, { debug: true })

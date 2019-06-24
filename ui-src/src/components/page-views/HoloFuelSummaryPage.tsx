@@ -65,9 +65,9 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
           <div className={classes.jumbotron}>
             <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
               {
-		this.props.ledger_state.balance && this.props.ledger_state.credit && this.props.ledger_state.payable
-		? <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="85" className={classes.hcLogoLg} /> {`${this.props.ledger_state.balance + this.props.ledger_state.credit - this.props.ledger_state.payable}`}</div>
-                : `Pending...`
+          		this.props.ledger_state.balance && this.props.ledger_state.credit && this.props.ledger_state.payable
+          		? <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="85" className={classes.hcLogoLg} /> {`${this.props.ledger_state.balance + this.props.ledger_state.credit - this.props.ledger_state.payable}`}</div>
+                          : `Pending...`
               }
             </Typography>
             <hr style={{color:"#0e094b8f"}} />
