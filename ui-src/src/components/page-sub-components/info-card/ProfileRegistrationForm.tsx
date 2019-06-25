@@ -275,7 +275,7 @@ class ProfileRegistrationForm extends React.Component<Props, State> {
             <CardContent className={classes.content}>
               <Tooltip title="This QR code is your digial fingerprint. It encodes your digital identity in a way that allows to you to transact with convenience and mobility through use of cellphone cameras." aria-label="This QR code is your digial fingerprint. It encodes your digital identity in a way that allows to you to transact with convenience and mobility through use of cellphone cameras." classes={{ tooltip: classes.lightTooltip }}>
                 <div className={classes.jumbotronImg}>
-                  <h4 className={classnames(classes.typography, classes.balanceHeader)}> Your Digital Fingrprint</h4>
+                  <h4 className={classnames(classes.typography, classes.balanceHeader)}> Your Digital Fingerprint</h4>
                   <QrGenerator agentHash={agentHash}/>
                 </div>
               </Tooltip>

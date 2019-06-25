@@ -21,6 +21,7 @@ PromiseAsyncAction,
 ReceivePaymentAsyncAction,
 // RejectPaymentAsyncAction
 //
+ResetRefresh,
 UpdateProfile
 } from '../actions/transactionActions';
 
@@ -68,12 +69,16 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   view_specific_request: transactionReducer.view_specific_request,
   view_specific_promise: transactionReducer.view_specific_promise,
   // status
-  agent_profile: {} //,
+  refresh: transactionReducer.refresh,
+  awaitingResponse: transactionReducer.awaitingResponse,
+  agent_profile: transactionReducer.agent_profile
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
+      reset_refresh : () => dispatch(ResetRefresh()),
+
       update_profile : (payload) => dispatch(UpdateProfile(payload)),
 
       get_info_instances : () => {
@@ -118,6 +123,7 @@ const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   //// PROMISE CASE :
       // payload === {to, amount, notes?, deadline?, request?}
       promise_payment : (payload) => {console.log("dispatching promise"); dispatch(PromiseAsyncAction.create(payload))},
+
       receive_payment : (payload) => {console.log("dispatching receive_payment" + JSON.stringify(payload)); dispatch(ReceivePaymentAsyncAction.create(payload))},
 
   // NB: API not yet available...

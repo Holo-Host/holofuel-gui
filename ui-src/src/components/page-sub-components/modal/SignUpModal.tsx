@@ -74,7 +74,7 @@ class VerficationModal extends React.Component<Props, State>  {
                 </DialogContent>
               <DialogActions>
               <Button onClick={this.handleClose} color="primary">
-                Ok.
+                X
               </Button>
           </DialogActions>
           </Dialog>

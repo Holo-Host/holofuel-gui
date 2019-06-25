@@ -18,7 +18,7 @@ import '../../styles/page-styles/scaffold-styles.css';
 export type Props = DispatchProps & StateProps;
 
 /* Transaction Table Headers */
-export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
+export const tx_table_columns = (props: Props, state: any, invokeTxCall:(txObj:any) => void, cb:() => void) => {
   const table_columns = [{
     Header: (row: any) => (<Tooltip title="Date" aria-label="Date"><Today style={{color:'#0e094b'}}/></Tooltip>),
     id: 'originTimeStamp',
@@ -73,6 +73,7 @@ export const tx_table_columns = (props: Props, state: any, cb:() => void) => {
       <div style={{ padding: '5px', marginTop:'13px' }}>
         <TransactionDetailsButton
           {...props}
+          invokeTxCall={invokeTxCall}
           transactionState={row.value}
           rowInfo={row}
           resetPage={() => cb()}

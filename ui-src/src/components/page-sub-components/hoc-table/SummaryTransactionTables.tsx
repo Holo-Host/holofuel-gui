@@ -18,7 +18,8 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
   classes: any,
-  newprofile: boolean
+  newprofile: boolean,
+  invokeTxCall: (txType:any) => void,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -62,6 +63,10 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     this.setState({ refresh: !this.state.refresh });
   }
 
+  invokeTxCall = (tx_obj:any) => {
+    this.props.invokeTxCall(tx_obj)
+  }
+
   fetchPendingAndProcessedData=()=>{
     if(!this.props.list_of_pending.promises && !this.props.list_of_pending.requests) {
       return [];
@@ -103,7 +108,7 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     // Sm (mobile) Viewport
     const mobile_table_columns = mobile_tx_table_columns(this.props, this.state, this.resetPage);
     // Md/Lg Viewport
-    const table_columns = tx_table_columns(this.props, this.state, this.resetPage);
+    const table_columns = tx_table_columns(this.props, this.state, this.invokeTxCall, this.resetPage);
     // Data
     const table_data = this.fetchPendingAndProcessedData();
     console.log("=============================================")

@@ -1,10 +1,8 @@
-import { ActionType } from 'typesafe-actions';
+import { ActionType, getType } from 'typesafe-actions'
 import * as actions from '../actions/transactionActions';
 import { Ledger, ListTransactionsResult, Address, Promise, Transaction, PendingResult } from '../utils/types';
-// import createMockApiData from '../utils/seed-data/mock-api-data';
 import { setInstance, TABLE_DATA_BATCH_LIMIT } from '../utils/constants'
 export type Action = ActionType<typeof actions>;
-
 // FILE CONSTANTS:
 const DNA_INSTANCE = setInstance();
 const TX_ZOME_NAME = 'transactions';
@@ -30,16 +28,20 @@ export type State = {
   view_specific_promise: Promise, // this include metadata from promise commit hash
   readonly status: string,
   //
-  agent_profile: {}
+  refresh: boolean,
+  awaitingResponse: boolean,
+  agent_profile: {},
 };
 
 export type OriginalState = State | undefined;
 
 export const INITIAL_STATE: State = {
+  refresh: false,
   agent_profile: {},
-  list_of_instance_info: [],
-  list_of_agents: [],
   my_agent_string: '',
+  list_of_agents: [],
+  list_of_instance_info: [],
+  awaitingResponse: false,
   mostRecentPromiseCommit:'',
   mostRecentRequestCommit:'',
   my_agent_hash: '',
@@ -139,6 +141,12 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state, agent_profile : payload };
     }
 
+  // Reset refresh
+    case actions.RESET_REFRESH: {
+      console.log("Calling RESET_REFRESH : FALSE ");
+      return { ...state, refresh : false };
+    }
+
 ////////////////////////////////////////////////////////////////////////////
           /* Confirm GLobal App Constants from Container*/
 ////////////////////////////////////////////////////////////////////////////
@@ -236,9 +244,15 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state };
     }
 
+//////////////////////////////////////////////////////////////
+  // Spinner Reducer Logic :
+    case getType(actions.PromiseAsyncAction.request):
+    return { ...state, awaitingResponse: true}
+//////////////////////////////////////////////////////////////
+
   // Call for PROMISE_PAYMENT_SUCCESS ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/promise_SUCCESS`: {
-      return { ...state };
+      return { ...state, awaitingResponse: false, refresh: true };
     }
 
     // Call for PROMISE_PAYMENT_FAILURE ()
@@ -246,9 +260,15 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
         return { ...state };
       }
 
-  // Call for RECEIVE_PAYMENT ()
+//////////////////////////////////////////////////////////////
+  // Spinner Reducer Logic :
+    case getType(actions.ReceivePaymentAsyncAction.request):
+    return { ...state, awaitingResponse: true}
+//////////////////////////////////////////////////////////////
+
+  // Call for RECEIVE_PAYMENT () + Spinner Reducer Logic
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/receive_payment_SUCCESS`: {
-      return { ...state, mostRecentPromiseCommit: payload };
+      return { ...state, mostRecentPromiseCommit: payload, awaitingResponse: false, refresh: true};
     }
 
   // Call for REJECT_PAYMENT ()

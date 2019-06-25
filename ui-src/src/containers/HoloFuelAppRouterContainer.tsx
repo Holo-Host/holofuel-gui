@@ -45,6 +45,8 @@ export interface StateProps {
   view_specific_request: Array<any>,
   view_specific_promise: Array<any>
   // TODO: Finish adding this, once a zome is made for profiles
+  refresh: boolean,
+  awaitingResponse: boolean,
   agent_profile: any,
 }
 export interface DispatchProps {
@@ -66,6 +68,7 @@ export interface DispatchProps {
     receive_payment: ({payment_obj}: any) => void,
 
 // Set agent profile in-app (Priof to zome exisiting)
+    reset_refresh : () =>  void,
     update_profile:({profile_obj}: any) => void
 }
 export type Props =  StateProps & DispatchProps & OwnProps;
@@ -80,7 +83,7 @@ export interface State {
     agentHash: string | null,
     agentName: string | null,
     email: string | null
-  } | null
+  } | null,
 }
 
 class HoloFuelAppRouterContainer extends React.Component<Props, State> {
@@ -94,7 +97,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
       retrievedPersistedProfile:  {
         agentHash: null,
         agentName: null,
-        email: null
+        email: null,
       }
     }
   };
@@ -108,6 +111,19 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     console.log("persistedGlobalAppState : ", persistedGlobalAppState);
     if(persistedGlobalAppState!.transactionReducer){
       this.setState({retrievedPersistedProfile:persistedGlobalAppState!.transactionReducer!.agent_profile});
+    }
+  }
+
+  componentDidUpdate(prevProps:any, prevState:any ) {
+    if (prevProps.list_of_transactions !== this.props.list_of_transactions || prevProps.list_of_pending !== this.props.list_of_pending ) {
+       console.log("inside prevProps v new props");
+      this.render();
+    }
+    else if (this.props.awaitingResponse && this.props.refresh) {
+      console.log("inside awaitingResponse & refresh... ");
+      this.render();
+      this.props.reset_refresh();
+      console.log('NEW this.props.refresh (should be reset to false) : ', this.props.refresh);
     }
   }
 
@@ -126,7 +142,6 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     if(!this.props.ledger_state || !this.props.list_of_transactions){
       return <div/>
     }
-    console.log("this.state.retrievedPersistedProfile!.agentName === : ", this.state.retrievedPersistedProfile!.agentName);
 
     return (
       <div>
@@ -142,6 +157,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
               newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
+              history = {this.props.history}
               {...newProps}
             />
           :
