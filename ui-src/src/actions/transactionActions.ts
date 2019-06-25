@@ -1,6 +1,7 @@
 import { createHolochainZomeCallAsyncAction, createHolochainAdminAsyncAction } from '@holochain/hc-redux-middleware';
 // export const FETCH_STATE = 'FETCH_STATE';
-export const UPDATE_PROFILE= 'UPDATE_PROFILE';
+export const UPDATE_PROFILE = 'UPDATE_PROFILE';
+export const RESET_REFRESH = 'RESET_REFRESH';
 
 // FILE CONSTANTS:
 import { setInstance } from '../utils/constants'
@@ -22,6 +23,13 @@ export function UpdateProfile (payload:any) {
   return {
     type: UPDATE_PROFILE,
     payload
+  };
+}
+
+// Call for in-app RESET_REFRESH
+export function ResetRefresh () {
+  return {
+    type: RESET_REFRESH
   };
 }
 

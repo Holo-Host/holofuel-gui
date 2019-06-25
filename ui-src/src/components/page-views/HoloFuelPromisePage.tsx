@@ -80,7 +80,6 @@ class HoloFuelTransferFormPage extends React.Component<Props, State> {
        <br/>
        <br/>
 
-
         <div style={{ margin:'0 auto' }}>
           <RequestPromiseFormBtns {...newProps} location={this.props.location} txType={this.props.txType} invokePromise={this.sendPromise} invokeRequest={this.sendPromise}  />
         </div>

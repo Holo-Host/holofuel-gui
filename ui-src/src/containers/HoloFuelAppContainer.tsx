@@ -21,6 +21,7 @@ PromiseAsyncAction,
 ReceivePaymentAsyncAction,
 // RejectPaymentAsyncAction
 //
+ResetRefresh,
 UpdateProfile
 } from '../actions/transactionActions';
 
@@ -68,12 +69,16 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   view_specific_request: transactionReducer.view_specific_request,
   view_specific_promise: transactionReducer.view_specific_promise,
   // status
-  agent_profile: {} //,
+  refresh: transactionReducer.refresh,
+  awaitingResponse: transactionReducer.awaitingResponse,
+  agent_profile: transactionReducer.agent_profile
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
+      reset_refresh : () => dispatch(ResetRefresh()),
+
       update_profile : (payload) => dispatch(UpdateProfile(payload)),
 
       get_info_instances : () => {

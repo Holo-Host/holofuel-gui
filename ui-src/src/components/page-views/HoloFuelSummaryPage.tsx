@@ -2,6 +2,8 @@ import * as React from 'react';
 // import classnames from 'classnames';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
+// import Dialog from '@material-ui/core/Dialog';
+// import CircularProgress from '@material-ui/core/CircularProgress';
 import Typography from '@material-ui/core/Typography';
 import Portal from '@material-ui/core/Portal';
 import Slide from '@material-ui/core/Slide';
@@ -18,7 +20,7 @@ export interface OwnProps {
   showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
   newprofile:boolean,
-  location: any
+  history: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
@@ -50,9 +52,37 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
     this.props.list_pending();
   }
 
-  componentDidUpdate(prevProps:any, prevState:any ) {
-    if (prevProps.list_transactions !== this.props.list_transactions || prevProps.list_pending !== this.props.list_pending ) {
-      this.render();
+  handleTx = async (txInfoObj: any) => {
+    const {apiCall} = txInfoObj;
+    if(apiCall === "promise_payment") {
+      console.log('invoking promise payment call', txInfoObj);
+
+      const makeApiCall = new Promise<string>(async (fulfill, reject) => {
+        this.props.promise_payment(txInfoObj);
+        const message = "calling receive_payment";
+        fulfill(message);
+      });
+      makeApiCall.then((message) => {
+        console.log(message);
+        // @ts-ignore
+        this.props.history.push('/');
+      })
+    }
+    else if (apiCall === "receive_payment") {
+      console.log('invoking receive payment call', txInfoObj);
+      const makeApiCall = new Promise<string>(async (fulfill, reject) => {
+        this.props.receive_payment(txInfoObj);
+        const message = "calling receive_payment";
+        fulfill(message);
+      });
+      makeApiCall.then((message) => {
+        console.log(message);
+        // @ts-ignore
+        this.props.history.push('/');
+      })
+    }
+    else {
+      console.log(" !!!!! ERROR: This is did not match a valid api call... !!!!! ");
     }
   }
 
@@ -96,15 +126,12 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
           </div>
 
           <div>
-            {/* { this.props.list_of_pending.promises && this.props.list_of_pending.requests ?
-              <Typography className={classnames(classes.tableHeader, classes.pageHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
-                Transaction History
-              </Typography>
-            :
-              <div/>
-            } */}
 
-            <TransactionTables newprofile={this.props.newprofile} {...newProps} />
+            <TransactionTables
+              newprofile={this.props.newprofile}
+              invokeTxCall={this.handleTx}
+              {...newProps}
+            />
 
             { transferBtnBar ?
               <Portal>
@@ -122,3 +149,12 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
 }
 
 export default withStyles(styles)(HoloFuelSummaryPage);
+
+// Implement if wish to have a spinner...
+// { this.props.awaitingResponse && this.props.refresh ?
+//   <Dialog open={this.props.awaitingResponse} className={classes.progressDialog}>
+//     <CircularProgress className={classes.progress}/>
+//   </Dialog>
+// :
+//   <div/>
+// }

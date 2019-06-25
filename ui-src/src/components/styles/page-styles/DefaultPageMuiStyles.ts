@@ -28,6 +28,14 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       top: '.1287rem',
       left: '.05124rem'
     },
+    progressDialog: {
+      minWidth: 200,
+      minHeight: 200,
+      width: '100%'
+    },
+    progress: {
+      width: 200
+    },
     datetimeRoot:{
       display:'inline !important',
       minWidth:'48vw'

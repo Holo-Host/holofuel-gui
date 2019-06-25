@@ -64,10 +64,6 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
     this.el = ReactDOM.findDOMNode(el!) as HTMLLabelElement | null;
   }
 
-  // componentDidMount() {
-  //   this.forceUpdate();
-  // }
-
   handleChange = (name: StateKeyType) => (event: React.ChangeEvent<HTMLInputElement>) => {
     switch (name) {
       case 'recipient':
@@ -181,7 +177,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
     }
   }
 
-  resetMessage = () => {
+  public resetMessage = () => {
     this.setState({ message: "" });
   }
 
@@ -273,7 +269,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
                   }}
                   id="notes-input"
                   label={(<div><Message/><span>Notes</span></div>)}
-                  placeholder="Fuel for the study session and lunch."
+                  placeholder="Time to fuel up!"
                   multiline={multiline}
                   rows="4"
                   value={this.state.notes}
