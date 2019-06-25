@@ -52,7 +52,7 @@ class TransactionTableModal extends React.Component<Props, State>  {
         let amount: number | null = null;
 
         if(apiCall === 'promise_payment') {
-          const {counterparty:recipient, amount:hf } = JSON.parse(this.props.message);
+          const {to:recipient, amount:hf } = JSON.parse(this.props.message);
           counterparty = recipient;
           amount = hf;
         }

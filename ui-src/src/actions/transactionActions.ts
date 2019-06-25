@@ -4,7 +4,7 @@ export const UPDATE_PROFILE = 'UPDATE_PROFILE';
 export const RESET_REFRESH = 'RESET_REFRESH';
 
 // FILE CONSTANTS:
-import { setInstance } from '../utils/constants'
+import { setInstance } from '../utils/constants';
 // const DNA_INSTANCE = 'holofuel instance';
 const TX_ZOME_NAME = 'transactions';
 const DNA_INSTANCE = setInstance();
