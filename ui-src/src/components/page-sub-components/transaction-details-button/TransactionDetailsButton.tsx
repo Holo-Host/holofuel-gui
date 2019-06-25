@@ -7,7 +7,7 @@ import Button from '@material-ui/core/Button';
 // Local Imports
 import { StateProps, DispatchProps } from '../../../containers/HoloFuelAppRouterContainer';
 import { PromiseActionParam } from '../../../utils/types';
-import InformativeModal from '../modal/InformativeModal';
+import TransactionTableModal from '../modal/TransactionTableModal';
 import HoloFuelTransactionDetailPage from '../../page-views/HoloFuelTransactionDetailPage';
 import styles from '../../styles/page-sub-component-styles/TransactionDetailsButtonMuiStyles';
 
@@ -17,7 +17,8 @@ export interface OwnProps {
   classes: any
   transactionState: any,
   rowInfo: any,
-  resetPage: () => void
+  resetPage: () => void,
+  invokeTxCall: (txObj:any) => void
 };
 export type Props = OwnProps & DispatchProps & StateProps;
 
@@ -27,10 +28,11 @@ export interface State {
   txStateStage: string,
   todoText: string | undefined,
   nextApiCall: string ,
-  message: string,
+  messageObj: any,
   statusText: string,
   currentRowDataDetailed: Array<any> | null,
   txDetailModal: boolean,
+  newTxCall: boolean,
   reset: boolean
 };
 
@@ -43,10 +45,11 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       txStateStage: "",
       todoText: undefined,
       nextApiCall: "/",
-      message: "",
+      messageObj: {},
       statusText: "",
       currentRowDataDetailed: null,
       txDetailModal: false,
+      newTxCall: false,
       reset: false
     };
     this.configureTransactionState();
@@ -67,15 +70,6 @@ class TransactionDetailsButton extends React.Component<Props, State> {
 
   componentDidMount = () => {
     this.configureTransactionState();
-  }
-
-  forceReset = (apiResult: any) => {
-    console.log("apiResult", apiResult);
-
-    // hack to force a reset >> refactor with modal...
-    this.setState({
-      reset: !this.state.reset
-    })
   }
 
   configureTransactionState = () => {
@@ -158,7 +152,7 @@ class TransactionDetailsButton extends React.Component<Props, State> {
       switch (this.state.txStateStage) {
         case 'recipient': {
           nextApiCall = 'receive_payment';
-          todoText = 'Request Payment';
+          todoText = 'Accept Payment';
           statusText = "Payment Promised";
           break;
         }
@@ -176,21 +170,29 @@ class TransactionDetailsButton extends React.Component<Props, State> {
     this.setState({ nextApiCall, todoText, statusText });
   };
 
+  public handleTableTx = () => {
+    console.log("messageObj to send off >> ", this.state.messageObj);
+    this.props.invokeTxCall(this.state.messageObj);
+    this.resetMessage();
+  };
+
+  public resetMessage = () => {
+    this.setState({ messageObj: {}, newTxCall: false });
+  }
+
   handlePendingTransaction = async () => {
     if (this.state.nextApiCall === "promise_payment") {
       const { counterparty, amount, notes, dueDate, originCommitHash } = this.props.rowInfo.original;
       const isoDeadline: Moment = moment(dueDate, moment.ISO_8601);
-      const approved_promise_obj: PromiseActionParam = {
+      const txObj: PromiseActionParam = {
         to: counterparty,
         amount,
         notes,
         deadline: isoDeadline,
         request: originCommitHash
       }
-      // this.props.promise_payment(approved_promise_obj);
-      const promiseResult = await this.props.promise_payment(approved_promise_obj); //sending as JSON
-      // this.sendConfirmationMessage(promiseResult, approved_promise_obj);
-      this.forceReset(promiseResult);
+      const messageObj = {...txObj, apiCall: 'promise_payment'}
+      this.setState({messageObj, newTxCall: true});
     }
     else if (this.state.nextApiCall === "receive_payment") {
       const { counterparty, amount, fee, notes, dueDate, inResponseToTX, eventCommitHash, txAuthor,  promiseCommitSignature } = this.props.rowInfo.original; // eventCommitHash,
@@ -200,23 +202,21 @@ class TransactionDetailsButton extends React.Component<Props, State> {
           to: txAuthor,
           from: counterparty,
           amount,
-	  fee,
+	         fee,
           notes,
           deadline: isoDeadline,
         },
         request: inResponseToTX ? inResponseToTX : null
       }
 
-      const receive_payment_obj: any = {
+      const txObj: any = {
         promise, // promise obj.
         promise_sig: promiseCommitSignature, // promise signature
         promise_commit: eventCommitHash // commit address
       }
-      // this.props.receive_payment(receive_payment_obj);
-
-      const receivePaymentResult = await this.props.receive_payment(receive_payment_obj); //sending as JSON
-      // this.sendConfirmationMessage(receivePaymentResult, receive_payment_obj);
-      this.forceReset(receivePaymentResult);
+      // this.props.receive_payment(txObj);
+      const messageObj = {...txObj, apiCall: 'receive_payment'}
+      this.setState({messageObj, newTxCall: true});
     }
     else if (this.state.nextApiCall === "") {
       // if nextApiCall === "" (an empty string), make btn access tx details page
@@ -239,15 +239,6 @@ class TransactionDetailsButton extends React.Component<Props, State> {
     }
   };
 
-  sendConfirmationMessage = (txResult: any, txInfoObj: any) => {
-    this.setState({ message: `You just made the following transaction: ${JSON.stringify(txInfoObj)}.`});
-  }
-
-  resetMessage = () => {
-    this.setState({ message: "" });
-    this.props.resetPage();
-  }
-
   toggleTxDetailModal = ()=> {
     this.setState({
       txDetailModal: !this.state.txDetailModal
@@ -255,30 +246,30 @@ class TransactionDetailsButton extends React.Component<Props, State> {
   }
 
   public render() {
-    const { classes, ...newProps } = this.props;
+    const { classes } = this.props;
     // NOTE: uncomment below when testing button
     return (
       <div>
         <div>
           <div>
             { this.state.txStateStage === "recipient" || this.state.txStateStage === "spender"  ?
-              <div style={{textTransform:"uppercase", width: '100%'}}>
+              <div style={{textTransform:"uppercase", width: '100%', fontSize:'.8rem', marginBottom:"5px"}}>
                 Pending
               </div>
 
             : this.state.txStateStage === "completed"  ?
-              <div style={{textTransform:"uppercase", width: '100%', marginTop:'13px'}}>
+              <div style={{textTransform:"uppercase", width: '100%', fontSize:'.8rem'}}>
                 { this.state.txStateStage }
               </div>
 
             :
-              <div style={{textTransform:"uppercase", width: '100%'}}>
+              <div style={{textTransform:"uppercase", width: '100%', fontSize:'.8rem'}}>
                 { this.state.txStateStage }
               </div>
             }
           </div>
 
-          { this.state.txStateStage !== "completed" ?
+          { this.state.txStateDirection === "pending" ?
               <Button
                 variant="outlined"
                 color="primary"
@@ -295,8 +286,11 @@ class TransactionDetailsButton extends React.Component<Props, State> {
         </div>
 
         {/* Toggle Confirmation Message (aka. InformativeModal) */}
-          { this.state.message ?
-            <InformativeModal {...newProps} confirmMessage={  this.state.message } resetMessage={this.resetMessage}/>
+          { this.state.newTxCall && this.state.txStateDirection === "pending" ?
+            <TransactionTableModal
+              handleTx={this.handleTableTx}
+              message={JSON.stringify(this.state.messageObj)}
+            />
           :
             <div/>
           }

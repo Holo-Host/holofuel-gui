@@ -20,7 +20,11 @@ RequestPaymentAsyncAction,
 PromiseAsyncAction,
 ReceivePaymentAsyncAction,
 // RejectPaymentAsyncAction
+SetAgentId,
+ResetRefresh,
+UpdateProfile
 } from '../actions/transactionActions';
+
 import HoloFuelAppRouterContainer, { StateProps, DispatchProps } from './HoloFuelAppRouterContainer';
 
 export interface OwnProps {
@@ -63,13 +67,24 @@ const mapStateToProps = ({ transactionReducer }: any): StateProps => {
   list_of_requests: transactionReducer.list_of_requests,
   list_of_promises: transactionReducer.list_of_promises,
   view_specific_request: transactionReducer.view_specific_request,
-  view_specific_promise: transactionReducer.view_specific_promise // ,
+  view_specific_promise: transactionReducer.view_specific_promise,
+
   // status
+  refresh: transactionReducer.refresh,
+  awaitingResponse: transactionReducer.awaitingResponse,
+  agent_id: transactionReducer.agent_id,
+  agent_profile: transactionReducer.agent_profile // {}
   };
 }
 
 const mapDispatchToProps = (dispatch: Dispatch): DispatchProps => {
   return {
+      reset_refresh : () => dispatch(ResetRefresh()),
+
+      set_agent_id : (payload) => dispatch(SetAgentId(payload)),
+
+      update_profile : (payload) => dispatch(UpdateProfile(payload)),
+
       get_info_instances : () => {
        dispatch(GetInfoInstancesAsyncAction.create([]))},
 

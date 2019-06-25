@@ -1,7 +1,6 @@
-import { ActionType } from 'typesafe-actions';
+import { ActionType, getType  } from 'typesafe-actions';
 import * as actions from '../actions/transactionActions';
 import { Ledger, ListTransactionsResult, Address, Promise, Transaction, PendingResult } from '../utils/types';
-// import createMockApiData from '../utils/seed-data/mock-api-data';
 import { setInstance, TABLE_DATA_BATCH_LIMIT } from '../utils/constants'
 export type Action = ActionType<typeof actions>;
 
@@ -29,13 +28,22 @@ export type State = {
   view_specific_request: Transaction, // this include metadata from promise commit hash (ie ZomeApiResult<AppEntryValue>)
   view_specific_promise: Promise, // this include metadata from promise commit hash
   readonly status: string
+  //
+  refresh: boolean,
+  awaitingResponse: boolean,
+  agent_id: "",
+  agent_profile: {},
 };
 
 export type OriginalState = State | undefined;
 
 export const INITIAL_STATE: State = {
+  refresh: false,
+  agent_id: "",
+  agent_profile: {},
   list_of_instance_info: [],
   list_of_agents: [],
+  awaitingResponse: false,
   my_agent_string: '',
   mostRecentPromiseCommit:'',
   mostRecentRequestCommit:'',
@@ -130,6 +138,24 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
     //   return { ...state };
     // }
 
+  // Profile Update
+  case actions.UPDATE_PROFILE: {
+    console.log("UPDATE_PROFILE payload: ", payload );
+    return { ...state, agent_profile : payload };
+  }
+
+  // Profile Update
+  case actions.SET_AGENT_ID: {
+    console.log("SET_AGENT_ID payload: ", payload );
+    return { ...state, agent_id : payload };
+  }
+
+  // Reset refresh
+  case actions.RESET_REFRESH: {
+    console.log("Calling RESET_REFRESH : FALSE ");
+    return { ...state, refresh : false };
+  }
+
 ////////////////////////////////////////////////////////////////////////////
           /* Confirm GLobal App Constants from Container*/
 ////////////////////////////////////////////////////////////////////////////
@@ -148,8 +174,6 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
 
     // FETCH_AGENT_STRING  >> Success message & Result
     case `${DNA_INSTANCE}/${TX_ZOME_NAME}/whoami_SUCCESS`: {
-      console.log("whoami_SUCCESS >> inside reducer");
-
       const my_agent_string = payload.agent_id.nick;
       // const my_agent_key = payload.pub_sign_key;
       const my_agent_hash = payload.agent_address;
@@ -227,6 +251,12 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
       return { ...state };
     }
 
+  //////////////////////////////////////////////////////////////
+  // Spinner Reducer Logic :
+    case getType(actions.PromiseAsyncAction.request):
+    return { ...state, awaitingResponse: true}
+//////////////////////////////////////////////////////////////
+
   // Call for PROMISE_PAYMENT_SUCCESS ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/promise_SUCCESS`: {
       return { ...state };
@@ -236,6 +266,12 @@ export function transactionReducer (state: OriginalState = INITIAL_STATE, action
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/promise_FAILURE`: {
         return { ...state };
       }
+
+  //////////////////////////////////////////////////////////////
+  // Spinner Reducer Logic :
+    case getType(actions.ReceivePaymentAsyncAction.request):
+    return { ...state, awaitingResponse: true}
+//////////////////////////////////////////////////////////////
 
   // Call for RECEIVE_PAYMENT ()
   case `${DNA_INSTANCE}/${TX_ZOME_NAME}/receive_payment_SUCCESS`: {

@@ -14,14 +14,14 @@ export interface OwnProps {
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
-class Jdenticon extends React.Component<Props, {}> {
+class JdenticonSmall extends React.Component<Props, {}> {
   public render () {
     const { hash } = this.props;
     // console.log("size for jdenticon", size);
 
-    const __html = jdenticon.toSvg(hash, 110);
+    const __html = jdenticon.toSvg(hash, 35);
     return <div dangerouslySetInnerHTML={{__html}} />
   }
 }
 
-export default withStyles(styles)(Jdenticon);
+export default withStyles(styles)(JdenticonSmall);

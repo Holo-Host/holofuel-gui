@@ -273,7 +273,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
                   }}
                   id="notes-input"
                   label={(<div><Message/><span>Notes</span></div>)}
-                  placeholder="Fuel for the study session and lunch."
+                  placeholder="Time to fuel up!"
                   multiline={multiline}
                   rows="4"
                   value={this.state.notes}
@@ -310,7 +310,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
                   onClick={this.verifyTx("promise")}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
-                  <span className={classes.innerBtnText}>Send</span>
+                  <span className={classes.innerBtnText}>Send HoloFuel</span>
                 </Button>
 
                 <OutlinedButton
@@ -328,7 +328,7 @@ class RequestPromiseFormBtns extends React.Component<Props, State> {
                   onClick={this.verifyTx("request")}
                   className={classnames(classes.button, classes.overlayTop)}
                  >
-                  <span className={classes.innerBtnText}>Request</span>
+                  <span className={classes.innerBtnText}>Request HoloFuel</span>
                 </Button>
 
                 <OutlinedButton

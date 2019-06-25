@@ -4,8 +4,7 @@ import QueueAnim from 'rc-queue-anim';
 const NoMatch = () => (
   <div className="error-container text-center" style={{margin:"20vh"}}>
     <div className="error" style={{justifyContent:'center', color:"#0e094b", padding: 20, width: '40%', margin: '0 auto', background:'#fcfeff', border: '2px solid #bec4dd'}}>
-      <h2 style={{justifyContent:'center', color:"#0e094b"}}>Sorry, no transactions yet exist.</h2>
-      <h4 style={{justifyContent:'center', color:"#0e094b"}}>Please select the HoloFuel Transaction option in the navigation bar to make your first transaction.</h4>
+      <h2 style={{justifyContent:'center', color:"#0e094b"}}>Opps, it appears you're not connected to the Holo Public Port.</h2>
     </div>
   </div>
 );

@@ -13,41 +13,63 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // local imports :
-import { PromiseActionParam, RequestActionParam } from '../../../utils/types';
-import { getDisplayName } from '../../../utils/global-helper-functions';
+import { getDisplayName } from '../../../utils/global-helper-functions'
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
-  message: any,
-  resetMessage: () => void,
-  tx: string,
   classes: any,
-  handleMakePayment: (tx_obj:any) => void,
-  handleRequestPayment: (tx_obj:any) => void
+  message: any,
+  handleTx: () => void,
 }
 export type Props = OwnProps;
 export interface State {
   open: boolean,
   prevProps: any
-  messageAsObj: any
+  apiCall: string,
+  messageObj: {
+    counterparty: string,
+    amount:number | null
+  } | null,
  }
 
-class VerficationModal extends React.Component<Props, State>  {
+class TransactionTableModal extends React.Component<Props, State>  {
   state = {
       open: false,
       prevProps: {},
-      messageAsObj: {
-        counterparty: "",
-        amount: "",
-        notes: "",
-        deadline: ""
+      apiCall: '',
+      messageObj: {
+        counterparty: '',
+        amount: null
       }
     };
 
   componentDidMount() {
       if(this.props.message){
-        const messageAsObj = JSON.parse(this.props.message);
-        this.setState({ messageAsObj })
+        console.log("message sent: ", this.props.message);
+        const {apiCall} = JSON.parse(this.props.message);
+
+        let counterparty: string = "";
+        let amount: number | null = null;
+
+        if(apiCall === 'promise_payment') {
+          const {to:recipient, amount:hf } = JSON.parse(this.props.message);
+          counterparty = recipient;
+          amount = hf;
+        }
+        if(apiCall === 'receive_payment'){
+          const {promise} = JSON.parse(this.props.message);
+          console.log("promise ", promise);
+
+          counterparty = promise.tx!.from;
+          amount = promise.tx!.amount;
+        }
+
+        const messageObj = {
+          counterparty,
+          amount
+        }
+
+        this.setState({ apiCall, messageObj })
         this.handleClickOpen();
       }
     }
@@ -63,40 +85,25 @@ class VerficationModal extends React.Component<Props, State>  {
     };
 
     handleClose = () => {
-      this.props.resetMessage();
-      this.setState({ open: false });
+      this.setState({
+        open: false,
+        messageObj:{
+          counterparty: '',
+          amount: null
+        }
+      });
     };
 
     handleMakeTransaction = () => {
-      const { counterparty, amount, deadline, notes } = this.state.messageAsObj;
-
-      if(this.props.tx === "promise"){
-        const tx_obj: PromiseActionParam = {
-          to: counterparty,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
-          amount,
-          notes,
-          deadline
-        }
-        this.props.handleMakePayment(tx_obj);
-      }
-      else if(this.props.tx === "request") {
-        const tx_obj: RequestActionParam = {
-          from: counterparty,// this will be the payment requestor's/payment recipient's AGENT_ADDRESS
-          amount,
-          notes,
-          deadline
-        }
-        this.props.handleRequestPayment(tx_obj);
-      }
-
-      this.setState({ open: false });
+      this.props.handleTx();
+      this.handleClose();
     };
 
     public render() {
       const { classes } = this.props;
       const fullScreen: boolean = false;
-      const { messageAsObj } = this.state;
-      console.log("tx body: ", messageAsObj);
+      const { messageObj, apiCall } = this.state;
+      console.log("messageObj body: ", messageObj);
 
       return (
           <Grid xs={12} >
@@ -115,30 +122,8 @@ class VerficationModal extends React.Component<Props, State>  {
                   <DialogContent style={{marginBottom:'-5px'}}>
                     <hr/>
                     <DialogContentText id="alert-dialog-description">
-                      Would you like to {this.props.tx === "promise"? "send" : "request"} {messageAsObj.amount} {this.props.tx === "promise"? "to" : "from"} {getDisplayName(messageAsObj.counterparty)} ?
+                      Would you like to {apiCall === "promise_payment"? "send" : "accept"} {messageObj!.amount} {apiCall === "promise_payment"? "to" : "from"} {getDisplayName(messageObj!.counterparty)} ?
                     </DialogContentText>
-                    {/* <hr/> */}
-                    {/* <br/> */}
-
-                    {/* <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
-                       Your Transaction Details
-                    </DialogContentText>
-
-                    <DialogContentText id="alert-dialog-description-2">
-                      Counterparty: {getDisplayName(messageAsObj.counterparty)}
-                    </DialogContentText>
-
-                    <DialogContentText id="alert-dialog-description-3">
-                      Amount: {messageAsObj.amount}
-                    </DialogContentText>
-
-                    <DialogContentText id="alert-dialog-description-4">
-                      Deadline: {messageAsObj.deadline}
-                    </DialogContentText>
-
-                    <DialogContentText id="alert-dialog-description-6">
-                      Notes: {messageAsObj.notes}
-                    </DialogContentText> */}
                 </DialogContent>
               <DialogActions>
                 <Button onClick={this.handleMakeTransaction} color="primary">
@@ -155,4 +140,4 @@ class VerficationModal extends React.Component<Props, State>  {
   }
 }
 
-export default withStyles(styles)(VerficationModal);
+export default withStyles(styles)(TransactionTableModal);
