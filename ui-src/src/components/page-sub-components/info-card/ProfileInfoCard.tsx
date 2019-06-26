@@ -82,7 +82,7 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
 export interface OwnProps {
   classes: any,
   agentHash: string,
-  name: string,
+  name: string | null,
   email: string,
   dateJoined: string,
   agentData:{agentHash: string, agentString: string} | null,
