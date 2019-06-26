@@ -29,7 +29,7 @@ export interface State {
   currentTxBatchInfo: {newer:{}, over:{}} | null,
   data: {} | null,
   prevProps: any,
-  toTxDashboard: boolean
+  toSuccessPageMsg: boolean
 }
 
 class HoloFuelSummaryPage extends React.Component<Props, State> {
@@ -42,12 +42,12 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       currentTxBatchInfo: null,
       data: {},
       prevProps: {},
-      toTxDashboard: false
+      toSuccessPageMsg: false
     };
   };
 
   public componentDidMount () {
-    this.setState({toTxDashboard: false})
+    this.setState({toSuccessPageMsg: false})
     this.props.list_transactions({});
     this.props.list_promises();
     this.props.list_requests();
@@ -68,7 +68,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
         console.log(message);
         // @ts-ignore
         // this.props.history.push('/');
-        this.setState({toTxDashboard: true});
+        this.setState({toSuccessPageMsg: true});
       })
     }
     else if (apiCall === "receive_payment") {
@@ -82,7 +82,7 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
         console.log(message);
         // @ts-ignore
         // this.props.history.push('/');
-        this.setState({toTxDashboard: true});
+        this.setState({toSuccessPageMsg: true});
       })
     }
     else {
@@ -91,13 +91,12 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
   }
 
    public render () {
-     console.log(">>>> this.props.newprofile >>>> : ", this.props.newprofile);
-
       const { classes, transferBtnBar, ...newProps } = this.props;
       const gutterBottom : boolean = true;
 
-      if (this.state.toTxDashboard === true) {
-        return <Redirect to='/holofuelsummary' />
+      if (this.state.toSuccessPageMsg === true) {
+        this.setState({toSuccessPageMsg: false});
+        return <Redirect to='/success' />
       }
 
       return (

@@ -20,6 +20,7 @@ const Root = ({ store, history, persistor }: { store: Store, history: any, persi
           <Route path = '/holofuelrequest' component={HoloFuelAppContainer} />
           <Route path = '/holofueltransactiondetails' component={HoloFuelAppContainer} />
           <Route path = '/profile' component={HoloFuelAppContainer} />
+          <Route path = '/success' component={HoloFuelAppContainer} />
           <Route path = '/settings' component={HoloFuelAppContainer} />
         </Switch>
       </ConnectedRouter>

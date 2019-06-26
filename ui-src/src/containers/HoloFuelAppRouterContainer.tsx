@@ -7,6 +7,7 @@ import HoloFuelRequestPage from '../components/page-views/HoloFuelRequestPage';
 import HoloFuelPromisePage from '../components/page-views/HoloFuelPromisePage';
 import SettingsHolo from "../components/page-views/SettingsHolo";
 import AgentProfile from "../components/page-views/AgentProfile";
+import SuccessPage from "../components/page-views/SuccessPage";
 import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTransactionDetailPage';
 
 import { findPersistedState } from "../utils/global-helper-functions";
@@ -135,19 +136,15 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
     }
 
     console.log(persistedGlobalAppState!.transactionReducer &&
-       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName &&
        persistedGlobalAppState!.transactionReducer!.agent_profile!.agentHash === this.props.agent_id);
 
     console.log(persistedGlobalAppState!.transactionReducer &&
-      persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName &&
       this.props.my_agent_string === 'Envoy Host');
 
     if(persistedGlobalAppState!.transactionReducer &&
-       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName &&
-       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentHash === this.props.agent_id
+       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName
        ||
        persistedGlobalAppState!.transactionReducer &&
-       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName &&
        this.props.my_agent_string === 'Envoy Host'){
        this.setState({retrievedPersistedProfile:persistedGlobalAppState!.transactionReducer!.agent_profile});
     }
@@ -258,6 +255,19 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
                 {...this.props}
               />
           :
+
+              location.pathname === "/success" ?
+              // this should lead to the "settings" page for HoloFuel &/ Holo
+              <SuccessPage
+                transferBtnBar={this.state.chooseTxBtnBarOpen}
+                showTransferBar={this.toggleTransferBtnBar}
+                txType={this.state.transactionType}
+                history = {this.props.history}
+                {...newProps}
+              />
+
+          :
+
             location.pathname === "/settings" ?
             // this should lead to the "settings" page for HoloFuel &/ Holo
             <SettingsHolo
