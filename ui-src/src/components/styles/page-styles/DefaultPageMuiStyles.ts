@@ -11,6 +11,11 @@ const styles: StyleRulesCallback  = (theme: Theme) => ({
       display: 'flex',
       flexWrap: 'wrap', // comment out ?
     },
+    center: {
+      display: 'block',
+      margin: '0 auto',
+      textAlign: 'center'
+    },
     modalRoot: {
       width: '100%',
       display: 'flex',

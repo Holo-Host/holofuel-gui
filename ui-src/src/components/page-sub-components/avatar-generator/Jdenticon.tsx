@@ -16,8 +16,8 @@ export type Props = OwnProps & StateProps & DispatchProps;
 
 class Jdenticon extends React.Component<Props, {}> {
   public render () {
-    const { hash, size } = this.props;
-    console.log("size for jdenticon", size);
+    const { hash } = this.props;
+    // console.log("size for jdenticon", size);
 
     const __html = jdenticon.toSvg(hash, 110);
     return <div dangerouslySetInnerHTML={{__html}} />

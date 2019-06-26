@@ -91,6 +91,7 @@ export interface OwnProps {
   agentHash: string,
   email: string,
   agentData:{agentHash: string, agentString: string} | null,
+  history: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -125,7 +126,7 @@ class ProfileRegistrationForm extends React.Component<Props, State> {
     switch (name) {
       case 'agentName':
         this.setState({
-          agentName: event.target.value.trim(),
+          agentName: event.target.value,
         });
         break;
 
@@ -183,10 +184,10 @@ class ProfileRegistrationForm extends React.Component<Props, State> {
 
     // USE THE FOLLOWING : if (profileUpdated !== null)
     if (profileUpdated !== null) {
-      this.clearProfileUpdates();
-      this.resetErrorMessage();
+      await this.clearProfileUpdates();
+      await this.resetErrorMessage();
       // @ts-ignore
-      // this.props.history.push('/')
+      this.props.history.push('/')
     }
   }
 

@@ -20,7 +20,7 @@ export type Props = DispatchProps & StateProps;
 /* Transaction Table Headers */
 export const tx_table_columns = (props: Props, state: any, invokeTxCall:(txObj:any) => void, cb:() => void) => {
   const table_columns = [{
-    Header: (row: any) => (<Tooltip title="Date" aria-label="Date"><Today style={{color:'#0e094b'}}/></Tooltip>),
+    Header: (row: any) => (<div><h4 style={{color:'#0e094b'}}>Date</h4><Tooltip title="Date" aria-label="Date"><Today style={{color:'#0e094b'}}/></Tooltip></div>),
     id: 'originTimeStamp',
     accessor: 'originTimeStamp',
      Cell: (row: any) => (
@@ -36,7 +36,7 @@ export const tx_table_columns = (props: Props, state: any, invokeTxCall:(txObj:a
         </div>
      )
     }, {
-    Header: (row: any) => (<Tooltip title="Counterparty" aria-label="Date"><AccountCircle style={{color:'#0e094b'}} /></Tooltip>),
+    Header: (row: any) => (<div><h4 style={{color:'#0e094b'}}>Counterparty</h4><Tooltip title="Counterparty" aria-label="Counterparty"><AccountCircle style={{color:'#0e094b'}}/></Tooltip></div>),
     accessor: 'counterparty',
     id: 'counterparty',
     Cell: (row: any) => (
@@ -51,7 +51,7 @@ export const tx_table_columns = (props: Props, state: any, invokeTxCall:(txObj:a
         </div>
       )
     },{
-    Header: (row: any) => (<Tooltip title="Counterparty" aria-label="Date"><AccountCircle style={{color:'#0e094b'}} /></Tooltip>),
+    Header: (row: any) => (<div><h4 style={{color:'#0e094b'}}>Counterparty</h4><Tooltip title="Counterparty" aria-label="Counterparty"><AccountCircle style={{color:'#0e094b'}}/></Tooltip></div>),
     accessor: 'counterparty',
     id: 'counterparty',
     Cell: (row: any) => (
@@ -66,7 +66,7 @@ export const tx_table_columns = (props: Props, state: any, invokeTxCall:(txObj:a
         </div>
       )
     },{
-    Header: (row: any) => (<Tooltip title="Status" aria-label="Date"><Info style={{color:'#0e094b'}} /></Tooltip>),
+    Header: (row: any) => (<div><h4 style={{color:'#0e094b'}}>Status</h4><Tooltip title="Status" aria-label="Status"><Info style={{color:'#0e094b'}}/></Tooltip></div>),
     id: 'status',
     accessor: 'status',
     Cell: (row: any) => (
@@ -82,7 +82,7 @@ export const tx_table_columns = (props: Props, state: any, invokeTxCall:(txObj:a
       )
     },
     // }, {
-    // Header: (row: any) => (<SwapVerticalCircle style={{color:'#0e094b'}} />),
+    // Header: (row: any) => (<SwapVerticalCircle style={{color:'#0e094b'}}/>),
     // id: 'originEvent',
     // accessor: 'originEvent',
     // Cell: (row: any) => (
@@ -122,7 +122,7 @@ export const tx_table_columns = (props: Props, state: any, invokeTxCall:(txObj:a
     //   )
     // },
     {
-    Header: (row: any) => (<Tooltip title="Amount" aria-label="Date"><ChangeHistory style={{color:'#0e094b'}} /></Tooltip>),
+    Header: (row: any) => (<div><h4 style={{color:'#0e094b'}}>Amount</h4><Tooltip title="Amount" aria-label="Amount"><ChangeHistory style={{color:'#0e094b'}}/></Tooltip></div>),
     id: "amount",
     accessor: (d:any) => d.amount,
     Cell: (row: any) => (
