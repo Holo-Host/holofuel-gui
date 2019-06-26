@@ -206,6 +206,7 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               txType={this.state.transactionType}
               newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
               persistedAgentInfo={this.state.retrievedPersistedProfile || null}
+              history = {this.props.history}
               {...this.props}
             />
           }

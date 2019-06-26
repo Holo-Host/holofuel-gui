@@ -13,6 +13,7 @@ import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterCon
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import ProfileInfoCard from '../page-sub-components/info-card/ProfileInfoCard';
 import ProfileRegistrationForm from '../page-sub-components/info-card/ProfileRegistrationForm';
+import { getDisplayName } from '../../utils/global-helper-functions';
 // import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
 
 // import ProfileInfoCard from './page-sub-components/info-card/ProfileAccountOptsCard';
@@ -29,7 +30,8 @@ export interface OwnProps {
     agentHash: string | null,
     agentName: string | null,
     email: string | null
-  } | null
+  } | null,
+  history: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
@@ -72,7 +74,7 @@ class AgentProfile extends React.Component<Props, State> {
     const gutterBottom : boolean = true;
     let today = moment(new Date());
     const MOCK_AGENT_JOIN_DATE = today.toString().substring(0, 16);
-    const DEFAULT_EMAIL = `${this.state.agentData!.agentString}@holo.host`;
+    const DEFAULT_EMAIL = `${getDisplayName(this.state.agentData!.agentString)}@holo.host`;
 
     return (
     <div>
@@ -89,6 +91,7 @@ class AgentProfile extends React.Component<Props, State> {
           agentData={this.state.agentData || null}
           agentHash={this.state.agentData!.agentHash}
           email={DEFAULT_EMAIL}
+          history = {this.props.history}
         />
 
       :
@@ -100,11 +103,6 @@ class AgentProfile extends React.Component<Props, State> {
           email={this.props.persistedAgentInfo!.email || DEFAULT_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}
         />
       }
-
-      {/* <div className={classes.jumbotronImg}>
-        <h4 className={classes.h4}> Your HoloFuel ID</h4>
-        <QrGenerator agentHash={this.state.agentData!.agentHash}/>
-      </div> */}
 
         <div>
         { transferBtnBar ?
