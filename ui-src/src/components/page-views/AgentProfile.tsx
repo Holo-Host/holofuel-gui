@@ -75,6 +75,7 @@ class AgentProfile extends React.Component<Props, State> {
     let today = moment(new Date());
     const MOCK_AGENT_JOIN_DATE = today.toString().substring(0, 16);
     const DEFAULT_EMAIL = this.state.agentData!.agentString === 'Envoy Host' ? `envoyhost-${getDisplayName(this.state.agentData!.agentHash || '1')}@holo.host` : `${getDisplayName(this.state.agentData!.agentString || "Qm001")}@holo.host`;
+    // const DEFAULT_NAME = this.props.persistedAgentInfo!.agentName || this.state.agentData!.agentString;
 
     return (
     <div>
@@ -99,7 +100,7 @@ class AgentProfile extends React.Component<Props, State> {
           {...newProps}
           agentData={this.state.agentData || null}
           agentHash={this.state.agentData!.agentHash}
-          name={this.props.persistedAgentInfo!.agentName || this.state.agentData!.agentString}
+          name={this.props.persistedAgentInfo!.agentName}
           email={this.props.persistedAgentInfo!.email || DEFAULT_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}
         />
       }
