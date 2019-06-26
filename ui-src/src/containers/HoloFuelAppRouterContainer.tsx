@@ -47,7 +47,7 @@ export interface StateProps {
   // TODO: Finish adding this, once a zome is made for profiles
   refresh: boolean,
   awaitingResponse: boolean,
-  agent_id: string,
+  agent_id: any,
   agent_profile: any,
 }
 export interface DispatchProps {
@@ -125,9 +125,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
 
     const persistedGlobalAppState = await findPersistedState();
     // console.log("persistedGlobalAppState : ", persistedGlobalAppState);
-
-    console.log('MY AGENT ID (registered) : ', this.props.agent_id);
-    console.log('My AGENT STRING (registered) : ', this.props.my_agent_string);
+    // console.log('MY AGENT ID (registered) : ', this.props.agent_id.agent_id);
+    // console.log('My AGENT STRING (registered) : ', this.props.my_agent_string);
 
 
     if(persistedGlobalAppState!.transactionReducer!) {
@@ -135,17 +134,11 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
       console.log('My AGENT NAME (registered) : ',  persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName);
     }
 
-    console.log(persistedGlobalAppState!.transactionReducer &&
-       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentHash === this.props.agent_id);
-
-    console.log(persistedGlobalAppState!.transactionReducer &&
-      this.props.my_agent_string === 'Envoy Host');
-
     if(persistedGlobalAppState!.transactionReducer &&
-       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName
+       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName &&
+       (persistedGlobalAppState!.transactionReducer!.agent_profile!.agentHash === this.props.agent_id.agent_id!
        ||
-       persistedGlobalAppState!.transactionReducer &&
-       this.props.my_agent_string === 'Envoy Host'){
+       this.props.my_agent_string === 'Envoy Host')){
        this.setState({retrievedPersistedProfile:persistedGlobalAppState!.transactionReducer!.agent_profile});
     }
   }
