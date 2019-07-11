@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Redirect } from 'react-router-dom';
 // import classnames from 'classnames';
 // custom mui styles :
 import { withStyles } from '@material-ui/core/styles';
@@ -17,6 +18,8 @@ export interface OwnProps {
   txType: any,
   showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
+  newprofile:boolean,
+  history: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
@@ -26,6 +29,7 @@ export interface State {
   currentTxBatchInfo: {newer:{}, over:{}} | null,
   data: {} | null,
   prevProps: any,
+  toSuccessPageMsg: boolean
 }
 
 class HoloFuelSummaryPage extends React.Component<Props, State> {
@@ -37,20 +41,52 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       txBatchType: "",
       currentTxBatchInfo: null,
       data: {},
-      prevProps: {}
+      prevProps: {},
+      toSuccessPageMsg: false
     };
   };
 
   public componentDidMount () {
+    this.setState({toSuccessPageMsg: false})
     this.props.list_transactions({});
     this.props.list_promises();
     this.props.list_requests();
     this.props.list_pending();
   }
 
-  componentDidUpdate(prevProps:any, prevState:any ) {
-    if (prevProps.list_transactions !== this.props.list_transactions || prevProps.list_pending !== this.props.list_pending ) {
-      this.render();
+  handleTx = async (txInfoObj: any) => {
+    const {apiCall} = txInfoObj;
+    if(apiCall === "promise_payment") {
+      console.log('invoking promise payment call', txInfoObj);
+
+      const makeApiCall = new Promise<string>(async (fulfill, reject) => {
+        this.props.promise_payment(txInfoObj);
+        const message = "calling receive_payment";
+        fulfill(message);
+      });
+      makeApiCall.then((message) => {
+        console.log(message);
+        // @ts-ignore
+        // this.props.history.push('/');
+        this.setState({toSuccessPageMsg: true});
+      })
+    }
+    else if (apiCall === "receive_payment") {
+      console.log('invoking receive payment call', txInfoObj);
+      const makeApiCall = new Promise<string>(async (fulfill, reject) => {
+        this.props.receive_payment(txInfoObj);
+        const message = "calling receive_payment";
+        fulfill(message);
+      });
+      makeApiCall.then((message) => {
+        console.log(message);
+        // @ts-ignore
+        // this.props.history.push('/');
+        this.setState({toSuccessPageMsg: true});
+      })
+    }
+    else {
+      console.log(" !!!!! ERROR: This is did not match a valid api call... !!!!! ");
     }
   }
 
@@ -58,14 +94,19 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
       const { classes, transferBtnBar, ...newProps } = this.props;
       const gutterBottom : boolean = true;
 
+      if (this.state.toSuccessPageMsg === true) {
+        this.setState({toSuccessPageMsg: false});
+        return <Redirect to='/success' />
+      }
+
       return (
         <div>
           <div className={classes.jumbotron}>
             <Typography className={classes.mainHeader} variant="display1" gutterBottom={gutterBottom} component="h1" >
               {
-		this.props.ledger_state.balance && this.props.ledger_state.credit && this.props.ledger_state.payable
-		? <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="85" className={classes.hcLogoLg} /> {`${this.props.ledger_state.balance + this.props.ledger_state.credit - this.props.ledger_state.payable}`}</div>
-                : `Pending...`
+            		this.props.ledger_state.balance && this.props.ledger_state.credit && this.props.ledger_state.payable
+            		? <div><img src="/assets/icons/holo-logo.png" alt="holo-logo" width="85" className={classes.hcLogoLg} /> {`${this.props.ledger_state.balance + this.props.ledger_state.credit - this.props.ledger_state.payable}`}</div>
+                            : `Pending...`
               }
             </Typography>
             <hr style={{color:"#0e094b8f"}} />
@@ -94,15 +135,13 @@ class HoloFuelSummaryPage extends React.Component<Props, State> {
           </div>
 
           <div>
-            {/* { this.props.list_of_pending.promises && this.props.list_of_pending.requests ?
-              <Typography className={classnames(classes.tableHeader, classes.pageHeader)} variant="display2" gutterBottom={gutterBottom} component="h3" >
-                Transaction History
-              </Typography>
-            :
-              <div/>
-            } */}
 
-            <TransactionTables {...newProps} />
+            <TransactionTables
+              newprofile={this.props.newprofile}
+              invokeTxCall={this.handleTx}
+              {...newProps}
+            />
+
 
             { transferBtnBar ?
               <Portal>

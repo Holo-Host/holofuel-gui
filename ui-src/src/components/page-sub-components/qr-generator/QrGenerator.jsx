@@ -23,7 +23,7 @@ class QrGenerator extends React.Component{
     try {
       const qrPng = await QRCode.toDataURL(text);
       this.setState({ qrPng });
-    } catch (err) {
+    } catch (err) { // DO WE NEED TO USE THIS STILL? agentData     return (
       console.error(err)
     }
   }
@@ -33,11 +33,11 @@ class QrGenerator extends React.Component{
     const { classes } = this.props;
 
     return (
-      <div>
+      <div className={classes.center}>
         <div className={classes.QrCodeContainer}>
           <img src={qrPng} alt="Your QR Code" className={classes.QrCodeImg}/>
         </div>
-        <h6 style={{color:'#eee', fontFamily:'Raleway', maxWidth:'20%', margin:'0 auto', marginTop:'5px', fontSize:'6px'}}>{this.props.agentHash}</h6>
+        <h6 style={{color:'#eee', fontFamily:'Raleway', marginTop:'5px', fontSize:'6px'}}>{this.props.agentHash}</h6>
       </div>
     );
   }

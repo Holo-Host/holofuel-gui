@@ -1,3 +1,5 @@
+// /* TODO: Add profile (with update ability) once the ZOME API funcationality exists....*/
+
 import * as React from 'react';
 import classnames from 'classnames';
 import * as moment from 'moment';
@@ -12,9 +14,8 @@ import Typography from '@material-ui/core/Typography';
 import { StateProps, DispatchProps } from '../../containers/HoloFuelAppRouterContainer';
 import BottomMenuBar from '../page-sub-components/bottom-menu-bar/BottomMenuBar';
 import ProfileInfoCard from '../page-sub-components/info-card/ProfileInfoCard';
-import QrGenerator from '../page-sub-components/qr-generator/QrGenerator';
-// import ProfileInfoCard from './page-sub-components/info-card/ProfileAccountOptsCard';
-// import Jdenticon from '../page-sub-components/avatar-generator/Jdenticon';
+import ProfileRegistrationForm from '../page-sub-components/info-card/ProfileRegistrationForm';
+import { getDisplayName } from '../../utils/global-helper-functions';
 
 export interface OwnProps {
   // These are props the component has received from its parent component
@@ -22,6 +23,13 @@ export interface OwnProps {
   showTransferBar: (txType:any) => void,
   transferBtnBar: boolean,
   txType: string,
+  newprofile: boolean,
+  persistedAgentInfo : {
+    agentHash: string | null,
+    agentName: string | null,
+    email: string | null
+  } | null,
+  history: any
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 export interface State {
@@ -60,11 +68,14 @@ class AgentProfile extends React.Component<Props, State> {
   }
 
   public render () {
+    console.log('newprofile : ', this.props.newprofile);
+
     const { classes, transferBtnBar, showTransferBar, txType, ...newProps } = this.props;
     const gutterBottom : boolean = true;
     let today = moment(new Date());
     const MOCK_AGENT_JOIN_DATE = today.toString().substring(0, 16);
-    const MOCK_EMAIL = `${this.state.agentData!.agentString}@holo.host`;
+    const DEFAULT_EMAIL = this.state.agentData!.agentString === 'Envoy Host' ? `envoyhost-${getDisplayName(this.state.agentData!.agentHash || '1')}@holo.host` : `${getDisplayName(this.state.agentData!.agentString || "Qm001")}@holo.host`;
+    // const DEFAULT_NAME = this.props.persistedAgentInfo!.agentName || this.state.agentData!.agentString;
 
     return (
     <div>
@@ -75,17 +86,29 @@ class AgentProfile extends React.Component<Props, State> {
       <br/>
       <br/>
 
-      <ProfileInfoCard
-        {...newProps}
-        agentHash={this.state.agentData!.agentHash}
-        name={this.state.agentData!.agentString}
-        email={MOCK_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}
-      />
+      {this.props.newprofile ?
+        <ProfileRegistrationForm
+          {...newProps}
+          agentData={this.state.agentData || null}
+          agentHash={this.state.agentData!.agentHash}
+          email={DEFAULT_EMAIL}
+          history = {this.props.history}
+        />
 
-      <div className={classes.jumbotronImg}>
+      :
+        <ProfileInfoCard
+          {...newProps}
+          agentData={this.state.agentData || null}
+          agentHash={this.state.agentData!.agentHash}
+          name={this.props.persistedAgentInfo!.agentName}
+          email={this.props.persistedAgentInfo!.email || DEFAULT_EMAIL} dateJoined={MOCK_AGENT_JOIN_DATE}
+        />
+      }
+
+      {/* <div className={classes.jumbotronImg}>
         <h4 className={classes.h4}> Your HoloFuel ID</h4>
         <QrGenerator agentHash={this.state.agentData!.agentHash}/>
-      </div>
+      </div> */}
 
         <div>
         { transferBtnBar ?
@@ -99,11 +122,7 @@ class AgentProfile extends React.Component<Props, State> {
         }
       </div>
     </div>
-  );
-
-    // /* TODO: Add profile (with update ability) once the API funcationality exists....*/
-
-  }
+  )}
 }
 
 export default withStyles(styles)(AgentProfile);

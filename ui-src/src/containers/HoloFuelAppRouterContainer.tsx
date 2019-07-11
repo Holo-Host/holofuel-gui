@@ -7,9 +7,10 @@ import HoloFuelRequestPage from '../components/page-views/HoloFuelRequestPage';
 import HoloFuelPromisePage from '../components/page-views/HoloFuelPromisePage';
 import SettingsHolo from "../components/page-views/SettingsHolo";
 import AgentProfile from "../components/page-views/AgentProfile";
+import SuccessPage from "../components/page-views/SuccessPage";
 import HoloFuelTransactionDetailPage from '../components/page-views/HoloFuelTransactionDetailPage';
-// import Dashboard from '../components/page-sub-components/dashboard-header/Dashboard';
-// import createMockApiData, { instanceListData } from  '../utils/seed-data/mock-api-data'; //
+
+import { findPersistedState } from "../utils/global-helper-functions";
 import { Ledger, ListTransactionsResult, PendingResult } from '../utils/types'; // RequestActionParam, PromiseActionParam, Address, DateTimeString
 import AppNavBar from '../components/page-sub-components/app-nav-bar/AppNavBar';
 // import SubNavBar from '../components/page-sub-components/app-nav-bar/SubNavBar';
@@ -42,6 +43,12 @@ export interface StateProps {
   list_of_promises: Array<any>,
   view_specific_request: Array<any>,
   view_specific_promise: Array<any>
+
+  // TODO: Finish adding this, once a zome is made for profiles
+  refresh: boolean,
+  awaitingResponse: boolean,
+  agent_id: any,
+  agent_profile: any,
 }
 export interface DispatchProps {
 // Props that are set by mapDispatchToProps
@@ -60,6 +67,11 @@ export interface DispatchProps {
     request_payment: ({request_tx_obj}: any) => void,
     promise_payment: ({promise_tx_obj}: any) => void,
     receive_payment: ({payment_obj}: any) => void,
+
+    reset_refresh : () =>  void,
+    set_agent_id: ({agent_id}: any) => void,
+    // Set agent profile in-app (Prior to zome exisiting)
+    update_profile:({profile_obj}: any) => void
 }
 export type Props =  StateProps & DispatchProps & OwnProps;
 
@@ -68,7 +80,12 @@ export interface State {
   chooseTxBtnBarOpen: boolean,
   transactionType: string,
   prevProps: any,
-  loggedIn: boolean
+  loggedIn: boolean,
+  retrievedPersistedProfile:  {
+    agentHash: string | null,
+    agentName: string | null,
+    email: string | null
+  } | null
 }
 
 class HoloFuelAppRouterContainer extends React.Component<Props, State> {
@@ -78,7 +95,12 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
       chooseTxBtnBarOpen: false,
       transactionType: "",
       prevProps: {},
-      loggedIn: false
+      loggedIn: false,
+      retrievedPersistedProfile:  {
+        agentHash: null,
+        agentName: null,
+        email: null
+      }
     }
   };
 
@@ -86,39 +108,81 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
   // Holo Connection
   // --------------------------------------
   initializeHolofuel = async () => {
-    const myAgentID = await hClient.getCurrentAgentId();
-    console.log("myAgentID >> from hClient :", myAgentID)
     this.setState({ loggedIn: true });
-    console.log("INSIDE of initializeHolofuel >>", this.state);
+    console.log("INSIDE of initializeHolofuel >> current module state : ", this.state);
 
     try{
-      const myAgentString = await this.props.fetch_agent_string();
-      console.log("myAgentString from HF DNA : ", myAgentString);
+      this.props.fetch_agent_string();
+      console.log("my_agent_string from HF DNA : ", this.props.my_agent_string);
     }catch(e){
       alert(e)
     }
-
     try{
       this.props.get_ledger_state();
     }catch(e){
       alert(e)
     }
+
+    const persistedGlobalAppState = await findPersistedState();
+    // console.log("persistedGlobalAppState : ", persistedGlobalAppState);
+    // console.log('MY AGENT ID (registered) : ', this.props.agent_id.agent_id);
+    // console.log('My AGENT STRING (registered) : ', this.props.my_agent_string);
+
+
+    if(persistedGlobalAppState!.transactionReducer!) {
+      console.log('My AGENT HASH (registered) : ',  persistedGlobalAppState!.transactionReducer!.agent_profile!.agentHash);
+      console.log('My AGENT NAME (registered) : ',  persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName);
+    }
+
+    if(persistedGlobalAppState!.transactionReducer &&
+       persistedGlobalAppState!.transactionReducer!.agent_profile!.agentName &&
+       (persistedGlobalAppState!.transactionReducer!.agent_profile!.agentHash === this.props.agent_id.agent_id!
+       ||
+       this.props.my_agent_string === 'Envoy Host')){
+       this.setState({retrievedPersistedProfile:persistedGlobalAppState!.transactionReducer!.agent_profile});
+    }
   }
   // --------------------------------------
 
-
-
   async componentDidMount () {
-    // NB: `initializeHolofuel` "installs" the login dialog for hClient, allowing hClient to automatically detect when a user is trying to take an action that requires a keypair (such as making a commit) and modally display the login page. Completing the login will generate/regenerate the user's keypair stored in the browser.
-    await hClient.installLoginDialog();
-    // this.initializeHolofuel()
-    console.log("Completed");
+    // console.log("Agent ID CHECK : ", this.props.agent_id);
+    // console.log("Agent HASH CHECK : ", this.props.my_agent_string);
+    // if(this.props.agent_id && this.props.my_agent_string !== "Envoy Host"){
+    //   console.log('User is *already* logged in as ', this.props.agent_id);
+    //   return this.initializeHolofuel();
+    // }
+    // else {
+    //NOTE: Only implement this if/else clause if using cache/cookies to courier email/pw to regen same agentID (not rec for security!)
 
-  // NB: `triggerLoginPrompt` manually triggers login dialog >> compare to `installLoginDialog`... :
-    await hClient.triggerLoginPrompt().then(() => {
-      console.log('HOLO LOGIN is cooooomplete!!')
-      this.initializeHolofuel()
-    })
+      // await hClient.insertLoginHtml();
+      // await hClient.registerLoginCallbacks();
+
+      // NB: `installLoginDialog` "installs" the login dialog for hClient, allowing hClient to automatically detect when a user is trying to take an action that requires a keypair (such as making a commit) and modally display the login page. Completing the login will generate/regenerate the user's keypair stored in the browser.
+      await hClient.installLoginDialog();
+
+      // NB: `triggerLoginPrompt` manually triggers login dialog >> compare to `installLoginDialog`... :
+      await hClient.triggerLoginPrompt().then(async() => {
+        console.log('HOLO LOGIN is cooooomplete!!');
+
+        const myAgentID = await hClient.getCurrentAgentId();
+        this.props.set_agent_id({ agent_id: myAgentID });
+        console.log("this.myAgentID >> from hClient :", myAgentID);
+
+        this.initializeHolofuel();
+      })
+
+    // }
+  }
+
+  componentDidUpdate(prevProps:any, prevState:any ) {
+    if (prevProps.list_of_transactions !== this.props.list_of_transactions || prevProps.list_of_pending !== this.props.list_of_pending ) {
+      this.render();
+    }
+    else if (this.props.awaitingResponse && this.props.refresh) {
+      console.log("inside awaitingResponse & refresh... ");
+      this.render();
+      this.props.reset_refresh();
+    }
   }
 
   toggleTransferBtnBar = (txType: any) => {
@@ -150,6 +214,8 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
+              newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
+              history = {this.props.history}
               {...newProps}
             />
           :
@@ -182,6 +248,19 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
                 {...this.props}
               />
           :
+
+              location.pathname === "/success" ?
+              // this should lead to the "settings" page for HoloFuel &/ Holo
+              <SuccessPage
+                transferBtnBar={this.state.chooseTxBtnBarOpen}
+                showTransferBar={this.toggleTransferBtnBar}
+                txType={this.state.transactionType}
+                history = {this.props.history}
+                {...newProps}
+              />
+
+          :
+
             location.pathname === "/settings" ?
             // this should lead to the "settings" page for HoloFuel &/ Holo
             <SettingsHolo
@@ -196,6 +275,9 @@ class HoloFuelAppRouterContainer extends React.Component<Props, State> {
               transferBtnBar={this.state.chooseTxBtnBarOpen}
               showTransferBar={this.toggleTransferBtnBar}
               txType={this.state.transactionType}
+              newprofile={this.state.retrievedPersistedProfile!.agentName ? false : true}
+              persistedAgentInfo={this.state.retrievedPersistedProfile || null}
+              history = {this.props.history}
               {...this.props}
             />
           }

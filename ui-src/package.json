@@ -17,7 +17,8 @@
     "coverage": "react-scripts-ts test --env=jsdom --coverage --collectCoverageFrom=!src/**/*.d.ts --collectCoverageFrom=!src/**/*.stories.tsx --collectCoverageFrom=!src/**/data/*.ts --collectCoverageFrom=src/**/*.ts --collectCoverageFrom=src/**/*.tsx",
     "release:files": "node copy-release.js",
     "tslint": "tslint --project ./tsconfig.json",
-    "tslint:fix": "tslint --project ./tsconfig.json --fix"
+    "tslint:fix": "tslint --project ./tsconfig.json --fix",
+    "watch": "tsc -p tsconfig.test.json -w "
   },
   "dependencies": {
     "@date-io/luxon": "^1.1.0",
@@ -35,6 +36,7 @@
     "classnames": "^2.2.6",
     "history": "^4.7.2",
     "inquirer": "^6.2.2",
+    "jdenticon": "^2.1.1",
     "jss": "9.8.7",
     "lodash": "^4.17.11",
     "lodash.get": "^4.4.2",
@@ -63,6 +65,8 @@
     "redux-async-initial-state": "^0.3.0",
     "redux-axios-middleware": "^4.0.0",
     "redux-logger": "^3.0.6",
+    "redux-persist": "^5.10.0",
+    "redux-promise-middleware": "^6.1.1",
     "save": "^2.3.3",
     "source-map-support": "^0.5.10",
     "toml": "^3.0.0",

@@ -8,13 +8,13 @@ import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
-// import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Fab from '@material-ui/core/Fab';
 import AddIcon from '@material-ui/icons/Add';
 // local imports :
 import { PromiseActionParam, RequestActionParam } from '../../../utils/types';
-// import { getDisplayName } from '../../../utils/global-helper-functions'
+import { getDisplayName } from '../../../utils/global-helper-functions';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
@@ -114,11 +114,11 @@ class VerficationModal extends React.Component<Props, State>  {
               <DialogTitle id="responsive-dialog-title" style={{color:'#072dc3'}}>{"Verify Transaction"}</DialogTitle>
                   <DialogContent style={{marginBottom:'-5px'}}>
                     <hr/>
-                    {/* <DialogContentText id="alert-dialog-description">
-                      Does everything look right?
+                    <DialogContentText id="alert-dialog-description">
+                      Would you like to {this.props.tx === "promise"? "send" : "request"} {messageAsObj.amount} {this.props.tx === "promise"? "to" : "from"} {getDisplayName(messageAsObj.counterparty)} ?
                     </DialogContentText>
-                    <hr/>
-                    <br/> */}
+                    {/* <hr/> */}
+                    {/* <br/> */}
 
                     {/* <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
                        Your Transaction Details

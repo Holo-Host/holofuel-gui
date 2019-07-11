@@ -12,10 +12,14 @@ import { tx_table_columns } from './SummaryTransactionTableCols';
 import mobile_tx_table_columns from './SummaryTransactionTableColsMobile';
 import { refactorListOfTransactions } from  '../../../utils/transaction-data-refactor';
 import ErrorMessage from '../error-message/ErrorMessage';
+import NoTxMsessage from '../error-message/NoTxMessage';
+import SignUpModal from '../modal/SignUpModal';
 import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 
 export interface OwnProps {
-  classes: any //,
+  classes: any,
+  newprofile: boolean
+  invokeTxCall: (txType:any) => void
 }
 export type Props = OwnProps & StateProps & DispatchProps;
 
@@ -40,7 +44,6 @@ class SummaryTransactionTables extends React.Component<Props, State> {
     this.updateViewPortSize = this.updateViewPortSize.bind(this);
   }
 
-
   componentDidMount = () => {
     this.updateViewPortSize();
     window.addEventListener("resize", this.updateViewPortSize);
@@ -55,8 +58,11 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   }
 
   resetPage = () => {
-    // Hach to reset page >> revisit...
     this.setState({ refresh: !this.state.refresh });
+  }
+
+  invokeTxCall = (tx_obj:any) => {
+    this.props.invokeTxCall(tx_obj)
   }
 
   fetchPendingAndProcessedData=()=>{
@@ -69,6 +75,8 @@ class SummaryTransactionTables extends React.Component<Props, State> {
   }
 
   public render() {
+    console.log(">>>> this.props.newprofile in summarytables >>>> : ", this.props.newprofile);
+
     const { classes } = this.props;
     const { isMobile } = this.state;
 
@@ -78,13 +86,28 @@ class SummaryTransactionTables extends React.Component<Props, State> {
       </div>
     }
 
+
+    if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.list_of_transactions.transactions!.length<=0 && this.props.newprofile === true){
+      return <div>
+        <SignUpModal />
+      </div>
+    }
+
+    if (this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.list_of_transactions.transactions!.length<=0 && this.props.newprofile !== true){
+      console.log("this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.list_of_transactions.transactions!.length<=0 : ", this.props.list_of_pending.promises!.length <= 0 && this.props.list_of_pending.requests!.length <= 0 && this.props.list_of_transactions.transactions!.length<=0);
+      return <div>
+        <NoTxMsessage />
+      </div>
+    }
+
     // Sm (mobile) Viewport
     const mobile_table_columns = mobile_tx_table_columns(this.props, this.state, this.resetPage);
     // Md/Lg Viewport
-    const table_columns = tx_table_columns(this.props, this.state, this.resetPage);
+    const table_columns = tx_table_columns(this.props, this.state, this.invokeTxCall, this.resetPage);
     // Data
     const table_data = this.fetchPendingAndProcessedData();
-    return (
+
+  return (
     <div className={classes.transactionTablesContainer}>
         { isMobile ?
           <div className={classnames(classes.tableContainer)}>

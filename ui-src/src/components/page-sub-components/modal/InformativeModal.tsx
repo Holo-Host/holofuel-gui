@@ -22,7 +22,7 @@ import styles from '../../styles/page-styles/DefaultPageMuiStyles';
 export interface OwnProps {
   // These are props the component has received from its parent component
   confirmMessage: any,
-  resetMessage: () => void,
+  handleReroute: () => void,
   classes: any,
 }
 export type Props = OwnProps & StateProps & DispatchProps;
@@ -31,10 +31,6 @@ export interface State {
   open: boolean,
   prevProps: any
 }
-
-// function ModalTransition(props) {
-//   return <Slide direction="down" {...props} />;
-// }
 
 class informativeModal extends React.Component<Props, State>  {
   state = {
@@ -59,7 +55,7 @@ class informativeModal extends React.Component<Props, State>  {
   };
 
   handleClose = () => {
-    this.props.resetMessage();
+    this.props.handleReroute();
     this.setState({ open: false });
   };
 
@@ -86,12 +82,16 @@ class informativeModal extends React.Component<Props, State>  {
             <DialogTitle id="responsive-dialog-title" style={{color:'#072dc3'}}>{"Transaction Sent"}</DialogTitle>
                 <DialogContent>
                   <hr/>
+                  <DialogContentText id="alert-dialog-slide-description">
+                    {parsedMessage.message}
+                  </DialogContentText>
+                  <br/>
                   <DialogContentText id="alert-dialog-description">
                   As of { `${moment().format('LLLL')}, \n`} your transfer has been successfully completed.
                   </DialogContentText>
                   <hr/>
                   <br/>
-
+{/*
                   <DialogContentText style={{textDecoration:'underline'}} id="alert-dialog-description-1">
                      Transaction Summary
                   </DialogContentText>
@@ -119,13 +119,13 @@ class informativeModal extends React.Component<Props, State>  {
 
                   <DialogContentText id="alert-dialog-description-6">
                     Notes: {parsedMessage.notes}
-                  </DialogContentText>
+                  </DialogContentText> */}
 
                   <br/>
-                  <hr/>
                   <DialogContentText id="alert-dialog-slide-description">
                     Please check your transaction history for updates.
                   </DialogContentText>
+                  <hr/>
               </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">

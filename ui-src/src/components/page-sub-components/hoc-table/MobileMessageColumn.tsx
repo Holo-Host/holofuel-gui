@@ -37,7 +37,7 @@ class MobileMesssageColumn extends React.Component<Props, State> {
     return (
       <div>
         <h5 style={{marginBottom:'10px'}}>
-          {`${currentRowInfo.counterparty} ${currentRowInfo.originEvent.display_value}`}
+          {`${currentRowInfo.counterparty}`}
         </h5>
 
          {currentRowInfo.status.split("/")[0] === "incoming" ?

@@ -117,9 +117,10 @@ input {
 } */
 
 /*********** * ADDED ONLY TO REMOVE TABLE HEADERS FOR V1 * **********/
-.ReactTable .rt-thead {
+/* .ReactTable .rt-thead {
   display: none !important
-}
+} */
+
 /*******************************************************/
 
 

@@ -26,8 +26,8 @@ function BottomMenuBar(props: Props) {
         <Toolbar className={classes.toolbar} >
           <div className={classes.closeBtn} onClick={() => props.showTransferBar("")}><CloseIcon className={classes.svgCloseIcon}/></div>
           <div className={classnames(classes.buttonMenu)}>
-            <OutlinedButton text="Send" color="primary" link="/holofuelpromise" showTransferBar={props.showTransferBar} fnName="promise" />
-            <OutlinedButton text="Request" color="primary" link="/holofuelrequest" showTransferBar={props.showTransferBar} fnName="request" />
+            <OutlinedButton text="Send HoloFuel" color="primary" link="/holofuelpromise" showTransferBar={props.showTransferBar} fnName="promise" />
+            <OutlinedButton text="Request HoloFuel" color="primary" link="/holofuelrequest" showTransferBar={props.showTransferBar} fnName="request" />
           </div>
         </Toolbar>
       </AppBar>

@@ -1,5 +1,8 @@
 import { createHolochainZomeCallAsyncAction, createHolochainAdminAsyncAction } from '@holochain/hc-redux-middleware';
 // export const FETCH_STATE = 'FETCH_STATE';
+export const UPDATE_PROFILE= 'UPDATE_PROFILE';
+export const RESET_REFRESH = 'RESET_REFRESH';
+export const SET_AGENT_ID= 'SET_AGENT_ID';
 // FILE CONSTANTS:
 import { setInstance } from '../utils/constants'
 // const DNA_INSTANCE = 'holofuel instance';
@@ -14,6 +17,28 @@ const DNA_INSTANCE = setInstance();
 //     type: FETCH_STATE
 //   };
 // }
+
+// Call for in-app UPDATE_PROFILE
+export function UpdateProfile (payload:any) {
+  return {
+    type: UPDATE_PROFILE,
+    payload
+  };
+}
+
+export function SetAgentId (payload:any) {
+  return {
+    type: SET_AGENT_ID,
+    payload
+  };
+}
+
+// Call for in-app RESET_REFRESH
+export function ResetRefresh () {
+  return {
+    type: RESET_REFRESH
+  };
+}
 
 ////////////////////////////////////////////////////////
           /* Agent and Instance Discovery  */
