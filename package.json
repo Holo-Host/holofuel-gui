@@ -9,8 +9,7 @@
     "start-ui-agent1": "cd ui-src && npm run start-agent1",
     "start-ui-agent2": "cd ui-src && npm run start-agent2",
     "build": "cd ui-src && npm run build",
-    "build-holo": "cd ui-src && npm run build-holo",
-    "watch": "cd ui-src && npm run tsc -p tsconfig.test.json -w "
+    "build-holo": "cd ui-src && npm run build-holo"
   },
   "authors": [
     "Lisa Jetton",
